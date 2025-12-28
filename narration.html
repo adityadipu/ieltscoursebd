@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 5: Narration Mastery</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #f59e0b;
+            --bg: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --success: #10b981;
+            --danger: #ef4444;
+            --purple: #8b5cf6;
+            --teal: #14b8a6;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-main); line-height: 1.6; padding-bottom: 50px; }
+
+        /* --- HEADER --- */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .back-link { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; display: block; margin-bottom: 10px; }
+        .back-link:hover { text-decoration: underline; color: white; }
+
+        /* --- TEST BUTTON --- */
+        .test-launch-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .test-launch-btn:hover { transform: scale(1.05); background: #d97706; }
+
+        /* --- LAYOUT --- */
+        .container { max-width: 1200px; margin: -30px auto 0; padding: 0 20px; position: relative; z-index: 10; }
+        
+        /* --- TABS SYSTEM --- */
+        .tabs { display: flex; gap: 5px; margin-bottom: 20px; justify-content: center; flex-wrap: wrap; }
+        .tab-btn {
+            padding: 10px 15px;
+            background: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+            flex: 1 1 auto;
+            min-width: 120px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        .tab-btn.active { background: var(--secondary); color: white; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+
+        /* --- CARDS --- */
+        .section-content { display: none; animation: fadeIn 0.4s ease; }
+        .section-content.active { display: block; }
+        .card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        
+        h2 { color: var(--primary); margin-bottom: 15px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        h3 { color: var(--secondary); margin: 25px 0 10px; font-size: 1.15rem; font-weight: 700; border-left: 4px solid var(--accent); padding-left: 10px; background: #fffbeb; }
+
+        /* --- TABLES --- */
+        .rule-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 0.9rem; }
+        .rule-table th, .rule-table td { border: 1px solid #e5e7eb; padding: 10px; text-align: left; vertical-align: top; }
+        .rule-table th { background-color: #eff6ff; color: var(--primary); }
+        .rule-table tr:nth-child(even) { background-color: #f9fafb; }
+
+        /* --- EXAMPLE BOXES --- */
+        .example-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
+        .example-card { background: #fafafa; border: 1px solid #e5e7eb; padding: 15px; border-radius: 8px; border-left: 4px solid var(--purple); }
+        .speech-label { font-size: 0.75rem; color: #6b7280; text-transform: uppercase; font-weight: bold; display: block; margin-bottom: 2px; }
+        .speech-text { font-size: 1rem; color: #1f2937; margin-bottom: 10px; display: block; }
+        .arrow-divider { text-align: center; color: var(--accent); margin: 5px 0; font-size: 1.2rem; }
+
+        /* --- PRO TIP --- */
+        .pro-tip { background-color: #f0fdf4; color: #166534; padding: 15px; border-radius: 8px; margin-top: 20px; border: 1px solid #bbf7d0; display: flex; gap: 10px; }
+
+        /* --- EXAM MODAL --- */
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
+        .modal-content { background-color: #1f2937; color: white; margin: auto; padding: 30px; border-radius: 16px; width: 95%; max-width: 600px; text-align: center; position: relative; }
+        .close-btn { position: absolute; top: 15px; right: 20px; color: #aaa; font-size: 28px; cursor: pointer; }
+        .option-btn { background: #374151; border: 2px solid transparent; color: white; padding: 12px 15px; border-radius: 8px; cursor: pointer; margin-bottom: 10px; display: flex; align-items: center; text-align: left; transition:0.2s; }
+        .option-btn:hover { background: #4b5563; }
+        .option-btn.correct { border-color: #10b981; background: rgba(16, 185, 129, 0.2); }
+        .option-btn.wrong { border-color: #ef4444; background: rgba(239, 68, 68, 0.2); }
+        .key-badge { background: #1f2937; width: 25px; height: 25px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; margin-right: 10px; font-size: 0.8rem; border: 1px solid #6b7280; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-link">← Back to Dashboard</a>
+        <h1>Module 5: Narration Mastery</h1>
+        <p>Direct vs. Indirect Speech</p>
+        <button class="test-launch-btn" onclick="openExam()">Take Exam (30 Q)</button>
+    </header>
+
+    <div class="container">
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('basics')">1. Basics & Rules</button>
+            <button class="tab-btn" onclick="switchTab('changes')">2. Tense & Word Changes</button>
+            <button class="tab-btn" onclick="switchTab('examples')">3. Sentence Examples</button>
+        </div>
+
+        <div id="basics" class="section-content active">
+            <div class="card">
+                <h2>The Core Concept</h2>
+                <div class="example-grid">
+                    <div class="example-card">
+                        <span class="speech-label">Direct Speech</span>
+                        <span class="speech-text">He said, "I am a good boy."</span>
+                        <div class="arrow-divider">⬇️</div>
+                        <span class="speech-label">Indirect Speech</span>
+                        <span class="speech-text">He said <strong>that</strong> he was a good boy.</span>
+                    </div>
+                </div>
+
+                <h3>Reporting Verb Rule</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 10px; padding: 10px; background: #fff7ed; border-left: 4px solid #f97316;">
+                        <strong>1. Present/Future Tense:</strong> If reporting verb is <em>says/will say</em>, <span style="color:#c2410c; font-weight:bold;">NO CHANGE</span> in the tense of reported speech.<br>
+                        <em>Bhaskar says, "I do not love Mistu." → Bhaskar says that he does not love Mistu.</em>
+                    </li>
+                    <li style="margin-bottom: 10px; padding: 10px; background: #eff6ff; border-left: 4px solid #2563eb;">
+                        <strong>2. Past Tense:</strong> If reporting verb is <em>said</em>, the tense inside <span style="color:#1d4ed8; font-weight:bold;">CHANGES</span> (e.g., Present → Past).
+                    </li>
+                </ul>
+
+                <h3>Person Change Rule </h3>
+                <table class="rule-table">
+                    <thead><tr><th>Person</th><th>Changes To</th><th>Example</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>1st Person</strong> (I, We)</td><td>Subject of Reporting Verb</td><td>"I am..." → <strong>He</strong> was...</td></tr>
+                        <tr><td><strong>2nd Person</strong> (You)</td><td>Object of Reporting Verb</td><td>"You are..." → <strong>I</strong> was...</td></tr>
+                        <tr><td><strong>3rd Person</strong> (He/She)</td><td>No Change</td><td>"He is..." → <strong>He</strong> was...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="changes" class="section-content">
+            <div class="card">
+                <h2>1. Tense Change Table</h2>
+                <p>Only applies when Reporting Verb is in the <strong>Past</strong>.</p>
+                <table class="rule-table">
+                    <thead><tr><th>Direct Speech</th><th>Indirect Speech</th></tr></thead>
+                    <tbody>
+                        <tr><td>Present Indefinite</td><td>Past Indefinite</td></tr>
+                        <tr><td>Present Continuous</td><td>Past Continuous</td></tr>
+                        <tr><td>Present Perfect</td><td>Past Perfect</td></tr>
+                        <tr><td>Past Indefinite</td><td>Past Perfect</td></tr>
+                        <tr><td>Past Continuous</td><td>Past Perfect Continuous</td></tr>
+                        <tr><td>Past Perfect</td><td>No Change</td></tr>
+                    </tbody>
+                </table>
+
+                <h2>2. Word & Time Change </h2>
+                <div class="grid-3" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:15px;">
+                    <div style="background:#f9fafb; padding:10px; border:1px solid #eee;">Now → Then</div>
+                    <div style="background:#f9fafb; padding:10px; border:1px solid #eee;">Here → There</div>
+                    <div style="background:#f9fafb; padding:10px; border:1px solid #eee;">This → That</div>
+                    <div style="background:#f9fafb; padding:10px; border:1px solid #eee;">Today → That day</div>
+                    <div style="background:#f9fafb; padding:10px; border:1px solid #eee;">Tomorrow → The next day</div>
+                    <div style="background:#f9fafb; padding:10px; border:1px solid #eee;">Yesterday → The previous day</div>
+                    <div style="background:#f9fafb; padding:10px; border:1px solid #eee;">Will → Would</div>
+                    <div style="background:#f9fafb; padding:10px; border:1px solid #eee;">Can → Could</div>
+                    <div style="background:#f9fafb; padding:10px; border:1px solid #eee;">May → Might</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="examples" class="section-content">
+            <div class="card">
+                <h2>Sentence Examples from Syllabus</h2>
+                
+                <h3>Assertive Sentences </h3>
+                <div class="example-grid">
+                    <div class="example-card">
+                        <span class="speech-text"><strong>Direct:</strong> He said, "I love my parents."</span>
+                        <span class="speech-text" style="color:var(--primary);"><strong>Indirect:</strong> He said that he loved his parents.</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="speech-text"><strong>Direct:</strong> Sujon said to me, "Arif is my friend."</span>
+                        <span class="speech-text" style="color:var(--primary);"><strong>Indirect:</strong> Sujon told me that Arif was his friend.</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="speech-text"><strong>Direct:</strong> Bhaskar says, "I do not love Mistu."</span>
+                        <span class="speech-text" style="color:var(--primary);"><strong>Indirect:</strong> Bhaskar says that he does not love Mistu. (No Tense Change)</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="speech-text"><strong>Direct:</strong> You said, "We are going for movie tonight."</span>
+                        <span class="speech-text" style="color:var(--primary);"><strong>Indirect:</strong> You said that we were going for movie that night.</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="speech-text"><strong>Direct:</strong> Jojo said, "You talk very politely."</span>
+                        <span class="speech-text" style="color:var(--primary);"><strong>Indirect:</strong> Jojo said that I talked very politely.</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="speech-text"><strong>Direct:</strong> My friend said, "Jojo has bitten me."</span>
+                        <span class="speech-text" style="color:var(--primary);"><strong>Indirect:</strong> My friend said that Jojo had bitten me.</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="speech-text"><strong>Direct:</strong> She said, "Titu drove the car roughly."</span>
+                        <span class="speech-text" style="color:var(--primary);"><strong>Indirect:</strong> She said that Titu had driven the car roughly.</span>
+                    </div>
+                </div>
+
+                <h3>Interrogative Sentences</h3>
+                <div class="pro-tip">
+                    <strong>Rule:</strong> Use "Asked" instead of Said. Use "If" for Yes/No questions.
+                </div>
+                <br>
+                <div class="example-grid">
+                    <div class="example-card">
+                        <span class="speech-text"><strong>Direct:</strong> "What are you doing now?" said my friend.</span>
+                        <span class="speech-text" style="color:var(--primary);"><strong>Indirect:</strong> My friend asked what I was doing then.</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="speech-text"><strong>Direct:</strong> She said to Priya, "Are you going to college today?"</span>
+                        <span class="speech-text" style="color:var(--primary);"><strong>Indirect:</strong> She asked Priya if she was going to college that day.</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="speech-text"><strong>Direct:</strong> She said to me, "Am I looking beautiful?"</span>
+                        <span class="speech-text" style="color:var(--primary);"><strong>Indirect:</strong> She asked me if she was looking beautiful.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="examModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeExam()">&times;</span>
+            <div id="quizContent">
+                <p id="progressText" style="text-align:right; font-size:0.9rem; color:#9ca3af;">Q 1/30</p>
+                <div id="questionText" style="font-size:1.3rem; font-weight:bold; margin-bottom:20px; min-height:80px; display:flex; align-items:center; justify-content:center;">Loading...</div>
+                <div id="optionsContainer"></div>
+            </div>
+            <div id="resultContent" style="display:none;">
+                <div style="font-size:3rem; margin-bottom:10px;">🏆</div>
+                <h2>Test Completed!</h2>
+                <p id="finalScore" style="font-size:1.5rem; font-weight:bold; color:var(--accent);">0/30</p>
+                <button class="test-launch-btn" onclick="restartExam()">Take Another Exam</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 30 QUESTIONS POOL (Based on PDF) ---
+        const questionPool = [
+            // Basics (5)
+            { q: "Reporting Verb 'said to' usually changes to:", o: ["told", "asked", "say", "ordered"], a: 0 },
+            { q: "If Reporting Verb is 'says', the tense inside:", o: ["Changes", "No Change", "Becomes Past", "Becomes Future"], a: 1 },
+            { q: "In Indirect Speech, 'Tomorrow' changes to:", o: ["The next day", "The previous day", "That day", "Today"], a: 0 },
+            { q: "In Indirect Speech, 'Now' changes to:", o: ["Then", "When", "Before", "After"], a: 0 },
+            { q: "For Interrogative sentences, we replace 'said' with:", o: ["Asked", "Told", "Ordered", "Replied"], a: 0 },
+
+            // Tense Changes (10)
+            { q: "Direct: 'I love my parents.' → Indirect: He said that...", o: ["he loved his parents", "he loves his parents", "he loving his parents", "I loved my parents"], a: 0 },
+            { q: "Direct: 'We do not eat chicken.' → Indirect: They told that...", o: ["they did not eat chicken", "we do not eat chicken", "they do not eat chicken", "they had not eaten"], a: 0 },
+            { q: "Direct: 'I may go to Kolkata.' → Indirect: He told me that...", o: ["he might go to Kolkata", "he may go to Kolkata", "he will go to Kolkata", "he can go to Kolkata"], a: 0 },
+            { q: "Direct: 'He was working very hard.' → Indirect: He told me he...", o: ["had been working hard", "was working hard", "is working hard", "has worked hard"], a: 0 },
+            { q: "Direct: 'Jojo has bitten me.' → Indirect: My friend said that...", o: ["Jojo had bitten me", "Jojo has bitten him", "Jojo bit me", "Jojo was biting"], a: 0 },
+            { q: "Direct: 'Titu drove the car.' (Past Indef) → Indirect: She said Titu...", o: ["had driven the car", "drove the car", "has driven the car", "was driving"], a: 0 },
+            { q: "Direct: 'We are very happy.' → Indirect: They said that...", o: ["they were very happy", "we are very happy", "they are very happy", "we were very happy"], a: 0 },
+            { q: "Direct: 'I do not hate you.' → Indirect: She told him that...", o: ["she did not hate him", "I do not hate you", "she does not hate him", "she had not hated him"], a: 0 },
+            { q: "Direct: 'Children were plucking flowers.' (Past Cont) → Indirect:...", o: ["had been plucking", "were plucking", "had plucked", "have plucked"], a: 0 },
+            { q: "Direct: 'They had completed their project.' (Past Perf) → Indirect:...", o: ["No Change (had completed)", "had been completing", "have completed", "completed"], a: 0 },
+
+            // Pronoun & Time Changes (10)
+            { q: "Direct: 'I am coming with you.' → Indirect: Rahul said that...", o: ["he was coming with me", "I am coming with you", "he is coming with me", "he came with me"], a: 0 },
+            { q: "Direct: 'You talk very politely.' → Indirect: Jojo said that...", o: ["I talked very politely", "you talked very politely", "he talked very politely", "I talk very politely"], a: 0 },
+            { q: "Direct: 'This' in direct speech becomes:", o: ["That", "Those", "These", "It"], a: 0 },
+            { q: "Direct: 'Yesterday' in direct speech becomes:", o: ["The previous day", "The next day", "That day", "Today"], a: 0 },
+            { q: "Direct: 'Here' in direct speech becomes:", o: ["There", "Where", "Their", "Then"], a: 0 },
+            { q: "Direct: 'Tonight' in direct speech becomes:", o: ["That night", "This night", "Last night", "Tomorrow night"], a: 0 },
+            { q: "Direct: 'We are going for movie tonight.' → Indirect: ...going...", o: ["that night", "tonight", "this night", "next night"], a: 0 },
+            { q: "Direct: 'Will' changes to:", o: ["Would", "Should", "Could", "Might"], a: 0 },
+            { q: "Direct: 'Can' changes to:", o: ["Could", "Can", "Would", "Should"], a: 0 },
+            { q: "Direct: 'May' changes to:", o: ["Might", "May", "Could", "Will"], a: 0 },
+
+            // Reporting Verb "Says" & Interrogative (5)
+            { q: "Direct: Bhaskar says, 'I do not love Mistu.' → Indirect: ...", o: ["he does not love Mistu", "he did not love Mistu", "he had not loved Mistu", "he do not love Mistu"], a: 0 },
+            { q: "Direct: 'Are you going to college?' → Indirect: She asked...", o: ["if she was going to college", "that she is going", "if you are going", "when she was going"], a: 0 },
+            { q: "Direct: 'What are you doing now?' → Indirect: Asked what I...", o: ["was doing then", "am doing now", "was doing now", "am doing then"], a: 0 },
+            { q: "Direct: 'Am I looking beautiful?' → Indirect: She asked...", o: ["if she was looking beautiful", "that she is looking beautiful", "if I was looking beautiful", "am I looking beautiful"], a: 0 },
+            { q: "Direct: 'Does he like tea?' → Indirect: She asked...", o: ["if he liked tea", "if he likes tea", "does he like tea", "that he liked tea"], a: 0 }
+        ];
+
+        let currentExamQuestions = [];
+        let currentQ = 0;
+        let score = 0;
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.section-content').forEach(content => content.classList.remove('active'));
+            document.querySelector(`[onclick="switchTab('${tabId}')"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function openExam() {
+            // Use all 30 questions
+            currentExamQuestions = questionPool; 
+            document.getElementById('examModal').style.display = "flex";
+            currentQ = 0;
+            score = 0;
+            showQuestion();
+            document.getElementById('quizContent').style.display = "block";
+            document.getElementById('resultContent').style.display = "none";
+        }
+
+        function closeExam() { document.getElementById('examModal').style.display = "none"; }
+
+        function showQuestion() {
+            if (currentQ >= currentExamQuestions.length) {
+                showResult();
+                return;
+            }
+            const q = currentExamQuestions[currentQ];
+            document.getElementById('progressText').innerText = `Q ${currentQ + 1}/${currentExamQuestions.length}`;
+            document.getElementById('questionText').innerText = q.q;
+            
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+            
+            const keys = ['A', 'B', 'C', 'D'];
+            q.o.forEach((opt, index) => {
+                const btn = document.createElement('div');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="key-badge">${keys[index]}</span> ${opt}`;
+                btn.onclick = () => checkAnswer(index, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(index, btn) {
+            const q = currentExamQuestions[currentQ];
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.onclick = null);
+
+            if(index === q.a) {
+                btn.classList.add('correct');
+                score++;
+            } else {
+                btn.classList.add('wrong');
+                allBtns[q.a].classList.add('correct');
+            }
+
+            setTimeout(() => {
+                currentQ++;
+                showQuestion();
+            }, 800);
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = "none";
+            document.getElementById('resultContent').style.display = "block";
+            document.getElementById('finalScore').innerText = score + "/" + currentExamQuestions.length;
+        }
+
+        function restartExam() { 
+            currentQ = 0;
+            score = 0;
+            // Shuffle again for restart
+            currentExamQuestions = questionPool.sort(() => 0.5 - Math.random());
+            openExam(); 
+        }
+    </script>
+</body>
+</html>

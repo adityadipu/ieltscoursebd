@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 7: Preposition Mastery</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #f59e0b;
+            --bg: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --success: #10b981;
+            --danger: #ef4444;
+            --purple: #8b5cf6;
+            --teal: #14b8a6;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-main); line-height: 1.6; padding-bottom: 50px; }
+
+        /* --- HEADER --- */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .back-link { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; display: block; margin-bottom: 10px; }
+        .back-link:hover { text-decoration: underline; color: white; }
+
+        /* --- TEST BUTTON --- */
+        .test-launch-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .test-launch-btn:hover { transform: scale(1.05); background: #d97706; }
+
+        /* --- LAYOUT --- */
+        .container { max-width: 1200px; margin: -30px auto 0; padding: 0 20px; position: relative; z-index: 10; }
+        
+        /* --- TABS SYSTEM --- */
+        .tabs { display: flex; gap: 5px; margin-bottom: 20px; justify-content: center; flex-wrap: wrap; }
+        .tab-btn {
+            padding: 10px 15px;
+            background: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+            flex: 1 1 auto;
+            min-width: 120px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        .tab-btn.active { background: var(--secondary); color: white; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+
+        /* --- CARDS --- */
+        .section-content { display: none; animation: fadeIn 0.4s ease; }
+        .section-content.active { display: block; }
+        .card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        
+        h2 { color: var(--primary); margin-bottom: 15px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        h3 { color: var(--secondary); margin: 25px 0 10px; font-size: 1.15rem; font-weight: 700; border-left: 4px solid var(--accent); padding-left: 10px; background: #fffbeb; }
+
+        /* --- VISUAL CONCEPTS (Replacing Images) --- */
+        .visual-box {
+            border: 2px dashed #cbd5e1;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .visual-icon { font-size: 2rem; display: block; margin-bottom: 5px; }
+        .visual-label { font-weight: bold; color: var(--secondary); text-transform: uppercase; font-size: 0.9rem; }
+
+        /* --- EXAMPLE LISTS --- */
+        .example-list li { margin-bottom: 8px; padding-left: 10px; border-left: 3px solid var(--teal); list-style: none; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; }
+
+        /* --- EXAM MODAL --- */
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
+        .modal-content { background-color: #1f2937; color: white; margin: auto; padding: 30px; border-radius: 16px; width: 95%; max-width: 600px; text-align: center; position: relative; }
+        .close-btn { position: absolute; top: 15px; right: 20px; color: #aaa; font-size: 28px; cursor: pointer; }
+        .option-btn { background: #374151; border: 2px solid transparent; color: white; padding: 12px 15px; border-radius: 8px; cursor: pointer; margin-bottom: 10px; display: flex; align-items: center; text-align: left; transition:0.2s; }
+        .option-btn:hover { background: #4b5563; }
+        .option-btn.correct { border-color: #10b981; background: rgba(16, 185, 129, 0.2); }
+        .option-btn.wrong { border-color: #ef4444; background: rgba(239, 68, 68, 0.2); }
+        .key-badge { background: #1f2937; width: 25px; height: 25px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; margin-right: 10px; font-size: 0.8rem; border: 1px solid #6b7280; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-link">← Back to Dashboard</a>
+        <h1>Module 7: Preposition Mastery</h1>
+        <p>Position, Time, Direction & Association</p>
+        <button class="test-launch-btn" onclick="openExam()">Take Exam (30 Q)</button>
+    </header>
+
+    <div class="container">
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('position')">1. Position & Level</button>
+            <button class="tab-btn" onclick="switchTab('movement')">2. In/Into/Inside</button>
+            <button class="tab-btn" onclick="switchTab('timeplace')">3. Time & Place (At/On/In)</button>
+            <button class="tab-btn" onclick="switchTab('association')">4. With/Within/Without</button>
+        </div>
+
+        <div id="position" class="section-content active">
+            <div class="card">
+                <h2>Level & Vertical Position</h2>
+                
+                <div class="grid-2">
+                    <div>
+                        <h3>Above (Higher Level)</h3>
+                        <div class="visual-box">
+                            <span class="visual-icon">🖼️ ⬆️ 🕰️</span>
+                            <span class="visual-label">Wall Clock above Image</span>
+                        </div>
+                        <ul class="example-list">
+                            <li>"The wall clock <strong>above</strong> the image need to be cleaned."</li>
+                            <li>"The sky is <strong>above</strong> our heads."</li>
+                            <li>"Bhongir fort is 609.6 meters <strong>above</strong> sea level."</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Below (Lower Level)</h3>
+                        <div class="visual-box">
+                            <span class="visual-icon">📝 ⬇️</span>
+                            <span class="visual-label">Name below Name</span>
+                        </div>
+                        <ul class="example-list">
+                            <li>"Your name in the list <strong>below</strong> me."</li>
+                            <li>"The picture is <strong>below</strong> the wall clock."</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div>
+                        <h3>Over (Vertically Above/Motion)</h3>
+                        <div class="visual-box">
+                            <span class="visual-icon">✈️ 👤</span>
+                            <span class="visual-label">Plane over Head</span>
+                        </div>
+                        <ul class="example-list">
+                            <li>"The Plane is flying <strong>over</strong> my head."</li>
+                            <li>"Vultures are flying <strong>over</strong> the stadium."</li>
+                            <li>"The sun passes <strong>over</strong> our heads at noon."</li>
+                            <li>"This is the bridge <strong>over</strong> the river."</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Under (Vertically Below)</h3>
+                        <div class="visual-box">
+                            <span class="visual-icon">🌳 👦</span>
+                            <span class="visual-label">Boy under Tree</span>
+                        </div>
+                        <ul class="example-list">
+                            <li>"The boy sat <strong>under</strong> the tree."</li>
+                            <li>"The river is <strong>under</strong> the bridge."</li>
+                            <li>"There are sixty people working <strong>under</strong> me."</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Beneath / Underneath (Layer) </h3>
+                <ul class="example-list">
+                    <li>"I worn my tshirt <strong>beneath</strong> my jacket."</li>
+                    <li>"I have worn a t-shirt <strong>underneath</strong> my jacket."</li>
+                    <li>"I kept a letter <strong>underneath</strong> the pillow."</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="movement" class="section-content">
+            <div class="card">
+                <h2>Inside vs. Into (Static vs. Motion) </h2>
+                
+                <div class="grid-3">
+                    <div>
+                        <h3>Into (Motion/Entry)</h3>
+                        <div class="visual-box">
+                            <span class="visual-icon">🚶‍♂️ ➡️ 🚪</span>
+                            <span class="visual-label">Entering Room</span>
+                        </div>
+                        <ul class="example-list">
+                            <li>"The man enters <strong>into</strong> his conference room."</li>
+                            <li>"The cyclist enters <strong>into</strong> the stadium."</li>
+                            <li>"She enters <strong>into</strong> the taxi."</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>In (Position/State)</h3>
+                        <div class="visual-box">
+                            <span class="visual-icon">🥅 ⚽</span>
+                            <span class="visual-label">Playing in Stadium</span>
+                        </div>
+                        <ul class="example-list">
+                            <li>"The men were locked <strong>in</strong> jail for no reason."</li>
+                            <li>"The Players are playing <strong>in</strong> the stadium."</li>
+                            <li>"The passenger sat <strong>in</strong> the driver's seat."</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Inside (Enclosed)</h3>
+                        <div class="visual-box">
+                            <span class="visual-icon">📦</span>
+                            <span class="visual-label">Deep Inside</span>
+                        </div>
+                        <ul class="example-list">
+                            <li>"The baby is <strong>inside</strong> her mother's womb."</li>
+                            <li>"The fence broke <strong>inside</strong> the stadium."</li>
+                            <li>"The driver was playing music <strong>inside</strong> the taxi."</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="timeplace" class="section-content">
+            <div class="card">
+                <h2>At, On, In, By </h2>
+                
+                <div class="grid-2">
+                    <div>
+                        <h3>At (Point/Dot)</h3>
+                        <ul class="example-list">
+                            <li><strong>Time:</strong> "at 7 pm."</li>
+                            <li><strong>Place:</strong> "at the door", "at school", "at the bus stop."</li>
+                            <li><em>"The meeting starts <strong>at</strong> 9 pm."</em></li>
+                            <li><em>"Let's meet <strong>at</strong> the bus stop."</em></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>On (Surface/Day)</h3>
+                        <ul class="example-list">
+                            <li><strong>Day/Date:</strong> "On Monday", "On May 10."</li>
+                            <li><strong>Surface:</strong> "On the table."</li>
+                            <li><em>"I left my purse <strong>on</strong> the table."</em></li>
+                            <li><em>"The picture is hanging <strong>on</strong> the wall."</em></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div>
+                        <h3>In (Enclosed/Long Time)</h3>
+                        <ul class="example-list">
+                            <li><strong>Place:</strong> "In the room", "In Paris", "In the USA", "In the yard."</li>
+                            <li><strong>Time:</strong> "In 2025", "In the evening."</li>
+                            <li><em>"She lives <strong>in</strong> Paris."</em></li>
+                            <li><em>"I usually study <strong>in</strong> the evening."</em></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>By (Deadline/Proximity)</h3>
+                        <ul class="example-list">
+                            <li><strong>Deadline:</strong> "By Friday", "By tomorrow morning."</li>
+                            <li><strong>Means:</strong> "By car."</li>
+                            <li><strong>Beside:</strong> "By the window."</li>
+                            <li><em>"She will finish the project <strong>by</strong> Friday."</em></li>
+                            <li><em>"Please reply <strong>by</strong> tomorrow morning."</em></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="association" class="section-content">
+            <div class="card">
+                <h2>Association & Direction</h2>
+                
+                <h3>With (Together/Tool) </h3>
+                <ul class="example-list">
+                    <li>"I ordered a pizza <strong>with</strong> coke."</li>
+                    <li>"I was <strong>with</strong> my bro yesterday."</li>
+                    <li>"I went to the stage <strong>with</strong> confidence."</li>
+                    <li>"She is my lady <strong>with</strong> blonde hair."</li>
+                </ul>
+
+                <h3>Within (Limit) </h3>
+                <ul class="example-list">
+                    <li>"He will come <strong>within</strong> 5 minutes."</li>
+                    <li>"Can you do it <strong>within</strong> a week?"</li>
+                    <li>"I will send the money <strong>within</strong> 5 days."</li>
+                </ul>
+
+                <h3>Without (Lack) </h3>
+                <ul class="example-list">
+                    <li>"I can't live <strong>without</strong> you."</li>
+                    <li>"I am completely helpless <strong>without</strong> a laptop."</li>
+                    <li>"I can't eat a burger <strong>without</strong> Coke."</li>
+                </ul>
+
+                <h3>To & For</h3>
+                <ul class="example-list">
+                    <li><strong>To (Destination):</strong> "He is going <strong>to</strong> college."</li>
+                    <li><strong>For (Reason):</strong> "I was going <strong>for</strong> you."</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="examModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeExam()">&times;</span>
+            <div id="quizContent">
+                <p id="progressText" style="text-align:right; font-size:0.9rem; color:#9ca3af;">Q 1/30</p>
+                <div id="questionText" style="font-size:1.3rem; font-weight:bold; margin-bottom:20px; min-height:80px; display:flex; align-items:center; justify-content:center;">Loading...</div>
+                <div id="optionsContainer"></div>
+            </div>
+            <div id="resultContent" style="display:none;">
+                <div style="font-size:3rem; margin-bottom:10px;">🏆</div>
+                <h2>Test Completed!</h2>
+                <p id="finalScore" style="font-size:1.5rem; font-weight:bold; color:var(--accent);">0/30</p>
+                <p>Excellent work on Prepositions!</p>
+                <button class="test-launch-btn" onclick="restartExam()">Take Another Exam</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 30 QUESTION POOL (Based on PDF Examples) ---
+        const questionPool = [
+            // Position
+            { q: "The wall clock is ____ the image.", o: ["above", "on", "in", "under"], a: 0 },
+            { q: "The Plane is flying ____ my head.", o: ["over", "on", "at", "in"], a: 0 },
+            { q: "The boy sat ____ the tree.", o: ["under", "over", "above", "on"], a: 0 },
+            { q: "I worn my tshirt ____ my jacket.", o: ["beneath", "over", "above", "on"], a: 0 },
+            { q: "The picture is ____ the wall clock.", o: ["below", "over", "above", "in"], a: 0 },
+            { q: "Your name is ____ my name in the list.", o: ["below", "above", "over", "on"], a: 0 },
+            { q: "I kept a letter ____ the pillow.", o: ["underneath", "over", "above", "at"], a: 0 },
+            
+            // Movement/Inside
+            { q: "The man enters ____ his conference room.", o: ["into", "in", "at", "on"], a: 0 },
+            { q: "The cyclist enters ____ the stadium.", o: ["into", "in", "at", "on"], a: 0 },
+            { q: "The players are playing ____ the stadium.", o: ["in", "into", "at", "on"], a: 0 },
+            { q: "The baby is ____ her mother's womb.", o: ["inside", "on", "at", "over"], a: 0 },
+            { q: "The driver was playing music ____ the taxi.", o: ["inside", "on", "at", "over"], a: 0 },
+            { q: "The fence broke ____ the stadium.", o: ["inside", "on", "at", "over"], a: 0 },
+            
+            // Time & Place
+            { q: "The meeting starts ____ 9 pm.", o: ["at", "on", "in", "by"], a: 0 },
+            { q: "Let's meet ____ the bus stop.", o: ["at", "on", "in", "under"], a: 0 },
+            { q: "She lives ____ Paris.", o: ["in", "at", "on", "by"], a: 0 },
+            { q: "She was born ____ 2025.", o: ["in", "at", "on", "by"], a: 0 },
+            { q: "I left my purse ____ the table.", o: ["on", "at", "in", "by"], a: 0 },
+            { q: "The picture is hanging ____ the wall.", o: ["on", "at", "in", "by"], a: 0 },
+            { q: "She will finish the project ____ Friday.", o: ["by", "at", "on", "in"], a: 0 },
+            { q: "Please reply ____ tomorrow morning.", o: ["by", "at", "on", "in"], a: 0 },
+            { q: "I usually study ____ the evening.", o: ["in", "at", "on", "by"], a: 0 },
+            
+            // Association
+            { q: "I ordered a pizza ____ coke.", o: ["with", "by", "for", "at"], a: 0 },
+            { q: "He will come ____ 5 minutes.", o: ["within", "with", "by", "at"], a: 0 },
+            { q: "I can't live ____ you.", o: ["without", "within", "by", "at"], a: 0 },
+            { q: "I went to the stage ____ confidence.", o: ["with", "by", "for", "at"], a: 0 },
+            { q: "I will send the money ____ 5 days.", o: ["within", "with", "by", "at"], a: 0 },
+            { q: "He is going ____ college.", o: ["to", "for", "at", "in"], a: 0 },
+            { q: "I was going ____ you.", o: ["for", "to", "at", "in"], a: 0 }
+        ];
+
+        let currentExamQuestions = [];
+        let currentQ = 0;
+        let score = 0;
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.section-content').forEach(content => content.classList.remove('active'));
+            document.querySelector(`[onclick="switchTab('${tabId}')"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function openExam() {
+            // Shuffle and select 30 questions
+            currentExamQuestions = questionPool.sort(() => 0.5 - Math.random()).slice(0, 30);
+            document.getElementById('examModal').style.display = "flex";
+            currentQ = 0;
+            score = 0;
+            showQuestion();
+            document.getElementById('quizContent').style.display = "block";
+            document.getElementById('resultContent').style.display = "none";
+        }
+
+        function closeExam() { document.getElementById('examModal').style.display = "none"; }
+
+        function showQuestion() {
+            if (currentQ >= currentExamQuestions.length) {
+                showResult();
+                return;
+            }
+            const q = currentExamQuestions[currentQ];
+            document.getElementById('progressText').innerText = `Q ${currentQ + 1}/${currentExamQuestions.length}`;
+            document.getElementById('questionText').innerText = q.q;
+            
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+            
+            const keys = ['A', 'B', 'C', 'D'];
+            q.o.forEach((opt, index) => {
+                const btn = document.createElement('div');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="key-badge">${keys[index]}</span> ${opt}`;
+                btn.onclick = () => checkAnswer(index, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(index, btn) {
+            const q = currentExamQuestions[currentQ];
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.onclick = null);
+
+            if(index === q.a) {
+                btn.classList.add('correct');
+                score++;
+            } else {
+                btn.classList.add('wrong');
+                allBtns[q.a].classList.add('correct');
+            }
+
+            setTimeout(() => {
+                currentQ++;
+                showQuestion();
+            }, 800);
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = "none";
+            document.getElementById('resultContent').style.display = "block";
+            document.getElementById('finalScore').innerText = score + "/" + currentExamQuestions.length;
+        }
+
+        function restartExam() { openExam(); }
+    </script>
+</body>
+</html>

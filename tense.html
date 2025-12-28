@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3: Tense Mastery</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #f59e0b;
+            --bg: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --success: #10b981;
+            --danger: #ef4444;
+            --purple: #8b5cf6;
+            --teal: #14b8a6;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-main); line-height: 1.6; padding-bottom: 50px; }
+
+        /* --- HEADER --- */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .back-link { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; display: block; margin-bottom: 10px; }
+        .back-link:hover { text-decoration: underline; color: white; }
+
+        /* --- TEST BUTTON --- */
+        .test-launch-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .test-launch-btn:hover { transform: scale(1.05); background: #d97706; }
+
+        /* --- LAYOUT --- */
+        .container { max-width: 1200px; margin: -30px auto 0; padding: 0 20px; position: relative; z-index: 10; }
+        
+        /* --- TABS SYSTEM --- */
+        .tabs { display: flex; gap: 8px; margin-bottom: 20px; justify-content: center; flex-wrap: wrap; }
+        .tab-btn {
+            padding: 10px 20px;
+            background: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+            flex: 1;
+            min-width: 100px;
+            max-width: 150px;
+            text-align: center;
+        }
+        .tab-btn.active { background: var(--secondary); color: white; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+
+        /* --- CARDS --- */
+        .section-content { display: none; animation: fadeIn 0.4s ease; }
+        .section-content.active { display: block; }
+        .card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        
+        h2 { color: var(--primary); margin-bottom: 15px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        h3 { color: var(--secondary); margin: 25px 0 10px; font-size: 1.15rem; font-weight: 700; border-left: 4px solid var(--accent); padding-left: 10px; background: #fffbeb; }
+
+        /* --- TABLES --- */
+        .tense-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 0.9rem; }
+        .tense-table th, .tense-table td { border: 1px solid #e5e7eb; padding: 12px; text-align: left; vertical-align: top; }
+        .tense-table th { background-color: #eff6ff; color: var(--primary); }
+        .tense-table tr:nth-child(even) { background-color: #f9fafb; }
+
+        /* --- FORMULA BOXES --- */
+        .formula-box {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            color: #0369a1;
+            margin-bottom: 5px;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        /* --- EXAM MODAL --- */
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
+        .modal-content { background-color: #1f2937; color: white; margin: auto; padding: 30px; border-radius: 16px; width: 95%; max-width: 600px; text-align: center; position: relative; }
+        .close-btn { position: absolute; top: 15px; right: 20px; color: #aaa; font-size: 28px; cursor: pointer; }
+        .option-btn { background: #374151; border: 2px solid transparent; color: white; padding: 12px 15px; border-radius: 8px; cursor: pointer; margin-bottom: 10px; display: flex; align-items: center; text-align: left; transition:0.2s; }
+        .option-btn:hover { background: #4b5563; }
+        .option-btn.correct { border-color: #10b981; background: rgba(16, 185, 129, 0.2); }
+        .option-btn.wrong { border-color: #ef4444; background: rgba(239, 68, 68, 0.2); }
+        .key-badge { background: #1f2937; width: 25px; height: 25px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; margin-right: 10px; font-size: 0.8rem; border: 1px solid #6b7280; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-link">← Back to Dashboard</a>
+        <h1>Module 3: Tense Mastery</h1>
+        <p>Present, Past, and Future Tenses with Rules & Examples</p>
+        <button class="test-launch-btn" onclick="openExam()">Take Exam (30 Q)</button>
+    </header>
+
+    <div class="container">
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('overview')">Overview</button>
+            <button class="tab-btn" onclick="switchTab('present')">Present</button>
+            <button class="tab-btn" onclick="switchTab('past')">Past</button>
+            <button class="tab-btn" onclick="switchTab('future')">Future</button>
+        </div>
+
+        <div id="overview" class="section-content active">
+            <div class="card">
+                <h2>The 3 Pillars of Time</h2>
+                <p>Tense indicates the time of an action. Based on your Verb PDF, here is the master chart:</p>
+                <br>
+                <table class="tense-table">
+                    <thead>
+                        <tr>
+                            <th>Tense</th>
+                            <th>Indefinite (Regular)</th>
+                            <th>Continuous (Running)</th>
+                            <th>Perfect (Finished)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Present</strong><br>(Now)</td>
+                            <td><strong>Do/Does/V1/V5</strong><br>"I eat rice."</td>
+                            <td><strong>Am/Is/Are + V4</strong><br>"I am dancing."</td>
+                            <td><strong>Have/Has + V3</strong><br>"I have eaten rice."</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Past</strong><br>(Before)</td>
+                            <td><strong>Did/V2</strong><br>"I ate rice."</td>
+                            <td><strong>Was/Were + V4</strong><br>"He was dancing."</td>
+                            <td><strong>Had + V3</strong><br>"I had eaten rice."</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Future</strong><br>(Later)</td>
+                            <td><strong>Will + V1</strong><br>"I will read."</td>
+                            <td><strong>Will be + V4</strong><br>"I will be eating."</td>
+                            <td><strong>Will have + V3</strong><br>"I will have finished."</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="present" class="section-content">
+            <div class="card">
+                <h2>Present Tense (Current Time)</h2>
+                
+                <h3>1. Present Indefinite </h3>
+                <p>Used for regular habits or universal truths.</p>
+                <div class="formula-box">Sub + V1/V5 (s/es) + Obj</div>
+                <table class="tense-table">
+                    <tr><td><strong>Habit:</strong></td><td>"I eat rice." / "She plays football."</td></tr>
+                    <tr><td><strong>Question:</strong></td><td>"Do you eat rice?" / "Does she play well?"</td></tr>
+                    <tr><td><strong>Negative:</strong></td><td>"I don't eat rice." / "She doesn't miss you."</td></tr>
+                </table>
+
+                <h3>2. Present Continuous </h3>
+                <p>Action is running right now.</p>
+                <div class="formula-box">Sub + Am/Is/Are + V4 (ing) + Obj</div>
+                <table class="tense-table">
+                    <tr><td><strong>Example 1:</strong></td><td>"I <strong>am dancing</strong> on the floor."</td></tr>
+                    <tr><td><strong>Example 2:</strong></td><td>"He <strong>is playing</strong> badminton with me."</td></tr>
+                    <tr><td><strong>Example 3:</strong></td><td>"They <strong>are swimming</strong> in the pond."</td></tr>
+                </table>
+
+                <h3>3. Present Perfect </h3>
+                <p>Action is finished, but result exists.</p>
+                <div class="formula-box">Sub + Have/Has + V3 + Obj</div>
+                <table class="tense-table">
+                    <tr><td><strong>Example 1:</strong></td><td>"I <strong>have eaten</strong> rice."</td></tr>
+                    <tr><td><strong>Example 2:</strong></td><td>"He <strong>has completed</strong> his task."</td></tr>
+                    <tr><td><strong>Example 3:</strong></td><td>"They <strong>haven't finished</strong> their project."</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div id="past" class="section-content">
+            <div class="card">
+                <h2>Past Tense (Previous Time)</h2>
+                
+                <h3>1. Past Indefinite </h3>
+                <p>Action happened in the past.</p>
+                <div class="formula-box">Sub + V2 + Obj</div>
+                <table class="tense-table">
+                    <tr><td><strong>Statement:</strong></td><td>"I <strong>went</strong> to school." / "I <strong>ate</strong> beef."</td></tr>
+                    <tr><td><strong>Question:</strong></td><td>"<strong>Did</strong> you know him?" / "<strong>Did</strong> they visit there?"</td></tr>
+                    <tr><td><strong>Negative:</strong></td><td>"No, I <strong>didn't</strong> know him."</td></tr>
+                </table>
+
+                <h3>2. Past Continuous </h3>
+                <p>Action was running in the past.</p>
+                <div class="formula-box">Sub + Was/Were + V4 (ing) + Obj</div>
+                <table class="tense-table">
+                    <tr><td><strong>Example 1:</strong></td><td>"He <strong>was dancing</strong> on the floor."</td></tr>
+                    <tr><td><strong>Example 2:</strong></td><td>"I <strong>was eating</strong> rice."</td></tr>
+                    <tr><td><strong>Example 3:</strong></td><td>"We <strong>were playing</strong> football."</td></tr>
+                </table>
+
+                <h3>3. Past Perfect </h3>
+                <p>Action completed in the past (before another action).</p>
+                <div class="formula-box">Sub + Had + V3 + Obj</div>
+                <table class="tense-table">
+                    <tr><td><strong>Example 1:</strong></td><td>"I <strong>had eaten</strong> rice."</td></tr>
+                    <tr><td><strong>Example 2:</strong></td><td>"You <strong>had played</strong> football."</td></tr>
+                    <tr><td><strong>Example 3:</strong></td><td>"He <strong>hadn't completed</strong> his task."</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div id="future" class="section-content">
+            <div class="card">
+                <h2>Future Tense (Upcoming Time)</h2>
+                
+                <h3>1. Future Indefinite </h3>
+                <p>Action will happen.</p>
+                <div class="formula-box">Sub + Will + V1 + Obj</div>
+                <table class="tense-table">
+                    <tr><td><strong>Statement:</strong></td><td>"I <strong>will read</strong> tomorrow."</td></tr>
+                    <tr><td><strong>Question:</strong></td><td>"<strong>Will</strong> you come for work?"</td></tr>
+                    <tr><td><strong>Rain:</strong></td><td>"It <strong>will rain</strong> tomorrow."</td></tr>
+                </table>
+
+                <h3>2. Future Continuous </h3>
+                <p>Action will be running in the future.</p>
+                <div class="formula-box">Sub + Will be + V4 (ing) + Obj</div>
+                <table class="tense-table">
+                    <tr><td><strong>Example 1:</strong></td><td>"I <strong>will be eating</strong> rice."</td></tr>
+                    <tr><td><strong>Example 2:</strong></td><td>"It <strong>will be raining</strong> tomorrow."</td></tr>
+                    <tr><td><strong>Example 3:</strong></td><td>"Will you <strong>be teaching</strong> me this year?"</td></tr>
+                </table>
+
+                <h3>3. Future Perfect </h3>
+                <p>Action will be finished in the future.</p>
+                <div class="formula-box">Sub + Will have + V3 + Obj</div>
+                <table class="tense-table">
+                    <tr><td><strong>Example 1:</strong></td><td>"I <strong>will have watched</strong> this movie."</td></tr>
+                    <tr><td><strong>Example 2:</strong></td><td>"He <strong>will have completed</strong> his task."</td></tr>
+                    <tr><td><strong>Example 3:</strong></td><td>"You <strong>will have reached</strong> Germany next year."</td></tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="examModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeExam()">&times;</span>
+            <div id="quizContent">
+                <p id="progressText" style="text-align:right; font-size:0.9rem; color:#9ca3af;">Q 1/30</p>
+                <div id="questionText" style="font-size:1.3rem; font-weight:bold; margin-bottom:20px; min-height:80px; display:flex; align-items:center; justify-content:center;">Loading...</div>
+                <div id="optionsContainer"></div>
+            </div>
+            <div id="resultContent" style="display:none;">
+                <div style="font-size:3rem; margin-bottom:10px;">🏆</div>
+                <h2>Test Completed!</h2>
+                <p id="finalScore" style="font-size:1.5rem; font-weight:bold; color:var(--accent);">0/30</p>
+                <p>Excellent work on your Tense practice.</p>
+                <button class="test-launch-btn" onclick="restartExam()">Take Another Exam</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- LARGE QUESTION POOL (Based on Verb.pdf) ---
+        const questionPool = [
+            // Present Indefinite
+            { q: "Which sentence is Present Indefinite?", o: ["I eat rice.", "I am eating.", "I have eaten.", "I ate."], a: 0 },
+            { q: "'Does she play well?' - Tense?", o: ["Past Indefinite", "Present Indefinite", "Future Indefinite", "Present Continuous"], a: 1 },
+            { q: "Universal truths are always in ____ tense.", o: ["Past", "Future", "Present", "Perfect"], a: 2 },
+            { q: "'Do you know him?' is an example of:", o: ["Do Verb (Present)", "Did Verb (Past)", "Have Verb", "Be Verb"], a: 0 },
+            
+            // Present Continuous
+            { q: "'I am dancing on the floor.' - Tense?", o: ["Present Continuous", "Past Continuous", "Future Continuous", "Simple Present"], a: 0 },
+            { q: "'They are swimming in the pond.' - Verb form used?", o: ["V1", "V2", "V3", "V4 (ing)"], a: 3 },
+            { q: "Structure of Present Continuous:", o: ["Sub+Am/Is/Are+V4", "Sub+Was/Were+V4", "Sub+Will be+V4", "Sub+Have+V3"], a: 0 },
+            
+            // Present Perfect
+            { q: "'I have eaten rice.' - Tense?", o: ["Present Perfect", "Past Perfect", "Future Perfect", "Simple Past"], a: 0 },
+            { q: "'He has completed his task.' - Auxiliary Verb?", o: ["Have", "Has", "Had", "Is"], a: 1 },
+            { q: "Structure of Present Perfect:", o: ["Sub+Have/Has+V3", "Sub+Had+V3", "Sub+Will have+V3", "Sub+Did+V1"], a: 0 },
+            
+            // Past Indefinite
+            { q: "'I ate rice.' - Tense?", o: ["Past Indefinite", "Present Indefinite", "Past Perfect", "Future Indefinite"], a: 0 },
+            { q: "'Did you go to school?' - Answer:", o: ["Yes, I go.", "Yes, I went.", "Yes, I gone.", "Yes, I going."], a: 1 },
+            { q: "V2 form of 'Eat' is:", o: ["Eat", "Ate", "Eaten", "Eating"], a: 1 },
+            
+            // Past Continuous
+            { q: "'He was dancing on the floor.' - Tense?", o: ["Past Continuous", "Present Continuous", "Future Continuous", "Past Perfect"], a: 0 },
+            { q: "'We were playing football.' - Auxiliary Verb?", o: ["Was", "Were", "Are", "Had"], a: 1 },
+            { q: "Structure of Past Continuous:", o: ["Sub+Was/Were+V4", "Sub+Am/Is/Are+V4", "Sub+Had+V3", "Sub+Did+V1"], a: 0 },
+            
+            // Past Perfect
+            { q: "'I had eaten rice.' - Tense?", o: ["Past Perfect", "Present Perfect", "Past Indefinite", "Future Perfect"], a: 0 },
+            { q: "'You had played football.' - Verb form?", o: ["V1", "V2", "V3", "V4"], a: 2 },
+            
+            // Future Indefinite
+            { q: "'I will read tomorrow.' - Tense?", o: ["Future Indefinite", "Future Continuous", "Present Indefinite", "Past Indefinite"], a: 0 },
+            { q: "'Will you come for work?' - Answer:", o: ["Yes, I come.", "Yes, I will come.", "Yes, I came.", "Yes, I coming."], a: 1 },
+            
+            // Future Continuous
+            { q: "'I will be eating rice.' - Tense?", o: ["Future Continuous", "Future Perfect", "Present Continuous", "Past Continuous"], a: 0 },
+            { q: "'It will be raining tomorrow.' - Auxiliary?", o: ["Will", "Will be", "Is", "Was"], a: 1 },
+            
+            // Future Perfect
+            { q: "'I will have watched this movie.' - Tense?", o: ["Future Perfect", "Future Continuous", "Present Perfect", "Past Perfect"], a: 0 },
+            { q: "'You will have reached Germany.' - Verb form?", o: ["V1", "V2", "V3", "V4"], a: 2 },
+            
+            // Mixed/Identification
+            { q: "Which is V3 of 'Play'?", o: ["Play", "Played", "Playing", "Plays"], a: 1 },
+            { q: "Which is V4 of 'Read'?", o: ["Reads", "Read", "Reading", "Red"], a: 2 },
+            { q: "'She doesn't miss you.' - Tense?", o: ["Present Indefinite", "Past Indefinite", "Future Indefinite", "Present Continuous"], a: 0 },
+            { q: "'Did they visit there?' - Tense?", o: ["Past Indefinite", "Present Perfect", "Past Perfect", "Future Indefinite"], a: 0 },
+            { q: "'We will have dancing.' - Correct or Incorrect?", o: ["Correct", "Incorrect (should be V3)", "Incorrect (should be V1)", "Correct (Continuous)"], a: 1 },
+            { q: "'I am doing my job.' - 'Doing' is:", o: ["V1", "V2", "V3", "V4"], a: 3 }
+        ];
+
+        let currentExamQuestions = [];
+        let currentQ = 0;
+        let score = 0;
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.section-content').forEach(content => content.classList.remove('active'));
+            document.querySelector(`[onclick="switchTab('${tabId}')"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function openExam() {
+            currentExamQuestions = questionPool.sort(() => 0.5 - Math.random()).slice(0, 30);
+            document.getElementById('examModal').style.display = "flex";
+            currentQ = 0;
+            score = 0;
+            showQuestion();
+            document.getElementById('quizContent').style.display = "block";
+            document.getElementById('resultContent').style.display = "none";
+        }
+
+        function closeExam() { document.getElementById('examModal').style.display = "none"; }
+
+        function showQuestion() {
+            if (currentQ >= currentExamQuestions.length) {
+                showResult();
+                return;
+            }
+            const q = currentExamQuestions[currentQ];
+            document.getElementById('progressText').innerText = `Q ${currentQ + 1}/${currentExamQuestions.length}`;
+            document.getElementById('questionText').innerText = q.q;
+            
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+            
+            const keys = ['A', 'B', 'C', 'D'];
+            q.o.forEach((opt, index) => {
+                const btn = document.createElement('div');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="key-badge">${keys[index]}</span> ${opt}`;
+                btn.onclick = () => checkAnswer(index, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(index, btn) {
+            const q = currentExamQuestions[currentQ];
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.onclick = null);
+
+            if(index === q.a) {
+                btn.classList.add('correct');
+                score++;
+            } else {
+                btn.classList.add('wrong');
+                allBtns[q.a].classList.add('correct');
+            }
+
+            setTimeout(() => {
+                currentQ++;
+                showQuestion();
+            }, 800);
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = "none";
+            document.getElementById('resultContent').style.display = "block";
+            document.getElementById('finalScore').innerText = score + "/" + currentExamQuestions.length;
+        }
+
+        function restartExam() { openExam(); }
+    </script>
+</body>
+</html>

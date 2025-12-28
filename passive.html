@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 4: Passive Voice Mastery</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #f59e0b;
+            --bg: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --success: #10b981;
+            --danger: #ef4444;
+            --purple: #8b5cf6;
+            --teal: #14b8a6;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-main); line-height: 1.6; padding-bottom: 50px; }
+
+        /* --- HEADER --- */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .back-link { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; display: block; margin-bottom: 10px; }
+        .back-link:hover { text-decoration: underline; color: white; }
+
+        /* --- TEST BUTTON --- */
+        .test-launch-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .test-launch-btn:hover { transform: scale(1.05); background: #d97706; }
+
+        /* --- LAYOUT --- */
+        .container { max-width: 1200px; margin: -30px auto 0; padding: 0 20px; position: relative; z-index: 10; }
+        
+        /* --- TABS SYSTEM --- */
+        .tabs { display: flex; gap: 5px; margin-bottom: 20px; justify-content: center; flex-wrap: wrap; }
+        .tab-btn {
+            padding: 10px 15px;
+            background: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+            flex: 1 1 auto;
+            min-width: 120px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        .tab-btn.active { background: var(--secondary); color: white; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+
+        /* --- CARDS --- */
+        .section-content { display: none; animation: fadeIn 0.4s ease; }
+        .section-content.active { display: block; }
+        .card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        
+        h2 { color: var(--primary); margin-bottom: 15px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        h3 { color: var(--secondary); margin: 25px 0 10px; font-size: 1.15rem; font-weight: 700; border-left: 4px solid var(--accent); padding-left: 10px; background: #fffbeb; }
+
+        /* --- TABLES --- */
+        .struct-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 0.9rem; }
+        .struct-table th, .struct-table td { border: 1px solid #e5e7eb; padding: 12px; text-align: left; vertical-align: top; }
+        .struct-table th { background-color: #eff6ff; color: var(--primary); }
+        .struct-table tr:nth-child(even) { background-color: #f9fafb; }
+        
+        .code-tag { font-family: monospace; background: #e0f2fe; color: #0284c7; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+
+        /* --- EXAMPLE BOXES --- */
+        .example-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .example-card { background: #fafafa; border: 1px solid #e5e7eb; padding: 15px; border-radius: 8px; border-left: 4px solid var(--teal); }
+        .bn-text { color: #059669; font-family: 'Segoe UI', sans-serif; font-size: 0.95rem; display: block; margin-bottom: 5px; }
+        .en-text { color: #333; font-weight: 600; display:block; }
+
+        /* --- EXAM MODAL --- */
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
+        .modal-content { background-color: #1f2937; color: white; margin: auto; padding: 30px; border-radius: 16px; width: 95%; max-width: 600px; text-align: center; position: relative; }
+        .close-btn { position: absolute; top: 15px; right: 20px; color: #aaa; font-size: 28px; cursor: pointer; }
+        .option-btn { background: #374151; border: 2px solid transparent; color: white; padding: 12px 15px; border-radius: 8px; cursor: pointer; margin-bottom: 10px; display: flex; align-items: center; text-align: left; transition:0.2s; }
+        .option-btn:hover { background: #4b5563; }
+        .option-btn.correct { border-color: #10b981; background: rgba(16, 185, 129, 0.2); }
+        .option-btn.wrong { border-color: #ef4444; background: rgba(239, 68, 68, 0.2); }
+        .key-badge { background: #1f2937; width: 25px; height: 25px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; margin-right: 10px; font-size: 0.8rem; border: 1px solid #6b7280; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-link">← Back to Dashboard</a>
+        <h1>Module 4: Passive Voice Mastery</h1>
+        <p>Focus on the Object, not the Doer</p>
+        <button class="test-launch-btn" onclick="openExam()">Take Exam (30 Q)</button>
+    </header>
+
+    <div class="container">
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('structures')">1. Structure Rules</button>
+            <button class="tab-btn" onclick="switchTab('basic')">2. Basic Tenses</button>
+            <button class="tab-btn" onclick="switchTab('continuous')">3. Continuous & Perfect</button>
+            <button class="tab-btn" onclick="switchTab('advanced')">4. Modals & Questions</button>
+        </div>
+
+        <div id="structures" class="section-content active">
+            <div class="card">
+                <h2>The 6 Golden Rules</h2>
+                <p>Use this table to identify the correct Passive structure based on the Bengali ending.</p>
+                <br>
+                <table class="struct-table">
+                    <thead>
+                        <tr>
+                            <th>Bengali Hint</th>
+                            <th>English Formula</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>হয়</strong> (Simple Present)</td>
+                            <td><span class="code-tag">S + am/is/are + V3 + O</span></td>
+                            <td>"Football is played here." (এখানে ফুটবল খেলা হয়)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>হচ্ছে</strong> (Continuous)</td>
+                            <td><span class="code-tag">S + am/is/are + being + V3</span></td>
+                            <td>"Football is being played here." (খেলা হচ্ছে)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>হয়েছে</strong> (Perfect)</td>
+                            <td><span class="code-tag">S + have/has + been + V3</span></td>
+                            <td>"Football has been played here." (খেলা হয়েছে)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>হয়েছিল</strong> (Simple Past)</td>
+                            <td><span class="code-tag">S + was/were + V3</span></td>
+                            <td>"Football was played here." (খেলা হয়েছিল)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>হচ্ছিল</strong> (Past Cont.)</td>
+                            <td><span class="code-tag">S + was/were + being + V3</span></td>
+                            <td>"Football was being played here." (খেলা হচ্ছিল)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>হবে</strong> (Future)</td>
+                            <td><span class="code-tag">S + will be + V3</span></td>
+                            <td>"Football will be played here." (খেলা হবে)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="basic" class="section-content">
+            <div class="card">
+                <h2>Basic Tense Examples</h2>
+                
+                <h3>Present (হয় / আছে)</h3>
+                <div class="example-grid">
+                    <div class="example-card">
+                        <span class="bn-text">১. এখানে ফুটবল খেলা হয়।</span>
+                        <span class="en-text">"Football is played here."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">২. এখানে ফর্ম জমা নেয়া হয়।</span>
+                        <span class="en-text">"Forms are deposited here."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">৩. রোজ কুকুরকে খাওয়ানো হয়।</span>
+                        <span class="en-text">"Dogs are fed here daily."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">৪. রোজ ইংরেজি চ্যানেলে মুভি দেখানো হয়।</span>
+                        <span class="en-text">"Movies are shown in the English Channel daily."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">৫. রোজ ইউটিউবে ভিডিও দেখা হয়।</span>
+                        <span class="en-text">"Youtube videos are watched daily."</span>
+                    </div>
+                </div>
+
+                <h3>Past (হয়েছিল) </h3>
+                <div class="example-grid">
+                    <div class="example-card">
+                        <span class="bn-text">১. এখানে ফুটবল খেলা হয়েছিল।</span>
+                        <span class="en-text">"Football was played here."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">২. ওকে পাঠানো হয়েছিলো।</span>
+                        <span class="en-text">"He was sent."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">৩. ওদেরকে জানানো হয়েছিল।</span>
+                        <span class="en-text">"They were informed."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">৪. এখানে মানুষদের খাওয়ানো হইয়েছিলো।</span>
+                        <span class="en-text">"Peoples were fed here."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">৫. কাপড়গুলো মেশিনে পরিষ্কার করা হয়েছিল।</span>
+                        <span class="en-text">"Clothes were washed in the machine."</span>
+                    </div>
+                </div>
+
+                <h3>Future (হবে) </h3>
+                <div class="example-grid">
+                    <div class="example-card">
+                        <span class="bn-text">১. রাস্তা প্রস্তুত করা হবে।</span>
+                        <span class="en-text">"Road will be prepared."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">২. আজকে রেজাল্ট ঘোষণা করা হবে।</span>
+                        <span class="en-text">"Result will be announced today."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">৩. রোজ সবার বাড়িরকাজ জমা নেওয়া হবে।</span>
+                        <span class="en-text">"Homework will be taken daily."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">৪. ওকে পাঠানো হবে।</span>
+                        <span class="en-text">"He will be sent."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">৫. কাপড়গুলো মেশিনে পরিষ্কার করা হবে।</span>
+                        <span class="en-text">"Clothes will be washed in the machine."</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="continuous" class="section-content">
+            <div class="card">
+                <h2>Continuous & Perfect Actions</h2>
+                
+                <h3>Continuous (হচ্ছে / হচ্ছিল)</h3>
+                <div class="example-grid">
+                    <div class="example-card">
+                        <span class="bn-text">১. ইংরেজি পড়ানো হচ্ছিলো।</span>
+                        <span class="en-text">"English was being taught here."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">২. এইখানে আইপিএল খেলা দেখা হচ্ছে।</span>
+                        <span class="en-text">"IPL is being showed here."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">৩. রুমগুলো পরিষ্কার করা হচ্ছিলো।</span>
+                        <span class="en-text">"Rooms are being cleaned."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">৪. বাচ্চাদের শেখানো হচ্ছিলো।</span>
+                        <span class="en-text">"Kids were being taught here."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">৫. কাপড়গুলো মেশিনে পরিষ্কার করা হচ্ছে।</span>
+                        <span class="en-text">"Clothes are being washed in the machine."</span>
+                    </div>
+                </div>
+
+                <h3>Perfect (হয়েছে)</h3>
+                <div class="example-grid">
+                    <div class="example-card">
+                        <span class="bn-text">১. এখানে ফুটবল খেলা হয়েছে।</span>
+                        <span class="en-text">"Football has been played here."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">২. কাপড়গুলো মেশিনে পরিষ্কার করা হয়েছে।</span>
+                        <span class="en-text">"Clothes have been washed in the machine."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">৩. এইখানে মানুষদের খাওয়ানো হয়েছে।</span>
+                        <span class="en-text">"Peoples have been fed here daily."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">৪. ওকে জানানো হয়েছে।</span>
+                        <span class="en-text">"He is informed."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">৫. এখানে ফর্ম জমা নেয়া হয়েছে।</span>
+                        <span class="en-text">"Forms have been deposited here."</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="advanced" class="section-content">
+            <div class="card">
+                <h2>Modals & Question Forms</h2>
+                
+                <h3>"Used to be" (হতো) </h3>
+                <div class="example-grid">
+                    <div class="example-card">
+                        <span class="bn-text">১. আমাদেরকে পড়ানো হতো।</span>
+                        <span class="en-text">"We used to be taught."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">২. ওদেরকে পাঠানো হতো।</span>
+                        <span class="en-text">"They used to be sent there."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">৩. আমাদেরকে টাকা দেওয়া হত।</span>
+                        <span class="en-text">"We used to be given (money)."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">৪. আমাদের ইংরেজি পড়ানো হতো নাহ।</span>
+                        <span class="en-text">"We didn't use to be taught English."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">৫. তোমাদের কি পড়ানো হতো নাহ?</span>
+                        <span class="en-text">"Didn't they use to be taught?"</span>
+                    </div>
+                </div>
+
+                <h3>Interrogative Passive (প্রশ্ন) </h3>
+                <div class="example-grid">
+                    <div class="example-card">
+                        <span class="bn-text">১. আজকে কি রেজাল্ট ঘোষণা করা হবে?</span>
+                        <span class="en-text">"Will result be announced today?"</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">২. এইখানে কি প্রায়ই মাছ খাওয়া হয়?</span>
+                        <span class="en-text">"Are fishes eaten here often?"</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">৩. ওকে কি জানানো হয়েছে?</span>
+                        <span class="en-text">"Is he informed?"</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">৪. কেন এইখানে আইপিএল খেলা দেখানো হয়?</span>
+                        <span class="en-text">"Why is IPL being showed here?"</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">৫. রোজ কি ইউটিউবে ভিডিও দেখা হয়?</span>
+                        <span class="en-text">"Is youtube videos watched daily?"</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="examModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeExam()">&times;</span>
+            <div id="quizContent">
+                <p id="progressText" style="text-align:right; font-size:0.9rem; color:#9ca3af;">Q 1/30</p>
+                <div id="questionText" style="font-size:1.3rem; font-weight:bold; margin-bottom:20px; min-height:80px; display:flex; align-items:center; justify-content:center;">Loading...</div>
+                <div id="optionsContainer"></div>
+            </div>
+            <div id="resultContent" style="display:none;">
+                <div style="font-size:3rem; margin-bottom:10px;">🏆</div>
+                <h2>Test Completed!</h2>
+                <p id="finalScore" style="font-size:1.5rem; font-weight:bold; color:var(--accent);">0/30</p>
+                <p>Great work mastering Passive Voice!</p>
+                <button class="test-launch-btn" onclick="restartExam()">Take Another Exam</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- QUESTION POOL (Strictly based on PDF Examples) ---
+        const questionPool = [
+            // Present Simple
+            { q: "'Football is played here.' - Bengali meaning?", o: ["এখানে ফুটবল খেলা হয়।", "এখানে ফুটবল খেলা হচ্ছে।", "ফুটবল খেলা হবে।", "ফুটবল খেলা হয়েছিল।"], a: 0 },
+            { q: "'Forms are deposited here.' - Tense?", o: ["Present Simple Passive", "Present Continuous", "Past Simple", "Future Simple"], a: 0 },
+            { q: "'Dogs are fed here daily.' - Verb form?", o: ["are fed", "were fed", "is feeding", "fed"], a: 0 },
+            { q: "'Fishes are eaten here.' - Structure?", o: ["S+am/is/are+V3", "S+was/were+V3", "S+will be+V3", "S+have been+V3"], a: 0 },
+            { q: "'Movie is showed in the English Channel daily.' - Time?", o: ["Daily (Present)", "Yesterday (Past)", "Tomorrow (Future)", "Now (Continuous)"], a: 0 },
+
+            // Present Continuous
+            { q: "'IPL is being showed here.' - Bengali?", o: ["আইপিএল খেলা দেখা হচ্ছে।", "আইপিএল খেলা দেখা হয়।", "আইপিএল খেলা হবে।", "আইপিএল খেলা হয়েছিল।"], a: 0 },
+            { q: "'Rooms are being cleaned.' - 'Being' indicates:", o: ["Continuous Action", "Completed Action", "Future Action", "Past Habit"], a: 0 },
+            { q: "'Football is being played here.' - Tense?", o: ["Present Continuous Passive", "Present Simple", "Past Continuous", "Future"], a: 0 },
+            
+            // Present Perfect
+            { q: "'Clothes have been washed.' - Bengali?", o: ["কাপড়গুলো পরিষ্কার করা হয়েছে।", "কাপড়গুলো পরিষ্কার করা হয়।", "কাপড়গুলো পরিষ্কার করা হবে।", "কাপড়গুলো পরিষ্কার করা হচ্ছিল।"], a: 0 },
+            { q: "'He is informed.' (PDF example for Perfect context) means:", o: ["ওকে জানানো হয়েছে।", "সে জানে।", "সে জানবে।", "তাকে জানানো হবে।"], a: 0 }, 
+            { q: "'Forms have been deposited here.' - Structure?", o: ["S+have/has+been+V3", "S+was/were+V3", "S+will be+V3", "S+are+V3"], a: 0 },
+
+            // Past Simple
+            { q: "'They were informed.' - Bengali?", o: ["ওদেরকে জানানো হয়েছিল", "ওদেরকে জানানো হয়", "ওদেরকে জানানো হবে", "ওরা জানত"], a: 0 },
+            { q: "'He was sent.' - Tense?", o: ["Past Simple Passive", "Present Simple", "Future Simple", "Past Continuous"], a: 0 },
+            { q: "'Clothes were washed in the machine.' - Structure?", o: ["S+was/were+V3", "S+am/is/are+V3", "S+will be+V3", "S+had been+V3"], a: 0 },
+
+            // Past Continuous
+            { q: "'English were being taught here.' - Bengali?", o: ["ইংরেজি পড়ানো হচ্ছিলো।", "ইংরেজি পড়ানো হয়।", "ইংরেজি পড়ানো হবে।", "ইংরেজি পড়ানো হয়েছিল।"], a: 0 },
+            { q: "'He was being beaten.' - Tense?", o: ["Past Continuous Passive", "Present Continuous", "Past Simple", "Future Continuous"], a: 0 },
+            { q: "'The fan were being switched on.' - Action state?", o: ["Happening in past", "Happening now", "Will happen", "Completed"], a: 0 },
+
+            // Future
+            { q: "'Result will be anounced today.' - Bengali?", o: ["আজকে রেজাল্ট ঘোষনা করা হবে।", "রেজাল্ট ঘোষনা করা হয়।", "রেজাল্ট ঘোষনা করা হচ্ছে।", "রেজাল্ট ঘোষনা করা হয়েছিল।"], a: 0 },
+            { q: "'He will be sent.' - Structure?", o: ["S+will be+V3", "S+is+V3", "S+was+V3", "S+has been+V3"], a: 0 },
+            { q: "'Road will be prepared.' - Time?", o: ["Future", "Present", "Past", "Continuous"], a: 0 },
+            
+            // "Used to be" / Modals / Questions
+            { q: "'We used to be taught.' - Meaning?", o: ["আমাদেরকে পড়ানো হতো।", "আমরা পড়াতাম।", "আমাদেরকে পড়ানো হবে।", "আমাদেরকে পড়ানো হচ্ছে।"], a: 0 },
+            { q: "'They used to be sent there.' - Tense/Mood?", o: ["Past Habit (Passive)", "Present Simple", "Future", "Continuous"], a: 0 },
+            { q: "'Will result be anounced today?' - Sentence Type?", o: ["Interrogative Passive", "Imperative", "Negative", "Affirmative"], a: 0 },
+            { q: "'Where will result be anounced?' - Start word?", o: ["Where", "When", "Why", "How"], a: 0 },
+            { q: "'Are fishes eaten here often?' - Answer type?", o: ["Yes/No", "Descriptive", "Command", "Exclamation"], a: 0 }
+        ];
+
+        let currentExamQuestions = [];
+        let currentQ = 0;
+        let score = 0;
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.section-content').forEach(content => content.classList.remove('active'));
+            document.querySelector(`[onclick="switchTab('${tabId}')"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function openExam() {
+            currentExamQuestions = questionPool.sort(() => 0.5 - Math.random()).slice(0, 30);
+            document.getElementById('examModal').style.display = "flex";
+            currentQ = 0;
+            score = 0;
+            showQuestion();
+            document.getElementById('quizContent').style.display = "block";
+            document.getElementById('resultContent').style.display = "none";
+        }
+
+        function closeExam() { document.getElementById('examModal').style.display = "none"; }
+
+        function showQuestion() {
+            if (currentQ >= currentExamQuestions.length) {
+                showResult();
+                return;
+            }
+            const q = currentExamQuestions[currentQ];
+            document.getElementById('progressText').innerText = `Q ${currentQ + 1}/${currentExamQuestions.length}`;
+            document.getElementById('questionText').innerText = q.q;
+            
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+            
+            const keys = ['A', 'B', 'C', 'D'];
+            q.o.forEach((opt, index) => {
+                const btn = document.createElement('div');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="key-badge">${keys[index]}</span> ${opt}`;
+                btn.onclick = () => checkAnswer(index, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(index, btn) {
+            const q = currentExamQuestions[currentQ];
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.onclick = null);
+
+            if(index === q.a) {
+                btn.classList.add('correct');
+                score++;
+            } else {
+                btn.classList.add('wrong');
+                allBtns[q.a].classList.add('correct');
+            }
+
+            setTimeout(() => {
+                currentQ++;
+                showQuestion();
+            }, 800);
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = "none";
+            document.getElementById('resultContent').style.display = "block";
+            document.getElementById('finalScore').innerText = score + "/" + currentExamQuestions.length;
+        }
+
+        function restartExam() { openExam(); }
+    </script>
+</body>
+</html>

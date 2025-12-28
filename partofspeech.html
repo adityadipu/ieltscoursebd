@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 2: Ultimate Part of Speech</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #f59e0b;
+            --bg: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --success: #10b981;
+            --danger: #ef4444;
+            --purple: #8b5cf6;
+            --teal: #14b8a6;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-main); line-height: 1.6; padding-bottom: 50px; }
+
+        /* --- HEADER --- */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .back-link { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; display: block; margin-bottom: 10px; }
+        .back-link:hover { text-decoration: underline; color: white; }
+
+        /* --- TEST BUTTON --- */
+        .test-launch-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .test-launch-btn:hover { transform: scale(1.05); background: #d97706; }
+
+        /* --- LAYOUT --- */
+        .container { max-width: 1200px; margin: -30px auto 0; padding: 0 10px; position: relative; z-index: 10; }
+        
+        /* --- TABS SYSTEM --- */
+        .tabs { display: flex; gap: 5px; margin-bottom: 20px; justify-content: center; flex-wrap: wrap; }
+        .tab-btn {
+            padding: 10px 12px;
+            background: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+            flex: 1 1 auto;
+            font-size: 0.9rem;
+            text-align: center;
+            white-space: nowrap;
+        }
+        .tab-btn.active { background: var(--secondary); color: white; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+
+        /* --- CARDS --- */
+        .section-content { display: none; animation: fadeIn 0.4s ease; }
+        .section-content.active { display: block; }
+        .card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        
+        h2 { color: var(--primary); margin-bottom: 15px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        h3 { color: var(--secondary); margin: 30px 0 15px; font-size: 1.2rem; font-weight: 700; border-left: 5px solid var(--accent); padding-left: 15px; background: #fffbeb; padding-top:5px; padding-bottom:5px;}
+
+        /* --- TABLES --- */
+        .pos-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 0.9rem; }
+        .pos-table th, .pos-table td { border: 1px solid #e5e7eb; padding: 10px; text-align: left; vertical-align: top; }
+        .pos-table th { background-color: #eff6ff; color: var(--primary); }
+        .pos-table tr:nth-child(even) { background-color: #f9fafb; }
+
+        /* --- EXAMPLE BOXES --- */
+        .example-box { background: #f0f9ff; border: 1px solid #bae6fd; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+        .bn-text { color: #059669; font-family: 'Segoe UI', sans-serif; font-size: 0.95rem; display: block; margin-top: 4px; border-top: 1px dashed #cbd5e1; padding-top: 4px; }
+        
+        /* --- GRID LAYOUTS --- */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; }
+        
+        /* --- EXAM MODAL --- */
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
+        .modal-content { background-color: #1f2937; color: white; margin: auto; padding: 30px; border-radius: 16px; width: 95%; max-width: 650px; text-align: center; position: relative; }
+        .close-btn { position: absolute; top: 15px; right: 20px; color: #aaa; font-size: 28px; cursor: pointer; }
+        .option-btn { background: #374151; border: 2px solid transparent; color: white; padding: 12px 15px; border-radius: 8px; cursor: pointer; margin-bottom: 10px; display: flex; align-items: center; text-align: left; transition:0.2s; }
+        .option-btn:hover { background: #4b5563; }
+        .option-btn.correct { border-color: #10b981; background: rgba(16, 185, 129, 0.2); }
+        .option-btn.wrong { border-color: #ef4444; background: rgba(239, 68, 68, 0.2); }
+        .key-badge { background: #1f2937; width: 25px; height: 25px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; margin-right: 10px; font-size: 0.8rem; border: 1px solid #6b7280; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .tab-btn { font-size: 0.8rem; padding: 8px 5px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-link">← Back to Dashboard</a>
+        <h1>Module 2: Ultimate Part of Speech</h1>
+        <p>Complete Reference from Course PDF</p>
+        <button class="test-launch-btn" onclick="openExam()">Take Exam (30 Q)</button>
+    </header>
+
+    <div class="container">
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('overview')">Overview</button>
+            <button class="tab-btn" onclick="switchTab('noun')">Nouns</button>
+            <button class="tab-btn" onclick="switchTab('pronoun')">Pronouns</button>
+            <button class="tab-btn" onclick="switchTab('adjective')">Adjectives</button>
+            <button class="tab-btn" onclick="switchTab('verb_aux')">Auxiliary (Do/Have)</button>
+            <button class="tab-btn" onclick="switchTab('verb_modal')">Modals (Can/Will)</button>
+            <button class="tab-btn" onclick="switchTab('others')">Others</button>
+        </div>
+
+        <div id="overview" class="section-content active">
+            <div class="card">
+                <h2>Master Example </h2>
+                <div class="example-box">
+                    <p style="font-size:1.1rem; line-height:1.8;">
+                        "A <strong>(Adj)</strong> very <strong>(Adv)</strong> nice <strong>(Adj)</strong> glass-jar <strong>(Noun)</strong> was <strong>(Aux)</strong> kept <strong>(Verb)</strong> on <strong>(Prep)</strong> the <strong>(Adj)</strong> table <strong>(Noun)</strong>.<br> 
+                        Suddenly <strong>(Adv)</strong> it <strong>(Pron)</strong> fell down <strong>(Verb)</strong> and <strong>(Conj)</strong> broke <strong>(Verb)</strong>.<br> 
+                        My <strong>(Pron)</strong> didi <strong>(Pron)</strong> screamed <strong>(Verb)</strong>, "Damn <strong>(Int)</strong>! How <strong>(Pron)</strong> did <strong>(Verb)</strong> it <strong>(Pron)</strong> happen <strong>(Verb)</strong>?"
+                    </p>
+                </div>
+                <h3>Basic Definitions</h3>
+                <div class="grid-2">
+                    <ul style="list-style: none; padding:0;">
+                        <li>🔹 <strong>Noun:</strong> Name (X, Y, Z). <em>"My name is Aditya."</em></li>
+                        <li>🔹 <strong>Pronoun:</strong> Replaces Noun. <em>"He is a boy."</em></li>
+                        <li>🔹 <strong>Adjective:</strong> Describes Noun. <em>"He is a good boy."</em></li>
+                        <li>🔹 <strong>Verb:</strong> Action/Work. <em>"He is doing his study."</em></li>
+                    </ul>
+                    <ul style="list-style: none; padding:0;">
+                        <li>🔹 <strong>Adverb:</strong> Describes Verb. <em>"Run faster."</em></li>
+                        <li>🔹 <strong>Preposition:</strong> Position. <em>"Plane flies above my head."</em></li>
+                        <li>🔹 <strong>Conjunction:</strong> Connector. <em>"You and I."</em></li>
+                        <li>🔹 <strong>Interjection:</strong> Emotion. <em>"Wow! I got the ticket."</em></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="noun" class="section-content">
+            <div class="card">
+                <h2>Nouns: The Naming Words</h2>
+                <div class="grid-2">
+                    <div>
+                        <h3>Classification</h3>
+                        <table class="pos-table">
+                            <thead><tr><th>Common</th><th>Proper</th><th>Collective</th></tr></thead>
+                            <tbody>
+                                <tr><td>Boy</td><td>Dipu</td><td>Team</td></tr>
+                                <tr><td>Girl</td><td>Punam</td><td>Community</td></tr>
+                                <tr><td>Animal</td><td>Tiger</td><td>Zoo</td></tr>
+                                <tr><td>Flower</td><td>Sunflower</td><td>Garden</td></tr>
+                                <tr><td>Poet</td><td>Robi Tagore</td><td>Literature</td></tr>
+                                <tr><td>City</td><td>Chattogram</td><td>Country</td></tr>
+                                <tr><td>School</td><td>BGC Trust</td><td>South Chattogram</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <h3>Special Types </h3>
+                        <div class="example-box">
+                            <strong>Material Noun (Uncountable)</strong>
+                            <ul>
+                                <li>"Water is costlier than Petrol."</li>
+                                <li>"Cow milk is good for health."</li>
+                                <li>"Maximum farming tools made of Iron."</li>
+                                <li>"Gold is a precious metal."</li>
+                                <li>"We should avoid plastic carry bags."</li>
+                            </ul>
+                        </div>
+                        <div class="example-box">
+                            <strong>Abstract Noun (Feelable)</strong>
+                            <ul>
+                                <li>"Teacher is famous for his <strong>kindness</strong>."</li>
+                                <li>"I always miss my <strong>childhood</strong>."</li>
+                                <li>"People die due to <strong>hunger</strong>."</li>
+                                <li>"Awarded for his <strong>bravery</strong>."</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pronoun" class="section-content">
+            <div class="card">
+                <h2>Pronouns (11 Types) </h2>
+                <div class="grid-3">
+                    <div class="example-box">
+                        <strong>1. Personal</strong><br>
+                        I, We, You, He, She, It<br>
+                        <em>"He is a good boy."</em>
+                    </div>
+                    <div class="example-box">
+                        <strong>2. Possessive</strong><br>
+                        Mine, Hers, His, Yours<br>
+                        <em>"This pen is mine."</em>
+                    </div>
+                    <div class="example-box">
+                        <strong>3. Emphatic</strong><br>
+                        Myself, Himself, Yourself, Themself<br>
+                        <em>"I did this work myself."</em>
+                    </div>
+                    <div class="example-box">
+                        <strong>4. Reflexive</strong><br>
+                        Myself, Himself, Yourself, Themself<br>
+                        <em>"She herself manages all this."</em>
+                    </div>
+                    <div class="example-box">
+                        <strong>5. Intensive</strong><br>
+                        Myself, Himself, Yourself, Themself<br>
+                        <em>"I myself done this work."</em>
+                    </div>
+
+                    <div class="example-box">
+                        <strong>6. Interrogative</strong><br>
+                        Who? What? Which?<br>
+                        <em>"Who are you?"</em>
+                    </div>
+                    <div class="example-box">
+                        <strong>7. Relative</strong><br>
+                        Who, What, Which<br>
+                        <em>"The boy who won the match."</em>
+                    </div>
+                    <div class="example-box">
+                        <strong>8. Demonstrative</strong><br>
+                        This, That, These<br>
+                        <em>"These are rotten mangoes."</em>
+                    </div>
+                    <div class="example-box">
+                        <strong>9. Indefinite</strong><br>
+                        Some, Any, Many<br>
+                        <em>"Give me something to eat."</em>
+                    </div>
+                    <div class="example-box">
+                        <strong>10. Distributive</strong><br>
+                        Each, Either, Neither<br>
+                        <em>"Each one of you learn."</em>
+                    </div>
+                    <div class="example-box">
+                        <strong>11. Reciprocal</strong><br>
+                        Each other, One another<br>
+                        <em>"They help one another."</em>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="adjective" class="section-content">
+            <div class="card">
+                <h2>Adjectives </h2>
+                <table class="pos-table">
+                    <tr><td><strong>Quality</strong></td><td>"Baby has <strong>Soft</strong> skin." / "It's a <strong>Sunny</strong> day." / "Tastes <strong>Spicy</strong>."</td></tr>
+                    <tr><td><strong>Quantity</strong></td><td>"I ate <strong>less</strong> rice." / "He has <strong>more</strong> intelligence."</td></tr>
+                    <tr><td><strong>Number</strong></td><td>"There are <strong>five</strong> mangoes." / "I came <strong>first</strong>."</td></tr>
+                    <tr><td><strong>Demonstrative</strong></td><td>"<strong>This</strong> dress looks good." / "<strong>These</strong> puppies are cute."</td></tr>
+                    <tr><td><strong>Interrogative</strong></td><td>"<strong>Which</strong> book do you want?" / "<strong>What</strong> car is this?"</td></tr>
+                    <tr><td><strong>Emphasising</strong></td><td>"I saw it with my <strong>own</strong> eyes."</td></tr>
+                    <tr><td><strong>Exclamatory</strong></td><td>"<strong>What</strong> an amazing place!"</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div id="verb_aux" class="section-content">
+            <div class="card">
+                <h2>Primary Auxiliary Verbs </h2>
+                
+                <h3>1. Do Verb (Do, Did, Does) </h3>
+                <div class="grid-2">
+                    <div class="example-box">
+                        <strong>Present (Do/Does)</strong>
+                        <ul>
+                            <li>"Do you eat rice?" - "No, I don't."</li>
+                            <li>"Do you go to university?" - "Yes, I go."</li>
+                            <li>"Does she play well?" - "She plays well."</li>
+                            <li>"Does it eat fish?" - "Yes, it eats fish."</li>
+                            <li>"Does the Sun shine?" - "Yes, it shines."</li>
+                        </ul>
+                    </div>
+                    <div class="example-box">
+                        <strong>Past (Did)</strong>
+                        <ul>
+                            <li>"Did you know him?" - "No, I didn't."</li>
+                            <li>"Did you eat beef?" - "No, I didn't."</li>
+                            <li>"Did they visit there?" - "No, they didn't."</li>
+                            <li>"Did Sumon do research?" - "Yes, he did."</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="example-box">
+                    <strong>Doing (Continuous)</strong><br>
+                    "I am doing my job perfectly." / "She is not doing her job." / "We are doing the right things."
+                </div>
+
+                <h3>2. Have Verb (Perfect Tense) </h3>
+                <table class="pos-table">
+                    <thead><tr><th>Tense</th><th>Examples</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Present</strong></td><td>"I have eaten rice." / "He has completed his task." / "They haven't finished."</td></tr>
+                        <tr><td><strong>Past</strong></td><td>"I had eaten rice." / "You had played football."</td></tr>
+                        <tr><td><strong>Future</strong></td><td>"He will have completed his task." / "We will have dancing on the floor."</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="verb_modal" class="section-content">
+            <div class="card">
+                <h2>Modals & Advanced Usage </h2>
+                
+                <h3>1. Can & Could </h3>
+                <div class="grid-2">
+                    <div class="example-box">
+                        <strong>Can (Ability/Permission)</strong>
+                        <ul>
+                            <li>"I can beat you."</li>
+                            <li>"Can you close the door?"</li>
+                            <li>"It can rain today." (Possibility)</li>
+                        </ul>
+                    </div>
+                    <div class="example-box">
+                        <strong>Could (Past/Polite)</strong>
+                        <ul>
+                            <li>"Could you close the window?" (Polite)</li>
+                            <li>"When I was young, I could run." (Past)</li>
+                            <li>"If I were a bird, I could fly." (Imaginary)</li>
+                            <span class="bn-text">যদি আমি পাখি হতাম, আমি উড়তাম।</span>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>2. Should (Advice)</h3>
+                <div class="grid-3">
+                    <div class="example-box">
+                        <strong>Should (উচিৎ)</strong>
+                        <p>"You should work hard."</p>
+                    </div>
+                    <div class="example-box">
+                        <strong>Should be (হওয়া উচিৎ)</strong>
+                        <p>"You should be a good boy."</p>
+                        <span class="bn-text">তোমার ভালো ছেলে হওয়া উচিৎ।</span>
+                    </div>
+                    <div class="example-box">
+                        <strong>Should have (উচিৎ ছিল)</strong>
+                        <p>"I should have eaten rice."</p>
+                        <span class="bn-text">আমার ভাত খাওয়া উচিৎ ছিল।</span>
+                    </div>
+                </div>
+
+                <h3>3. Would (The All-Rounder) </h3>
+                <div class="grid-2">
+                    <div class="example-box">
+                        <strong>Conditional (যদি...)</strong>
+                        <p>"If I were rich, I would help."</p>
+                        <span class="bn-text">যদি আমি ধনী হতাম, সাহায্য করতাম।</span>
+                        <p>"If I won the lottery, I would travel."</p>
+                    </div>
+                    <div class="example-box">
+                        <strong>Past Habit (করতাম)</strong>
+                        <p>"In childhood, we would have played cricket."</p>
+                        <span class="bn-text">ছোটবেলায় আমরা ক্রিকেট খেলতাম।</span>
+                    </div>
+                    <div class="example-box">
+                        <strong>Polite Request (Mind)</strong>
+                        <p>"Would you mind calling me?"</p>
+                        <span class="bn-text">আমাকে কল করলে তুমি কিছু মনে করবে?</span>
+                    </div>
+                    <div class="example-box">
+                        <strong>Become (হয়ে যেত)</strong>
+                        <p>"Robin would have been a project manager."</p>
+                        <span class="bn-text">রবিন এতোদিনে প্রজেক্ট ম্যানেজার হয়ে যেত।</span>
+                    </div>
+                </div>
+
+                <h3>4.Will (Future)</h3>
+                <ul>
+                    <li><strong>Will:</strong> "It will rain tomorrow." (হবে)</li>
+                    <li><strong>Will be:</strong> "It will be raining tomorrow." (হতে থাকবে)</li>
+                    <li><strong>Will have:</strong> "I will have finished my food." (হয়ে যাবে)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="others" class="section-content">
+            <div class="card">
+                <h2>Other Parts of Speech </h2>
+                <div class="grid-2">
+                    <div class="example-box">
+                        <h4>Adverb</h4>
+                        <p><em>Modifies Verb/Adj</em></p>
+                        <ul>
+                            <li>"He can run <strong>faster</strong>."</li>
+                            <li>"A <strong>very</strong> nice jar."</li>
+                            <li>"Running <strong>smoothly</strong>."</li>
+                        </ul>
+                    </div>
+                    <div class="example-box">
+                        <h4>Preposition</h4>
+                        <p><em>Position/Relation</em></p>
+                        <ul>
+                            <li>"The plane flies <strong>above</strong> my head."</li>
+                            <li>"Kept <strong>on</strong> the table."</li>
+                        </ul>
+                    </div>
+                    <div class="example-box">
+                        <h4>Conjunction</h4>
+                        <p><em>Connectors</em></p>
+                        <ul>
+                            <li>"You <strong>and</strong> I."</li>
+                            <li>"Fell <strong>and</strong> broke."</li>
+                        </ul>
+                    </div>
+                    <div class="example-box">
+                        <h4>Interjection</h4>
+                        <p><em>Emotion</em></p>
+                        <ul>
+                            <li>"<strong>Wow!</strong> I got the ticket."</li>
+                            <li>"<strong>Damn!</strong> How did it happen?"</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="examModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeExam()">&times;</span>
+            <div id="quizContent">
+                <p id="progressText" style="text-align:right; font-size:0.9rem; color:#9ca3af;">Q 1/30</p>
+                <div id="questionText" style="font-size:1.3rem; font-weight:bold; margin-bottom:20px; min-height:80px; display:flex; align-items:center; justify-content:center;">Loading...</div>
+                <div id="optionsContainer"></div>
+            </div>
+            <div id="resultContent" style="display:none;">
+                <div style="font-size:3rem; margin-bottom:10px;">🏆</div>
+                <h2>Test Completed!</h2>
+                <p id="finalScore" style="font-size:1.5rem; font-weight:bold; color:var(--accent);">0/30</p>
+                <p>Great job practicing your Grammar basics.</p>
+                <button class="test-launch-btn" onclick="restartExam()">Take Another Exam</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- LARGE QUESTION POOL (Based on PDF Content) ---
+        const questionPool = [
+            // Nouns
+            { q: "Which is a Proper Noun?", o: ["Boy", "Chattogram", "City", "Team"], a: 1 },
+            { q: "Identify the Collective Noun:", o: ["Sunflower", "Zoo", "Tiger", "Animal"], a: 1 },
+            { q: "Cow ____ is good for health. (Material Noun)", o: ["Milk", "Water", "Tea", "Petrol"], a: 0 },
+            { q: "'Kindness' is which type of noun?", o: ["Common", "Proper", "Abstract", "Material"], a: 2 },
+            { q: "'The table is made of wood.' - Wood is:", o: ["Material Noun", "Abstract Noun", "Proper Noun", "Collective Noun"], a: 0 },
+            { q: "What is the collective noun for 'Sheep'?", o: ["Group", "Herd", "Mob", "Team"], a: 1 },
+            { q: "'Petrol price is up.' - Petrol is:", o: ["Material", "Abstract", "Common", "Proper"], a: 0 },
+            
+            // Pronouns
+            { q: "'He is a good boy.' - He is:", o: ["Personal Pronoun", "Possessive", "Reflexive", "Relative"], a: 0 },
+            { q: "'This pen is mine.' - Mine is:", o: ["Personal", "Possessive", "Emphatic", "Indefinite"], a: 1 },
+            { q: "'I did this work myself.' - Myself is:", o: ["Emphatic", "Reciprocal", "Relative", "Demonstrative"], a: 0 },
+            { q: "'Who are you?' - Who is:", o: ["Relative", "Interrogative", "Indefinite", "Personal"], a: 1 },
+            { q: "'These are the rotten mangoes.' - These is:", o: ["Demonstrative", "Distributive", "Reciprocal", "Relative"], a: 0 },
+            { q: "'Each one of you learn English.' - Each is:", o: ["Distributive", "Indefinite", "Reflexive", "Intensive"], a: 0 },
+            { q: "'They help one another.' - One another is:", o: ["Reciprocal", "Reflexive", "Personal", "Possessive"], a: 0 },
+            
+            // Adjectives
+            { q: "'Baby has Soft skin.' - Soft is Adjective of:", o: ["Quality", "Quantity", "Number", "Demonstration"], a: 0 },
+            { q: "'I ate less rice.' - Less indicates:", o: ["Quality", "Quantity", "Number", "Exclamation"], a: 1 },
+            { q: "'There are five mangoes.' - Five is:", o: ["Number", "Quality", "Demonstrative", "Noun"], a: 0 },
+            { q: "'This dress looks good.' - This is:", o: ["Demonstrative", "Interrogative", "Quality", "Number"], a: 0 },
+            { q: "'I saw it with my own eyes.' - Own is:", o: ["Emphasising", "Exclamatory", "Quality", "Verb"], a: 0 },
+            
+            // Verbs - Basic
+            { q: "What is the V2 form of 'Eat'?", o: ["Eat", "Ate", "Eaten", "Eating"], a: 1 },
+            { q: "Which is a Transitive Verb sentence?", o: ["I love my Mother.", "Birds fly.", "The moon shines.", "He goes."], a: 0 },
+            { q: "'Birds fly in the sky.' - Fly is:", o: ["Transitive", "Intransitive", "Modal", "Noun"], a: 1 },
+            { q: "Which is an Auxiliary Verb?", o: ["Run", "Is", "Eat", "Read"], a: 1 },
+            { q: "Which is a Modal Verb?", o: ["Am", "Was", "Can", "Has"], a: 2 },
+            
+            // Do/Have/Did
+            { q: "'Did you eat beef?' - Answer:", o: ["No, I didn't.", "No, I don't.", "No, I haven't.", "No, I won't."], a: 0 },
+            { q: "'Do you know him?' - Answer:", o: ["Yes, I know him.", "Yes, I knew him.", "Yes, I known him.", "Yes, I does."], a: 0 },
+            { q: "'She is ____ her job perfectly.'", o: ["Do", "Did", "Doing", "Done"], a: 2 },
+            { q: "'I have ____ rice.'", o: ["Eat", "Ate", "Eaten", "Eating"], a: 2 },
+            
+            // Modals
+            { q: "'I can beat you.' - Can shows:", o: ["Ability", "Permission", "Possibility", "Request"], a: 0 },
+            { q: "Polite Request: '____ you close the door?'", o: ["Can", "Could", "Should", "Must"], a: 1 },
+            { q: "'You should work hard.' - Should implies:", o: ["Ability", "Advice (Uchit)", "Past Habit", "Future"], a: 1 },
+            { q: "'I should have eaten rice.' means:", o: ["আমার ভাত খাওয়া উচিৎ ছিল", "আমি ভাত খাব", "আমি ভাত খেতে পারি", "আমার ভাত খাওয়া উচিৎ"], a: 0 },
+            { q: "'Would you mind ____ with me?'", o: ["Dance", "Dancing", "Danced", "To Dance"], a: 1 },
+            { q: "'If I were a bird, I ____ fly.'", o: ["Will", "Can", "Could", "Shall"], a: 2 },
+            { q: "'I would be a cricketer.' in Bengali:", o: ["আমি ক্রিকেটার হতাম", "আমি ক্রিকেটার হব", "আমি ক্রিকেটার ছিলাম", "আমি ক্রিকেটার হতে চাই"], a: 0 },
+            { q: "'It would rain tomorrow.' - indicates:", o: ["Certainty", "Possibility", "Ability", "Order"], a: 1 },
+            { q: "'Robin would have been a manager' - Bengali:", o: ["রবিন ম্যানেজার হয়ে যেত", "রবিন ম্যানেজার হবে", "রবিন ম্যানেজার ছিল", "রবিন ম্যানেজার হতে পারে"], a: 0 },
+            
+            // Others
+            { q: "'He can run faster.' - Faster is:", o: ["Adjective", "Adverb", "Verb", "Noun"], a: 1 },
+            { q: "'The plane flies above my head.' - Above is:", o: ["Conjunction", "Preposition", "Adverb", "Adjective"], a: 1 },
+            { q: "'Wow! I got the ticket.' - Wow is:", o: ["Interjection", "Conjunction", "Noun", "Adjective"], a: 0 },
+            { q: "In 'Very nice jar', 'Very' is:", o: ["Adjective", "Adverb", "Noun", "Verb"], a: 1 },
+            { q: "In 'It fell down', 'It' replaces:", o: ["The Table", "The Jar", "The Didi", "The Floor"], a: 1 }
+        ];
+
+        let currentExamQuestions = [];
+        let currentQ = 0;
+        let score = 0;
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.section-content').forEach(content => content.classList.remove('active'));
+            document.querySelector(`[onclick="switchTab('${tabId}')"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function openExam() {
+            // Randomly select 30 questions
+            currentExamQuestions = questionPool.sort(() => 0.5 - Math.random()).slice(0, 30);
+            
+            document.getElementById('examModal').style.display = "flex";
+            currentQ = 0;
+            score = 0;
+            showQuestion();
+            document.getElementById('quizContent').style.display = "block";
+            document.getElementById('resultContent').style.display = "none";
+        }
+
+        function closeExam() { document.getElementById('examModal').style.display = "none"; }
+
+        function showQuestion() {
+            if (currentQ >= currentExamQuestions.length) {
+                showResult();
+                return;
+            }
+            const q = currentExamQuestions[currentQ];
+            document.getElementById('progressText').innerText = `Q ${currentQ + 1}/${currentExamQuestions.length}`;
+            document.getElementById('questionText').innerText = q.q;
+            
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+            
+            const keys = ['A', 'B', 'C', 'D'];
+            q.o.forEach((opt, index) => {
+                const btn = document.createElement('div');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="key-badge">${keys[index]}</span> ${opt}`;
+                btn.onclick = () => checkAnswer(index, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(index, btn) {
+            const q = currentExamQuestions[currentQ];
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.onclick = null);
+
+            if(index === q.a) {
+                btn.classList.add('correct');
+                score++;
+            } else {
+                btn.classList.add('wrong');
+                allBtns[q.a].classList.add('correct');
+            }
+
+            setTimeout(() => {
+                currentQ++;
+                showQuestion();
+            }, 800);
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = "none";
+            document.getElementById('resultContent').style.display = "block";
+            document.getElementById('finalScore').innerText = score + "/" + currentExamQuestions.length;
+        }
+
+        function restartExam() { openExam(); }
+    </script>
+</body>
+</html>

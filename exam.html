@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Grammar Full Assessment (100 Marks)</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --bg: #f3f4f6;
+            --card-bg: #ffffff;
+            --text: #1f2937;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg); color: var(--text); padding-bottom: 100px; }
+
+        /* HEADER & TIMER */
+        header {
+            background: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .timer-box {
+            background: var(--text);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .timer-box.warning { background: var(--error); animation: pulse 1s infinite; }
+
+        /* CONTAINER */
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 15px; }
+
+        /* SECTION STYLES */
+        .exam-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--primary);
+        }
+        .section-title { font-size: 1.5rem; font-weight: 700; color: var(--secondary); margin-bottom: 25px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        
+        /* QUESTION STYLES */
+        .question-block { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px dashed #e5e7eb; }
+        .q-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
+        .q-num { font-weight: bold; color: var(--primary); background: #e0e7ff; padding: 2px 8px; border-radius: 4px; font-size: 0.9rem; }
+        .q-text { font-weight: 600; font-size: 1.1rem; display: block; margin-bottom: 5px; }
+        .q-sub { font-size: 0.95rem; color: #6b7280; font-style: italic; display: block; margin-bottom: 15px; }
+        
+        /* OPTION STYLES */
+        .options-group { display: grid; gap: 10px; }
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            background: #fff;
+        }
+        .option-label:hover { background: #f9fafb; border-color: var(--primary); }
+        .option-label input { margin-right: 12px; transform: scale(1.3); accent-color: var(--primary); }
+
+        /* FOOTER */
+        .exam-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+            z-index: 99;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .submit-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 12px 50px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .submit-btn:hover { transform: scale(1.05); background: #059669; }
+
+        /* RESULT MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            overflow-y: auto;
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background: white;
+            margin: 30px auto;
+            padding: 40px;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 16px;
+            position: relative;
+        }
+        .score-circle {
+            width: 150px; height: 150px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+        }
+        .review-item { margin-bottom: 20px; padding: 20px; border-radius: 10px; border-left: 6px solid #ccc; background: #f9fafb; }
+        .review-item.correct { border-left-color: var(--success); background: #f0fdf4; }
+        .review-item.wrong { border-left-color: var(--error); background: #fef2f2; }
+        .exp-box { margin-top: 10px; font-size: 0.95rem; color: #4b5563; padding-top:10px; border-top:1px solid #e5e7eb; }
+        .exp-label { font-weight: bold; color: var(--secondary); }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div style="font-weight:bold; font-size:1.4rem;">IELTS Grammar Mock Test</div>
+        <div class="timer-box" id="timer">60:00</div>
+    </header>
+
+    <div class="container" id="quizContainer">
+        </div>
+
+    <div class="exam-footer">
+        <button class="submit-btn" onclick="submitExam()">Submit Assessment</button>
+    </div>
+
+    <div id="resultModal" class="modal">
+        <div class="modal-content">
+            <div style="text-align:center; margin-bottom:30px;">
+                <div class="score-circle" id="finalScore">0</div>
+                <h2>Assessment Report</h2>
+                <p id="passFailMsg" style="font-size:1.2rem; font-weight:bold; color:#6b7280;">Passing Score: 70/100</p>
+            </div>
+            
+            <h3 style="border-bottom:2px solid #eee; padding-bottom:10px; margin-bottom:20px;">Mistake Analysis</h3>
+            <div id="reviewContainer"></div>
+            
+            <div style="text-align:center; margin-top:30px;">
+                <button class="submit-btn" style="background:#4b5563;" onclick="location.reload()">Retake Exam</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 100 QUESTION DATABASE ---
+        // Derived strictly from user's uploaded PDFs: Sentence, Part of Speech, Verb, Passive, Narration, Articles, Preposition, Usage.
+        const allQuestions = [
+            // --- PART 1: SENTENCE & SYNTAX (10 Q) ---
+            { q: "'If you give me this book, I will give you 500 taka.' is a:", o: ["Simple Sentence", "Compound Sentence", "Complex Sentence", "Optative Sentence"], a: 2, exp: "Contains a dependent clause 'If...' and an independent clause 'I will...'. [Sentence.pdf]" },
+            { q: "Identify the sentence type: 'Hurrah! I eat rice.'", o: ["Imperative", "Exclamatory", "Assertive", "Interrogative"], a: 1, exp: "Expresses strong emotion (Hurrah!). [Sentence.pdf]" },
+            { q: "Which part is the Subject? 'Here is the train.'", o: ["Here", "The train", "Is", "None"], a: 1, exp: "In inverted sentences starting with 'Here', the subject comes after the verb. [Subject & Predicate.pdf]" },
+            { q: "Identify the Phrase: 'I live in Chattogram.'", o: ["Noun Phrase", "Verb Phrase", "Preposition Phrase", "Adjective Phrase"], a: 2, exp: "Starts with preposition 'in'. [Phrase.pdf]" },
+            { q: "Which is a Compound Sentence?", o: ["I am a good boy.", "I am a good boy and she is a good girl.", "If I am good, she is good.", "Being good is nice."], a: 1, exp: "Joined by coordinating conjunction 'and'. [Sentence.pdf]" },
+            { q: "'The sun rises in the East.' - What type of truth?", o: ["Past Truth", "Universal Truth", "Future Truth", "Conditional"], a: 1, exp: "Universal Truths are always in Present Tense. [Sentence.pdf]" },
+            { q: "'Let me know if you need any help.' - Sentence Structure?", o: ["Simple", "Complex", "Compound", "Fragment"], a: 1, exp: "Contains dependent clause 'if you need...'. [Sentence.pdf]" },
+            { q: "Subject of 'Sit here, don't move.'", o: ["Here", "Sit", "(You)", "Move"], a: 2, exp: "In Imperative sentences, the subject 'You' is hidden. [Subject & Predicate.pdf]" },
+            { q: "'My brother' in 'My brother is flying' is a:", o: ["Noun Phrase", "Verb Phrase", "Adverb Phrase", "Clause"], a: 0, exp: "Acts as the subject/noun. [Phrase.pdf]" },
+            { q: "Identify the Adverb Clause: 'Call me when you need my help.'", o: ["Call me", "When you need my help", "My help", "You need"], a: 1, exp: "Answers 'When?' (Time condition). [Phrase.pdf]" },
+
+            // --- PART 2: PARTS OF SPEECH (15 Q) ---
+            { q: "Identify the Proper Noun:", o: ["City", "Chattogram", "Country", "Boy"], a: 1, exp: "Specific name of a city. [Part of Speech.pdf]" },
+            { q: "Identify the Collective Noun:", o: ["Team", "Player", "Man", "Student"], a: 0, exp: "Represents a group. [Part of Speech.pdf]" },
+            { q: "'Gold' is which type of noun?", o: ["Common", "Proper", "Material", "Abstract"], a: 2, exp: "Material noun (Uncountable). [Part of Speech.pdf]" },
+            { q: "'Kindness' is which type of noun?", o: ["Abstract", "Common", "Material", "Collective"], a: 0, exp: "Cannot be touched, only felt. [Part of Speech.pdf]" },
+            { q: "Pronoun type: 'Each one of you learn English.'", o: ["Personal", "Distributive", "Reciprocal", "Relative"], a: 1, exp: "'Each' distributes the group. [Part of Speech.pdf]" },
+            { q: "'They help one another.' - 'One another' is:", o: ["Reciprocal Pronoun", "Reflexive Pronoun", "Possessive Pronoun", "Personal Pronoun"], a: 0, exp: "Shows mutual action. [Part of Speech.pdf]" },
+            { q: "'This pen is mine.' - 'Mine' is:", o: ["Possessive Pronoun", "Personal Pronoun", "Relative Pronoun", "Adjective"], a: 0, exp: "Shows possession. [Part of Speech.pdf]" },
+            { q: "Adjective type: 'There are five mangoes.'", o: ["Quality", "Quantity", "Number", "Demonstrative"], a: 2, exp: "Exact number. [Part of Speech.pdf]" },
+            { q: "Adjective type: 'This food tastes Spicy.'", o: ["Quality", "Quantity", "Number", "Exclamatory"], a: 0, exp: "Describes the kind/quality. [Part of Speech.pdf]" },
+            { q: "Verb type: 'The moon shines at night.'", o: ["Transitive", "Intransitive", "Modal", "Auxiliary"], a: 1, exp: "No object present. [Verb.pdf]" },
+            { q: "Verb type: 'I love my mother.'", o: ["Intransitive", "Transitive", "Helping", "Modal"], a: 1, exp: "Has object 'Mother'. [Verb.pdf]" },
+            { q: "'He can run faster.' - 'Faster' is:", o: ["Adjective", "Adverb", "Verb", "Noun"], a: 1, exp: "Modifies the verb 'run'. [Part of Speech.pdf]" },
+            { q: "'Wow! I got the ticket.' - 'Wow' is:", o: ["Interjection", "Conjunction", "Preposition", "Adverb"], a: 0, exp: "Expresses sudden emotion. [Part of Speech.pdf]" },
+            { q: "'You and I will be a pair.' - 'And' is:", o: ["Preposition", "Conjunction", "Adverb", "Pronoun"], a: 1, exp: "Connects two words. [Part of Speech.pdf]" },
+            { q: "'The plane flies above my head.' - 'Above' is:", o: ["Adverb", "Conjunction", "Preposition", "Verb"], a: 2, exp: "Shows position relative to noun. [Part of Speech.pdf]" },
+
+            // --- PART 3: VERBS & TENSE (20 Q) ---
+            { q: "V2 form of 'Eat':", o: ["Eaten", "Eating", "Ate", "Eats"], a: 2, exp: "Simple Past form. [Verb.pdf]" },
+            { q: "Which is a Modal Verb?", o: ["Am", "Do", "Can", "Have"], a: 2, exp: "Can, Could, Should etc. are Modals. [Verb.pdf]" },
+            { q: "'I am dancing on the floor.' - Tense?", o: ["Present Indefinite", "Present Continuous", "Past Continuous", "Future Continuous"], a: 1, exp: "Structure: Am/Is/Are + V4. [Verb.pdf]" },
+            { q: "'I have eaten rice.' - Tense?", o: ["Present Perfect", "Past Perfect", "Present Continuous", "Simple Past"], a: 0, exp: "Structure: Have/Has + V3. [Verb.pdf]" },
+            { q: "'He was dancing.' - Tense?", o: ["Present Continuous", "Past Continuous", "Past Perfect", "Simple Past"], a: 1, exp: "Structure: Was/Were + V4. [Verb.pdf]" },
+            { q: "'I will have finished.' - Tense?", o: ["Future Indefinite", "Future Continuous", "Future Perfect", "Present Perfect"], a: 2, exp: "Structure: Will have + V3. [Verb.pdf]" },
+            { q: "'Do you know him?' - Auxiliary Verb?", o: ["Have", "Be", "Do", "Modal"], a: 2, exp: "Do verb used for questions. [Verb.pdf]" },
+            { q: "'She doesn't miss you.' - Tense?", o: ["Present Indefinite", "Past Indefinite", "Present Continuous", "Future Indefinite"], a: 0, exp: "Negative of Present Indefinite uses Does not. [Verb.pdf]" },
+            { q: "'Did you eat beef?' - Tense?", o: ["Present Perfect", "Past Indefinite", "Past Perfect", "Present Indefinite"], a: 1, exp: "Did + V1 indicates Past Indefinite. [Verb.pdf]" },
+            { q: "'We were playing football.' - Auxiliary?", o: ["We", "Playing", "Were", "Football"], a: 2, exp: "Be verb 'Were' is the auxiliary. [Verb.pdf]" },
+            { q: "Finite Verb in 'Abir goes to school':", o: ["Abir", "Goes", "To", "School"], a: 1, exp: "Changes with subject/tense. [Verb.pdf]" },
+            { q: "Non-Finite Verb in 'Ramu doesn't like to go':", o: ["Doesn't", "Like", "To go", "Ramu"], a: 2, exp: "Does not change with tense. [Verb.pdf]" },
+            { q: "'If I were a bird, I ____ fly.' (Imaginary)", o: ["Will", "Can", "Could", "Shall"], a: 2, exp: "Imaginary condition uses 'Could' or 'Would'. [Verb.pdf]" },
+            { q: "'You should be a good boy.' - Meaning?", o: ["তোমার ভালো ছেলে হওয়া উচিৎ", "তুমি ভালো ছেলে", "তুমি ভালো ছেলে হবে", "তুমি ভালো ছেলে ছিলে"], a: 0, exp: "Should be = হওয়া উচিৎ. [Verb.pdf]" },
+            { q: "'I would be a cricketer.' - Bengali?", o: ["আমি ক্রিকেটার হব", "আমি ক্রিকেটার হতাম", "আমি ক্রিকেটার ছিলাম", "আমি ক্রিকেটার হতে চাই"], a: 1, exp: "Would be = হতাম (Past habit/Unreal). [Verb.pdf]" },
+            { q: "'Would you mind ____ calling me?'", o: ["To", "For", "(No preposition)", "Of"], a: 2, exp: "Would you mind + V4 (Gerund) directly. [Verb.pdf]" },
+            { q: "V3 form of 'Read':", o: ["Readed", "Red", "Reading", "Read"], a: 3, exp: "Read (V1) -> Read (V2) -> Read (V3) (Pronounced differently but spelt same). [Verb.pdf]" },
+            { q: "'It will be raining.' - Tense?", o: ["Future Indefinite", "Future Continuous", "Future Perfect", "Present Continuous"], a: 1, exp: "Will be + V4. [Verb.pdf]" },
+            { q: "'I had eaten rice.' - Tense?", o: ["Past Perfect", "Present Perfect", "Past Indefinite", "Past Continuous"], a: 0, exp: "Had + V3. [Verb.pdf]" },
+            { q: "'Does she play well?' - Statement form:", o: ["She play well.", "She plays well.", "She played well.", "She playing well."], a: 1, exp: "3rd Person Singular adds s/es. [Sentence.pdf]" },
+
+            // --- PART 4: VOICE CHANGE (10 Q) ---
+            { q: "Passive: 'Football is played here.' - Tense?", o: ["Present Simple", "Present Continuous", "Past Simple", "Future Simple"], a: 0, exp: "Is + V3 = Present Simple Passive. [Passive_Voice.pdf]" },
+            { q: "Passive: 'Football is being played here.' - Tense?", o: ["Present Simple", "Present Continuous", "Past Continuous", "Future Continuous"], a: 1, exp: "Is + Being + V3 = Present Continuous Passive. [Passive_Voice.pdf]" },
+            { q: "Passive: 'Football has been played here.' - Tense?", o: ["Present Perfect", "Past Perfect", "Present Simple", "Past Simple"], a: 0, exp: "Has been + V3 = Present Perfect Passive. [Passive_Voice.pdf]" },
+            { q: "'We used to be taught.' - Bengali?", o: ["আমরা পড়াতাম", "আমাদেরকে পড়ানো হতো", "আমরা পড়ছি", "আমাদেরকে পড়ানো হবে"], a: 1, exp: "Used to be + V3 = Past Habitual Passive. [Passive_Voice.pdf]" },
+            { q: "'Result will be announced today.' - Structure?", o: ["S+will+V1", "S+will be+V3", "S+will be+V4", "S+are+V3"], a: 1, exp: "Future Simple Passive. [Passive_Voice.pdf]" },
+            { q: "'He was sent.' - Active equivalent idea?", o: ["Someone sent him.", "He sent someone.", "He is sending.", "He was sending."], a: 0, exp: "Past Simple Passive. [Passive_Voice.pdf]" },
+            { q: "'Rooms are being cleaned.' - 'Being' indicates:", o: ["Future", "Continuous Action", "Completed Action", "Habit"], a: 1, exp: "Being indicates continuous aspect. [Passive_Voice.pdf]" },
+            { q: "'They were informed.' - Tense?", o: ["Past Simple", "Past Continuous", "Present Perfect", "Present Simple"], a: 0, exp: "Were + V3 = Past Simple Passive. [Passive_Voice.pdf]" },
+            { q: "'Will result be announced today?' - Sentence type?", o: ["Imperative", "Assertive", "Interrogative Passive", "Exclamatory"], a: 2, exp: "Question form of Passive. [Passive_Voice.pdf]" },
+            { q: "'Dogs are fed here daily.' - Verb?", o: ["fed", "are fed", "feed", "feeding"], a: 1, exp: "Passive verb phrase. [Passive_Voice.pdf]" },
+
+            // --- PART 5: NARRATION (10 Q) ---
+            { q: "Direct: 'I love my parents.' -> Indirect: He said that...", o: ["he loved his parents", "he loves his parents", "I loved my parents", "he loving his parents"], a: 0, exp: "Present Indefinite -> Past Indefinite. [Narration.pdf]" },
+            { q: "Direct: Bhaskar says, 'I do not love Mistu.' -> Indirect: Bhaskar says...", o: ["he did not love", "he does not love", "he had not loved", "he do not love"], a: 1, exp: "Reporting verb 'Says' (Present) -> No Tense Change. [Narration.pdf]" },
+            { q: "Direct: 'Are you going to college?' -> Indirect: She asked...", o: ["that if I was going", "if I was going", "that I was going", "if you are going"], a: 1, exp: "Interrogative uses 'Asked' and 'If'. [Narration.pdf]" },
+            { q: "Direct: 'What are you doing now?' -> Indirect: Asked what I was doing ____.", o: ["now", "then", "later", "before"], a: 1, exp: "'Now' becomes 'Then'. [Narration.pdf]" },
+            { q: "'Tomorrow' changes to:", o: ["The previous day", "The next day", "That day", "Today"], a: 1, exp: "Standard narration rule. [Narration.pdf]" },
+            { q: "Direct: 'We do not eat chicken.' -> Indirect: They told that...", o: ["they did not eat chicken", "we do not eat chicken", "they do not eat chicken", "they had not eaten"], a: 0, exp: "Present -> Past. 'We' -> 'They'. [Narration.pdf]" },
+            { q: "Direct: 'I may go to Kolkata.' -> Indirect: He told me he ____ go.", o: ["may", "might", "will", "can"], a: 1, exp: "'May' becomes 'Might'. [Narration.pdf]" },
+            { q: "Direct: 'Children were plucking flowers.' (Past Cont) -> Indirect: Children ____ plucking.", o: ["were", "had been", "have been", "are"], a: 1, exp: "Past Cont -> Past Perfect Cont. [Narration.pdf]" },
+            { q: "Direct: 'This' becomes:", o: ["That", "Those", "It", "These"], a: 0, exp: "Standard rule. [Narration.pdf]" },
+            { q: "Direct: 'I will come.' -> Indirect: He said he ____ come.", o: ["will", "would", "should", "could"], a: 1, exp: "'Will' becomes 'Would'. [Narration.pdf]" },
+
+            // --- PART 6: ARTICLES (10 Q) ---
+            { q: "____ Lamborghini", o: ["A", "An", "The", "None"], a: 0, exp: "Consonant sound. [Articles.pdf]" },
+            { q: "____ apple", o: ["A", "An", "The", "None"], a: 1, exp: "Vowel sound. [Articles.pdf]" },
+            { q: "____ university", o: ["A", "An", "The", "None"], a: 0, exp: "Starts with 'Yu' (Consonant sound). [Articles.pdf]" },
+            { q: "____ honest man", o: ["A", "An", "The", "None"], a: 1, exp: "Silent 'H' -> Vowel sound 'O'. [Articles.pdf]" },
+            { q: "____ M.B.B.S", o: ["A", "An", "The", "None"], a: 1, exp: "Starts with 'Em' (Vowel sound). [Articles.pdf]" },
+            { q: "____ moon", o: ["A", "An", "The", "None"], a: 2, exp: "Unique creation. [Articles.pdf]" },
+            { q: "I read ____ Quran.", o: ["A", "An", "The", "None"], a: 2, exp: "Holy book. [Articles.pdf]" },
+            { q: "He likes ____ Shakespeare.", o: ["The", "A", "An", "No Article"], a: 3, exp: "Proper Noun (Person). [Articles.pdf]" },
+            { q: "____ Gold is precious.", o: ["The", "A", "An", "No Article"], a: 3, exp: "Material Noun (General sense). [Articles.pdf]" },
+            { q: "____ 21st of February", o: ["A", "An", "The", "None"], a: 2, exp: "Specific date/event. [Articles.pdf]" },
+
+            // --- PART 7: PREPOSITIONS (10 Q) ---
+            { q: "The wall clock is ____ the image.", o: ["above", "on", "in", "under"], a: 0, exp: "Higher level (vertical). [Preposition.pdf]" },
+            { q: "The boy sat ____ the tree.", o: ["over", "under", "above", "on"], a: 1, exp: "Directly below. [Preposition.pdf]" },
+            { q: "The man enters ____ the room.", o: ["in", "at", "into", "on"], a: 2, exp: "Motion/Entry. [Preposition.pdf]" },
+            { q: "The baby is ____ the womb.", o: ["inside", "on", "at", "over"], a: 0, exp: "Enclosed deep inside. [Preposition.pdf]" },
+            { q: "The meeting starts ____ 9 pm.", o: ["on", "in", "at", "by"], a: 2, exp: "Exact time point. [Preposition.pdf]" },
+            { q: "I left my purse ____ the table.", o: ["in", "at", "on", "over"], a: 2, exp: "Surface contact. [Preposition.pdf]" },
+            { q: "She lives ____ Paris.", o: ["at", "on", "in", "by"], a: 2, exp: "Enclosed area/City. [Preposition.pdf]" },
+            { q: "She will finish ____ Friday.", o: ["by", "on", "in", "at"], a: 0, exp: "Deadline. [Preposition.pdf]" },
+            { q: "I ordered pizza ____ coke.", o: ["by", "with", "for", "at"], a: 1, exp: "Together/Association. [Preposition.pdf]" },
+            { q: "I can't live ____ you.", o: ["within", "without", "with", "by"], a: 1, exp: "Lack of association. [Preposition.pdf]" },
+
+            // --- PART 8: IMPORTANT USAGE (15 Q) ---
+            { q: "'I am _____ at how fast he learned.'", o: ["amazed", "amazing", "amaze", "amazes"], a: 0, exp: "Feeling (Ed). [Important Usage.pdf]" },
+            { q: "'It's an _____ series.'", o: ["addicted", "addicting", "addict", "addiction"], a: 1, exp: "Causing the feeling (Ing). [Important Usage.pdf]" },
+            { q: "'Will you _____ to go then?'", o: ["need", "needs", "needed", "needing"], a: 0, exp: "Need to structure. [Important Usage.pdf]" },
+            { q: "'Having _____ me, they escaped.'", o: ["see", "saw", "seen", "seeing"], a: 2, exp: "Having + V3. [Important Usage.pdf]" },
+            { q: "'Having _____ the book, I learned.'", o: ["read", "reading", "reads", "red"], a: 0, exp: "Having + V3. [Important Usage.pdf]" },
+            { q: "'My boss _____ me check emails.' (Force/Duty)", o: ["gets", "makes", "lets", "have"], a: 1, exp: "Make = Force/Duty. [Important Usage.pdf]" },
+            { q: "'I _____ him to write the letter.'", o: ["make", "have", "get", "let"], a: 2, exp: "Get + Object + To + Verb. [Important Usage.pdf]" },
+            { q: "'He _____ me read the newspaper.' (Authority)", o: ["has", "gets", "makes", "lets"], a: 0, exp: "Have + Object + Base Verb. [Important Usage.pdf]" },
+            { q: "'I get the car _____.' (Passive Causative)", o: ["clean", "cleaning", "cleaned", "cleans"], a: 2, exp: "Get + Object + V3. [Important Usage.pdf]" },
+            { q: "'Let me _____.'", o: ["go", "to go", "going", "gone"], a: 0, exp: "Let + Object + Base Verb. [Important Usage.pdf]" },
+            { q: "'Will you let me _____ outside?'", o: ["go", "to go", "going", "gone"], a: 0, exp: "Let + Object + Base Verb. [Important Usage.pdf]" },
+            { q: "'I have been learning _____ 4 months.'", o: ["since", "for", "from", "in"], a: 1, exp: "Duration = For. [Important Usage.pdf]" },
+            { q: "'He has been learning _____ January.'", o: ["for", "from", "since", "in"], a: 2, exp: "Point of time = Since. [Important Usage.pdf]" },
+            { q: "'I _____ to Delhi 2 times.' (Experience)", o: ["have been", "was", "had", "did"], a: 0, exp: "Have been to = Visited and returned. [Important Usage.pdf]" },
+            { q: "'Money had been sent _____ they asked.'", o: ["after", "when", "before", "while"], a: 2, exp: "Past Perfect sequence. [Important Usage.pdf]" }
+        ];
+
+        // --- EXAM LOGIC ---
+        let timeRemaining = 3600; // 60 mins
+        const timerElement = document.getElementById('timer');
+        
+        function startTimer() {
+            const countdown = setInterval(() => {
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                
+                if (timeRemaining <= 300) timerElement.classList.add('warning');
+                if (timeRemaining <= 0) {
+                    clearInterval(countdown);
+                    submitExam();
+                }
+                timeRemaining--;
+            }, 1000);
+        }
+
+        function loadQuestions() {
+            const container = document.getElementById('quizContainer');
+            // Divide questions into sections visually
+            const sections = [
+                { title: "Part 1: Sentence & Syntax", start: 0, end: 10 },
+                { title: "Part 2: Parts of Speech", start: 10, end: 25 },
+                { title: "Part 3: Verbs & Tense", start: 25, end: 45 },
+                { title: "Part 4: Voice Change", start: 45, end: 55 },
+                { title: "Part 5: Narration", start: 55, end: 65 },
+                { title: "Part 6: Articles", start: 65, end: 75 },
+                { title: "Part 7: Prepositions", start: 75, end: 85 },
+                { title: "Part 8: Advanced Usage", start: 85, end: 100 }
+            ];
+
+            sections.forEach(sec => {
+                const sectionDiv = document.createElement('div');
+                sectionDiv.className = 'exam-section';
+                sectionDiv.innerHTML = `<div class="section-title">${sec.title}</div>`;
+                
+                for(let i = sec.start; i < sec.end; i++) {
+                    const q = allQuestions[i];
+                    const qBlock = document.createElement('div');
+                    qBlock.className = 'question-block';
+                    qBlock.setAttribute('data-id', i);
+                    
+                    let optionsHTML = '';
+                    q.o.forEach((opt, idx) => {
+                        optionsHTML += `
+                            <label class="option-label">
+                                <input type="radio" name="q${i}" value="${idx}">
+                                ${opt}
+                            </label>
+                        `;
+                    });
+
+                    qBlock.innerHTML = `
+                        <div class="q-header"><span class="q-num">Q${i+1}</span></div>
+                        <span class="q-text">${q.q}</span>
+                        <div class="options-group">${optionsHTML}</div>
+                    `;
+                    sectionDiv.appendChild(qBlock);
+                }
+                container.appendChild(sectionDiv);
+            });
+        }
+
+        function submitExam() {
+            let score = 0;
+            const reviewContainer = document.getElementById('reviewContainer');
+            reviewContainer.innerHTML = '';
+
+            allQuestions.forEach((q, i) => {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                const userVal = selected ? parseInt(selected.value) : -1;
+                
+                const reviewItem = document.createElement('div');
+                reviewItem.className = 'review-item ' + (userVal === q.a ? 'correct' : 'wrong');
+                
+                if (userVal === q.a) score++;
+
+                reviewItem.innerHTML = `
+                    <strong>Q${i+1}: ${userVal === q.a ? "Correct" : "Incorrect"}</strong><br>
+                    ${q.q}<br>
+                    <div style="margin-top:5px;">
+                        <span style="color:${userVal === q.a ? 'green' : 'red'}">Your Answer: ${userVal !== -1 ? q.o[userVal] : 'Skipped'}</span><br>
+                        <span style="color:green; font-weight:bold;">Correct Answer: ${q.o[q.a]}</span>
+                    </div>
+                    <div class="exp-box"><span class="exp-label">Explanation:</span> ${q.exp}</div>
+                `;
+                reviewContainer.appendChild(reviewItem);
+            });
+
+            document.getElementById('finalScore').innerText = score;
+            document.getElementById('passFailMsg').innerText = score >= 70 ? "Status: PASSED (Good Job!)" : "Status: NEEDS IMPROVEMENT";
+            document.getElementById('resultModal').style.display = 'block';
+            window.scrollTo(0,0);
+        }
+
+        // Initialize
+        loadQuestions();
+        startTimer();
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS English Course</title>
+    <style>
+        /* --- VARIABLES & RESET --- */
+        :root {
+            --primary: #2c3e50;    /* Dark Slate */
+            --accent: #e74c3c;     /* Red/Orange for highlights */
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #2d3436;
+            --text-muted: #636e72;
+            --shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
+        body { background-color: var(--bg); color: var(--text); padding-bottom: 50px; }
+
+        /* --- HEADER --- */
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .subtitle { font-size: 1.1rem; opacity: 0.9; }
+
+        /* --- FINAL EXAM BUTTON (NEW) --- */
+        .final-exam-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s, background 0.2s;
+            margin-top: 20px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .final-exam-btn:hover {
+            transform: scale(1.05);
+            background: #c0392b;
+        }
+
+        /* --- LAYOUT --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Responsive Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        /* --- CARD DESIGN --- */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary); /* Default color */
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .card-number {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #b2bec3;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .card-note {
+            font-size: 0.9rem;
+            background: #fff3cd;
+            color: #856404;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            display: inline-block;
+            font-style: italic;
+        }
+
+        .topic-list {
+            list-style: none;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .topic-list li {
+            padding: 6px 0;
+            border-bottom: 1px solid #dfe6e9;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .topic-list li:last-child { border-bottom: none; }
+
+        .topic-list strong { color: var(--text); font-weight: 600; }
+
+        /* --- BUTTON --- */
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+            display: block;
+        }
+
+        .btn:hover { filter: brightness(1.1); }
+
+        /* --- SPECIFIC COLORS --- */
+        .border-blue { border-left-color: #3498db; }
+        .border-green { border-left-color: #27ae60; }
+        .border-purple { border-left-color: #9b59b6; }
+        .border-orange { border-left-color: #e67e22; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>IELTS Grammar Syllabus</h1>
+            <p class="subtitle">Interactive Learning Path based on your curriculum</p>
+            <a href="final_exam.html" class="final-exam-btn">🏆 Take Final Exam (100 Marks)</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div id="courseGrid" class="grid">
+            </div>
+    </div>
+
+    <script>
+        // Data strictly based on the uploaded image structure
+        const syllabusData = [
+            {
+                id: 1,
+                title: "Sentence",
+                link: "sentence.html", // Links to your Sentence Module
+                color: "border-blue",
+                note: "", 
+                content: [
+                    "<strong>Structure:</strong> Simple, Complex, Compound",
+                    "<strong>Types:</strong> Affirmative, Negative, Interrogative",
+                    "Negative-Interrogative",
+                    "Imperative, Exclamatory"
+                ]
+            },
+            {
+                id: 2,
+                title: "Part of Speech",
+                link: "partofspeech.html", // Links to your PoS Module
+                color: "border-green",
+                note: "Comprehensive List",
+                content: [
+                    "Noun, Pronoun, Adjective",
+                    "<strong>Verb:</strong> Finite, Infinite, Modal, Aux., Helping, Action",
+                    "Adverb, Preposition",
+                    "Conjunction, Interjection"
+                ]
+            },
+            {
+                id: 3,
+                title: "Tense",
+                link: "tense.html", // Links to Tense Module
+                color: "border-purple",
+                note: "",
+                content: [
+                    "<strong>Present:</strong> Indefinite, Continuous, Perfect, Perfect Continuous",
+                    "<strong>Past:</strong> (All forms)",
+                    "<strong>Future:</strong> (All forms)"
+                ]
+            },
+            {
+                id: 4,
+                title: "Voice Change",
+                link: "passive.html", // Links to Passive Module
+                color: "border-orange",
+                note: "(Without Subject)",
+                content: [
+                    "Active to Passive conversion",
+                    "Handling implicit subjects",
+                    "Standard transformation rules"
+                ]
+            },
+            {
+                id: 5,
+                title: "Narration",
+                link: "narration.html", // Links to Narration Module
+                color: "border-blue",
+                note: "Ex: Someone says that I will be present",
+                content: [
+                    "Direct to Indirect Speech",
+                    "Reporting Verbs",
+                    "Tense changes in narration"
+                ]
+            },
+            {
+                id: 6,
+                title: "Articles",
+                link: "articles.html", // Links to Articles Module
+                color: "border-green",
+                note: "",
+                content: [
+                    "Definite Article (The)",
+                    "Indefinite Articles (A, An)",
+                    "Omission of Articles"
+                ]
+            },
+            {
+                id: 7,
+                title: "Prepositions",
+                link: "preposition.html", // Links to Preposition Module
+                color: "border-orange",
+                note: "Deep Dive",
+                content: [
+                    "Types of prepositions (place, time, direction)",
+                    "Prepositions of place (in, on, under, above)",
+                    "Prepositions of time (at, on, in)",
+                    "Common prepositional phrases"
+                ]
+            },
+            {
+                id: 8,
+                title: "Important Usage",
+                link: "usage.html", // Links to Usage Module
+                color: "border-purple",
+                note: "IELTS Essentials",
+                content: [
+                    "Adjective vs adjective-ing (amazed / amazing)",
+                    "Need to – questions and usage",
+                    "Having + V3 structure",
+                    "Get / Make / Have usage",
+                    "Let – permission structure",
+                    "Have been / Has been / Had been"
+                ]
+            }
+        ];
+
+        const grid = document.getElementById('courseGrid');
+
+        function renderSyllabus() {
+            grid.innerHTML = syllabusData.map(item => {
+                const noteHtml = item.note ? `<div class="card-note">${item.note}</div>` : '';
+                const listItems = item.content.map(text => `<li>${text}</li>`).join('');
+
+                return `
+                    <div class="card ${item.color}">
+                        <div class="card-number">Module ${item.id}</div>
+                        <h2 class="card-title">${item.title}</h2>
+                        ${noteHtml}
+                        <ul class="topic-list">
+                            ${listItems}
+                        </ul>
+                        <a href="${item.link}" class="btn">Start Module</a>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        renderSyllabus();
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 1: Sentence Mastery</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #f59e0b;
+            --bg: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --success: #10b981;
+            --danger: #ef4444;
+            --purple: #8b5cf6;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-main); line-height: 1.6; padding-bottom: 50px; }
+
+        /* --- HEADER --- */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .back-link { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; display: block; margin-bottom: 10px; }
+        .back-link:hover { text-decoration: underline; color: white; }
+
+        /* --- TEST BUTTON --- */
+        .test-launch-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .test-launch-btn:hover { transform: scale(1.05); background: #d97706; }
+        .test-launch-btn::before { content: "📝"; }
+
+        /* --- LAYOUT --- */
+        .container { max-width: 1000px; margin: -30px auto 0; padding: 0 20px; position: relative; z-index: 10; }
+        
+        /* --- TABS SYSTEM --- */
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; flex-wrap: wrap; }
+        .tab-btn {
+            padding: 12px 20px;
+            background: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            flex: 1;
+            min-width: 120px;
+            max-width: 200px;
+            text-align: center;
+        }
+        .tab-btn.active { background: var(--secondary); color: white; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+
+        /* --- CONTENT SECTIONS --- */
+        .section-content { display: none; animation: fadeIn 0.4s ease; }
+        .section-content.active { display: block; }
+        
+        .card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        h2 { color: var(--primary); margin-bottom: 20px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        h3 { color: var(--secondary); margin: 15px 0 10px; font-size: 1.1rem; }
+
+        /* --- TABLE STYLES --- */
+        .person-table, .data-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .person-table th, .person-table td, .data-table th, .data-table td { border: 1px solid #e5e7eb; padding: 12px; text-align: left; }
+        .person-table th, .data-table th { background-color: #eff6ff; color: var(--primary); }
+        
+        /* --- INTERACTIVE TRANSFORMER --- */
+        .transformer-box {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary);
+        }
+        .control-panel button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 8px;
+            border: 1px solid #d1d5db;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.2s;
+        }
+        .control-panel button:hover { border-color: var(--primary); color: var(--primary); }
+        .control-panel button.active-type { background-color: var(--primary); color: white; border-color: var(--primary); }
+        
+        .display-panel { display: flex; flex-direction: column; justify-content: center; }
+        .example-list { max-height: 400px; overflow-y: auto; padding-right: 10px; }
+        .rule-tag { display: inline-block; background: #dbeafe; color: var(--secondary); padding: 4px 10px; border-radius: 4px; font-size: 0.85rem; }
+
+        /* --- STRUCTURE GRID --- */
+        .structure-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .structure-card { background: #f9fafb; padding: 20px; border-radius: 8px; border: 1px solid #e5e7eb; }
+        .formula { font-family: monospace; background: #e0e7ff; color: var(--primary); padding: 5px; border-radius: 4px; display: block; margin-bottom: 10px; font-size: 0.9rem; }
+        .structure-card ul li { margin-bottom: 8px; line-height: 1.4; }
+
+        /* --- SUB/PRED SPLITTER STYLES --- */
+        .split-box { display: flex; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden; margin-bottom: 15px; background: #fff; }
+        .split-part { flex: 1; padding: 15px; text-align: center; }
+        .sp-sub { background: #eff6ff; border-right: 2px dashed #bfdbfe; }
+        .sp-pred { background: #f0fdf4; }
+        .sp-label { display: block; font-size: 0.75rem; text-transform: uppercase; color: #64748b; margin-bottom: 5px; font-weight: bold; letter-spacing: 0.5px; }
+        .sp-text { font-size: 1.1rem; font-weight: 700; color: #1e293b; }
+
+        /* --- PHRASE VS CLAUSE STYLES --- */
+        .vs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
+        .vs-card { padding: 20px; border-radius: 8px; border: 1px solid #e5e7eb; background: #fafafa; }
+        .vs-card h4 { margin-top: 0; margin-bottom: 10px; color: var(--primary); border-bottom: 2px solid #e5e7eb; padding-bottom: 5px; }
+        .vs-list li { margin-bottom: 8px; color: #4b5563; font-size: 0.95rem; }
+        
+        .phrase-list-item { padding: 10px; border-bottom: 1px solid #f3f4f6; display: flex; justify-content: space-between; align-items: center; }
+        .type-badge { font-size: 0.75rem; padding: 3px 8px; border-radius: 12px; font-weight: bold; }
+        .bg-blue { background: #dbeafe; color: #1e40af; }
+        .bg-green { background: #dcfce7; color: #15803d; }
+        .bg-purple { background: #f3e8ff; color: #7e22ce; }
+        .bg-orange { background: #ffedd5; color: #c2410c; }
+
+        /* --- EXAM MODAL STYLES --- */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 100; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.6); 
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #1f2937; /* Dark theme */
+            color: white;
+            margin: auto; 
+            padding: 30px; 
+            border-radius: 16px; 
+            width: 90%; 
+            max-width: 500px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            text-align: center;
+            position: relative;
+        }
+        .close-btn { position: absolute; top: 15px; right: 20px; color: #aaa; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .close-btn:hover { color: white; }
+        
+        .question-box { margin-bottom: 20px; min-height: 100px; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        .q-tag { background: #374151; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; }
+        .q-text { font-size: 1.3rem; font-weight: 600; line-height: 1.4; }
+        .progress-text { font-size: 0.8rem; color: #9ca3af; margin-bottom: 10px; display:block; text-align:right;}
+        
+        .options-grid { display: grid; gap: 10px; text-align: left; }
+        .option-btn {
+            background: #374151;
+            border: 2px solid transparent;
+            color: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        .option-btn:hover { background: #4b5563; }
+        .option-btn.correct { border-color: #10b981; background: rgba(16, 185, 129, 0.1); }
+        .option-btn.wrong { border-color: #ef4444; background: rgba(239, 68, 68, 0.1); }
+        
+        .key-badge { background: #1f2937; width: 25px; height: 25px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; margin-right: 10px; font-size: 0.8rem; border: 1px solid #6b7280; }
+
+        .result-box { display: none; }
+        .score-circle { width: 100px; height: 100px; border-radius: 50%; border: 8px solid var(--accent); display: flex; justify-content: center; align-items: center; font-size: 2rem; font-weight: bold; margin: 0 auto 20px; }
+
+        /* --- PRO TIP --- */
+        .pro-tip { background-color: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; margin-top: 20px; display: flex; align-items: start; gap: 10px; }
+        .pro-tip::before { content: "💡"; font-size: 1.5rem; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        @media (max-width: 768px) {
+            .transformer-box { grid-template-columns: 1fr; }
+            .split-box { flex-direction: column; }
+            .sp-sub { border-right: none; border-bottom: 2px dashed #bfdbfe; }
+            .vs-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-link">← Back to Dashboard</a>
+        <h1>Module 1: Sentence Mastery</h1>
+        <p>From Basic Functions to Complex Structures</p>
+        <button class="test-launch-btn" onclick="openExam()">Take Test (30 Q)</button>
+    </header>
+
+    <div class="container">
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('basics')">1. The Basics</button>
+            <button class="tab-btn" onclick="switchTab('functional')">2. Functional Types</button>
+            <button class="tab-btn" onclick="switchTab('structural')">3. Structure Analysis</button>
+            <button class="tab-btn" onclick="switchTab('subpred')">4. Subject & Predicate</button>
+            <button class="tab-btn" onclick="switchTab('phrases')">5. Phrase & Clause</button>
+        </div>
+
+        <div id="basics" class="section-content active">
+            <div class="card">
+                <h2>The Foundation: Person & Number</h2>
+                <p>Before building sentences, understand the subject types.</p>
+                <br>
+                <table class="person-table">
+                    <thead>
+                        <tr><th>Person</th><th>Singular</th><th>Plural</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>1st</strong></td><td>I</td><td>We</td></tr>
+                        <tr><td><strong>2nd</strong></td><td>You</td><td>You</td></tr>
+                        <tr><td><strong>3rd</strong></td><td>He, She, It (X)</td><td>They</td></tr>
+                    </tbody>
+                </table>
+                <div class="pro-tip">
+                    <span><strong>Note:</strong> 3rd Person Singular (He/She) often changes the verb form (e.g., "Play" becomes "Plays").</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="functional" class="section-content">
+            <div class="card">
+                <h2>Sentence Function Laboratory</h2>
+                <p>Click the buttons below to see examples.</p>
+                <div class="transformer-box">
+                    <div class="control-panel">
+                        <button class="active-type" onclick="updateFunction('affirmative')">Affirmative</button>
+                        <button onclick="updateFunction('negative')">Negative</button>
+                        <button onclick="updateFunction('interrogative')">Interrogative</button>
+                        <button onclick="updateFunction('neg_interrogative')">Neg. Interrogative</button>
+                        <button onclick="updateFunction('imperative')">Imperative</button>
+                        <button onclick="updateFunction('exclamatory')">Exclamatory</button>
+                    </div>
+                    <div class="display-panel" id="displayPanel"></div>
+                </div>
+                <div class="pro-tip">
+                    <span><strong>Universal Truth Rule:</strong> "Universal Truth will always be in the present tense."<br><em>Ex: The beautiful, shiny sun rises in the East.</em></span>
+                </div>
+            </div>
+        </div>
+
+        <div id="structural" class="section-content">
+            <div class="card">
+                <h2>Structural Analysis</h2>
+                <div class="structure-grid">
+                    <div class="structure-card">
+                        <h3 style="color:var(--success)">Simple</h3>
+                        <span class="formula">Subject + Verb + Object</span>
+                        <ul style="padding-left:20px; font-size:0.9rem;">
+                            <li><em>I am a good boy.</em></li>
+                            <li><em>The leg of the chair are broken.</em></li>
+                            <li><em>They were confused.</em></li>
+                            <li><em>I have a Laptop.</em></li>
+                            <li><em>The Money was taken.</em></li>
+                            <li><em>The wall is painted.</em></li>
+                            <li><em>She likes coffee.</em></li>
+                            <li><em>We finished the work.</em></li>
+                            <li><em>The baby is sleeping.</em></li>
+                            <li><em>He opened the door.</em></li>
+                        </ul>
+                    </div>
+                    <div class="structure-card">
+                        <h3 style="color:var(--accent)">Compound</h3>
+                        <span class="formula">Ind. Clause + <strong>Conjunction</strong> + Ind. Clause</span>
+                        <ul style="padding-left:20px; font-size:0.9rem;">
+                            <li><em>I am a good boy, <strong>and</strong> she is a good girl.</em></li>
+                            <li><em>It could rain today, <strong>so</strong> I took the umbrella.</em></li>
+                            <li><em>You can use the card, <strong>or</strong> You can use the cash.</em></li>
+                            <li><em>I tried to lift the briefcase, <strong>but</strong> it was too heavy.</em></li>
+                            <li><em>He wanted to play, <strong>but</strong> he had homework.</em></li>
+                            <li><em>She cooked dinner, <strong>and</strong> he washed the dishes.</em></li>
+                            <li><em>The shop was closed, <strong>so</strong> we returned home.</em></li>
+                            <li><em>You must hurry, <strong>or</strong> you will miss the train.</em></li>
+                        </ul>
+                    </div>
+                    <div class="structure-card">
+                        <h3 style="color:var(--primary)">Complex</h3>
+                        <span class="formula">Ind. Clause + <strong>Dep. Clause</strong></span>
+                        <ul style="padding-left:20px; font-size:0.9rem;">
+                            <li><em><strong>If</strong> you give me this book, I will give you 500 taka.</em></li>
+                            <li><em>Let me know <strong>if</strong> you need any help.</em></li>
+                            <li><em><strong>When</strong> I reached home yesterday, Everyone was sleeping.</em></li>
+                            <li><em>In spite of asking him so many times, He didn't help me.</em></li>
+                            <li><em><strong>Because</strong> it was raining, we stayed indoors.</em></li>
+                            <li><em>I will call you <strong>after</strong> I finish my work.</em></li>
+                            <li><em><strong>Although</strong> he was tired, he continued working.</em></li>
+                            <li><em>She believes <strong>that</strong> hard work brings success.</em></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="subpred" class="section-content">
+            <div class="card">
+                <h2>Subject & Predicate</h2>
+                <p style="margin-bottom:20px">Every complete sentence has a <strong>Doer</strong> (Subject) and <strong>Information</strong> (Predicate).</p>
+                
+                <div class="split-box">
+                    <div class="split-part sp-sub">
+                        <span class="sp-label">Subject</span>
+                        <div class="sp-text">Osmania University</div>
+                    </div>
+                    <div class="split-part sp-pred">
+                        <span class="sp-label">Predicate</span>
+                        <div class="sp-text">is situated in Hyderabad.</div>
+                    </div>
+                </div>
+
+                <div class="split-box">
+                    <div class="split-part sp-sub">
+                        <span class="sp-label">Subject</span>
+                        <div class="sp-text">Edison</div>
+                    </div>
+                    <div class="split-part sp-pred">
+                        <span class="sp-label">Predicate</span>
+                        <div class="sp-text">invented the electric bulb.</div>
+                    </div>
+                </div>
+
+                <div class="split-box">
+                    <div class="split-part sp-sub">
+                        <span class="sp-label">Subject</span>
+                        <div class="sp-text">The Labrador</div>
+                    </div>
+                    <div class="split-part sp-pred">
+                        <span class="sp-label">Predicate</span>
+                        <div class="sp-text">is the best family-friendly dog.</div>
+                    </div>
+                </div>
+
+                <div class="split-box">
+                    <div class="split-part sp-sub">
+                        <span class="sp-label">Subject</span>
+                        <div class="sp-text">Kids</div>
+                    </div>
+                    <div class="split-part sp-pred">
+                        <span class="sp-label">Predicate</span>
+                        <div class="sp-text">were playing in the field.</div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top:30px; border-bottom:1px solid #eee; padding-bottom:5px;">⚠️ Tricky Cases</h3>
+                <div class="structure-grid">
+                    <div class="structure-card" style="border-left:4px solid var(--accent)">
+                        <h4>Imperative Sentences</h4>
+                        <p>The subject is often hidden.</p>
+                        <p><em>"Sit here."</em> = <strong>(You)</strong> Sit here.</p>
+                        <p><em>"Could you please give me a glass of water?"</em></p>
+                    </div>
+                    <div class="structure-card" style="border-left:4px solid var(--purple)">
+                        <h4>Inverted Sentences</h4>
+                        <p>The subject comes after the verb.</p>
+                        <p><em>"Here is the train."</em></p>
+                        <p><small>Subject = <strong>The Train</strong></small></p>
+                        <p><em>"There is the manager."</em></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="phrases" class="section-content">
+            <div class="card">
+                <h2>Phrases vs. Clauses</h2>
+                
+                <div class="vs-grid">
+                    <div class="vs-card">
+                        <h4>Phrase</h4>
+                        <ul class="vs-list">
+                            <li>❌ No Subject + Verb Combination</li>
+                            <li>❌ No Independent Meaning</li>
+                            <li>✅ Part of a sentence</li>
+                        </ul>
+                    </div>
+                    <div class="vs-card" style="background:#fdfeff">
+                        <h4>Clause</h4>
+                        <ul class="vs-list">
+                            <li>✅ Has Subject + Verb Combination</li>
+                            <li>✅ Can be Independent (Sentence)</li>
+                            <li>✅ Or Dependent (Needs help)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Phrase Analysis Examples</h3>
+                <div style="border:1px solid #e5e7eb; border-radius:8px; overflow:hidden;">
+                    <div class="phrase-list-item">
+                        <span><strong>My Brother</strong> is flying...</span>
+                        <span class="type-badge bg-blue">Noun Phrase</span>
+                    </div>
+                    <div class="phrase-list-item">
+                        <span>I live <strong>in Chattogram</strong></span>
+                        <span class="type-badge bg-green">Preposition Phrase</span>
+                    </div>
+                    <div class="phrase-list-item">
+                        <span>I have <strong>a small boat</strong></span>
+                        <span class="type-badge bg-purple">Adjective Phrase</span>
+                    </div>
+                    <div class="phrase-list-item">
+                        <span>He worked <strong>so hard</strong></span>
+                        <span class="type-badge bg-orange">Adverb Phrase</span>
+                    </div>
+                    <div class="phrase-list-item">
+                        <span>The cat is jumping <strong>over the wall</strong></span>
+                        <span class="type-badge bg-green">Preposition Phrase</span>
+                    </div>
+                    <div class="phrase-list-item">
+                        <span>It was <strong>a wonderful day</strong></span>
+                        <span class="type-badge bg-purple">Adjective Phrase</span>
+                    </div>
+                    <div class="phrase-list-item">
+                        <span><strong>Cheeta</strong> is the fastest animal</span>
+                        <span class="type-badge bg-blue">Noun Phrase</span>
+                    </div>
+                </div>
+
+                <div class="pro-tip">
+                    <span><strong>Clause Identification Trick:</strong><br>
+                    • Noun Clause answers <strong>"What?"</strong> (Ex: "We can do <em>whatever we want</em>")<br>
+                    • Adverb Clause answers <strong>"When/Why?"</strong> (Ex: "When we went to the Zoo")<br>
+                    • Adjective Clause answers <strong>"Which/Whose?"</strong> (Ex: "People <em>who are lazy</em>")</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="examModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeExam()">&times;</span>
+            
+            <div id="quizContent">
+                <span class="progress-text" id="progressDisplay">Q 1/30</span>
+                <div class="q-tag" id="strategyTag">Identification</div>
+                <div class="question-box">
+                    <div class="q-text" id="questionText">Loading...</div>
+                </div>
+                <div class="options-grid" id="optionsContainer">
+                    </div>
+            </div>
+
+            <div id="resultContent" class="result-box">
+                <div class="score-circle" id="scoreDisplay">0</div>
+                <h2>Test Completed!</h2>
+                <p>Great job practicing your sentence skills.</p>
+                <button class="test-launch-btn" onclick="restartExam()">Try Again</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // --- DATA ---
+        const sentenceData = {
+            affirmative: { title: "Affirmative", rule: "Positive Meanings", examples: ["I eat rice.", "She plays football.", "Bina sings.", "New Delhi is the capital.", "The beautiful, shiny sun rises in the East.", "They play football.", "I love to watch movies."] },
+            negative: { title: "Negative", rule: "Negative Meanings", examples: ["I don't eat rice.", "She doesn't play football.", "Bina doesn't sing.", "New Delhi isn't the capital.", "The beautiful, shiny sun doesn't rise in the East.", "They don't play Football.", "I don't love to watch movies."] },
+            interrogative: { title: "Interrogative", rule: "Aux/Help/Do + Sub + Obj?", examples: ["Do I eat rice?", "What things do you eat?", "Does she play football?", "Does Bina sing?", "What things does Bina do?", "Which side does the sun rise?", "Do they play football?", "What movies do you love to watch?"] },
+            neg_interrogative: { title: "Neg. Interrogative", rule: "Aux/Help + Not + Sub + Obj?", examples: ["Don't I eat rice?", "What things don't you eat?", "Doesn't she play football?", "Doesn't Bina sing?", "Doesn't the sun rise in the East?", "What sport don't they play?", "What movies don't you love to watch?"] },
+            imperative: { title: "Imperative", rule: "Order, Request, Advice", examples: ["Please, eat rice.", "Play football in the afternoon.", "Please sing a song.", "See the Sun in the Morning.", "Watch those movies."] },
+            exclamatory: { title: "Exclamatory", rule: "Strong Emotion!", examples: ["Hurrah! I eat rice.", "Wow! She plays football.", "Wow! Bina Sings.", "Wow! The sun rises in the east.", "Ah! Do I love to watch movies?"] }
+        };
+
+        // --- 30 EXAM QUESTIONS ---
+        const examQuestions = [
+            // --- FUNCTIONAL TYPES (5 Q) ---
+            { type: "Identification", text: "'Hurrah! We won the match.' is which type?", options: ["Imperative", "Exclamatory", "Optative", "Affirmative"], correct: 1 },
+            { type: "Identification", text: "'Please sit down.' is which type?", options: ["Imperative", "Exclamatory", "Interrogative", "Negative"], correct: 0 },
+            { type: "Identification", text: "'Do you like coffee?' is which type?", options: ["Affirmative", "Exclamatory", "Interrogative", "Imperative"], correct: 2 },
+            { type: "Identification", text: "'I do not play cricket.' is which type?", options: ["Negative", "Affirmative", "Imperative", "Simple"], correct: 0 },
+            { type: "Identification", text: "'The sun rises in the East.' is which type?", options: ["Interrogative", "Exclamatory", "Affirmative", "Imperative"], correct: 2 },
+
+            // --- SUBJECT & PREDICATE (5 Q) ---
+            { type: "Sub & Pred", text: "Identify the Subject: 'Sit here.'", options: ["Here", "Sit", "(You)", "None"], correct: 2 },
+            { type: "Sub & Pred", text: "Identify the Subject: 'Here comes the bus.'", options: ["Here", "The bus", "Comes", "Here comes"], correct: 1 },
+            { type: "Sub & Pred", text: "Identify the Predicate: 'Edison invented the bulb.'", options: ["Edison", "Bulb", "invented the bulb", "invented"], correct: 2 },
+            { type: "Sub & Pred", text: "Identify the Subject: 'My brother is tall.'", options: ["My", "Brother", "My brother", "Tall"], correct: 2 },
+            { type: "Sub & Pred", text: "Identify the Subject: 'There is the manager.'", options: ["There", "Is", "The manager", "Manager"], correct: 2 },
+
+            // --- STRUCTURE (5 Q) ---
+            { type: "Structure", text: "'I am a boy.' is:", options: ["Simple", "Compound", "Complex", "Fragment"], correct: 0 },
+            { type: "Structure", text: "'I am a boy and she is a girl.' is:", options: ["Simple", "Compound", "Complex", "Mixed"], correct: 1 },
+            { type: "Structure", text: "'If you come, I will go.' is:", options: ["Simple", "Compound", "Complex", "Inverted"], correct: 2 },
+            { type: "Structure", text: "'He is poor but honest.' is:", options: ["Simple", "Compound", "Complex", "Exclamatory"], correct: 1 },
+            { type: "Structure", text: "'When it rains, we sleep.' is:", options: ["Simple", "Compound", "Complex", "Imperative"], correct: 2 },
+
+            // --- TRANSFORMATION (5 Q) ---
+            { type: "Transformation", text: "Negative of: 'She plays.'", options: ["She do not play.", "She doesn't plays.", "She doesn't play.", "She not play."], correct: 2 },
+            { type: "Transformation", text: "Interrogative of: 'I eat rice.'", options: ["Do I eat rice?", "Does I eat rice?", "Am I eat rice?", "Did I eat rice?"], correct: 0 },
+            { type: "Transformation", text: "Negative of: 'They play.'", options: ["They doesn't play.", "They not play.", "They don't play.", "They don't plays."], correct: 2 },
+            { type: "Transformation", text: "Interrogative of: 'He works hard.'", options: ["Do he work hard?", "Does he works hard?", "Does he work hard?", "Is he work hard?"], correct: 2 },
+            { type: "Transformation", text: "Imperative form meaning 'Do not move':", options: ["You move not.", "Don't move.", "Not move.", "Move not."], correct: 1 },
+
+            // --- PHRASES & CLAUSES (5 Q) ---
+            { type: "Phrase/Clause", text: "'in the sky' is a:", options: ["Clause", "Phrase", "Sentence", "Subject"], correct: 1 },
+            { type: "Phrase/Clause", text: "'because he is ill' is a:", options: ["Phrase", "Clause", "Simple Sentence", "Noun"], correct: 1 },
+            { type: "Phrase/Clause", text: "'A red kite' is which phrase?", options: ["Verb Phrase", "Adjective Phrase", "Adverb Phrase", "Noun Phrase"], correct: 1 }, // Technically usually NP but adjectival in function in sentence examples provided earlier
+            { type: "Phrase/Clause", text: "'I know where he lives.' 'where he lives' is:", options: ["Noun Clause", "Adjective Clause", "Adverb Clause", "Phrase"], correct: 0 },
+            { type: "Phrase/Clause", text: "'The man who is tall.' 'who is tall' is:", options: ["Noun Clause", "Adjective Clause", "Adverb Clause", "Phrase"], correct: 1 },
+
+            // --- PERSON/VERB BASICS (5 Q) ---
+            { type: "Gap Fill", text: "He ____ football. (Present Indefinite)", options: ["play", "playing", "plays", "played"], correct: 2 },
+            { type: "Gap Fill", text: "They ____ football. (Present Indefinite)", options: ["plays", "play", "playing", "played"], correct: 1 },
+            { type: "Gap Fill", text: "Universal truths are always in ____ tense.", options: ["Past", "Future", "Present", "Perfect"], correct: 2 },
+            { type: "Gap Fill", text: "Does she ____?", options: ["sing", "sings", "sang", "singing"], correct: 0 },
+            { type: "Gap Fill", text: "I ____ not go.", options: ["does", "has", "do", "is"], correct: 2 }
+        ];
+
+        let currentQ = 0;
+        let score = 0;
+
+        // --- FUNCTIONS ---
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.section-content').forEach(content => content.classList.remove('active'));
+            document.querySelector(`[onclick="switchTab('${tabId}')"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function updateFunction(type) {
+            const data = sentenceData[type];
+            const panel = document.getElementById('displayPanel');
+            const buttons = document.querySelectorAll('.control-panel button');
+
+            buttons.forEach(btn => btn.classList.remove('active-type'));
+            document.querySelector(`[onclick="updateFunction('${type}')"]`).classList.add('active-type');
+
+            let examplesHtml = data.examples.map(ex => `<div style="margin-bottom:8px; border-left:3px solid var(--accent); padding-left:10px;">${ex}</div>`).join('');
+
+            panel.innerHTML = `
+                <div style="animation: fadeIn 0.3s">
+                    <h3 style="margin-top:0">${data.title}</h3>
+                    <span class="rule-tag">${data.rule}</span>
+                    <hr style="margin:15px 0; border:0; border-top:1px solid #eee;">
+                    <div class="example-list">${examplesHtml}</div>
+                </div>
+            `;
+        }
+
+        // --- EXAM LOGIC ---
+        function openExam() {
+            document.getElementById('examModal').style.display = "flex";
+            currentQ = 0;
+            score = 0;
+            showQuestion();
+            document.getElementById('quizContent').style.display = "block";
+            document.getElementById('resultContent').style.display = "none";
+        }
+
+        function closeExam() {
+            document.getElementById('examModal').style.display = "none";
+        }
+
+        function showQuestion() {
+            const q = examQuestions[currentQ];
+            document.getElementById('progressDisplay').innerText = `Q ${currentQ + 1}/${examQuestions.length}`;
+            document.getElementById('strategyTag').innerText = q.type;
+            document.getElementById('questionText').innerText = q.text;
+            
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+            
+            const keys = ['A', 'B', 'C', 'D'];
+            q.options.forEach((opt, index) => {
+                const btn = document.createElement('div');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="key-badge">${keys[index] || ''}</span> ${opt}`;
+                btn.onclick = () => checkAnswer(index, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIndex, btnElement) {
+            const q = examQuestions[currentQ];
+            const allBtns = document.querySelectorAll('.option-btn');
+            
+            // Disable all clicks
+            allBtns.forEach(b => b.onclick = null);
+
+            if (selectedIndex === q.correct) {
+                btnElement.classList.add('correct');
+                score++;
+            } else {
+                btnElement.classList.add('wrong');
+                allBtns[q.correct].classList.add('correct'); // Show right answer
+            }
+
+            setTimeout(() => {
+                currentQ++;
+                if (currentQ < examQuestions.length) {
+                    showQuestion();
+                } else {
+                    showResult();
+                }
+            }, 800);
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = "none";
+            document.getElementById('resultContent').style.display = "block";
+            document.getElementById('scoreDisplay').innerText = score + "/" + examQuestions.length;
+        }
+
+        function restartExam() {
+            openExam();
+        }
+
+        // Initialize
+        updateFunction('affirmative');
+
+    </script>
+</body>
+</html>

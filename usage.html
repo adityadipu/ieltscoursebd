@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 8: Important Usage Mastery</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #f59e0b;
+            --bg: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --success: #10b981;
+            --danger: #ef4444;
+            --purple: #8b5cf6;
+            --teal: #14b8a6;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-main); line-height: 1.6; padding-bottom: 50px; }
+
+        /* --- HEADER --- */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .back-link { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; display: block; margin-bottom: 10px; }
+        .back-link:hover { text-decoration: underline; color: white; }
+
+        /* --- TEST BUTTON --- */
+        .test-launch-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .test-launch-btn:hover { transform: scale(1.05); background: #d97706; }
+
+        /* --- LAYOUT --- */
+        .container { max-width: 1200px; margin: -30px auto 0; padding: 0 20px; position: relative; z-index: 10; }
+        
+        /* --- TABS SYSTEM --- */
+        .tabs { display: flex; gap: 5px; margin-bottom: 20px; justify-content: center; flex-wrap: wrap; }
+        .tab-btn {
+            padding: 10px 15px;
+            background: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+            flex: 1 1 auto;
+            min-width: 120px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        .tab-btn.active { background: var(--secondary); color: white; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+
+        /* --- CARDS --- */
+        .section-content { display: none; animation: fadeIn 0.4s ease; }
+        .section-content.active { display: block; }
+        .card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        
+        h2 { color: var(--primary); margin-bottom: 15px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        h3 { color: var(--secondary); margin: 25px 0 10px; font-size: 1.15rem; font-weight: 700; border-left: 4px solid var(--accent); padding-left: 10px; background: #fffbeb; }
+
+        /* --- EXAMPLE BOXES --- */
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; }
+        .example-card { background: #fafafa; border: 1px solid #e5e7eb; padding: 15px; border-radius: 8px; border-left: 4px solid var(--teal); }
+        .bn-text { color: #059669; font-family: 'Segoe UI', sans-serif; font-size: 0.95rem; display: block; margin-bottom: 5px; }
+        .en-text { color: #333; font-weight: 600; display:block; }
+        
+        .compare-box { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+        .compare-item { flex: 1; background: #f0fdf4; padding: 10px; border-radius: 6px; border: 1px solid #bbf7d0; }
+        .compare-item.bad { background: #fef2f2; border-color: #fecaca; }
+
+        /* --- EXAM MODAL --- */
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
+        .modal-content { background-color: #1f2937; color: white; margin: auto; padding: 30px; border-radius: 16px; width: 95%; max-width: 600px; text-align: center; position: relative; }
+        .close-btn { position: absolute; top: 15px; right: 20px; color: #aaa; font-size: 28px; cursor: pointer; }
+        .option-btn { background: #374151; border: 2px solid transparent; color: white; padding: 12px 15px; border-radius: 8px; cursor: pointer; margin-bottom: 10px; display: flex; align-items: center; text-align: left; transition:0.2s; }
+        .option-btn:hover { background: #4b5563; }
+        .option-btn.correct { border-color: #10b981; background: rgba(16, 185, 129, 0.2); }
+        .option-btn.wrong { border-color: #ef4444; background: rgba(239, 68, 68, 0.2); }
+        .key-badge { background: #1f2937; width: 25px; height: 25px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; margin-right: 10px; font-size: 0.8rem; border: 1px solid #6b7280; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-link">← Back to Dashboard</a>
+        <h1>Module 8: Important Usage</h1>
+        <p>Feelings, Causatives, Needs & Experience </p>
+        <button class="test-launch-btn" onclick="openExam()">Take Exam (30 Q)</button>
+    </header>
+
+    <div class="container">
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('feelings')">1. Feelings (Adjectives)</button>
+            <button class="tab-btn" onclick="switchTab('need')">2. Need to / Having</button>
+            <button class="tab-btn" onclick="switchTab('causative')">3. Causative (Get/Make)</button>
+            <button class="tab-btn" onclick="switchTab('let')">4. Let & Experience</button>
+        </div>
+
+        <div id="feelings" class="section-content active">
+            <div class="card">
+                <h2>Participial Adjectives (Feelings) </h2>
+                <p>Expressing situations vs feelings. (Verb X)</p>
+                
+                <div class="grid-2">
+                    <div class="compare-box">
+                        <div class="compare-item">
+                            <strong>Amazed (Feeling)</strong><br>
+                            "I am amazed at how fast he learned."
+                        </div>
+                        <div class="compare-item bad">
+                            <strong>Amazing (Situation)</strong><br>
+                            "I am happy to hear about her amazing news."
+                        </div>
+                    </div>
+
+                    <div class="compare-box">
+                        <div class="compare-item">
+                            <strong>Worried</strong><br>
+                            "I am worried about her breakup."<br>
+                            "Worried student."
+                        </div>
+                        <div class="compare-item bad">
+                            <strong>Worrying</strong><br>
+                            "The doctor gave us worrying news."
+                        </div>
+                    </div>
+
+                    <div class="compare-box">
+                        <div class="compare-item">
+                            <strong>Frustrated</strong><br>
+                            "I am frustrated with this boring life."
+                        </div>
+                        <div class="compare-item bad">
+                            <strong>Frustrating</strong><br>
+                            "This is a frustrating problem."<br>
+                            "Frustrating homework."
+                        </div>
+                    </div>
+
+                    <div class="compare-box">
+                        <div class="compare-item">
+                            <strong>Surprised</strong><br>
+                            "My 4th year result surprised me."
+                        </div>
+                        <div class="compare-item bad">
+                            <strong>Surprising</strong><br>
+                            "She made a surprising dinner."
+                        </div>
+                    </div>
+
+                    <div class="compare-box">
+                        <div class="compare-item">
+                            <strong>Disappointed</strong><br>
+                            "My English skills disappointed me."<br>
+                            "Disappointed audience."
+                        </div>
+                        <div class="compare-item bad">
+                            <strong>Disappointing</strong><br>
+                            "We had a disappointing experience."
+                        </div>
+                    </div>
+
+                    <div class="compare-box">
+                        <div class="compare-item">
+                            <strong>Addicted</strong><br>
+                            "I am addicted to learning new skills."<br>
+                            "Addicted players."
+                        </div>
+                        <div class="compare-item bad">
+                            <strong>Addicting</strong><br>
+                            "It's an addicting series to watch."<br>
+                            "Addicting gameplay."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="need" class="section-content">
+            <div class="card">
+                <h2>Need to (Necessity) </h2>
+                <div class="example-grid">
+                    <div class="example-card">
+                        <span class="bn-text">তোমার কি এখনই যেতে হবে?</span>
+                        <span class="en-text">"Will you need to go then only?"</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">আমাদের কতদূর হাঁটতে হবে?</span>
+                        <span class="en-text">"How long will I need to walk?"</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">আমায় কি এটাই করতে হবে?</span>
+                        <span class="en-text">"Will I need to do this?"</span>
+                        <span class="en-text">"What will I need to do?"</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">আমাকে আর কতক্ষন অপেক্ষা করতে হবে?</span>
+                        <span class="en-text">"How long will I need to wait?"</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">আমাকে এগুলা কতবার অভ্যাস করতে হবে?</span>
+                        <span class="en-text">"How many times will I need to practice this?"</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">ওকে কি এটা খাওয়াতেই হবে?</span>
+                        <span class="en-text">"Will he need to feed this?"</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">কালকে আমার ইংরেজি কোর্সে ভর্তি হওয়া দরকার।</span>
+                        <span class="en-text">"I need to admit in the English course tomorrow."</span>
+                    </div>
+                </div>
+
+                <h2 style="margin-top:30px;">Having + V3 (After doing...) </h2>
+                <div class="example-grid">
+                    <div class="example-card">
+                        <span class="bn-text">আমাকে দেখে ওরা পালালো।</span>
+                        <span class="en-text">"Having seen me they escaped."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">পুলিশকে দেখে চোরটা দৌড় দিল।</span>
+                        <span class="en-text">"Having seen the police the thief ran away."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">শব্দটা শুনে সবাই দরজার দিকে তাকাল।</span>
+                        <span class="en-text">"Having heard the sound everyone looked at the door."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">বইটা পড়ে আমি অনেক কিছু শিখেছি।</span>
+                        <span class="en-text">"Having read the book I learned a lot."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">শিক্ষককে দেখে ছাত্ররা চুপ করে গিয়েছিল।</span>
+                        <span class="en-text">"Having seen the teacher, students became quiet."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">তোমাদের আসার খবর পেয়ে বাচ্চারা লাফানো শুরু করেছে।</span>
+                        <span class="en-text">"Having gotten news of your arriving kids have started jumping."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">বৃষ্টির খবর পেয়ে আমরা বের হইনি।</span>
+                        <span class="en-text">"Having heard the news about rain I didn't go outside."</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="causative" class="section-content">
+            <div class="card">
+                <h2>Causative Verbs (Get/Make/Have) </h2>
+                <p>Getting work done by others.</p>
+                <ul style="list-style:none; padding:0; background:#fff7ed; padding:10px; border-left:4px solid var(--accent);">
+                    <li><strong>Get:</strong> get + object + to + verb (অনুরোধ/ব্যবস্থা)</li>
+                    <li><strong>Make:</strong> make + object + verb base (জোর করে)</li>
+                    <li><strong>Have:</strong> have + object + verb base (কর্তৃত্ব দিয়ে)</li>
+                </ul>
+
+                <div class="example-grid">
+                    <div class="example-card">
+                        <span class="bn-text">আমার বস আমাকে দিয়ে ইমেইল চেক করায়।</span>
+                        <span class="en-text">"My boss gets me to check the emails."</span>
+                        <span class="en-text">"My boss makes me check the emails."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">আমি ওকে দিয়ে চিঠি লিখাই।</span>
+                        <span class="en-text">"I get him to write the letter."</span>
+                        <span class="en-text">"I get the letters written by him." (Passive)</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">সে আমাকে দিয়ে পত্রিকা পড়ায়।</span>
+                        <span class="en-text">"He has me read the newspaper."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">আমি ওকে দিয়ে জল আনাই।</span>
+                        <span class="en-text">"I get him to bring the water."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">আমি তাকে দিয়ে টেবিল পরিষ্কার করাই।</span>
+                        <span class="en-text">"I have him clean the table."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">আমি ওকে দিয়ে চুল কাটাই।</span>
+                        <span class="en-text">"I get him to cut my hair."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">আমি গাড়িটা ধুইয়ে নিই।</span>
+                        <span class="en-text">"I get the car cleaned."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">আমি ওকে দিয়ে ফাইলটা জমা দিই।</span>
+                        <span class="en-text">"I get him to submit the file."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">আমি ওকে দিয়ে খাবার রান্না করাই।</span>
+                        <span class="en-text">"I get him to cook the food."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">আমি ঘরটা রং করিয়ে নিই।</span>
+                        <span class="en-text">"I get the house painted."</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="let" class="section-content">
+            <div class="card">
+                <h2>Let (Permission) </h2>
+                <p>Let + Object + V1 (No 'to', No 'ing')</p>
+                <div class="example-grid">
+                    <div class="example-card">
+                        <span class="bn-text">আমাকে যেতে দাও।</span>
+                        <span class="en-text">"Let me go."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">আমাকে কথা বলতে দাও।</span>
+                        <span class="en-text">"Let me speak."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">ওদের গাইতে দাও।</span>
+                        <span class="en-text">"Let them sing."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">বাচ্চাদের খেলতে দাও।</span>
+                        <span class="en-text">"Let kids play."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">চলো শুরু করি।</span>
+                        <span class="en-text">"Let's start."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">তুমি কি আমাকে বাইরে যেতে দিবে?</span>
+                        <span class="en-text">"Will you let me go outside?"</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">সে তার কুকুরকে সোফায় ঘুমাতে দিয়েছে।</span>
+                        <span class="en-text">"She's letting her dog sleep on the couch."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">আমার বস আমাকে বাসা থেকে কাজ করার সুযোগ দিয়েছে।</span>
+                        <span class="en-text">"My boss lets me the opportunity to work from home."</span>
+                    </div>
+                </div>
+
+                <h2 style="margin-top:30px;">Have/Had Been (Experience & Duration) </h2>
+                <div class="example-grid">
+                    <div class="example-card">
+                        <span class="bn-text">আমি চার মাস ধরে ইংরেজি শিখছি।</span>
+                        <span class="en-text">"I have been learning English for 4 months."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">সে সকাল থেকে আমাকে ফোন করছে।</span>
+                        <span class="en-text">"She has been calling me since the Morning."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">আমি পাঁচ মাস ধরে জিমে যাচ্ছি না।</span>
+                        <span class="en-text">"I haven't been going to the Gym for five months."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">ওরা জিজ্ঞেস করার আগেই টাকাটা পাঠিয়েছে।</span>
+                        <span class="en-text">"Money had been sent before they asked."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">আমি দিল্লিতে ২ বার গিয়েছিলাম।</span>
+                        <span class="en-text">"I have been to Delhi 2 times."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">রাস্তাটা মেরামত করা হয়েছে।</span>
+                        <span class="en-text">"The Road has been repaired."</span>
+                    </div>
+                    <div class="example-card">
+                        <span class="bn-text">আমরা ২০২০ সাল থেকে এই বাড়িতে থাকছি।</span>
+                        <span class="en-text">"We have been living here since 2020."</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="examModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeExam()">&times;</span>
+            <div id="quizContent">
+                <p id="progressText" style="text-align:right; font-size:0.9rem; color:#9ca3af;">Q 1/30</p>
+                <div id="questionText" style="font-size:1.3rem; font-weight:bold; margin-bottom:20px; min-height:80px; display:flex; align-items:center; justify-content:center;">Loading...</div>
+                <div id="optionsContainer"></div>
+            </div>
+            <div id="resultContent" style="display:none;">
+                <div style="font-size:3rem; margin-bottom:10px;">🏆</div>
+                <h2>Test Completed!</h2>
+                <p id="finalScore" style="font-size:1.5rem; font-weight:bold; color:var(--accent);">0/30</p>
+                <button class="test-launch-btn" onclick="restartExam()">Take Another Exam</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 30 QUESTION POOL (Based on PDF) ---
+        const questionPool = [
+            // Feelings (Adjectives)
+            { q: "'I am _____ at how fast he learned.'", o: ["amazed", "amazing", "amaze", "amazement"], a: 0 },
+            { q: "'It's an _____ series to watch.'", o: ["addicting", "addicted", "addict", "addiction"], a: 0 },
+            { q: "'We had a _____ experience.'", o: ["disappointing", "disappointed", "disappoint", "disappointment"], a: 0 },
+            { q: "'My English skills _____ me.'", o: ["disappointed", "disappointing", "disappoint", "disappoints"], a: 0 },
+            { q: "'This is a _____ problem.'", o: ["frustrating", "frustrated", "frustrate", "frustration"], a: 0 },
+            { q: "'I am _____ with this boring life.'", o: ["frustrated", "frustrating", "frustrate", "frustrates"], a: 0 },
+            { q: "'The doctor gave us _____ news.'", o: ["worrying", "worried", "worry", "worries"], a: 0 },
+
+            // Need to
+            { q: "'Will you need to go then only?' - Bengali?", o: ["তোমার কি এখনই যেতে হবে?", "তুমি কি এখন যাবে?", "তোমার যাওয়া দরকার?", "তুমি যাবে?"], a: 0 },
+            { q: "'How long will I need to wait?' - Bengali?", o: ["আমাকে আর কতক্ষন অপেক্ষা করতে হবে?", "আমি কতক্ষণ অপেক্ষা করব?", "আমার অপেক্ষা করা দরকার?", "আমি অপেক্ষা করছি?"], a: 0 },
+            { q: "'What will I need to do?' - Bengali?", o: ["আমাকে কি এটা করতে হবে?", "আমি কি করব?", "আমার কি করা দরকার?", "আমি কি করছি?"], a: 0 },
+            { q: "'How many times will I need to practice this?' - Bengali?", o: ["আমাকে এগুলা কতবার অভ্যাস করতে হবে?", "আমি কতবার অভ্যাস করব?", "আমার কতবার অভ্যাস করা দরকার?", "আমি কতবার অভ্যাস করছি?"], a: 0 },
+            { q: "'Will I need to sleep now?' - Bengali?", o: ["আমাকে কি এখন ঘুমাতে যেতে হবে?", "আমি কি ঘুমাব?", "আমার ঘুমানো দরকার?", "আমি ঘুমাচ্ছি?"], a: 0 },
+
+            // Having
+            { q: "'Having _____ me they escaped.'", o: ["seen", "saw", "see", "seeing"], a: 0 },
+            { q: "'Having _____ the book I learned a lot.'", o: ["read", "reading", "reads", "reader"], a: 0 },
+            { q: "'Having _____ the news of your arriving, kids started jumping.'", o: ["gotten", "get", "getting", "got"], a: 0 },
+            { q: "'Having _____ the news about rain, I didn't go.'", o: ["heard", "hear", "hearing", "hears"], a: 0 },
+            { q: "'Having _____ the salesman he locked the door.'", o: ["seen", "saw", "see", "seeing"], a: 0 },
+
+            // Causative
+            { q: "'My boss _____ me check the emails.' (Force/Duty)", o: ["makes", "get", "do", "let"], a: 0 },
+            { q: "'I _____ him to write the letter.'", o: ["get", "make", "have", "let"], a: 0 },
+            { q: "'I get him to _____ the food.'", o: ["cook", "cooked", "cooking", "cooks"], a: 0 },
+            { q: "'I get the house _____.' (Passive)", o: ["painted", "paint", "painting", "paints"], a: 0 },
+            { q: "'I get the mobile _____.' (Passive)", o: ["fixed", "fix", "fixing", "fixes"], a: 0 },
+            
+            // Let
+            { q: "'Let me _____.'", o: ["speak", "to speak", "speaking", "speaks"], a: 0 },
+            { q: "'Let kids _____.'", o: ["play", "to play", "playing", "played"], a: 0 },
+            { q: "'Will you let me _____ outside?'", o: ["go", "to go", "going", "gone"], a: 0 },
+            { q: "'She lets me _____ her phone.'", o: ["use", "to use", "using", "used"], a: 0 },
+            { q: "'My boss lets me the _____ to work from home.'", o: ["opportunity", "work", "job", "time"], a: 0 },
+
+            // Have been / Had been
+            { q: "'I have been learning English _____ 4 months.'", o: ["for", "since", "from", "to"], a: 0 },
+            { q: "'Money had been sent _____ they asked.'", o: ["before", "after", "when", "while"], a: 0 },
+            { q: "'I _____ to Delhi 2 times.' (Experience)", o: ["have been", "was", "had", "did"], a: 0 },
+            { q: "'She has been calling me _____ the morning.'", o: ["since", "for", "from", "in"], a: 0 },
+            { q: "'I haven't been going to the Gym _____ five months.'", o: ["for", "since", "from", "in"], a: 0 }
+        ];
+
+        let currentExamQuestions = [];
+        let currentQ = 0;
+        let score = 0;
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.section-content').forEach(content => content.classList.remove('active'));
+            document.querySelector(`[onclick="switchTab('${tabId}')"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function openExam() {
+            currentExamQuestions = questionPool.sort(() => 0.5 - Math.random()).slice(0, 30);
+            document.getElementById('examModal').style.display = "flex";
+            currentQ = 0;
+            score = 0;
+            showQuestion();
+            document.getElementById('quizContent').style.display = "block";
+            document.getElementById('resultContent').style.display = "none";
+        }
+
+        function closeExam() { document.getElementById('examModal').style.display = "none"; }
+
+        function showQuestion() {
+            if (currentQ >= currentExamQuestions.length) {
+                showResult();
+                return;
+            }
+            const q = currentExamQuestions[currentQ];
+            document.getElementById('progressText').innerText = `Q ${currentQ + 1}/${currentExamQuestions.length}`;
+            document.getElementById('questionText').innerText = q.q;
+            
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+            
+            const keys = ['A', 'B', 'C', 'D'];
+            q.o.forEach((opt, index) => {
+                const btn = document.createElement('div');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="key-badge">${keys[index]}</span> ${opt}`;
+                btn.onclick = () => checkAnswer(index, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(index, btn) {
+            const q = currentExamQuestions[currentQ];
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.onclick = null);
+
+            if(index === q.a) {
+                btn.classList.add('correct');
+                score++;
+            } else {
+                btn.classList.add('wrong');
+                allBtns[q.a].classList.add('correct');
+            }
+
+            setTimeout(() => {
+                currentQ++;
+                showQuestion();
+            }, 800);
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = "none";
+            document.getElementById('resultContent').style.display = "block";
+            document.getElementById('finalScore').innerText = score + "/" + currentExamQuestions.length;
+        }
+
+        function restartExam() { openExam(); }
+    </script>
+</body>
+</html>

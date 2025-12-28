@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 6: Articles Mastery</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #f59e0b;
+            --bg: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --success: #10b981;
+            --danger: #ef4444;
+            --purple: #8b5cf6;
+            --teal: #14b8a6;
+            --orange: #f97316;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-main); line-height: 1.6; padding-bottom: 50px; }
+
+        /* --- HEADER --- */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .back-link { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; display: block; margin-bottom: 10px; }
+        .back-link:hover { text-decoration: underline; color: white; }
+
+        /* --- TEST BUTTON --- */
+        .test-launch-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .test-launch-btn:hover { transform: scale(1.05); background: #d97706; }
+
+        /* --- LAYOUT --- */
+        .container { max-width: 1200px; margin: -30px auto 0; padding: 0 20px; position: relative; z-index: 10; }
+        
+        /* --- TABS SYSTEM --- */
+        .tabs { display: flex; gap: 5px; margin-bottom: 20px; justify-content: center; flex-wrap: wrap; }
+        .tab-btn {
+            padding: 10px 15px;
+            background: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+            flex: 1 1 auto;
+            min-width: 120px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        .tab-btn.active { background: var(--secondary); color: white; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+
+        /* --- CARDS --- */
+        .section-content { display: none; animation: fadeIn 0.4s ease; }
+        .section-content.active { display: block; }
+        .card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        
+        h2 { color: var(--primary); margin-bottom: 15px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        h3 { color: var(--secondary); margin: 25px 0 10px; font-size: 1.15rem; font-weight: 700; border-left: 4px solid var(--accent); padding-left: 10px; background: #fffbeb; }
+
+        /* --- TABLES --- */
+        .art-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 0.95rem; }
+        .art-table th, .art-table td { border: 1px solid #e5e7eb; padding: 12px; text-align: left; vertical-align: top; }
+        .art-table th { background-color: #eff6ff; color: var(--primary); }
+        .art-table tr:nth-child(even) { background-color: #f9fafb; }
+
+        /* --- EXAMPLE BOXES --- */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .example-box { background: #f0f9ff; border: 1px solid #bae6fd; padding: 15px; border-radius: 8px; margin-bottom: 10px; }
+        .bn-hint { color: #059669; font-size: 0.85rem; display: block; margin-top: 2px; }
+        
+        .cross-mark { color: #ef4444; font-weight: bold; font-size: 1.2rem; margin-right: 5px; }
+
+        /* --- EXAM MODAL --- */
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
+        .modal-content { background-color: #1f2937; color: white; margin: auto; padding: 30px; border-radius: 16px; width: 95%; max-width: 600px; text-align: center; position: relative; }
+        .close-btn { position: absolute; top: 15px; right: 20px; color: #aaa; font-size: 28px; cursor: pointer; }
+        .option-btn { background: #374151; border: 2px solid transparent; color: white; padding: 12px 15px; border-radius: 8px; cursor: pointer; margin-bottom: 10px; display: flex; align-items: center; text-align: left; transition:0.2s; }
+        .option-btn:hover { background: #4b5563; }
+        .option-btn.correct { border-color: #10b981; background: rgba(16, 185, 129, 0.2); }
+        .option-btn.wrong { border-color: #ef4444; background: rgba(239, 68, 68, 0.2); }
+        .key-badge { background: #1f2937; width: 25px; height: 25px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; margin-right: 10px; font-size: 0.8rem; border: 1px solid #6b7280; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-link">← Back to Dashboard</a>
+        <h1>Module 6: Articles</h1>
+        <p>A, An, The & Zero Article (Omission) </p>
+        <button class="test-launch-btn" onclick="openExam()">Take Exam (30 Q)</button>
+    </header>
+
+    <div class="container">
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('indefinite')">Indefinite (A/An)</button>
+            <button class="tab-btn" onclick="switchTab('definite')">Definite (The)</button>
+            <button class="tab-btn" onclick="switchTab('exceptions')">Exceptions & Sounds</button>
+            <button class="tab-btn" onclick="switchTab('zero')">No Article (Zero)</button>
+        </div>
+
+        <div id="indefinite" class="section-content active">
+            <div class="card">
+                <h2>Indefinite Articles: A / An</h2>
+                <div class="grid-2">
+                    <div>
+                        <h3>Use 'A' (Consonant Sound)</h3>
+                        <p>Used before words starting with a consonant sound.</p>
+                        <div class="example-box">
+                            <ul>
+                                <li>a chair</li>
+                                <li>a Lamborghini</li>
+                                <li>a boy</li>
+                                <li>a dog / a cat / a tiger</li>
+                                <li>a Bangladeshi</li>
+                                <li>a Doctor</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Use 'An' (Vowel Sound) </h3>
+                        <p>Used before words starting with a vowel sound (a, e, i, o, u).</p>
+                        <div class="example-box">
+                            <ul>
+                                <li>an apple</li>
+                                <li>an owl</li>
+                                <li>an orange</li>
+                                <li>an umbrella</li>
+                                <li>an engineer</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="definite" class="section-content">
+            <div class="card">
+                <h2>Definite Article: The</h2>
+                <p>Used for specific items, unique things, or superlatives.</p>
+                
+                <table class="art-table">
+                    <thead><tr><th>Category</th><th>Examples from PDF </th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Unique Creations</strong><br><span class="bn-hint">অতুলনীয়, একক সৃষ্টি</span></td>
+                            <td>the moon, the earth, the sky</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Superlative</strong><br><span class="bn-hint">সেরা/সবচেয়ে</span></td>
+                            <td>the best, the most, the tallest</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dates & Events</strong><br><span class="bn-hint">তারিখ / ঐতিহাসিক ঘটনা</span></td>
+                            <td>the 21st of February<br>the 26th of March<br>the Liberation War<br>the French Revolution</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Directions</strong><br><span class="bn-hint">দিকের নাম</span></td>
+                            <td>the east, the west<br>the north, the south</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Holy Books</strong> (Specific)<br><span class="bn-hint">ধর্মীয় গ্রন্থ</span></td>
+                            <td>I read <strong>the</strong> Quran.<br>He studies <strong>the</strong> Bible.<br>She reads <strong>the</strong> Gita.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Seasons</strong><br><span class="bn-hint">ঋতুর নাম</span></td>
+                            <td>the summer, the winter, the rainy season</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="example-box" style="border-color: #f97316; background: #fff7ed;">
+                    <strong>Note on Books:</strong><br>
+                    "I read <strong>the</strong> Iliad." (Book Name) <br>
+                </div>
+            </div>
+        </div>
+
+        <div id="exceptions" class="section-content">
+            <div class="card">
+                <h2>Sound-Based Exceptions</h2>
+                <p>The choice depends on the <strong>sound</strong>, not just the spelling.</p>
+
+                <div class="grid-2">
+                    <div>
+                        <h3>'A' with 'U' / 'Wa' Sound </h3>
+                        <p>If 'U' sounds like 'You' or 'O' sounds like 'Wa'.</p>
+                        <ul style="list-style:none; padding:0;">
+                            <li class="example-box"><strong>a university</strong> (Sound: You-ni-ver-sity)</li>
+                            <li class="example-box"><strong>a European</strong> (Sound: You-ro-pean)</li>
+                            <li class="example-box"><strong>a once</strong> (Sound: Wa-nce)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>'An' with Silent 'H' </h3>
+                        <p>If 'H' is silent and word starts with vowel sound.</p>
+                        <ul style="list-style:none; padding:0;">
+                            <li class="example-box"><strong>an honest</strong> (Sound: O-nest)</li>
+                            <li class="example-box"><strong>an heir</strong> (Sound: Air)</li>
+                            <li class="example-box"><strong>an hour</strong> (Sound: Ou-r)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Abbreviations</h3>
+                <table class="art-table">
+                    <tr>
+                        <td><strong>Starts with Vowel Sound (An)</strong></td>
+                        <td><strong>Starts with Consonant Sound (A)</strong></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>an M.B.B.S</strong> (Sound: Em)<br>
+                            <strong>an S.S.C</strong> (Sound: Es)
+                        </td>
+                        <td>
+                            <strong>a Ph.D</strong> (Sound: Pi)<br>
+                            <strong>a H.S.C</strong>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div id="zero" class="section-content">
+            <div class="card">
+                <h2>Omission of Article (Zero Article)</h2>
+                <p>Where we do <span class="cross-mark">NOT</span> use A, An, or The.</p>
+
+                <div class="grid-2">
+                    <div class="example-box" style="border-left: 4px solid var(--danger);">
+                        <h3>1. Proper Nouns (People/Authors)</h3>
+                        <p>Do not use 'The' before names of people.</p>
+                        <ul>
+                            <li><span class="cross-mark">×</span> The Shakespeare</li>
+                            <li><span class="code-tag">✔</span> <strong>He likes Shakespeare.</strong></li>
+                            <li><span class="code-tag">✔</span> My name is Aditya.</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-box" style="border-left: 4px solid var(--danger);">
+                        <h3>2. Nations/Languages p>
+                        <ul>
+                            <li><span class="code-tag">✔</span> <strong>Japan</strong> is a beautiful country.</li>
+                            <li><span class="code-tag">✔</span> He speaks <strong>English</strong>.</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-box" style="border-left: 4px solid var(--danger);">
+                        <h3>3. Material Nouns (General) </h3>
+                        <p>No article when talking generally.</p>
+                        <ul>
+                            <li><span class="code-tag">✔</span> <strong>Gold</strong> is a precious metal.</li>
+                            <li><span class="code-tag">✔</span> <strong>Water</strong> is costlier than Petrol.</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-box" style="border-left: 4px solid var(--danger);">
+                        <h3>4. Religious Books (Exception) </h3>
+                        <p>Your syllabus lists these specific examples without 'The':</p>
+                        <ul>
+                            <li><span class="code-tag">✔</span> "I read <strong>Quran</strong>."</li>
+                            <li><span class="code-tag">✔</span> "He studies <strong>Bible</strong>."</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="examModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeExam()">&times;</span>
+            <div id="quizContent">
+                <p id="progressText" style="text-align:right; font-size:0.9rem; color:#9ca3af;">Q 1/30</p>
+                <div id="questionText" style="font-size:1.3rem; font-weight:bold; margin-bottom:20px; min-height:80px; display:flex; align-items:center; justify-content:center;">Loading...</div>
+                <div id="optionsContainer"></div>
+            </div>
+            <div id="resultContent" style="display:none;">
+                <div style="font-size:3rem; margin-bottom:10px;">🏆</div>
+                <h2>Test Completed!</h2>
+                <p id="finalScore" style="font-size:1.5rem; font-weight:bold; color:var(--accent);">0/30</p>
+                <p>Great job practicing Articles!</p>
+                <button class="test-launch-btn" onclick="restartExam()">Take Another Exam</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- EXPANDED 30 QUESTION POOL (Strictly from PDF + Zero Rules) ---
+        const questionPool = [
+            // Basic A (5)
+            { q: "____ chair", o: ["a", "an", "the", "none"], a: 0 },
+            { q: "____ Lamborghini", o: ["an", "a", "the", "none"], a: 1 },
+            { q: "____ boy", o: ["the", "an", "a", "none"], a: 2 },
+            { q: "____ tiger", o: ["a", "an", "the", "none"], a: 0 },
+            { q: "____ Bangladeshi", o: ["an", "a", "the", "none"], a: 1 },
+
+            // Basic An (5)
+            { q: "____ apple", o: ["a", "an", "the", "none"], a: 1 },
+            { q: "____ owl", o: ["an", "a", "the", "none"], a: 0 },
+            { q: "____ orange", o: ["a", "an", "the", "none"], a: 1 },
+            { q: "____ umbrella", o: ["the", "a", "an", "none"], a: 2 },
+            { q: "____ engineer", o: ["a", "an", "the", "none"], a: 1 },
+
+            // Exceptions (A) (5)
+            { q: "____ university", o: ["an", "a", "the", "none"], a: 1 },
+            { q: "____ European", o: ["a", "an", "the", "none"], a: 0 },
+            { q: "____ once", o: ["an", "a", "the", "none"], a: 1 },
+            { q: "____ horse", o: ["a", "an", "the", "none"], a: 0 },
+            { q: "____ hotel", o: ["an", "the", "a", "none"], a: 2 },
+
+            // Exceptions (An) & Abbreviations (5)
+            { q: "____ honest man", o: ["a", "an", "the", "none"], a: 1 },
+            { q: "____ heir", o: ["a", "an", "the", "none"], a: 1 },
+            { q: "____ hour", o: ["an", "a", "the", "none"], a: 0 },
+            { q: "____ M.B.B.S", o: ["a", "an", "the", "none"], a: 1 },
+            { q: "____ S.S.C", o: ["a", "the", "an", "none"], a: 2 },
+
+            // Definite 'The' (5)
+            { q: "____ moon", o: ["a", "an", "the", "none"], a: 2 },
+            { q: "____ tallest building", o: ["a", "an", "the", "none"], a: 2 },
+            { q: "____ Liberation War", o: ["a", "the", "an", "none"], a: 1 },
+            { q: "____ Quran (As per common usage)", o: ["a", "an", "the", "none"], a: 2 },
+            { q: "____ north", o: ["a", "an", "the", "none"], a: 2 },
+
+            // Zero Article & Specifics (5)
+            { q: "I read ____ Iliad.", o: ["a", "an", "the", "none"], a: 2 },
+            { q: "He likes ____ Shakespeare.", o: ["the", "a", "an", "No Article"], a: 3 },
+            { q: "____ 21st of February", o: ["a", "an", "the", "none"], a: 2 },
+            { q: "____ Gold is a precious metal.", o: ["The", "A", "An", "No Article"], a: 3 },
+            { q: "____ Water is costlier than petrol.", o: ["A", "The", "No Article", "An"], a: 2 } 
+        ];
+
+        let currentExamQuestions = [];
+        let currentQ = 0;
+        let score = 0;
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.section-content').forEach(content => content.classList.remove('active'));
+            document.querySelector(`[onclick="switchTab('${tabId}')"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function openExam() {
+            // Shuffle and select 30 questions
+            currentExamQuestions = questionPool.sort(() => 0.5 - Math.random()).slice(0, 30);
+            document.getElementById('examModal').style.display = "flex";
+            currentQ = 0;
+            score = 0;
+            showQuestion();
+            document.getElementById('quizContent').style.display = "block";
+            document.getElementById('resultContent').style.display = "none";
+        }
+
+        function closeExam() { document.getElementById('examModal').style.display = "none"; }
+
+        function showQuestion() {
+            if (currentQ >= currentExamQuestions.length) {
+                showResult();
+                return;
+            }
+            const q = currentExamQuestions[currentQ];
+            document.getElementById('progressText').innerText = `Q ${currentQ + 1}/${currentExamQuestions.length}`;
+            document.getElementById('questionText').innerText = q.q;
+            
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+            
+            const keys = ['A', 'B', 'C', 'D'];
+            q.o.forEach((opt, index) => {
+                const btn = document.createElement('div');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="key-badge">${keys[index]}</span> ${opt}`;
+                btn.onclick = () => checkAnswer(index, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(index, btn) {
+            const q = currentExamQuestions[currentQ];
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.onclick = null);
+
+            if(index === q.a) {
+                btn.classList.add('correct');
+                score++;
+            } else {
+                btn.classList.add('wrong');
+                allBtns[q.a].classList.add('correct');
+            }
+
+            setTimeout(() => {
+                currentQ++;
+                showQuestion();
+            }, 800);
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').style.display = "none";
+            document.getElementById('resultContent').style.display = "block";
+            document.getElementById('finalScore').innerText = score + "/" + currentExamQuestions.length;
+        }
+
+        function restartExam() { openExam(); }
+    </script>
+</body>
+</html>
