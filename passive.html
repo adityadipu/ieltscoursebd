@@ -97,6 +97,25 @@
         .bn-text { color: #059669; font-family: 'Segoe UI', sans-serif; font-size: 0.95rem; display: block; margin-bottom: 5px; }
         .en-text { color: #333; font-weight: 600; display:block; }
 
+        /* --- INTERACTIVE GAMES CSS --- */
+        .game-container { background: #1f2937; color: white; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .game-question { font-size: 1.4rem; font-weight: bold; margin: 15px 0; color: #facc15; min-height: 40px;}
+        .game-options { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top:15px;}
+        .game-btn { background: white; color: #1f2937; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .game-btn:hover { background: #d1d5db; transform: translateY(-2px); }
+
+        /* Flip Cards */
+        .flip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom:20px; }
+        .flip-card { background: white; min-height: 120px; border: 2px solid var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; perspective: 1000px; transition: transform 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); padding: 10px; }
+        .flip-card:hover { transform: translateY(-3px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .flip-content { text-align: center; width: 100%; }
+        .active-side { display: block; color: var(--text-main); }
+        .passive-side { display: none; color: var(--primary); font-weight: bold; animation: fadeIn 0.3s; }
+        .flip-card.flipped .active-side { display: none; }
+        .flip-card.flipped .passive-side { display: block; }
+        .flip-card.flipped { background: #eff6ff; border-color: var(--teal); }
+        .card-label { font-size: 0.75rem; text-transform: uppercase; color: #9ca3af; margin-bottom: 5px; display:block; letter-spacing: 1px;}
+
         /* --- EXAM MODAL --- */
         .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
         .modal-content { background-color: #1f2937; color: white; margin: auto; padding: 30px; border-radius: 16px; width: 95%; max-width: 600px; text-align: center; position: relative; }
@@ -129,6 +148,19 @@
         </div>
 
         <div id="structures" class="section-content active">
+            <!-- GAME 1: Structure Detective -->
+            <div class="game-container">
+                <h3>🕵️ Structure Detective</h3>
+                <p style="font-size:0.9rem; color:#9ca3af; margin-bottom:15px;">Match the Bengali ending to the English Passive structure.</p>
+                <div id="sd-clue" class="game-question">...হচ্ছে (Continuous)</div>
+                <div id="sd-feedback" style="height:20px; font-size:0.9rem; margin-bottom:10px; font-weight:bold;"></div>
+                <div class="game-options">
+                    <button class="game-btn" onclick="checkStructure('simple')">am/is + V3</button>
+                    <button class="game-btn" onclick="checkStructure('cont')">am/is + being + V3</button>
+                    <button class="game-btn" onclick="checkStructure('perfect')">have/has + been + V3</button>
+                </div>
+            </div>
+
             <div class="card">
                 <h2>The 6 Golden Rules</h2>
                 <p>Use this table to identify the correct Passive structure based on the Bengali ending.</p>
@@ -143,9 +175,9 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>হয়</strong> (Simple Present)</td>
+                            <td><strong>হয়</strong> (Simple Present)</td>
                             <td><span class="code-tag">S + am/is/are + V3 + O</span></td>
-                            <td>"Football is played here." (এখানে ফুটবল খেলা হয়)</td>
+                            <td>"Football is played here." (এখানে ফুটবল খেলা হয়)</td>
                         </tr>
                         <tr>
                             <td><strong>হচ্ছে</strong> (Continuous)</td>
@@ -153,14 +185,14 @@
                             <td>"Football is being played here." (খেলা হচ্ছে)</td>
                         </tr>
                         <tr>
-                            <td><strong>হয়েছে</strong> (Perfect)</td>
+                            <td><strong>হয়েছে</strong> (Perfect)</td>
                             <td><span class="code-tag">S + have/has + been + V3</span></td>
-                            <td>"Football has been played here." (খেলা হয়েছে)</td>
+                            <td>"Football has been played here." (খেলা হয়েছে)</td>
                         </tr>
                         <tr>
-                            <td><strong>হয়েছিল</strong> (Simple Past)</td>
+                            <td><strong>হয়েছিল</strong> (Simple Past)</td>
                             <td><span class="code-tag">S + was/were + V3</span></td>
-                            <td>"Football was played here." (খেলা হয়েছিল)</td>
+                            <td>"Football was played here." (খেলা হয়েছিল)</td>
                         </tr>
                         <tr>
                             <td><strong>হচ্ছিল</strong> (Past Cont.)</td>
@@ -179,52 +211,77 @@
 
         <div id="basic" class="section-content">
             <div class="card">
+                <!-- GAME 2: Active to Passive Flippers -->
+                <h2>🔄 Active to Passive Flipper</h2>
+                <p style="margin-bottom:20px;">Click the cards to convert the Active sentence (Doer) to Passive (Object).</p>
+                <div class="flip-grid">
+                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-content">
+                            <span class="active-side"><span class="card-label">Active</span>I play football.</span>
+                            <span class="passive-side"><span class="card-label">Passive</span>Football is played by me.</span>
+                        </div>
+                    </div>
+                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-content">
+                            <span class="active-side"><span class="card-label">Active</span>He sent the letter.</span>
+                            <span class="passive-side"><span class="card-label">Passive</span>The letter was sent.</span>
+                        </div>
+                    </div>
+                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-content">
+                            <span class="active-side"><span class="card-label">Active</span>We will eat rice.</span>
+                            <span class="passive-side"><span class="card-label">Passive</span>Rice will be eaten.</span>
+                        </div>
+                    </div>
+                </div>
+                <hr style="margin: 25px 0; border:0; border-top:1px solid #e5e7eb;">
+
                 <h2>Basic Tense Examples</h2>
                 
-                <h3>Present (হয় / আছে)</h3>
+                <h3>Present (হয় / আছে)</h3>
                 <div class="example-grid">
                     <div class="example-card">
-                        <span class="bn-text">১. এখানে ফুটবল খেলা হয়।</span>
+                        <span class="bn-text">১. এখানে ফুটবল খেলা হয়।</span>
                         <span class="en-text">"Football is played here."</span>
                     </div>
                     <div class="example-card">
-                        <span class="bn-text">২. এখানে ফর্ম জমা নেয়া হয়।</span>
+                        <span class="bn-text">২. এখানে ফর্ম জমা নেয়া হয়।</span>
                         <span class="en-text">"Forms are deposited here."</span>
                     </div>
                     <div class="example-card">
-                        <span class="bn-text">৩. রোজ কুকুরকে খাওয়ানো হয়।</span>
+                        <span class="bn-text">৩. রোজ কুকুরকে খাওয়ানো হয়।</span>
                         <span class="en-text">"Dogs are fed here daily."</span>
                     </div>
                     <div class="example-card">
-                        <span class="bn-text">৪. রোজ ইংরেজি চ্যানেলে মুভি দেখানো হয়।</span>
+                        <span class="bn-text">৪. রোজ ইংরেজি চ্যানেলে মুভি দেখানো হয়।</span>
                         <span class="en-text">"Movies are shown in the English Channel daily."</span>
                     </div>
                     <div class="example-card">
-                        <span class="bn-text">৫. রোজ ইউটিউবে ভিডিও দেখা হয়।</span>
+                        <span class="bn-text">৫. রোজ ইউটিউবে ভিডিও দেখা হয়।</span>
                         <span class="en-text">"Youtube videos are watched daily."</span>
                     </div>
                 </div>
 
-                <h3>Past (হয়েছিল) </h3>
+                <h3>Past (হয়েছিল) </h3>
                 <div class="example-grid">
                     <div class="example-card">
-                        <span class="bn-text">১. এখানে ফুটবল খেলা হয়েছিল।</span>
+                        <span class="bn-text">১. এখানে ফুটবল খেলা হয়েছিল।</span>
                         <span class="en-text">"Football was played here."</span>
                     </div>
                     <div class="example-card">
-                        <span class="bn-text">২. ওকে পাঠানো হয়েছিলো।</span>
+                        <span class="bn-text">২. ওকে পাঠানো হয়েছিলো।</span>
                         <span class="en-text">"He was sent."</span>
                     </div>
                     <div class="example-card">
-                        <span class="bn-text">৩. ওদেরকে জানানো হয়েছিল।</span>
+                        <span class="bn-text">৩. ওদেরকে জানানো হয়েছিল।</span>
                         <span class="en-text">"They were informed."</span>
                     </div>
                     <div class="example-card">
-                        <span class="bn-text">৪. এখানে মানুষদের খাওয়ানো হইয়েছিলো।</span>
+                        <span class="bn-text">৪. এখানে মানুষদের খাওয়ানো হইয়েছিলো।</span>
                         <span class="en-text">"Peoples were fed here."</span>
                     </div>
                     <div class="example-card">
-                        <span class="bn-text">৫. কাপড়গুলো মেশিনে পরিষ্কার করা হয়েছিল।</span>
+                        <span class="bn-text">৫. কাপড়গুলো মেশিনে পরিষ্কার করা হয়েছিল।</span>
                         <span class="en-text">"Clothes were washed in the machine."</span>
                     </div>
                 </div>
@@ -240,7 +297,7 @@
                         <span class="en-text">"Result will be announced today."</span>
                     </div>
                     <div class="example-card">
-                        <span class="bn-text">৩. রোজ সবার বাড়িরকাজ জমা নেওয়া হবে।</span>
+                        <span class="bn-text">৩. রোজ সবার বাড়িরকাজ জমা নেওয়া হবে।</span>
                         <span class="en-text">"Homework will be taken daily."</span>
                     </div>
                     <div class="example-card">
@@ -248,7 +305,7 @@
                         <span class="en-text">"He will be sent."</span>
                     </div>
                     <div class="example-card">
-                        <span class="bn-text">৫. কাপড়গুলো মেশিনে পরিষ্কার করা হবে।</span>
+                        <span class="bn-text">৫. কাপড়গুলো মেশিনে পরিষ্কার করা হবে।</span>
                         <span class="en-text">"Clothes will be washed in the machine."</span>
                     </div>
                 </div>
@@ -257,12 +314,24 @@
 
         <div id="continuous" class="section-content">
             <div class="card">
+                <!-- GAME 3: Being vs Been -->
+                <div class="game-container" style="background:#0f766e;">
+                    <h3>🧠 "Being" vs "Been" Challenge</h3>
+                    <p style="font-size:0.9rem; color:#ccfbf1; margin-bottom:15px;">Complete the passive sentence correctly.</p>
+                    <div id="bb-sentence" class="game-question">"Football is _____ played now."</div>
+                    <div id="bb-feedback" style="height:20px; font-size:0.9rem; margin-bottom:10px; font-weight:bold;"></div>
+                    <div class="game-options">
+                        <button class="game-btn" onclick="checkBB('being')">Being (Continuous)</button>
+                        <button class="game-btn" onclick="checkBB('been')">Been (Perfect)</button>
+                    </div>
+                </div>
+
                 <h2>Continuous & Perfect Actions</h2>
                 
                 <h3>Continuous (হচ্ছে / হচ্ছিল)</h3>
                 <div class="example-grid">
                     <div class="example-card">
-                        <span class="bn-text">১. ইংরেজি পড়ানো হচ্ছিলো।</span>
+                        <span class="bn-text">১. ইংরেজি পড়ানো হচ্ছিলো।</span>
                         <span class="en-text">"English was being taught here."</span>
                     </div>
                     <div class="example-card">
@@ -278,31 +347,31 @@
                         <span class="en-text">"Kids were being taught here."</span>
                     </div>
                     <div class="example-card">
-                        <span class="bn-text">৫. কাপড়গুলো মেশিনে পরিষ্কার করা হচ্ছে।</span>
+                        <span class="bn-text">৫. কাপড়গুলো মেশিনে পরিষ্কার করা হচ্ছে।</span>
                         <span class="en-text">"Clothes are being washed in the machine."</span>
                     </div>
                 </div>
 
-                <h3>Perfect (হয়েছে)</h3>
+                <h3>Perfect (হয়েছে)</h3>
                 <div class="example-grid">
                     <div class="example-card">
-                        <span class="bn-text">১. এখানে ফুটবল খেলা হয়েছে।</span>
+                        <span class="bn-text">১. এখানে ফুটবল খেলা হয়েছে।</span>
                         <span class="en-text">"Football has been played here."</span>
                     </div>
                     <div class="example-card">
-                        <span class="bn-text">২. কাপড়গুলো মেশিনে পরিষ্কার করা হয়েছে।</span>
+                        <span class="bn-text">২. কাপড়গুলো মেশিনে পরিষ্কার করা হয়েছে।</span>
                         <span class="en-text">"Clothes have been washed in the machine."</span>
                     </div>
                     <div class="example-card">
-                        <span class="bn-text">৩. এইখানে মানুষদের খাওয়ানো হয়েছে।</span>
+                        <span class="bn-text">৩. এইখানে মানুষদের খাওয়ানো হয়েছে।</span>
                         <span class="en-text">"Peoples have been fed here daily."</span>
                     </div>
                     <div class="example-card">
-                        <span class="bn-text">৪. ওকে জানানো হয়েছে।</span>
+                        <span class="bn-text">৪. ওকে জানানো হয়েছে।</span>
                         <span class="en-text">"He is informed."</span>
                     </div>
                     <div class="example-card">
-                        <span class="bn-text">৫. এখানে ফর্ম জমা নেয়া হয়েছে।</span>
+                        <span class="bn-text">৫. এখানে ফর্ম জমা নেয়া হয়েছে।</span>
                         <span class="en-text">"Forms have been deposited here."</span>
                     </div>
                 </div>
@@ -316,7 +385,7 @@
                 <h3>"Used to be" (হতো) </h3>
                 <div class="example-grid">
                     <div class="example-card">
-                        <span class="bn-text">১. আমাদেরকে পড়ানো হতো।</span>
+                        <span class="bn-text">১. আমাদেরকে পড়ানো হতো।</span>
                         <span class="en-text">"We used to be taught."</span>
                     </div>
                     <div class="example-card">
@@ -324,15 +393,15 @@
                         <span class="en-text">"They used to be sent there."</span>
                     </div>
                     <div class="example-card">
-                        <span class="bn-text">৩. আমাদেরকে টাকা দেওয়া হত।</span>
+                        <span class="bn-text">৩. আমাদেরকে টাকা দেওয়া হত।</span>
                         <span class="en-text">"We used to be given (money)."</span>
                     </div>
                     <div class="example-card">
-                        <span class="bn-text">৪. আমাদের ইংরেজি পড়ানো হতো নাহ।</span>
+                        <span class="bn-text">৪. আমাদের ইংরেজি পড়ানো হতো নাহ।</span>
                         <span class="en-text">"We didn't use to be taught English."</span>
                     </div>
                     <div class="example-card">
-                        <span class="bn-text">৫. তোমাদের কি পড়ানো হতো নাহ?</span>
+                        <span class="bn-text">৫. তোমাদের কি পড়ানো হতো নাহ?</span>
                         <span class="en-text">"Didn't they use to be taught?"</span>
                     </div>
                 </div>
@@ -344,19 +413,19 @@
                         <span class="en-text">"Will result be announced today?"</span>
                     </div>
                     <div class="example-card">
-                        <span class="bn-text">২. এইখানে কি প্রায়ই মাছ খাওয়া হয়?</span>
+                        <span class="bn-text">২. এইখানে কি প্রায়ই মাছ খাওয়া হয়?</span>
                         <span class="en-text">"Are fishes eaten here often?"</span>
                     </div>
                     <div class="example-card">
-                        <span class="bn-text">৩. ওকে কি জানানো হয়েছে?</span>
+                        <span class="bn-text">৩. ওকে কি জানানো হয়েছে?</span>
                         <span class="en-text">"Is he informed?"</span>
                     </div>
                     <div class="example-card">
-                        <span class="bn-text">৪. কেন এইখানে আইপিএল খেলা দেখানো হয়?</span>
+                        <span class="bn-text">৪. কেন এইখানে আইপিএল খেলা দেখানো হয়?</span>
                         <span class="en-text">"Why is IPL being showed here?"</span>
                     </div>
                     <div class="example-card">
-                        <span class="bn-text">৫. রোজ কি ইউটিউবে ভিডিও দেখা হয়?</span>
+                        <span class="bn-text">৫. রোজ কি ইউটিউবে ভিডিও দেখা হয়?</span>
                         <span class="en-text">"Is youtube videos watched daily?"</span>
                     </div>
                 </div>
@@ -384,42 +453,98 @@
     </div>
 
     <script>
+        // --- INTERACTIVE GAME LOGIC ---
+
+        // Game 1: Structure Detective
+        // Redefining data to match buttons exactly
+        const structLevels = [
+            { clue: "কাজটি করা হচ্ছে (Action is running)", type: "cont" },
+            { clue: "কাজটি করা হয়েছে (Action finished)", type: "perfect" },
+            { clue: "ফুটবল খেলা হয় (Regular habit)", type: "simple" },
+            { clue: "রুম পরিষ্কার করা হচ্ছে", type: "cont" },
+            { clue: "ভাত খাওয়া হয়েছে", type: "perfect" }
+        ];
+        let structIdx = 0;
+
+        function checkStructure(guess) {
+            const current = structLevels[structIdx];
+            const feedback = document.getElementById('sd-feedback');
+            
+            if(guess === current.type) {
+                feedback.innerHTML = `<span style="color:#10b981">✅ Correct!</span>`;
+                setTimeout(() => {
+                    structIdx = (structIdx + 1) % structLevels.length;
+                    document.getElementById('sd-clue').innerText = structLevels[structIdx].clue;
+                    feedback.innerText = "";
+                }, 1000);
+            } else {
+                feedback.innerHTML = `<span style="color:#ef4444">❌ Try again!</span>`;
+            }
+        }
+
+        // Game 3: Being vs Been
+        const bbData = [
+            { text: "Football is ____ played now.", ans: "being" },
+            { text: "The room has ____ cleaned.", ans: "been" },
+            { text: "Work was ____ done yesterday.", ans: "being" }, // Context implies continuous "was being"
+            { text: "He has ____ informed.", ans: "been" },
+            { text: "Rice is ____ eaten.", ans: "being" }
+        ];
+        let bbIdx = 0;
+
+        function checkBB(guess) {
+            const current = bbData[bbIdx];
+            const feedback = document.getElementById('bb-feedback');
+            
+            if(guess === current.ans) {
+                feedback.innerHTML = `<span style="color:#ccfbf1">✅ Correct!</span>`; // Light color for dark bg
+                setTimeout(() => {
+                    bbIdx = (bbIdx + 1) % bbData.length;
+                    document.getElementById('bb-sentence').innerText = `"${bbData[bbIdx].text}"`;
+                    feedback.innerText = "";
+                }, 1000);
+            } else {
+                feedback.innerHTML = `<span style="color:#fca5a5">❌ Try again!</span>`;
+            }
+        }
+
+
         // --- QUESTION POOL (Strictly based on PDF Examples) ---
         const questionPool = [
             // Present Simple
-            { q: "'Football is played here.' - Bengali meaning?", o: ["এখানে ফুটবল খেলা হয়।", "এখানে ফুটবল খেলা হচ্ছে।", "ফুটবল খেলা হবে।", "ফুটবল খেলা হয়েছিল।"], a: 0 },
+            { q: "'Football is played here.' - Bengali meaning?", o: ["এখানে ফুটবল খেলা হয়।", "এখানে ফুটবল খেলা হচ্ছে।", "ফুটবল খেলা হবে।", "ফুটবল খেলা হয়েছিল।"], a: 0 },
             { q: "'Forms are deposited here.' - Tense?", o: ["Present Simple Passive", "Present Continuous", "Past Simple", "Future Simple"], a: 0 },
             { q: "'Dogs are fed here daily.' - Verb form?", o: ["are fed", "were fed", "is feeding", "fed"], a: 0 },
             { q: "'Fishes are eaten here.' - Structure?", o: ["S+am/is/are+V3", "S+was/were+V3", "S+will be+V3", "S+have been+V3"], a: 0 },
             { q: "'Movie is showed in the English Channel daily.' - Time?", o: ["Daily (Present)", "Yesterday (Past)", "Tomorrow (Future)", "Now (Continuous)"], a: 0 },
 
             // Present Continuous
-            { q: "'IPL is being showed here.' - Bengali?", o: ["আইপিএল খেলা দেখা হচ্ছে।", "আইপিএল খেলা দেখা হয়।", "আইপিএল খেলা হবে।", "আইপিএল খেলা হয়েছিল।"], a: 0 },
+            { q: "'IPL is being showed here.' - Bengali?", o: ["আইপিএল খেলা দেখা হচ্ছে।", "আইপিএল খেলা দেখা হয়।", "আইপিএল খেলা হবে।", "আইপিএল খেলা হয়েছিল।"], a: 0 },
             { q: "'Rooms are being cleaned.' - 'Being' indicates:", o: ["Continuous Action", "Completed Action", "Future Action", "Past Habit"], a: 0 },
             { q: "'Football is being played here.' - Tense?", o: ["Present Continuous Passive", "Present Simple", "Past Continuous", "Future"], a: 0 },
             
             // Present Perfect
-            { q: "'Clothes have been washed.' - Bengali?", o: ["কাপড়গুলো পরিষ্কার করা হয়েছে।", "কাপড়গুলো পরিষ্কার করা হয়।", "কাপড়গুলো পরিষ্কার করা হবে।", "কাপড়গুলো পরিষ্কার করা হচ্ছিল।"], a: 0 },
-            { q: "'He is informed.' (PDF example for Perfect context) means:", o: ["ওকে জানানো হয়েছে।", "সে জানে।", "সে জানবে।", "তাকে জানানো হবে।"], a: 0 }, 
+            { q: "'Clothes have been washed.' - Bengali?", o: ["কাপড়গুলো পরিষ্কার করা হয়েছে।", "কাপড়গুলো পরিষ্কার করা হয়।", "কাপড়গুলো পরিষ্কার করা হবে।", "কাপড়গুলো পরিষ্কার করা হচ্ছিল।"], a: 0 },
+            { q: "'He is informed.' (PDF example for Perfect context) means:", o: ["ওকে জানানো হয়েছে।", "সে জানে।", "সে জানবে।", "তাকে জানানো হবে।"], a: 0 }, 
             { q: "'Forms have been deposited here.' - Structure?", o: ["S+have/has+been+V3", "S+was/were+V3", "S+will be+V3", "S+are+V3"], a: 0 },
 
             // Past Simple
-            { q: "'They were informed.' - Bengali?", o: ["ওদেরকে জানানো হয়েছিল", "ওদেরকে জানানো হয়", "ওদেরকে জানানো হবে", "ওরা জানত"], a: 0 },
+            { q: "'They were informed.' - Bengali?", o: ["ওদেরকে জানানো হয়েছিল", "ওদেরকে জানানো হয়", "ওদেরকে জানানো হবে", "ওরা জানত"], a: 0 },
             { q: "'He was sent.' - Tense?", o: ["Past Simple Passive", "Present Simple", "Future Simple", "Past Continuous"], a: 0 },
             { q: "'Clothes were washed in the machine.' - Structure?", o: ["S+was/were+V3", "S+am/is/are+V3", "S+will be+V3", "S+had been+V3"], a: 0 },
 
             // Past Continuous
-            { q: "'English were being taught here.' - Bengali?", o: ["ইংরেজি পড়ানো হচ্ছিলো।", "ইংরেজি পড়ানো হয়।", "ইংরেজি পড়ানো হবে।", "ইংরেজি পড়ানো হয়েছিল।"], a: 0 },
+            { q: "'English were being taught here.' - Bengali?", o: ["ইংরেজি পড়ানো হচ্ছিলো।", "ইংরেজি পড়ানো হয়।", "ইংরেজি পড়ানো হবে।", "ইংরেজি পড়ানো হয়েছিল।"], a: 0 },
             { q: "'He was being beaten.' - Tense?", o: ["Past Continuous Passive", "Present Continuous", "Past Simple", "Future Continuous"], a: 0 },
             { q: "'The fan were being switched on.' - Action state?", o: ["Happening in past", "Happening now", "Will happen", "Completed"], a: 0 },
 
             // Future
-            { q: "'Result will be anounced today.' - Bengali?", o: ["আজকে রেজাল্ট ঘোষনা করা হবে।", "রেজাল্ট ঘোষনা করা হয়।", "রেজাল্ট ঘোষনা করা হচ্ছে।", "রেজাল্ট ঘোষনা করা হয়েছিল।"], a: 0 },
+            { q: "'Result will be anounced today.' - Bengali?", o: ["আজকে রেজাল্ট ঘোষনা করা হবে।", "রেজাল্ট ঘোষনা করা হয়।", "রেজাল্ট ঘোষনা করা হচ্ছে।", "রেজাল্ট ঘোষনা করা হয়েছিল।"], a: 0 },
             { q: "'He will be sent.' - Structure?", o: ["S+will be+V3", "S+is+V3", "S+was+V3", "S+has been+V3"], a: 0 },
             { q: "'Road will be prepared.' - Time?", o: ["Future", "Present", "Past", "Continuous"], a: 0 },
             
             // "Used to be" / Modals / Questions
-            { q: "'We used to be taught.' - Meaning?", o: ["আমাদেরকে পড়ানো হতো।", "আমরা পড়াতাম।", "আমাদেরকে পড়ানো হবে।", "আমাদেরকে পড়ানো হচ্ছে।"], a: 0 },
+            { q: "'We used to be taught.' - Meaning?", o: ["আমাদেরকে পড়ানো হতো।", "আমরা পড়াতাম।", "আমাদেরকে পড়ানো হবে।", "আমাদেরকে পড়ানো হচ্ছে।"], a: 0 },
             { q: "'They used to be sent there.' - Tense/Mood?", o: ["Past Habit (Passive)", "Present Simple", "Future", "Continuous"], a: 0 },
             { q: "'Will result be anounced today?' - Sentence Type?", o: ["Interrogative Passive", "Imperative", "Negative", "Affirmative"], a: 0 },
             { q: "'Where will result be anounced?' - Start word?", o: ["Where", "When", "Why", "How"], a: 0 },
@@ -499,4 +624,5 @@
         function restartExam() { openExam(); }
     </script>
 </body>
+
 </html>
