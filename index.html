@@ -14,6 +14,7 @@
             --text: #2d3436;
             --text-muted: #636e72;
             --shadow: 0 10px 20px rgba(0,0,0,0.05);
+            --blue-light: #e3f2fd; /* New for Daily Section */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
@@ -34,7 +35,7 @@
         h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
         .subtitle { font-size: 1.1rem; opacity: 0.9; }
 
-        /* --- FINAL EXAM BUTTON (NEW) --- */
+        /* --- FINAL EXAM BUTTON --- */
         .final-exam-btn {
             background: var(--accent);
             color: white;
@@ -62,20 +63,88 @@
             padding: 0 20px;
         }
 
-        /* Responsive Grid */
+        /* --- NEW: DAILY SECTION STYLES --- */
+        .daily-section {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            overflow: hidden;
+            border-top: 5px solid var(--accent);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .daily-header {
+            background: var(--blue-light);
+            padding: 15px 25px;
+            color: var(--primary);
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .daily-content {
+            padding: 25px;
+            display: grid;
+            grid-template-columns: 2fr 1fr; /* Word section wider than line section */
+            gap: 30px;
+        }
+
+        .daily-words h3, .daily-line h3 {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        .word-item {
+            margin-bottom: 15px;
+        }
+
+        .word-item strong {
+            color: var(--primary);
+            font-size: 1.2rem;
+            display: block;
+        }
+
+        .word-item span {
+            color: var(--text);
+            font-style: italic;
+        }
+
+        .line-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent);
+            line-height: 1.5;
+            background: #fff5f5;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .daily-content { grid-template-columns: 1fr; } 
+        }
+
+        /* --- GRID & CARDS --- */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 25px;
         }
 
-        /* --- CARD DESIGN --- */
         .card {
             background: var(--card-bg);
             border-radius: 12px;
             padding: 25px;
             box-shadow: var(--shadow);
-            border-left: 5px solid var(--primary); /* Default color */
+            border-left: 5px solid var(--primary);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             display: flex;
             flex-direction: column;
@@ -127,10 +196,8 @@
         }
 
         .topic-list li:last-child { border-bottom: none; }
-
         .topic-list strong { color: var(--text); font-weight: 600; }
 
-        /* --- BUTTON --- */
         .btn {
             background-color: var(--primary);
             color: white;
@@ -148,7 +215,6 @@
 
         .btn:hover { filter: brightness(1.1); }
 
-        /* --- SPECIFIC COLORS --- */
         .border-blue { border-left-color: #3498db; }
         .border-green { border-left-color: #27ae60; }
         .border-purple { border-left-color: #9b59b6; }
@@ -167,114 +233,125 @@
     </header>
 
     <div class="container">
+        
+        <div id="dailySection" class="daily-section">
+            </div>
+
         <div id="courseGrid" class="grid">
             </div>
     </div>
 
     <script>
-        // Data strictly based on the uploaded image structure
+        // --- 1. DAILY VOCABULARY & LINE DATA ---
+        // You can add up to 500 items here. 
+        const dailyDatabase = [
+            {
+                w1: "Ameliorate", m1: "To make something bad or unsatisfactory better.",
+                w2: "Detrimental", m2: "Tending to cause harm.",
+                line: "Success is the sum of small efforts, repeated day in and day out."
+            },
+            {
+                w1: "Elucidate", m1: "To make something clear; explain.",
+                w2: "Inevitable", m2: "Certain to happen; unavoidable.",
+                line: "Practice makes a man perfect, but perfect practice makes a master."
+            },
+            {
+                w1: "Meticulous", m1: "Showing great attention to detail; very careful.",
+                w2: "Pragmatic", m2: "Dealing with things sensibly and realistically.",
+                line: "To improve is to change; to be perfect is to change often."
+            },
+            {
+                w1: "Ubiquitous", m1: "Present, appearing, or found everywhere.",
+                w2: "Ephemeral", m2: "Lasting for a very short time.",
+                line: "Don't watch the clock; do what it does. Keep going."
+            },
+            // ... COPY AND PASTE THIS STRUCTURE TO ADD MORE DAYS ...
+            {
+                w1: "Acquiesce", m1: "Accept something reluctantly but without protest.",
+                w2: "Cacophony", m2: "A harsh, discordant mixture of sounds.",
+                line: "The only way to do great work is to love what you do."
+            }
+        ];
+
+        // --- 2. DAILY LOGIC (Selects content based on Date) ---
+        function renderDailyDose() {
+            const container = document.getElementById('dailySection');
+            const date = new Date();
+            
+            // Format Date for display (e.g., "Monday, Oct 24")
+            const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+            const dateString = date.toLocaleDateString('en-US', options);
+
+            // Calculate "Day of the Year" (1-366) to pick an index
+            const start = new Date(date.getFullYear(), 0, 0);
+            const diff = date - start;
+            const oneDay = 1000 * 60 * 60 * 24;
+            const dayOfYear = Math.floor(diff / oneDay);
+            
+            // Cycle through the database (if day 500, and we have 5 items, it takes index 0)
+            const index = dayOfYear % dailyDatabase.length; 
+            const todayContent = dailyDatabase[index];
+
+            container.innerHTML = `
+                <div class="daily-header">
+                    <span>⚡ Daily IELTS Dose</span>
+                    <span>📅 ${dateString}</span>
+                </div>
+                <div class="daily-content">
+                    <div class="daily-words">
+                        <h3>Today's Vocabulary</h3>
+                        <div class="word-item">
+                            <strong>1. ${todayContent.w1}</strong>
+                            <span>"${todayContent.m1}"</span>
+                        </div>
+                        <div class="word-item">
+                            <strong>2. ${todayContent.w2}</strong>
+                            <span>"${todayContent.m2}"</span>
+                        </div>
+                    </div>
+                    <div class="daily-line">
+                        <h3>Line of the Day</h3>
+                        <div class="line-text">
+                            “${todayContent.line}”
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- 3. EXISTING SYLLABUS DATA ---
         const syllabusData = [
             {
-                id: 1,
-                title: "Sentence",
-                link: "sentence.html", // Links to your Sentence Module
-                color: "border-blue",
-                note: "", 
-                content: [
-                    "<strong>Structure:</strong> Simple, Complex, Compound",
-                    "<strong>Types:</strong> Affirmative, Negative, Interrogative",
-                    "Negative-Interrogative",
-                    "Imperative, Exclamatory"
-                ]
+                id: 1, title: "Sentence", link: "sentence.html", color: "border-blue", note: "", 
+                content: ["<strong>Structure:</strong> Simple, Complex, Compound", "<strong>Types:</strong> Affirmative, Negative, Interrogative", "Negative-Interrogative", "Imperative, Exclamatory"]
             },
             {
-                id: 2,
-                title: "Part of Speech",
-                link: "partofspeech.html", // Links to your PoS Module
-                color: "border-green",
-                note: "Comprehensive List",
-                content: [
-                    "Noun, Pronoun, Adjective",
-                    "<strong>Verb:</strong> Finite, Infinite, Modal, Aux., Helping, Action",
-                    "Adverb, Preposition",
-                    "Conjunction, Interjection"
-                ]
+                id: 2, title: "Part of Speech", link: "partofspeech.html", color: "border-green", note: "Comprehensive List",
+                content: ["Noun, Pronoun, Adjective", "<strong>Verb:</strong> Finite, Infinite, Modal, Aux., Helping, Action", "Adverb, Preposition", "Conjunction, Interjection"]
             },
             {
-                id: 3,
-                title: "Tense",
-                link: "tense.html", // Links to Tense Module
-                color: "border-purple",
-                note: "",
-                content: [
-                    "<strong>Present:</strong> Indefinite, Continuous, Perfect, Perfect Continuous",
-                    "<strong>Past:</strong> (All forms)",
-                    "<strong>Future:</strong> (All forms)"
-                ]
+                id: 3, title: "Tense", link: "tense.html", color: "border-purple", note: "",
+                content: ["<strong>Present:</strong> Indefinite, Continuous, Perfect, Perfect Continuous", "<strong>Past:</strong> (All forms)", "<strong>Future:</strong> (All forms)"]
             },
             {
-                id: 4,
-                title: "Voice Change",
-                link: "passive.html", // Links to Passive Module
-                color: "border-orange",
-                note: "(Without Subject)",
-                content: [
-                    "Active to Passive conversion",
-                    "Handling implicit subjects",
-                    "Standard transformation rules"
-                ]
+                id: 4, title: "Voice Change", link: "passive.html", color: "border-orange", note: "(Without Subject)",
+                content: ["Active to Passive conversion", "Handling implicit subjects", "Standard transformation rules"]
             },
             {
-                id: 5,
-                title: "Narration",
-                link: "narration.html", // Links to Narration Module
-                color: "border-blue",
-                note: "Ex: Someone says that I will be present",
-                content: [
-                    "Direct to Indirect Speech",
-                    "Reporting Verbs",
-                    "Tense changes in narration"
-                ]
+                id: 5, title: "Narration", link: "narration.html", color: "border-blue", note: "Ex: Someone says that I will be present",
+                content: ["Direct to Indirect Speech", "Reporting Verbs", "Tense changes in narration"]
             },
             {
-                id: 6,
-                title: "Articles",
-                link: "articles.html", // Links to Articles Module
-                color: "border-green",
-                note: "",
-                content: [
-                    "Definite Article (The)",
-                    "Indefinite Articles (A, An)",
-                    "Omission of Articles"
-                ]
+                id: 6, title: "Articles", link: "articles.html", color: "border-green", note: "",
+                content: ["Definite Article (The)", "Indefinite Articles (A, An)", "Omission of Articles"]
             },
             {
-                id: 7,
-                title: "Prepositions",
-                link: "preposition.html", // Links to Preposition Module
-                color: "border-orange",
-                note: "Deep Dive",
-                content: [
-                    "Types of prepositions (place, time, direction)",
-                    "Prepositions of place (in, on, under, above)",
-                    "Prepositions of time (at, on, in)",
-                    "Common prepositional phrases"
-                ]
+                id: 7, title: "Prepositions", link: "preposition.html", color: "border-orange", note: "Deep Dive",
+                content: ["Types of prepositions (place, time, direction)", "Prepositions of place (in, on, under, above)", "Prepositions of time (at, on, in)", "Common prepositional phrases"]
             },
             {
-                id: 8,
-                title: "Important Usage",
-                link: "usage.html", // Links to Usage Module
-                color: "border-purple",
-                note: "IELTS Essentials",
-                content: [
-                    "Adjective vs adjective-ing (amazed / amazing)",
-                    "Need to – questions and usage",
-                    "Having + V3 structure",
-                    "Get / Make / Have usage",
-                    "Let – permission structure",
-                    "Have been / Has been / Had been"
-                ]
+                id: 8, title: "Important Usage", link: "usage.html", color: "border-purple", note: "IELTS Essentials",
+                content: ["Adjective vs adjective-ing (amazed / amazing)", "Need to – questions and usage", "Having + V3 structure", "Get / Make / Have usage", "Let – permission structure", "Have been / Has been / Had been"]
             }
         ];
 
@@ -299,6 +376,8 @@
             }).join('');
         }
 
+        // Initialize both sections
+        renderDailyDose();
         renderSyllabus();
 
     </script>
