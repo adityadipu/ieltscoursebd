@@ -97,6 +97,21 @@
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; }
         
+        /* --- INTERACTIVE GAMES CSS --- */
+        .game-container { background: #374151; color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; text-align: center; }
+        .game-word { font-size: 2rem; font-weight: bold; margin: 15px 0; color: var(--accent); }
+        .game-options { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .game-btn { padding: 10px 20px; background: white; color: #374151; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .game-btn:hover { background: var(--teal); color: white; }
+        
+        .toggle-box { background: #fff; border: 2px solid var(--primary); border-radius: 8px; padding: 20px; text-align: center; margin-bottom: 20px; transition: 0.3s; }
+        .toggle-text { font-size: 1.5rem; margin-bottom: 15px; }
+        .highlight { color: var(--primary); font-weight: bold; text-decoration: underline; cursor: pointer; }
+
+        .time-machine { display: flex; gap: 5px; justify-content: center; margin-bottom: 15px; }
+        .time-btn { padding: 8px 15px; border: 1px solid #ccc; background: #f9fafb; cursor: pointer; border-radius: 4px; }
+        .time-btn.active-time { background: var(--purple); color: white; border-color: var(--purple); }
+
         /* --- EXAM MODAL --- */
         .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
         .modal-content { background-color: #1f2937; color: white; margin: auto; padding: 30px; border-radius: 16px; width: 95%; max-width: 650px; text-align: center; position: relative; }
@@ -166,6 +181,19 @@
 
         <div id="noun" class="section-content">
             <div class="card">
+                <!-- NEW INTERACTIVE GAME -->
+                <div class="game-container">
+                    <h3>🧠 Quick Quiz: Identify the Noun Type</h3>
+                    <div id="noun-game-word" class="game-word">Chattogram</div>
+                    <div id="noun-game-feedback" style="height:20px; margin-bottom:10px; font-size:0.9rem;">Select the type below</div>
+                    <div class="game-options">
+                        <button class="game-btn" onclick="checkNoun('Common')">Common</button>
+                        <button class="game-btn" onclick="checkNoun('Proper')">Proper</button>
+                        <button class="game-btn" onclick="checkNoun('Collective')">Collective</button>
+                        <button class="game-btn" onclick="checkNoun('Abstract')">Abstract</button>
+                    </div>
+                </div>
+
                 <h2>Nouns: The Naming Words</h2>
                 <div class="grid-2">
                     <div>
@@ -212,6 +240,17 @@
         <div id="pronoun" class="section-content">
             <div class="card">
                 <h2>Pronouns (11 Types) </h2>
+                
+                <!-- INTERACTIVE PRONOUN SWAPPER -->
+                <div class="toggle-box">
+                    <h4 style="margin-top:0; color:#666;">🔄 Pronoun Swapper</h4>
+                    <p style="font-size:0.9rem;">Click the button to see how Pronouns replace Nouns.</p>
+                    <div class="toggle-text">
+                        "<span id="pronoun-target" class="highlight">Aditya</span> is a good boy because <span id="pronoun-target-2" class="highlight">Aditya</span> studies hard."
+                    </div>
+                    <button class="test-launch-btn" style="margin-top:0; font-size:0.9rem; background:var(--teal);" onclick="togglePronounDemo()">Swap Noun/Pronoun</button>
+                </div>
+
                 <div class="grid-3">
                     <div class="example-box">
                         <strong>1. Personal</strong><br>
@@ -292,6 +331,17 @@
             <div class="card">
                 <h2>Primary Auxiliary Verbs </h2>
                 
+                <!-- INTERACTIVE TENSE MACHINE -->
+                <div class="example-box" style="border: 2px solid var(--purple); background: #fdf4ff;">
+                    <h4 style="margin-top:0; color:var(--purple); text-align:center;">⏳ Tense Time Machine</h4>
+                    <div class="time-machine">
+                        <button class="time-btn" onclick="changeTense('past')">Past (Did)</button>
+                        <button class="time-btn active-time" onclick="changeTense('present')">Present (Do/Does)</button>
+                        <button class="time-btn" onclick="changeTense('future')">Future (Will)</button>
+                    </div>
+                    <p id="tense-display" style="text-align:center; font-size:1.2rem; font-weight:bold;">"Do you know him?"</p>
+                </div>
+
                 <h3>1. Do Verb (Do, Did, Does) </h3>
                 <div class="grid-2">
                     <div class="example-box">
@@ -351,7 +401,7 @@
                             <li>"Could you close the window?" (Polite)</li>
                             <li>"When I was young, I could run." (Past)</li>
                             <li>"If I were a bird, I could fly." (Imaginary)</li>
-                            <span class="bn-text">যদি আমি পাখি হতাম, আমি উড়তাম।</span>
+                            <span class="bn-text">যদি আমি পাখি হতাম, আমি উড়তাম।</span>
                         </ul>
                     </div>
                 </div>
@@ -363,14 +413,14 @@
                         <p>"You should work hard."</p>
                     </div>
                     <div class="example-box">
-                        <strong>Should be (হওয়া উচিৎ)</strong>
+                        <strong>Should be (হওয়া উচিৎ)</strong>
                         <p>"You should be a good boy."</p>
-                        <span class="bn-text">তোমার ভালো ছেলে হওয়া উচিৎ।</span>
+                        <span class="bn-text">তোমার ভালো ছেলে হওয়া উচিৎ।</span>
                     </div>
                     <div class="example-box">
                         <strong>Should have (উচিৎ ছিল)</strong>
                         <p>"I should have eaten rice."</p>
-                        <span class="bn-text">আমার ভাত খাওয়া উচিৎ ছিল।</span>
+                        <span class="bn-text">আমার ভাত খাওয়া উচিৎ ছিল।</span>
                     </div>
                 </div>
 
@@ -385,7 +435,7 @@
                     <div class="example-box">
                         <strong>Past Habit (করতাম)</strong>
                         <p>"In childhood, we would have played cricket."</p>
-                        <span class="bn-text">ছোটবেলায় আমরা ক্রিকেট খেলতাম।</span>
+                        <span class="bn-text">ছোটবেলায় আমরা ক্রিকেট খেলতাম।</span>
                     </div>
                     <div class="example-box">
                         <strong>Polite Request (Mind)</strong>
@@ -393,9 +443,9 @@
                         <span class="bn-text">আমাকে কল করলে তুমি কিছু মনে করবে?</span>
                     </div>
                     <div class="example-box">
-                        <strong>Become (হয়ে যেত)</strong>
+                        <strong>Become (হয়ে যেত)</strong>
                         <p>"Robin would have been a project manager."</p>
-                        <span class="bn-text">রবিন এতোদিনে প্রজেক্ট ম্যানেজার হয়ে যেত।</span>
+                        <span class="bn-text">রবিন এতোদিনে প্রজেক্ট ম্যানেজার হয়ে যেত।</span>
                     </div>
                 </div>
 
@@ -403,7 +453,7 @@
                 <ul>
                     <li><strong>Will:</strong> "It will rain tomorrow." (হবে)</li>
                     <li><strong>Will be:</strong> "It will be raining tomorrow." (হতে থাকবে)</li>
-                    <li><strong>Will have:</strong> "I will have finished my food." (হয়ে যাবে)</li>
+                    <li><strong>Will have:</strong> "I will have finished my food." (হয়ে যাবে)</li>
                 </ul>
             </div>
         </div>
@@ -470,6 +520,82 @@
     </div>
 
     <script>
+        // --- INTERACTIVE GAME LOGIC ---
+
+        // 1. Noun Sorting Game
+        const nounGameData = [
+            { word: "Chattogram", type: "Proper" },
+            { word: "Team", type: "Collective" },
+            { word: "Kindness", type: "Abstract" },
+            { word: "Tiger", type: "Common" },
+            { word: "Water", type: "Material" },
+            { word: "Aditya", type: "Proper" },
+            { word: "Hunger", type: "Abstract" }
+        ];
+        let nounIndex = 0;
+
+        function checkNoun(selectedType) {
+            const currentItem = nounGameData[nounIndex];
+            const feedback = document.getElementById('noun-game-feedback');
+            
+            // Allow Material as Common for simplicity if needed, but here we check strict types if we add Material btn. 
+            // Since we didn't add Material button in HTML, map Material to Common for this specific UI or add the button.
+            // Let's stick to the buttons provided: Common, Proper, Collective, Abstract.
+            // If word is Material, we skip or treat as Common. The data above has "Water", let's handle it.
+            
+            let isCorrect = (selectedType === currentItem.type) || (currentItem.type === "Material" && selectedType === "Common");
+
+            if(isCorrect) {
+                feedback.innerHTML = `<span style="color:#10b981">✅ Correct! ${currentItem.word} is ${currentItem.type}.</span>`;
+                setTimeout(() => {
+                    nounIndex = (nounIndex + 1) % nounGameData.length;
+                    document.getElementById('noun-game-word').innerText = nounGameData[nounIndex].word;
+                    feedback.innerText = "Select the type below";
+                }, 1500);
+            } else {
+                feedback.innerHTML = `<span style="color:#ef4444">❌ Try again. Hint: ${currentItem.type}</span>`;
+            }
+        }
+
+        // 2. Pronoun Swapper
+        let isPronounActive = false;
+        function togglePronounDemo() {
+            const t1 = document.getElementById('pronoun-target');
+            const t2 = document.getElementById('pronoun-target-2');
+            isPronounActive = !isPronounActive;
+
+            if(isPronounActive) {
+                t1.innerText = "He";
+                t2.innerText = "he";
+                t1.style.color = "#8b5cf6";
+                t2.style.color = "#8b5cf6";
+            } else {
+                t1.innerText = "Aditya";
+                t2.innerText = "Aditya";
+                t1.style.color = "#2563eb";
+                t2.style.color = "#2563eb";
+            }
+        }
+
+        // 3. Tense Time Machine
+        function changeTense(tense) {
+            const display = document.getElementById('tense-display');
+            const btns = document.querySelectorAll('.time-btn');
+            btns.forEach(b => b.classList.remove('active-time'));
+
+            if(tense === 'past') {
+                display.innerText = '"Did you know him?"';
+                btns[0].classList.add('active-time');
+            } else if(tense === 'present') {
+                display.innerText = '"Do you know him?"';
+                btns[1].classList.add('active-time');
+            } else {
+                display.innerText = '"Will you know him?"';
+                btns[2].classList.add('active-time');
+            }
+        }
+
+
         // --- LARGE QUESTION POOL (Based on PDF Content) ---
         const questionPool = [
             // Nouns
@@ -514,12 +640,12 @@
             { q: "'I can beat you.' - Can shows:", o: ["Ability", "Permission", "Possibility", "Request"], a: 0 },
             { q: "Polite Request: '____ you close the door?'", o: ["Can", "Could", "Should", "Must"], a: 1 },
             { q: "'You should work hard.' - Should implies:", o: ["Ability", "Advice (Uchit)", "Past Habit", "Future"], a: 1 },
-            { q: "'I should have eaten rice.' means:", o: ["আমার ভাত খাওয়া উচিৎ ছিল", "আমি ভাত খাব", "আমি ভাত খেতে পারি", "আমার ভাত খাওয়া উচিৎ"], a: 0 },
+            { q: "'I should have eaten rice.' means:", o: ["আমার ভাত খাওয়া উচিৎ ছিল", "আমি ভাত খাব", "আমি ভাত খেতে পারি", "আমার ভাত খাওয়া উচিৎ"], a: 0 },
             { q: "'Would you mind ____ with me?'", o: ["Dance", "Dancing", "Danced", "To Dance"], a: 1 },
             { q: "'If I were a bird, I ____ fly.'", o: ["Will", "Can", "Could", "Shall"], a: 2 },
             { q: "'I would be a cricketer.' in Bengali:", o: ["আমি ক্রিকেটার হতাম", "আমি ক্রিকেটার হব", "আমি ক্রিকেটার ছিলাম", "আমি ক্রিকেটার হতে চাই"], a: 0 },
             { q: "'It would rain tomorrow.' - indicates:", o: ["Certainty", "Possibility", "Ability", "Order"], a: 1 },
-            { q: "'Robin would have been a manager' - Bengali:", o: ["রবিন ম্যানেজার হয়ে যেত", "রবিন ম্যানেজার হবে", "রবিন ম্যানেজার ছিল", "রবিন ম্যানেজার হতে পারে"], a: 0 },
+            { q: "'Robin would have been a manager' - Bengali:", o: ["রবিন ম্যানেজার হয়ে যেত", "রবিন ম্যানেজার হবে", "রবিন ম্যানেজার ছিল", "রবিন ম্যানেজার হতে পারে"], a: 0 },
             
             // Others
             { q: "'He can run faster.' - Faster is:", o: ["Adjective", "Adverb", "Verb", "Noun"], a: 1 },
@@ -604,4 +730,5 @@
         function restartExam() { openExam(); }
     </script>
 </body>
+
 </html>
