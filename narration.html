@@ -96,6 +96,26 @@
         .speech-text { font-size: 1rem; color: #1f2937; margin-bottom: 10px; display: block; }
         .arrow-divider { text-align: center; color: var(--accent); margin: 5px 0; font-size: 1.2rem; }
 
+        /* --- INTERACTIVE GAMES CSS --- */
+        .interactive-box { background: #f0f9ff; border: 2px dashed #bae6fd; padding: 20px; border-radius: 12px; margin-bottom: 25px; text-align: center; }
+        .interactive-title { color: #0284c7; font-weight: bold; margin-bottom: 15px; display: block; font-size: 1.1rem; }
+        
+        .toggle-btn { padding: 8px 20px; border: 2px solid #ccc; background: white; border-radius: 20px; cursor: pointer; margin: 0 5px; font-weight: bold; transition: 0.3s; }
+        .toggle-btn.selected { background: var(--primary); color: white; border-color: var(--primary); transform: scale(1.05); }
+        
+        .status-display { margin-top: 15px; padding: 15px; background: white; border-radius: 8px; font-weight: bold; min-height: 50px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        
+        /* Flip Cards */
+        .flip-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .flip-card { background: white; height: 100px; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer; perspective: 1000px; position: relative; transition: transform 0.3s; }
+        .flip-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+        .flip-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; display: flex; align-items: center; justify-content: center; }
+        .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+        .flip-front, .flip-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; flex-direction: column; font-weight: bold; border-radius: 8px; }
+        .flip-front { background-color: #ffffff; color: #374151; }
+        .flip-back { background-color: #fef3c7; color: #b45309; transform: rotateY(180deg); }
+        .flip-label { font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; margin-bottom: 5px; }
+
         /* --- PRO TIP --- */
         .pro-tip { background-color: #f0fdf4; color: #166534; padding: 15px; border-radius: 8px; margin-top: 20px; border: 1px solid #bbf7d0; display: flex; gap: 10px; }
 
@@ -130,6 +150,17 @@
         </div>
 
         <div id="basics" class="section-content active">
+            <!-- GAME 1: Reporting Verb Logic -->
+            <div class="interactive-box">
+                <span class="interactive-title">🚦 The Tense Gatekeeper</span>
+                <p style="font-size:0.9rem; color:#64748b; margin-bottom:15px;">Does the inner tense change? Select a Reporting Verb to check.</p>
+                <div>
+                    <button class="toggle-btn" onclick="checkGate('says', this)">Says / Will say</button>
+                    <button class="toggle-btn" onclick="checkGate('said', this)">Said / Told</button>
+                </div>
+                <div id="gate-result" class="status-display">Select a verb above...</div>
+            </div>
+
             <div class="card">
                 <h2>The Core Concept</h2>
                 <div class="example-grid">
@@ -167,6 +198,48 @@
 
         <div id="changes" class="section-content">
             <div class="card">
+                <!-- GAME 2: Word Flippers -->
+                <h2>🔄 Interactive Word Shifters</h2>
+                <p style="margin-bottom:15px; font-size:0.9rem;">Click the cards to see how words change in Indirect Speech.</p>
+                <div class="flip-container">
+                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-inner">
+                            <div class="flip-front"><span class="flip-label">Direct</span>Now</div>
+                            <div class="flip-back"><span class="flip-label">Indirect</span>Then</div>
+                        </div>
+                    </div>
+                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-inner">
+                            <div class="flip-front"><span class="flip-label">Direct</span>Here</div>
+                            <div class="flip-back"><span class="flip-label">Indirect</span>There</div>
+                        </div>
+                    </div>
+                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-inner">
+                            <div class="flip-front"><span class="flip-label">Direct</span>Tomorrow</div>
+                            <div class="flip-back"><span class="flip-label">Indirect</span>The next day</div>
+                        </div>
+                    </div>
+                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-inner">
+                            <div class="flip-front"><span class="flip-label">Direct</span>Yesterday</div>
+                            <div class="flip-back"><span class="flip-label">Indirect</span>The previous day</div>
+                        </div>
+                    </div>
+                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-inner">
+                            <div class="flip-front"><span class="flip-label">Direct</span>Today</div>
+                            <div class="flip-back"><span class="flip-label">Indirect</span>That day</div>
+                        </div>
+                    </div>
+                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-inner">
+                            <div class="flip-front"><span class="flip-label">Direct</span>Will</div>
+                            <div class="flip-back"><span class="flip-label">Indirect</span>Would</div>
+                        </div>
+                    </div>
+                </div>
+
                 <h2>1. Tense Change Table</h2>
                 <p>Only applies when Reporting Verb is in the <strong>Past</strong>.</p>
                 <table class="rule-table">
@@ -180,23 +253,22 @@
                         <tr><td>Past Perfect</td><td>No Change</td></tr>
                     </tbody>
                 </table>
-
-                <h2>2. Word & Time Change </h2>
-                <div class="grid-3" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:15px;">
-                    <div style="background:#f9fafb; padding:10px; border:1px solid #eee;">Now → Then</div>
-                    <div style="background:#f9fafb; padding:10px; border:1px solid #eee;">Here → There</div>
-                    <div style="background:#f9fafb; padding:10px; border:1px solid #eee;">This → That</div>
-                    <div style="background:#f9fafb; padding:10px; border:1px solid #eee;">Today → That day</div>
-                    <div style="background:#f9fafb; padding:10px; border:1px solid #eee;">Tomorrow → The next day</div>
-                    <div style="background:#f9fafb; padding:10px; border:1px solid #eee;">Yesterday → The previous day</div>
-                    <div style="background:#f9fafb; padding:10px; border:1px solid #eee;">Will → Would</div>
-                    <div style="background:#f9fafb; padding:10px; border:1px solid #eee;">Can → Could</div>
-                    <div style="background:#f9fafb; padding:10px; border:1px solid #eee;">May → Might</div>
-                </div>
             </div>
         </div>
 
         <div id="examples" class="section-content">
+            <!-- GAME 3: Person Map -->
+            <div class="interactive-box" style="background:#f0fdf4; border-color:#bbf7d0;">
+                <span class="interactive-title">👤 Person & Pronoun Map</span>
+                <p style="font-size:0.9rem; color:#166534; margin-bottom:15px;">"He said to me, 'I love you.'"</p>
+                <div>
+                    <button class="toggle-btn" onclick="checkPerson('1st', this)">1st Person (I)</button>
+                    <button class="toggle-btn" onclick="checkPerson('2nd', this)">2nd Person (You)</button>
+                    <button class="toggle-btn" onclick="checkPerson('3rd', this)">3rd Person (He)</button>
+                </div>
+                <div id="person-result" class="status-display" style="color:#166534;">Click a Person type to see the rule.</div>
+            </div>
+
             <div class="card">
                 <h2>Sentence Examples from Syllabus</h2>
                 
@@ -274,6 +346,38 @@
     </div>
 
     <script>
+        // --- INTERACTIVE LOGIC ---
+
+        // Game 1: Tense Gatekeeper
+        function checkGate(verb, btn) {
+            const result = document.getElementById('gate-result');
+            // Reset buttons
+            document.querySelectorAll('#basics .toggle-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+
+            if(verb === 'says') {
+                result.innerHTML = `<span style="color:#f97316">⛔ STOP! No Tense Change inside.</span><br><small>"I am busy" → He says he <strong>is</strong> busy.</small>`;
+            } else {
+                result.innerHTML = `<span style="color:#2563eb">✅ PASS! Change the Tense.</span><br><small>"I am busy" → He said he <strong>was</strong> busy.</small>`;
+            }
+        }
+
+        // Game 3: Person Map
+        function checkPerson(person, btn) {
+            const result = document.getElementById('person-result');
+            document.querySelectorAll('#examples .toggle-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+
+            if(person === '1st') {
+                result.innerHTML = `<strong>1st Person (I)</strong> follows the <u>SUBJECT</u> (He).<br>So 'I' becomes 'He'.`;
+            } else if(person === '2nd') {
+                result.innerHTML = `<strong>2nd Person (You)</strong> follows the <u>OBJECT</u> (Me).<br>So 'You' becomes 'I'.`;
+            } else {
+                result.innerHTML = `<strong>3rd Person (He/She)</strong> has <u>NO CHANGE</u>.<br>It stays the same.`;
+            }
+        }
+
+
         // --- 30 QUESTIONS POOL (Based on PDF) ---
         const questionPool = [
             // Basics (5)
@@ -395,4 +499,5 @@
         }
     </script>
 </body>
+
 </html>
