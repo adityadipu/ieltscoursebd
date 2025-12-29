@@ -97,6 +97,18 @@
         
         .cross-mark { color: #ef4444; font-weight: bold; font-size: 1.2rem; margin-right: 5px; }
 
+        /* --- INTERACTIVE GAMES CSS --- */
+        .game-container { background: #fdf2f8; border: 2px dashed #f472b6; padding: 20px; border-radius: 12px; margin-bottom: 25px; text-align: center; }
+        .game-word { font-size: 2rem; font-weight: bold; margin: 15px 0; color: #db2777; }
+        .game-options { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top:15px; }
+        .game-btn { background: white; border: 2px solid #db2777; color: #db2777; padding: 10px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .game-btn:hover { background: #db2777; color: white; }
+        
+        .detective-box { background: #e0e7ff; border: 2px solid #6366f1; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 20px; }
+        .spotter-item { display: inline-block; background: white; padding: 8px 15px; border-radius: 6px; margin: 5px; border: 1px solid #ccc; cursor: pointer; transition: 0.2s; }
+        .spotter-item.correct { background: #dcfce7; border-color: #16a34a; color: #16a34a; }
+        .spotter-item.wrong { background: #fee2e2; border-color: #dc2626; color: #dc2626; }
+
         /* --- EXAM MODAL --- */
         .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
         .modal-content { background-color: #1f2937; color: white; margin: auto; padding: 30px; border-radius: 16px; width: 95%; max-width: 600px; text-align: center; position: relative; }
@@ -118,7 +130,7 @@
 
     <header>
         <a href="index.html" class="back-link">← Back to Dashboard</a>
-        <h1>Module 6: Articles</h1>
+        <h1>Module 6: Articles Mastery</h1>
         <p>A, An, The & Zero Article (Omission) </p>
         <button class="test-launch-btn" onclick="openExam()">Take Exam (30 Q)</button>
     </header>
@@ -133,6 +145,18 @@
         </div>
 
         <div id="indefinite" class="section-content active">
+            <!-- GAME 1: A vs An Sorter -->
+            <div class="game-container">
+                <h3 style="color:#be185d; margin-top:0;">🍎 A vs An Sorter</h3>
+                <p style="font-size:0.9rem; color:#831843;">Choose the correct article based on the sound!</p>
+                <div id="sorter-word" class="game-word">Apple</div>
+                <div id="sorter-feedback" style="height:20px; font-weight:bold; margin-bottom:10px;"></div>
+                <div class="game-options">
+                    <button class="game-btn" onclick="checkSorter('a')">A</button>
+                    <button class="game-btn" onclick="checkSorter('an')">An</button>
+                </div>
+            </div>
+
             <div class="card">
                 <h2>Indefinite Articles: A / An</h2>
                 <div class="grid-2">
@@ -168,6 +192,18 @@
         </div>
 
         <div id="definite" class="section-content">
+            <!-- GAME 2: Definite Detective -->
+            <div class="detective-box">
+                <h3 style="color:#4338ca; margin-top:0;">👑 Definite Detective</h3>
+                <p style="margin-bottom:15px;">Does this need "The"? Click YES if it's unique/specific.</p>
+                <div id="dd-word" style="font-size:1.5rem; font-weight:bold; color:#312e81; margin:15px 0;">Moon</div>
+                <div id="dd-feedback" style="height:20px; font-weight:bold; margin-bottom:10px;"></div>
+                <div>
+                    <button class="game-btn" style="border-color:#4338ca; color:#4338ca;" onclick="checkDetective(true)">YES (The)</button>
+                    <button class="game-btn" style="border-color:#4338ca; color:#4338ca;" onclick="checkDetective(false)">NO</button>
+                </div>
+            </div>
+
             <div class="card">
                 <h2>Definite Article: The</h2>
                 <p>Used for specific items, unique things, or superlatives.</p>
@@ -176,7 +212,7 @@
                     <thead><tr><th>Category</th><th>Examples from PDF </th></tr></thead>
                     <tbody>
                         <tr>
-                            <td><strong>Unique Creations</strong><br><span class="bn-hint">অতুলনীয়, একক সৃষ্টি</span></td>
+                            <td><strong>Unique Creations</strong><br><span class="bn-hint">অতুলনীয়, একক সৃষ্টি</span></td>
                             <td>the moon, the earth, the sky</td>
                         </tr>
                         <tr>
@@ -192,7 +228,7 @@
                             <td>the east, the west<br>the north, the south</td>
                         </tr>
                         <tr>
-                            <td><strong>Holy Books</strong> (Specific)<br><span class="bn-hint">ধর্মীয় গ্রন্থ</span></td>
+                            <td><strong>Holy Books</strong> (Specific)<br><span class="bn-hint">ধর্মীয় গ্রন্থ</span></td>
                             <td>I read <strong>the</strong> Quran.<br>He studies <strong>the</strong> Bible.<br>She reads <strong>the</strong> Gita.</td>
                         </tr>
                         <tr>
@@ -255,6 +291,21 @@
         </div>
 
         <div id="zero" class="section-content">
+            <!-- GAME 3: Zero Spotter -->
+            <div class="card" style="border: 2px solid var(--danger);">
+                <h3 style="color:var(--danger); margin-top:0;">🚫 Zero Article Spotter</h3>
+                <p>Click the words below that DO NOT need an article.</p>
+                <div style="display:flex; flex-wrap:wrap; justify-content:center;">
+                    <span class="spotter-item" onclick="checkSpotter(this, true)">Shakespeare</span>
+                    <span class="spotter-item" onclick="checkSpotter(this, false)">Cat</span>
+                    <span class="spotter-item" onclick="checkSpotter(this, true)">Gold</span>
+                    <span class="spotter-item" onclick="checkSpotter(this, false)">Apple</span>
+                    <span class="spotter-item" onclick="checkSpotter(this, true)">Japan</span>
+                    <span class="spotter-item" onclick="checkSpotter(this, true)">Water</span>
+                </div>
+                <div id="spotter-feedback" style="text-align:center; height:20px; margin-top:10px; font-weight:bold;"></div>
+            </div>
+
             <div class="card">
                 <h2>Omission of Article (Zero Article)</h2>
                 <p>Where we do <span class="cross-mark">NOT</span> use A, An, or The.</p>
@@ -271,7 +322,8 @@
                     </div>
 
                     <div class="example-box" style="border-left: 4px solid var(--danger);">
-                        <h3>2. Nations/Languages p>
+                        <h3>2. Nations/Languages </h3>
+                        <p>No article before names of countries/languages generally.</p>
                         <ul>
                             <li><span class="code-tag">✔</span> <strong>Japan</strong> is a beautiful country.</li>
                             <li><span class="code-tag">✔</span> He speaks <strong>English</strong>.</li>
@@ -320,6 +372,75 @@
     </div>
 
     <script>
+        // --- INTERACTIVE LOGIC ---
+
+        // Game 1: A vs An Sorter
+        const sorterData = [
+            { word: "Apple", type: "an" },
+            { word: "University", type: "a" },
+            { word: "Chair", type: "a" },
+            { word: "Hour", type: "an" },
+            { word: "Honest", type: "an" },
+            { word: "European", type: "a" }
+        ];
+        let sorterIdx = 0;
+
+        function checkSorter(guess) {
+            const current = sorterData[sorterIdx];
+            const feedback = document.getElementById('sorter-feedback');
+            
+            if(guess === current.type) {
+                feedback.innerHTML = `<span style="color:#10b981">✅ Correct!</span>`;
+                setTimeout(() => {
+                    sorterIdx = (sorterIdx + 1) % sorterData.length;
+                    document.getElementById('sorter-word').innerText = sorterData[sorterIdx].word;
+                    feedback.innerText = "";
+                }, 1000);
+            } else {
+                feedback.innerHTML = `<span style="color:#ef4444">❌ Oops! Check the sound.</span>`;
+            }
+        }
+
+        // Game 2: Definite Detective
+        const ddData = [
+            { word: "Moon", isDef: true },
+            { word: "Book", isDef: false },
+            { word: "Taj Mahal", isDef: true },
+            { word: "Best", isDef: true },
+            { word: "Boy", isDef: false }
+        ];
+        let ddIdx = 0;
+
+        function checkDetective(guess) {
+            const current = ddData[ddIdx];
+            const feedback = document.getElementById('dd-feedback');
+            
+            if(guess === current.isDef) {
+                feedback.innerHTML = `<span style="color:#4f46e5">✅ Correct!</span>`;
+                setTimeout(() => {
+                    ddIdx = (ddIdx + 1) % ddData.length;
+                    document.getElementById('dd-word').innerText = ddData[ddIdx].word;
+                    feedback.innerText = "";
+                }, 1000);
+            } else {
+                feedback.innerHTML = `<span style="color:#ef4444">❌ Incorrect.</span>`;
+            }
+        }
+
+        // Game 3: Zero Spotter
+        function checkSpotter(el, isZero) {
+            const feedback = document.getElementById('spotter-feedback');
+            if(isZero) {
+                el.classList.add('correct');
+                feedback.innerHTML = `<span style="color:#16a34a">✅ Good! No article needed.</span>`;
+            } else {
+                el.classList.add('wrong');
+                feedback.innerHTML = `<span style="color:#dc2626">❌ This needs an article!</span>`;
+                setTimeout(() => el.classList.remove('wrong'), 1000);
+            }
+        }
+
+
         // --- EXPANDED 30 QUESTION POOL (Strictly from PDF + Zero Rules) ---
         const questionPool = [
             // Basic A (5)
@@ -439,4 +560,5 @@
         function restartExam() { openExam(); }
     </script>
 </body>
+
 </html>
