@@ -101,6 +101,14 @@
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; }
 
+        /* --- INTERACTIVE GAMES CSS --- */
+        .game-container { background: #e0f2fe; border: 2px dashed #0ea5e9; padding: 20px; border-radius: 12px; margin-bottom: 25px; text-align: center; }
+        .game-word { font-size: 1.5rem; font-weight: bold; margin: 15px 0; color: #0369a1; min-height: 40px; display: flex; align-items: center; justify-content: center; }
+        .game-options { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top:15px; }
+        .game-btn { background: white; border: 2px solid #0369a1; color: #0369a1; padding: 10px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .game-btn:hover { background: #0369a1; color: white; }
+        .game-feedback { height: 20px; font-weight: bold; margin-bottom: 10px; font-size: 0.9rem; }
+
         /* --- EXAM MODAL --- */
         .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
         .modal-content { background-color: #1f2937; color: white; margin: auto; padding: 30px; border-radius: 16px; width: 95%; max-width: 600px; text-align: center; position: relative; }
@@ -137,6 +145,19 @@
         </div>
 
         <div id="position" class="section-content active">
+            <!-- GAME 1: Position Puzzle -->
+            <div class="game-container">
+                <h3 style="margin-top:0; color:#0369a1;">📍 Position Puzzle</h3>
+                <p style="font-size:0.9rem; color:#075985;">Fill the blank with the correct preposition.</p>
+                <div id="pos-sentence" class="game-word">"The fan is ____ my head."</div>
+                <div id="pos-feedback" class="game-feedback"></div>
+                <div class="game-options">
+                    <button class="game-btn" onclick="checkPosition('on')">On</button>
+                    <button class="game-btn" onclick="checkPosition('over')">Over</button>
+                    <button class="game-btn" onclick="checkPosition('under')">Under</button>
+                </div>
+            </div>
+
             <div class="card">
                 <h2>Level & Vertical Position</h2>
                 
@@ -204,6 +225,18 @@
         </div>
 
         <div id="movement" class="section-content">
+            <!-- GAME 2: Motion Master -->
+            <div class="game-container" style="background:#fdf4ff; border-color:#d946ef;">
+                <h3 style="margin-top:0; color:#a21caf;">🏃‍♂️ Motion Master</h3>
+                <p style="font-size:0.9rem; color:#86198f;">Is it Static (In) or Moving (Into)?</p>
+                <div id="motion-sentence" class="game-word" style="color:#a21caf;">"He jumped ____ the river."</div>
+                <div id="motion-feedback" class="game-feedback"></div>
+                <div class="game-options">
+                    <button class="game-btn" style="border-color:#d946ef; color:#a21caf;" onclick="checkMotion('in')">In</button>
+                    <button class="game-btn" style="border-color:#d946ef; color:#a21caf;" onclick="checkMotion('into')">Into</button>
+                </div>
+            </div>
+
             <div class="card">
                 <h2>Inside vs. Into (Static vs. Motion) </h2>
                 
@@ -249,6 +282,19 @@
         </div>
 
         <div id="timeplace" class="section-content">
+            <!-- GAME 3: Time Triangle -->
+            <div class="game-container" style="background:#ecfdf5; border-color:#10b981;">
+                <h3 style="margin-top:0; color:#047857;">⏳ Time Triangle</h3>
+                <p style="font-size:0.9rem; color:#065f46;">Sort the time expression correctly.</p>
+                <div id="time-sentence" class="game-word" style="color:#047857;">"____ 5:00 PM"</div>
+                <div id="time-feedback" class="game-feedback"></div>
+                <div class="game-options">
+                    <button class="game-btn" style="border-color:#10b981; color:#047857;" onclick="checkTime('at')">At (Time)</button>
+                    <button class="game-btn" style="border-color:#10b981; color:#047857;" onclick="checkTime('on')">On (Day)</button>
+                    <button class="game-btn" style="border-color:#10b981; color:#047857;" onclick="checkTime('in')">In (Period)</button>
+                </div>
+            </div>
+
             <div class="card">
                 <h2>At, On, In, By </h2>
                 
@@ -352,6 +398,88 @@
     </div>
 
     <script>
+        // --- INTERACTIVE LOGIC ---
+
+        // Game 1: Position
+        const posData = [
+            { text: "The fan is ____ my head.", ans: "over" },
+            { text: "The book is ____ the table.", ans: "on" },
+            { text: "The cat is ____ the table.", ans: "under" },
+            { text: "Plane flying ____ the city.", ans: "over" },
+            { text: "Poster ____ the wall.", ans: "on" }
+        ];
+        let posIdx = 0;
+
+        function checkPosition(guess) {
+            const current = posData[posIdx];
+            const feedback = document.getElementById('pos-feedback');
+            
+            if(guess === current.ans) {
+                feedback.innerHTML = `<span style="color:#10b981">✅ Correct!</span>`;
+                setTimeout(() => {
+                    posIdx = (posIdx + 1) % posData.length;
+                    document.getElementById('pos-sentence').innerText = `"${posData[posIdx].text}"`;
+                    feedback.innerText = "";
+                }, 1000);
+            } else {
+                feedback.innerHTML = `<span style="color:#ef4444">❌ Try again!</span>`;
+            }
+        }
+
+        // Game 2: Motion
+        const motionData = [
+            { text: "He jumped ____ the river.", ans: "into" },
+            { text: "She is sleeping ____ the room.", ans: "in" },
+            { text: "He walked ____ the office.", ans: "into" },
+            { text: "Fish swim ____ the water.", ans: "in" },
+            { text: "Pour water ____ the glass.", ans: "into" }
+        ];
+        let motionIdx = 0;
+
+        function checkMotion(guess) {
+            const current = motionData[motionIdx];
+            const feedback = document.getElementById('motion-feedback');
+            
+            if(guess === current.ans) {
+                feedback.innerHTML = `<span style="color:#a21caf">✅ Correct!</span>`;
+                setTimeout(() => {
+                    motionIdx = (motionIdx + 1) % motionData.length;
+                    document.getElementById('motion-sentence').innerText = `"${motionData[motionIdx].text}"`;
+                    feedback.innerText = "";
+                }, 1000);
+            } else {
+                feedback.innerHTML = `<span style="color:#ef4444">❌ Try again!</span>`;
+            }
+        }
+
+        // Game 3: Time
+        const timeData = [
+            { text: "____ 5:00 PM", ans: "at" },
+            { text: "____ Sunday", ans: "on" },
+            { text: "____ 2025", ans: "in" },
+            { text: "____ the morning", ans: "in" },
+            { text: "____ Night", ans: "at" },
+            { text: "____ 15th August", ans: "on" }
+        ];
+        let timeIdx = 0;
+
+        function checkTime(guess) {
+            const current = timeData[timeIdx];
+            const feedback = document.getElementById('time-feedback');
+            
+            if(guess === current.ans) {
+                feedback.innerHTML = `<span style="color:#047857">✅ Correct!</span>`;
+                setTimeout(() => {
+                    timeIdx = (timeIdx + 1) % timeData.length;
+                    document.getElementById('time-sentence').innerText = `"${timeData[timeIdx].text}"`;
+                    feedback.innerText = "";
+                }, 1000);
+            } else {
+                feedback.innerHTML = `<span style="color:#ef4444">❌ Try again!</span>`;
+            }
+        }
+
+
         // --- 30 QUESTION POOL (Based on PDF Examples) ---
         const questionPool = [
             // Position
@@ -466,4 +594,5 @@
         function restartExam() { openExam(); }
     </script>
 </body>
+
 </html>
