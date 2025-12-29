@@ -144,7 +144,33 @@
         .bg-purple { background: #f3e8ff; color: #7e22ce; }
         .bg-orange { background: #ffedd5; color: #c2410c; }
 
-        /* --- EXAM MODAL STYLES --- */
+        /* --- INTERACTIVE GAMES STYLES --- */
+        
+        /* Scrambler */
+        .word-chip {
+            background: white; border: 2px solid var(--primary); color: var(--primary);
+            padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: bold;
+            transition: all 0.2s; user-select: none;
+        }
+        .word-chip:hover { background: var(--primary); color: white; transform: translateY(-2px); }
+        .word-chip.used { opacity: 0.3; pointer-events: none; border-color: #ccc; background: #eee; }
+        .slot-word {
+            background: var(--secondary); color: white; padding: 8px 16px; 
+            border-radius: 20px; animation: fadeIn 0.3s;
+        }
+
+        /* Subject Hunter */
+        .hunter-word {
+            padding: 5px 10px; border-radius: 5px; cursor: pointer; display: inline-block; margin: 2px;
+            border: 1px solid transparent; transition: 0.2s;
+        }
+        .hunter-word:hover { background: #e0e7ff; border-color: #c7d2fe; }
+        .hunter-word.correct-sub { background: #22c55e !important; color: white; animation: pop 0.3s; }
+        .hunter-word.wrong-sub { background: #ef4444 !important; color: white; animation: shake 0.3s; }
+        @keyframes pop { 50% { transform: scale(1.2); } }
+        @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-5px);} 75% {transform: translateX(5px);} }
+
+        /* EXAM MODAL STYLES */
         .modal {
             display: none; 
             position: fixed; 
@@ -247,6 +273,20 @@
                         <tr><td><strong>3rd</strong></td><td>He, She, It (X)</td><td>They</td></tr>
                     </tbody>
                 </table>
+            </div>
+
+            <div class="card">
+                <h2>🧩 Sentence Builder</h2>
+                <p>Tap the words in the correct order to form a proper sentence.</p>
+                
+                <div id="scramble-container" style="text-align:center; padding: 20px;">
+                    <div id="scramble-slots" style="min-height: 50px; margin-bottom: 20px; border-bottom: 2px dashed #ccc; display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+                        </div>
+                    <div id="scramble-bank" style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+                        </div>
+                    <div id="scramble-feedback" style="margin-top:15px; font-weight:bold; height:24px;"></div>
+                    <button class="test-launch-btn" onclick="nextScramble()" style="font-size:0.8rem; padding: 5px 15px;">Next Puzzle</button>
+                </div>
                 <div class="pro-tip">
                     <span><strong>Note:</strong> 3rd Person Singular (He/She) often changes the verb form (e.g., "Play" becomes "Plays").</span>
                 </div>
@@ -327,8 +367,20 @@
         </div>
 
         <div id="subpred" class="section-content">
+            <div class="card" style="border-top: 5px solid var(--purple);">
+                <h2>🕵️ Subject Hunter</h2>
+                <p>Click on the <strong>Subject</strong> in the sentence below.</p>
+                
+                <div id="hunter-box" style="font-size: 1.5rem; text-align: center; padding: 30px; background: #fdf2f8; border-radius: 10px; margin: 20px 0;">
+                    </div>
+                
+                <div style="text-align:center">
+                    <button class="test-launch-btn" onclick="loadHunterLevel()" style="background: var(--purple)">Next Sentence</button>
+                </div>
+            </div>
+
             <div class="card">
-                <h2>Subject & Predicate</h2>
+                <h2>Subject & Predicate Examples</h2>
                 <p style="margin-bottom:20px">Every complete sentence has a <strong>Doer</strong> (Subject) and <strong>Information</strong> (Predicate).</p>
                 
                 <div class="split-box">
@@ -395,6 +447,19 @@
         </div>
 
         <div id="phrases" class="section-content">
+            <div class="card">
+                <h2>⚖️ Phrase or Clause?</h2>
+                <div style="background: #1e293b; color: white; padding: 20px; border-radius: 12px; text-align: center;">
+                    <h3 id="sorter-text" style="color: #60a5fa; font-size: 1.4rem; margin-bottom: 20px;">because he is ill</h3>
+                    
+                    <div style="display: flex; gap: 20px; justify-content: center; flex-wrap:wrap;">
+                        <button onclick="guessSorter('Phrase')" style="padding: 15px 30px; border-radius: 8px; border: none; background: #fbbf24; cursor: pointer; font-weight: bold; font-size: 1rem;">Phrase</button>
+                        <button onclick="guessSorter('Clause')" style="padding: 15px 30px; border-radius: 8px; border: none; background: #34d399; cursor: pointer; font-weight: bold; font-size: 1rem;">Clause</button>
+                    </div>
+                    <p id="sorter-feedback" style="height: 20px; margin-top: 15px; color: #cbd5e1;"></p>
+                </div>
+            </div>
+
             <div class="card">
                 <h2>Phrases vs. Clauses</h2>
                 
@@ -528,7 +593,7 @@
             // --- PHRASES & CLAUSES (5 Q) ---
             { type: "Phrase/Clause", text: "'in the sky' is a:", options: ["Clause", "Phrase", "Sentence", "Subject"], correct: 1 },
             { type: "Phrase/Clause", text: "'because he is ill' is a:", options: ["Phrase", "Clause", "Simple Sentence", "Noun"], correct: 1 },
-            { type: "Phrase/Clause", text: "'A red kite' is which phrase?", options: ["Verb Phrase", "Adjective Phrase", "Adverb Phrase", "Noun Phrase"], correct: 1 }, // Technically usually NP but adjectival in function in sentence examples provided earlier
+            { type: "Phrase/Clause", text: "'A red kite' is which phrase?", options: ["Verb Phrase", "Adjective Phrase", "Adverb Phrase", "Noun Phrase"], correct: 1 }, 
             { type: "Phrase/Clause", text: "'I know where he lives.' 'where he lives' is:", options: ["Noun Clause", "Adjective Clause", "Adverb Clause", "Phrase"], correct: 0 },
             { type: "Phrase/Clause", text: "'The man who is tall.' 'who is tall' is:", options: ["Noun Clause", "Adjective Clause", "Adverb Clause", "Phrase"], correct: 1 },
 
@@ -571,6 +636,138 @@
                 </div>
             `;
         }
+
+        // --- GAME LOGIC START ---
+
+        // 1. SCRAMBLER GAME LOGIC
+        const scrambleData = [
+            { words: ["The", "sun", "rises", "in", "the", "East"], correct: "The sun rises in the East" },
+            { words: ["Do", "you", "play", "football?"], correct: "Do you play football?" },
+            { words: ["Edison", "invented", "the", "electric", "bulb"], correct: "Edison invented the electric bulb" }
+        ];
+        let scrambleIdx = 0;
+        let currentBuiltSentence = [];
+
+        function initScramble() {
+            const data = scrambleData[scrambleIdx];
+            const bank = document.getElementById('scramble-bank');
+            const slots = document.getElementById('scramble-slots');
+            
+            // Randomize words
+            let shuffled = [...data.words].sort(() => Math.random() - 0.5);
+            
+            bank.innerHTML = '';
+            slots.innerHTML = '<span style="color:#aaa; align-self:center;">(Tap words below)</span>';
+            currentBuiltSentence = [];
+            document.getElementById('scramble-feedback').innerText = '';
+
+            shuffled.forEach((word, idx) => {
+                let btn = document.createElement('div');
+                btn.className = 'word-chip';
+                btn.innerText = word;
+                btn.onclick = () => addToSlot(word, btn);
+                bank.appendChild(btn);
+            });
+        }
+
+        function addToSlot(word, btnElement) {
+            const slots = document.getElementById('scramble-slots');
+            if(currentBuiltSentence.length === 0) slots.innerHTML = ''; // Clear placeholder
+            
+            currentBuiltSentence.push(word);
+            btnElement.classList.add('used');
+            
+            let span = document.createElement('div');
+            span.className = 'slot-word';
+            span.innerText = word;
+            slots.appendChild(span);
+
+            // Auto-check
+            const target = scrambleData[scrambleIdx].correct.replace(/[?.!]/g, ''); // Simple check
+            const current = currentBuiltSentence.join(' ').replace(/[?.!]/g, '');
+            
+            if (currentBuiltSentence.length === scrambleData[scrambleIdx].words.length) {
+                const feedback = document.getElementById('scramble-feedback');
+                if (current === target) {
+                    feedback.innerHTML = '<span style="color:green">✅ Perfect!</span>';
+                } else {
+                    feedback.innerHTML = '<span style="color:red">❌ Try again</span>';
+                    setTimeout(initScramble, 1500);
+                }
+            }
+        }
+
+        function nextScramble() {
+            scrambleIdx = (scrambleIdx + 1) % scrambleData.length;
+            initScramble();
+        }
+
+        // 2. SUBJECT HUNTER LOGIC
+        const hunterLevels = [
+            { text: "My brother is tall.", targetIndex: [0, 1] }, 
+            { text: "The dog barks.", targetIndex: [0, 1] },     
+            { text: "Swimming is good.", targetIndex: [0] }     
+        ];
+        let hunterIdx = 0;
+
+        function loadHunterLevel() {
+            const container = document.getElementById('hunter-box');
+            container.innerHTML = '';
+            const data = hunterLevels[hunterIdx];
+            const words = data.text.split(' ');
+            
+            words.forEach((word, index) => {
+                let span = document.createElement('span');
+                span.className = 'hunter-word';
+                span.innerText = word;
+                span.onclick = () => checkHunter(index, span, data.targetIndex);
+                container.appendChild(span);
+            });
+            
+            hunterIdx = (hunterIdx + 1) % hunterLevels.length;
+        }
+
+        function checkHunter(clickedIndex, element, correctIndices) {
+            if (correctIndices.includes(clickedIndex)) {
+                element.classList.add('correct-sub');
+            } else {
+                element.classList.add('wrong-sub');
+                setTimeout(() => element.classList.remove('wrong-sub'), 500);
+            }
+        }
+
+        // 3. PHRASE/CLAUSE SORTER LOGIC
+        const sortItems = [
+            { text: "in the sky", type: "Phrase" },
+            { text: "because he is ill", type: "Clause" },
+            { text: "a red kite", type: "Phrase" },
+            { text: "where he lives", type: "Clause" }
+        ];
+        let sortIdx = 0;
+
+        function loadSorter() {
+            document.getElementById('sorter-text').innerText = sortItems[sortIdx].text;
+            document.getElementById('sorter-feedback').innerText = "";
+        }
+
+        function guessSorter(guess) {
+            const actual = sortItems[sortIdx].type;
+            const fb = document.getElementById('sorter-feedback');
+            
+            if(guess === actual) {
+                fb.innerText = "✅ Correct! " + (actual === 'Clause' ? "It has a Sub + Verb." : "No Sub + Verb.");
+                fb.style.color = "#4ade80";
+                setTimeout(() => {
+                    sortIdx = (sortIdx + 1) % sortItems.length;
+                    loadSorter();
+                }, 1500);
+            } else {
+                fb.innerText = "❌ Oops! Check for a Subject + Verb combo.";
+                fb.style.color = "#f87171";
+            }
+        }
+
+        // --- GAME LOGIC END ---
 
         // --- EXAM LOGIC ---
         function openExam() {
@@ -642,7 +839,11 @@
 
         // Initialize
         updateFunction('affirmative');
+        initScramble();
+        loadHunterLevel();
+        loadSorter();
 
     </script>
 </body>
+
 </html>
