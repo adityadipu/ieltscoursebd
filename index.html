@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IELTS English Course</title>
+    <title>Grammar Mastery Course</title>
+    <!-- SECURITY CHECK -->
+    <script>
+        if(localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+    </script>
     <style>
         /* --- VARIABLES & RESET --- */
         :root {
@@ -31,6 +37,19 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             position: relative;
         }
+
+        .header-top {
+            position: absolute; top: 15px; left: 20px;
+        }
+        .home-link { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; font-weight: bold; }
+        .home-link:hover { color: white; text-decoration: underline; }
+
+        .logout-btn {
+            position: absolute; top: 15px; right: 20px;
+            background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.4);
+            padding: 5px 15px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; font-weight: bold;
+        }
+        .logout-btn:hover { background: rgba(255,255,255,0.4); }
 
         h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
         .subtitle { font-size: 1.1rem; opacity: 0.9; }
@@ -63,7 +82,7 @@
             padding: 0 20px;
         }
 
-        /* --- NEW: DAILY SECTION STYLES --- */
+        /* --- DAILY SECTION STYLES --- */
         .daily-section {
             background: #ffffff;
             border-radius: 12px;
@@ -225,8 +244,13 @@
 <body>
 
     <header>
+        <div class="header-top">
+            <a href="main_home.html" class="home-link">← Back to Main Home</a>
+        </div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+        
         <div class="container">
-            <h1>IELTS Grammar Syllabus</h1>
+            <h1>Grammar Mastery Syllabus</h1>
             <p class="subtitle">Interactive Learning Path based on your curriculum</p>
             <a href="final_exam.html" class="final-exam-btn">🏆 Take Final Exam (100 Marks)</a>
         </div>
@@ -244,273 +268,37 @@
     </div>
 
     <script>
-        // --- 1. DAILY VOCABULARY DATABASE (EXPANDED TO 500 ITEMS) ---
+        // --- 1. DAILY VOCABULARY DATABASE ---
         const ieltsDatabase = [
-            // --- BATCH 1: GENERAL & ABSTRACT ---
             { w1: "Aberration", m1: "A departure from what is normal or expected.", w2: "Belligerent", m2: "Hostile and aggressive.", q: "Success is not final, failure is not fatal: It is the courage to continue that counts." },
             { w1: "Cacophony", m1: "A harsh, discordant mixture of sounds.", w2: "Debilitate", m2: "Make (someone) very weak and infirm.", q: "The only way to do great work is to love what you do." },
             { w1: "Ebullient", m1: "Cheerful and full of energy.", w2: "Facetious", m2: "Treating serious issues with inappropriate humor.", q: "Believe you can and you're halfway there." },
             { w1: "Garrulous", m1: "Excessively talkative.", w2: "Hackneyed", m2: "Lacking significance through having been overused.", q: "Your time is limited, don't waste it living someone else's life." },
-            { w1: "Iconoclast", m1: "A person who attacks cherished beliefs.", w2: "Juxtapose", m2: "Place close together for contrasting effect.", q: "The future belongs to those who believe in the beauty of their dreams." },
-
-            // --- BATCH 2: ACADEMIC & FORMAL ---
-            { w1: "Ameliorate", m1: "Make (something bad) better.", w2: "Detrimental", m2: "Tending to cause harm.", q: "Education is the most powerful weapon which you can use to change the world." },
-            { w1: "Elucidate", m1: "Make (something) clear; explain.", w2: "Feasible", m2: "Possible to do easily or conveniently.", q: "It always seems impossible until it's done." },
-            { w1: "Implement", m1: "Put (a decision, plan, agreement) into effect.", w2: "Mitigate", m2: "Make less severe, serious, or painful.", q: "Start where you are. Use what you have. Do what you can." },
-            { w1: "Paradigm", m1: "A typical example or pattern of something.", w2: "Substantiate", m2: "Provide evidence to support or prove the truth of.", q: "The secret of getting ahead is getting started." },
-            { w1: "Ubiquitous", m1: "Present, appearing, or found everywhere.", w2: "Viable", m2: "Capable of working successfully.", q: "Quality is not an act, it is a habit." },
-
-            // --- BATCH 3: ENVIRONMENT & SOCIETY ---
-            { w1: "Biodegradable", m1: "Capable of being decomposed by bacteria.", w2: "Contaminate", m2: "Make impure by exposure to polluting substances.", q: "Earth provides enough to satisfy every man's needs, but not every man's greed." },
-            { w1: "Deplete", m1: "Use up the supply or resources of.", w2: "Ecological", m2: "Relating to the relation of living organisms to one another.", q: "The Earth does not belong to us: we belong to the Earth." },
-            { w1: "Finite", m1: "Having limits or bounds.", w2: "Habitat", m2: "The natural home or environment of an animal.", q: "Nature is not a place to visit. It is home." },
-            { w1: "Negligible", m1: "So small or unimportant as to be not worth considering.", w2: "Sustainable", m2: "Able to be maintained at a certain rate or level.", q: "Action is the foundational key to all success." },
-            { w1: "Unprecedented", m1: "Never done or known before.", w2: "Vital", m2: "Absolutely necessary or important; essential.", q: "Small acts, when multiplied by millions of people, can transform the world." },
-
-            // --- BATCH 4: TECHNOLOGY & INNOVATION ---
-            { w1: "Automate", m1: "Convert (a process) to be operated by automatic equipment.", w2: "Breakthrough", m2: "A sudden, dramatic, and important discovery.", q: "Technology is best when it brings people together." },
-            { w1: "Cutting-edge", m1: "At the most recent stage of development.", w2: "Digital", m2: "Involving or relating to the use of computer technology.", q: "Innovation distinguishes between a leader and a follower." },
-            { w1: "Enhance", m1: "Intensify, increase, or further improve the quality.", w2: "Intuitive", m2: "Using or based on what one feels to be true.", q: "The science of today is the technology of tomorrow." },
-            { w1: "Obsolete", m1: "No longer produced or used; out of date.", w2: "Revolutionize", m2: "Change (something) radically or fundamentally.", q: "Simplicity is the ultimate sophistication." },
-            { w1: "Sophisticated", m1: "Developed to a high degree of complexity.", w2: "Virtual", m2: "Not physically existing as such but made by software.", q: "It’s not a bug. It’s an undocumented feature." },
-
-            // --- BATCH 5: WORK & BUSINESS ---
-            { w1: "Acumen", m1: "The ability to make good judgments and quick decisions.", w2: "Bureaucracy", m2: "Excessively complicated administrative procedure.", q: "Choose a job you love, and you will never have to work a day in your life." },
-            { w1: "Commodity", m1: "A raw material or primary agricultural product.", w2: "Deficit", m2: "The amount by which something is too small.", q: "Opportunities don't happen, you create them." },
-            { w1: "Entrepreneur", m1: "A person who organizes and operates a business.", w2: "Fluctuate", m2: "Rise and fall irregularly in number or amount.", q: "Success is not the key to happiness. Happiness is the key to success." },
-            { w1: "Incentive", m1: "A thing that motivates or encourages one to do something.", w2: "Lucrative", m2: "Producing a great deal of profit.", q: "Don't watch the clock; do what it does. Keep going." },
-            { w1: "Merger", m1: "A combination of two things, especially companies.", w2: "Niche", m2: "A comfortable or suitable position in life or employment.", q: "Success usually comes to those who are too busy to be looking for it." },
-
-            // --- BATCH 6: EMOTIONS & PERSONALITY ---
-            { w1: "Altruistic", m1: "Showing a disinterested and selfless concern for others.", w2: "Benevolent", m2: "Well meaning and kindly.", q: "No act of kindness, no matter how small, is ever wasted." },
-            { w1: "Conscientious", m1: "Wishing to do one's work or duty well and thoroughly.", w2: "Diligent", m2: "Having or showing care and conscientiousness in one's work.", q: "Genius is 1% inspiration and 99% perspiration." },
-            { w1: "Empathetic", m1: "Showing an ability to understand the feelings of another.", w2: "Fortitude", m2: "Courage in pain or adversity.", q: "What lies behind us and what lies before us are tiny matters compared to what lies within us." },
-            { w1: "Gregarious", m1: "Fond of company; sociable.", w2: "Humble", m2: "Having or showing a modest or low estimate of one's own importance.", q: "Stay hungry, stay foolish." },
-            { w1: "Introverted", m1: "A shy, reticent person.", w2: "Jovial", m2: "Cheerful and friendly.", q: "Happiness depends upon ourselves." },
-
-            // --- BATCH 7: HEALTH & MEDICINE ---
-            { w1: "Acute", m1: "(Of a bad situation) experienced to a severe or intense degree.", w2: "Benign", m2: "(Of a disease) not harmful in effect.", q: "Health is the greatest gift, contentment the greatest wealth." },
-            { w1: "Chronic", m1: "(Of an illness) persisting for a long time.", w2: "Diagnosis", m2: "The identification of the nature of an illness.", q: "To keep the body in good health is a duty." },
-            { w1: "Epidemic", m1: "A widespread occurrence of an infectious disease.", w2: "Fatigue", m2: "Extreme tiredness resulting from mental or physical exertion.", q: "A healthy outside starts from the inside." },
-            { w1: "Holistic", m1: "Characterized by the treatment of the whole person.", w2: "Immune", m2: "Resistant to a particular infection or toxin.", q: "Take care of your body. It's the only place you have to live." },
-            { w1: "Sedentary", m1: "Tending to spend much time seated; somewhat inactive.", w2: "Therapeutic", m2: "Relating to the healing of disease.", q: "Let food be thy medicine and medicine be thy food." },
-
-            // --- BATCH 8: ARTS & CULTURE ---
-            { w1: "Aesthetic", m1: "Concerned with beauty or the appreciation of beauty.", w2: "Contemporary", m2: "Living or occurring at the same time.", q: "Creativity takes courage." },
-            { w1: "Eclectic", m1: "Deriving ideas, style, or taste from a broad and diverse range.", w2: "Genre", m2: "A category of artistic composition.", q: "Every artist was first an amateur." },
-            { w1: "Improvise", m1: "Create and perform (music, drama, or verse) spontaneously.", w2: "Juxtaposition", m2: "The fact of two things being seen or placed close together.", q: "Art is not what you see, but what you make others see." },
-            { w1: "Nuance", m1: "A subtle difference in or shade of meaning.", w2: "Ornate", m2: "Made in an intricate shape or decorated with complex patterns.", q: "Everything you can imagine is real." },
-            { w1: "Profound", m1: "Very great or intense.", w2: "Renaissance", m2: "The revival of art and literature.", q: "Simplicity is the ultimate form of sophistication." },
-
-            // --- BATCH 9: TRAVEL & PLACES ---
-            { w1: "Accommodation", m1: "A room, group of rooms, or building in which someone may live or stay.", w2: "Bustling", m2: "(Of a place) full of activity.", q: "The world is a book and those who do not travel read only one page." },
-            { w1: "Commute", m1: "Travel some distance between one's home and place of work.", w2: "Destination", m2: "The place to which someone or something is going.", q: "Not all those who wander are lost." },
-            { w1: "Exotic", m1: "Originating in or characteristic of a distant foreign country.", w2: "Itinerary", m2: "A planned route or journey.", q: "Life is either a daring adventure or nothing." },
-            { w1: "Picturesque", m1: "Visually attractive, especially in a quaint or pretty style.", w2: "Remote", m2: "(Of a place) situated far from the main centers of population.", q: "Travel is the only thing you buy that makes you richer." },
-            { w1: "Tranquil", m1: "Free from disturbance; calm.", w2: "Unspoiled", m2: "(Of a place) not marred by development.", q: "To travel is to live." },
-
-            // --- BATCH 10: COMPLEX & HIGH-LEVEL ---
-            { w1: "Acquiesce", m1: "Accept something reluctantly but without protest.", w2: "Capitulate", m2: "Cease to resist an opponent or an unwelcome demand.", q: "He who has a why to live can bear almost any how." },
-            { w1: "Deleterious", m1: "Causing harm or damage.", w2: "Ephemeral", m2: "Lasting for a very short time.", q: "The unexamined life is not worth living." },
-            { w1: "Fastidious", m1: "Very attentive to and concerned about accuracy and detail.", w2: "Gregarious", m2: "Fond of company; sociable.", q: "I think, therefore I am." },
-            { w1: "Haughty", m1: "Arrogantly superior and disdainful.", w2: "Ineffable", m2: "Too great or extreme to be expressed or described in words.", q: "Knowledge is power." },
-            { w1: "Juxtapose", m1: "Place or deal with close together for contrasting effect.", w2: "Languid", m2: "Disinclination for physical exertion or effort.", q: "Time is the wisest counselor of all." },
-
-            // --- BATCH 11: LOGIC & REASONING ---
-            { w1: "Deduce", m1: "Arrive at (a fact) by reasoning.", w2: "Empirical", m2: "Based on observation rather than theory.", q: "Logic will get you from A to B. Imagination will take you everywhere." },
-            { w1: "Fallacy", m1: "A mistaken belief based on unsound argument.", w2: "Hypothetical", m2: "Based on a suggested idea or theory.", q: "A problem well stated is a problem half solved." },
-            { w1: "Plausible", m1: "Seeming reasonable or probable.", w2: "Rationalize", m2: "Attempt to explain or justify behavior.", q: "The unexamined life is not worth living." },
-            { w1: "Skepticism", m1: "A skeptical attitude; doubt as to the truth.", w2: "Subjective", m2: "Based on personal feelings rather than facts.", q: "Doubt is the beginning, not the end, of wisdom." },
-            { w1: "Tentative", m1: "Not certain or fixed; provisional.", w2: "Valid", m2: "Having a sound basis in logic or fact.", q: "Truth is ever to be found in simplicity." },
-
-            // --- BATCH 12: SOCIAL ISSUES & LAW ---
-            { w1: "Advocacy", m1: "Public support for or recommendation of a cause.", w2: "Censure", m2: "Express severe disapproval of.", q: "Injustice anywhere is a threat to justice everywhere." },
-            { w1: "Discrimination", m1: "Unjust treatment of different categories of people.", w2: "Egalitarian", m2: "Believing in the principle that all people are equal.", q: "Equality is the soul of liberty." },
-            { w1: "Illicit", m1: "Forbidden by law, rules, or custom.", w2: "Mandate", m2: "An official order or commission to do something.", q: "Laws are spider webs through which the big flies pass and the little ones get caught." },
-            { w1: "Penalize", m1: "Subject to some form of punishment.", w2: "Rehabilitate", m2: "Restore (someone) to health or normal life.", q: "Justice consists not in being neutral between right and wrong, but in finding out the right and upholding it." },
-            { w1: "Scrutiny", m1: "Critical observation or examination.", w2: "Verdict", m2: "A decision on a disputed issue in a civil or criminal case.", q: "The moral arc of the universe is long, but it bends toward justice." },
-
-            // --- BATCH 13: GLOBALIZATION & ECONOMY ---
-            { w1: "Affluent", m1: "Having a great deal of money; wealthy.", w2: "Consumerism", m2: "The protection or promotion of the interests of consumers.", q: "The goal of an economy is to meet the needs of people." },
-            { w1: "Deficit", m1: "The amount by which something is too small.", w2: "Fiscal", m2: "Relating to government revenue, especially taxes.", q: "Beware of little expenses; a small leak will sink a great ship." },
-            { w1: "Gross", m1: "Income before tax or other deductions.", w2: "Inflation", m2: "A general increase in prices and fall in the purchasing value of money.", q: "Economy is the method by which we prepare today to afford the improvements of tomorrow." },
-            { w1: "Monopoly", m1: "The exclusive possession or control of the supply or trade.", w2: "Outsource", m2: "Obtain (goods or a service) from an outside or foreign supplier.", q: "Competition is the keenest spur to progress." },
-            { w1: "Subsidy", m1: "Money granted by the government to keep prices low.", w2: "Tariff", m2: "A tax or duty to be paid on a particular class of imports.", q: "Trade is the natural enemy of war." },
-
-            // --- BATCH 14: PSYCHOLOGY & BEHAVIOR ---
-            { w1: "Cognitive", m1: "Relating to the mental action of acquiring knowledge.", w2: "Conditioning", m2: "The process of training a person or animal.", q: "The mind is its own place, and in itself can make a heaven of hell, a hell of heaven." },
-            { w1: "Delusion", m1: "A belief that is firmly maintained despite being contradicted by reality.", w2: "Extrovert", m2: "An outgoing, overtly expressive person.", q: "Knowing yourself is the beginning of all wisdom." },
-            { w1: "Innate", m1: "Inborn; natural.", w2: "Narcissism", m2: "Excessive interest in or admiration of oneself.", q: "The pendulum of the mind oscillates between sense and nonsense." },
-            { w1: "Pathological", m1: "Involving, caused by, or of the nature of a disease (mental).", w2: "Psyche", m2: "The human soul, mind, or spirit.", q: "Your vision will become clear only when you can look into your own heart." },
-            { w1: "Subconscious", m1: "Of or concerning the part of the mind of which one is not fully aware.", w2: "Trauma", m2: "A deeply distressing or disturbing experience.", q: "Out of suffering have emerged the strongest souls." },
-
-            // --- BATCH 15: ACADEMIC CONNECTORS ---
-            { w1: "Conversely", m1: "Introducing a statement that reverses the one just made.", w2: "Furthermore", m2: "In addition; besides.", q: "Language is the dress of thought." },
-            { w1: "Hence", m1: "As a consequence; for this reason.", w2: "Nevertheless", m2: "In spite of that; notwithstanding.", q: "Brevity is the soul of wit." },
-            { w1: "Albeit", m1: "Although.", w2: "Hereby", m2: "As a result of this document or utterance.", q: "Words are, in my not-so-humble opinion, our most inexhaustible source of magic." },
-            { w1: "Notwithstanding", m1: "In spite of.", w2: "Whereas", m2: "In contrast or comparison with the fact that.", q: "The limits of my language mean the limits of my world." },
-            { w1: "Thereby", m1: "By that means; as a result of that.", w2: "Whereby", m2: "By which.", q: "To speak is to blunder; but to recover is to live." },
-            
-            // --- BATCH 16: ADVANCED ADJECTIVES ---
-            { w1: "Arduous", m1: "Involving or requiring strenuous effort.", w2: "Convoluted", m2: "Extremely complex and difficult to follow.", q: "Perseverance is failing 19 times and succeeding the 20th." },
-            { w1: "Didactic", m1: "Intended to teach, particularly in having moral instruction.", w2: "Exemplary", m2: "Serving as a desirable model; representing the best of its kind.", q: "Example is not the main thing in influencing others. It is the only thing." },
-            { w1: "Impeccable", m1: "In accordance with the highest standards; faultless.", w2: "Mundane", m2: "Lacking interest or excitement; dull.", q: "Strive for perfection in everything you do." },
-            { w1: "Ostentatious", m1: "Characterized by vulgar or pretentious display.", w2: "Pristine", m2: "In its original condition; unspoiled.", q: "Beauty is power; a smile is its sword." },
-            { w1: "Superfluous", m1: "Unnecessary, especially through being more than enough.", w2: "Voracious", m2: "Wanting or devouring great quantities of food or knowledge.", q: "Stay hungry for knowledge." },
-
-            // --- BATCH 17: POLITICS & GOVERNANCE ---
-            { w1: "Ratify", m1: "Sign or give formal consent to (a treaty, contract, or agreement).", w2: "Sovereign", m2: "Possessing supreme or ultimate power.", q: "Liberty means responsibility. That is why most men dread it." },
-            { w1: "Constituent", m1: "Being a voting member of a community.", w2: "Partisan", m2: "Prejudiced in favor of a particular cause.", q: "Democracy is the government of the people, by the people, for the people." },
-            { w1: "Autocracy", m1: "A system of government by one person with absolute power.", w2: "Diplomatic", m2: "Of or concerning the profession, activity, or skill of managing international relations.", q: "Diplomacy is the art of letting someone else have your way." },
-            { w1: "Referendum", m1: "A general vote by the electorate on a single political question.", w2: "Bipartisan", m2: "Involving the agreement or cooperation of two political parties.", q: "A house divided against itself cannot stand." },
-            { w1: "Totalitarian", m1: "Relating to a system of government that is centralized and dictatorial.", w2: "Anarchy", m2: "A state of disorder due to absence or nonrecognition of authority.", q: "Freedom is never voluntarily given by the oppressor; it must be demanded by the oppressed." },
-
-            // --- BATCH 18: HIGHER EDUCATION ---
-            { w1: "Pedagogy", m1: "The method and practice of teaching.", w2: "Curriculum", m2: "The subjects comprising a course of study in a school or college.", q: "Education is the passport to the future." },
-            { w1: "Autodidact", m1: "A self-taught person.", w2: "Syllabus", m2: "An outline of the subjects in a course of study or teaching.", q: "Self-education is, I firmly believe, the only kind of education there is." },
-            { w1: "Tenure", m1: "Guaranteed permanent employment, especially as a teacher or professor.", w2: "Dissertation", m2: "A long essay on a particular subject, especially one written for a university degree.", q: "The roots of education are bitter, but the fruit is sweet." },
-            { w1: "Alumni", m1: "A graduate or former student of a particular school, college, or university.", w2: "Matriculate", m2: "Be enrolled at a college or university.", q: "Education is what remains after one has forgotten what one has learned in school." },
-            { w1: "Prerequisite", m1: "A thing that is required as a prior condition for something else.", w2: "Colloquium", m2: "An academic conference or seminar.", q: "An investment in knowledge pays the best interest." },
-
-            // --- BATCH 19: ENVIRONMENTAL SCIENCE ---
-            { w1: "Anthropogenic", m1: "(Chiefly of environmental pollution and pollutants) originating in human activity.", w2: "Biosphere", m2: "The regions of the surface, atmosphere, and hydrosphere of the earth occupied by living organisms.", q: "We are the first generation to feel the impact of climate change and the last generation that can do something about it." },
-            { w1: "Conservation", m1: "Prevention of wasteful use of a resource.", w2: "Erosion", m2: "The process of eroding or being eroded by wind, water, or other natural agents.", q: "Nature never hurries, yet everything is accomplished." },
-            { w1: "Geothermal", m1: "Relating to or produced by the internal heat of the earth.", w2: "Photovoltaic", m2: "Relating to the production of electric current at the junction of two substances exposed to light.", q: "The sun is the only safe nuclear reactor, situated 93 million miles away." },
-            { w1: "Seismic", m1: "Relating to earthquakes or other vibrations of the earth and its crust.", w2: "Tectonic", m2: "Relating to the structure of the earth's crust and the large-scale processes which take place within it.", q: "Geology gives us a sense of patience." },
-            { w1: "Indigenous", m1: "Originating or occurring naturally in a particular place; native.", w2: "Endemic", m2: "(Of a disease or condition) regularly found among particular people or in a certain area.", q: "The land is the only thing in the world worth working for." },
-
-            // --- BATCH 20: DIGITAL TECHNOLOGY ---
-            { w1: "Algorithm", m1: "A process or set of rules to be followed in calculations or other problem-solving operations.", w2: "Encryption", m2: "The process of converting information or data into a code, especially to prevent unauthorized access.", q: "Computers are incredibly fast, accurate, and stupid." },
-            { w1: "Bandwidth", m1: "The energy or mental capacity required to deal with a situation.", w2: "Interface", m2: "A point where two systems, subjects, organizations, etc., meet and interact.", q: "The real danger is not that computers will begin to think like men, but that men will begin to think like computers." },
-            { w1: "Prototype", m1: "A first, typical or preliminary model of something.", w2: "Latency", m2: "The delay before a transfer of data begins following an instruction.", q: "Failure is simply the opportunity to begin again, this time more intelligently." },
-            { w1: "Autonomous", m1: "(Of a device) capable of operating without direct human control.", w2: "Cybersecurity", m2: "The state of being protected against the criminal or unauthorized use of electronic data.", q: "Security is a process, not a product." },
-            { w1: "Proprietary", m1: "Relating to an owner or ownership.", w2: "Open-source", m2: "Denoting software for which the original source code is made freely available.", q: "Information wants to be free." },
-
-            // --- BATCH 21: LAW & CRIMINOLOGY ---
-            { w1: "Litigation", m1: "The process of taking legal action.", w2: "Defendant", m2: "An individual, company, or institution sued or accused in a court of law.", q: "Justice delayed is justice denied." },
-            { w1: "Plaintiff", m1: "A person who brings a case against another in a court of law.", w2: "Affidavit", m2: "A written statement confirmed by oath or affirmation, for use as evidence in court.", q: "The law is reason, free from passion." },
-            { w1: "Jurisdiction", m1: "The official power to make legal decisions and judgments.", w2: "Acquit", m2: "Free (someone) from a criminal charge by a verdict of not guilty.", q: "It is better that ten guilty persons escape than that one innocent suffer." },
-            { w1: "Indictment", m1: "A formal charge or accusation of a serious crime.", w2: "Subpoena", m2: "A writ ordering a person to attend a court.", q: "The life of the law has not been logic: it has been experience." },
-            { w1: "Arbitration", m1: "The use of an arbitrator to settle a dispute.", w2: "Liability", m2: "The state of being responsible for something, especially by law.", q: "Ignorance of the law excuses no one." },
-
-            // --- BATCH 22: SOCIOLOGY ---
-            { w1: "Demographics", m1: "Statistical data relating to the population and particular groups within it.", w2: "Gentrification", m2: "The process of renovating and improving a house or district so that it conforms to middle-class taste.", q: "Society is like a stew. If you don't stir it frequently, the scum floats to the top." },
-            { w1: "Polarization", m1: "Division into two sharply contrasting groups or sets of opinions or beliefs.", w2: "Stereotype", m2: "A widely held but fixed and oversimplified image or idea of a particular type of person or thing.", q: "We see the world, not as it is, but as we are." },
-            { w1: "Norms", m1: "Something that is usual, typical, or standard.", w2: "Mores", m2: "The essential or characteristic customs and conventions of a community.", q: "Culture does not make people. People make culture." },
-            { w1: "Assimilation", m1: "The process of taking in and fully understanding information or ideas.", w2: "Segregation", m2: "The action or state of setting someone or something apart from others.", q: "Diversity is the mix. Inclusion is making the mix work." },
-            { w1: "Meritocracy", m1: "Government or the holding of power by people selected on the basis of their ability.", w2: "Nepotism", m2: "The practice among those with power or influence of favoring relatives or friends.", q: "We must learn to live together as brothers or perish together as fools." },
-
-            // --- BATCH 23: ABSTRACT CONCEPTS II ---
-            { w1: "Ambivalence", m1: "The state of having mixed feelings or contradictory ideas about something or someone.", w2: "Cogent", m2: "(Of an argument or case) clear, logical, and convincing.", q: "The test of a first-rate intelligence is the ability to hold two opposed ideas in the mind at the same time." },
-            { w1: "Delineate", m1: "Describe or portray (something) precisely.", w2: "Euphemism", m2: "A mild or indirect word or expression substituted for one considered to be too harsh or blunt.", q: "Words have the power to destroy or heal." },
-            { w1: "Paradox", m1: "A situation, person, or thing that combines contradictory features or qualities.", w2: "Rhetoric", m2: "The art of effective or persuasive speaking or writing.", q: "Speech is power: speech is to persuade, to convert, to compel." },
-            { w1: "Semantics", m1: "The branch of linguistics and logic concerned with meaning.", w2: "Synthesize", m2: "Combine (a number of things) into a coherent whole.", q: "Language creates reality." },
-            { w1: "Ubiquity", m1: "The fact of appearing everywhere or of being very common.", w2: "Vicarious", m2: "Experienced in the imagination through the feelings or actions of another person.", q: "We read to know we are not alone." },
-
-            // --- BATCH 24: CORPORATE & OFFICE ---
-            { w1: "Collaboration", m1: "The action of working with someone to produce or create something.", w2: "Delegate", m2: "Entrust (a task or responsibility) to another person.", q: "Alone we can do so little; together we can do so much." },
-            { w1: "Logistics", m1: "The detailed coordination of a complex operation involving many people, facilities, or supplies.", w2: "Personnel", m2: "People employed in an organization or engaged in an organized undertaking such as military service.", q: "Plans are nothing; planning is everything." },
-            { w1: "Synergy", m1: "The interaction or cooperation of two or more organizations to produce a combined effect greater than the sum of their separate effects.", w2: "Stakeholder", m2: "A person with an interest or concern in something, especially a business.", q: "Coming together is a beginning, staying together is progress, and working together is success." },
-            { w1: "Quarterly", m1: "Done, produced, or occurring once every quarter of a year.", w2: "Revenue", m2: "Income, especially when of a company or organization and of a substantial nature.", q: "Profit is not the legitimate purpose of business. The legitimate purpose is to provide a service needed and useful to people." },
-            { w1: "Benchmark", m1: "A standard or point of reference against which things may be compared or assessed.", w2: "Diversification", m2: "The process of a business enlarging or varying its range of products or field of operation.", q: "Do not put all your eggs in one basket." },
-
-            // --- BATCH 25: MEDICINE II ---
-            { w1: "Metabolic", m1: "Relating to the metabolism of a living organism.", w2: "Pandemic", m2: "(Of a disease) prevalent over a whole country or the world.", q: "An ounce of prevention is worth a pound of cure." },
-            { w1: "Respiratory", m1: "Relating to or affecting respiration or the organs of respiration.", w2: "Symptomatic", m2: "Serving as a symptom or sign, especially of something undesirable.", q: "Healing is a matter of time, but it is sometimes also a matter of opportunity." },
-            { w1: "Vaccination", m1: "Treatment with a vaccine to produce immunity against a disease.", w2: "Chronic", m2: "(Of an illness) persisting for a long time or constantly recurring.", q: "Science knows no country, because knowledge belongs to humanity." },
-            { w1: "Placebo", m1: "A harmless pill, medicine, or procedure prescribed more for the psychological benefit to the patient than for any physiological effect.", w2: "Prognosis", m2: "The likely course of a disease or ailment.", q: "The art of medicine consists of amusing the patient while nature cures the disease." },
-            { w1: "Cardiovascular", m1: "Relating to the heart and blood vessels.", w2: "Neurological", m2: "Relating to the anatomy, functions, and organic disorders of nerves and the nervous system.", q: "The human body is the best picture of the human soul." },
-
-            // --- BATCH 26: ASTRONOMY & SPACE ---
-            { w1: "Celestial", m1: "Positioned in or relating to the sky, or outer space as observed in astronomy.", w2: "Nebula", m2: "A cloud of gas and dust in outer space.", q: "We are all in the gutter, but some of us are looking at the stars." },
-            { w1: "Orbit", m1: "The curved path of a celestial object or spacecraft around a star, planet, or moon.", w2: "Galaxy", m2: "A system of millions or billions of stars, together with gas and dust.", q: "Somewhere, something incredible is waiting to be known." },
-            { w1: "Eclipse", m1: "An obscuring of the light from one celestial body by the passage of another between it and the observer.", w2: "Meteor", m2: "A small body of matter from outer space that enters the earth's atmosphere.", q: "Keep your eyes on the stars, and your feet on the ground." },
-            { w1: "Telescope", m1: "An optical instrument designed to make distant objects appear nearer.", w2: "Constellation", m2: "A group of stars forming a recognizable pattern.", q: "For small creatures such as we the vastness is bearable only through love." },
-            { w1: "Gravity", m1: "The force that attracts a body toward the center of the earth.", w2: "Cosmos", m2: "The universe seen as a well-ordered whole.", q: "The universe is under no obligation to make sense to you." },
-
-            // --- BATCH 27: ARCHITECTURE ---
-            { w1: "Facade", m1: "The face of a building, especially the principal front that looks onto a street or open space.", w2: "Aesthetic", m2: "Concerned with beauty or the appreciation of beauty.", q: "Architecture is frozen music." },
-            { w1: "Structure", m1: "The arrangement of and relations between the parts or elements of something complex.", w2: "Innovation", m2: "The action or process of innovating.", q: "Form follows function." },
-            { w1: "Sustainability", m1: "The ability to be maintained at a certain rate or level.", w2: "Urban", m2: "In, relating to, or characteristic of a city or town.", q: "We shape our buildings; thereafter they shape us." },
-            { w1: "Restoration", m1: "The action of returning something to a former owner, place, or condition.", w2: "Modernism", m2: "A style or movement in the arts that aims to break with classical and traditional forms.", q: "Less is more." },
-            { w1: "Skyscraper", m1: "A very tall modern building, typically one with many stories.", w2: "Landscape", m2: "All the visible features of an area of countryside or land.", q: "Architecture should speak of its time and place, but yearn for timelessness." },
-
-            // --- BATCH 28: HISTORY ---
-            { w1: "Chronicle", m1: "A factual written account of important or historical events in the order of their occurrence.", w2: "Era", m2: "A long and distinct period of history with a particular feature or characteristic.", q: "Those who cannot remember the past are condemned to repeat it." },
-            { w1: "Heritage", m1: "Property that is or may be inherited; an inheritance.", w2: "Lineage", m2: "Lineal descent from an ancestor; ancestry or pedigree.", q: "History is a set of lies agreed upon." },
-            { w1: "Archaeology", m1: "The study of human history and prehistory through the excavation of sites.", w2: "Artifact", m2: "An object made by a human being, typically an item of cultural or historical interest.", q: "The more you know about the past, the better prepared you are for the future." },
-            { w1: "Civilization", m1: "The stage of human social and cultural development and organization that is considered most advanced.", w2: "Empire", m2: "An extensive group of states or countries under a single supreme authority.", q: "History is written by the victors." },
-            { w1: "Revolution", m1: "A forcible overthrow of a government or social order in favor of a new system.", w2: "Legacy", m2: "An amount of money or property left to someone in a will.", q: "We are not makers of history. We are made by history." },
-
-            // --- BATCH 29: PHYSICS ---
-            { w1: "Kinetic", m1: "Relating to or resulting from motion.", w2: "Momentum", m2: "The quantity of motion of a moving body.", q: "Energy cannot be created or destroyed, it can only be changed from one form to another." },
-            { w1: "Quantum", m1: "A discrete quantity of energy proportional in magnitude to the frequency of the radiation it represents.", w2: "Relativity", m2: "The absence of standards of absolute and universal application.", q: "Everything is relative." },
-            { w1: "Velocity", m1: "The speed of something in a given direction.", w2: "Friction", m2: "The resistance that one surface or object encounters when moving over another.", q: "For every action, there is an equal and opposite reaction." },
-            { w1: "Thermodynamics", m1: "The branch of physical science that deals with the relations between heat and other forms of energy.", w2: "Vacuum", m2: "A space entirely devoid of matter.", q: "Nature abhors a vacuum." },
-            { w1: "Particle", m1: "A minute portion of matter.", w2: "Radiation", m2: "The emission of energy as electromagnetic waves.", q: "Imagination is more important than knowledge." },
-
-            // --- BATCH 30: BIOLOGY ---
-            { w1: "Organism", m1: "An individual animal, plant, or single-celled life form.", w2: "Cellular", m2: "Relating to or consisting of living cells.", q: "Life finds a way." },
-            { w1: "Genetic", m1: "Relating to genes or heredity.", w2: "Mutation", m2: "The changing of the structure of a gene.", q: "Evolution is the secret for the next step." },
-            { w1: "Evolution", m1: "The process by which different kinds of living organisms are thought to have developed.", w2: "Species", m2: "A group of living organisms consisting of similar individuals capable of exchanging genes or interbreeding.", q: "It is not the strongest of the species that survive, but the one most responsive to change." },
-            { w1: "Photosynthesis", m1: "The process by which green plants use sunlight to synthesize foods.", w2: "Metabolism", m2: "The chemical processes that occur within a living organism in order to maintain life.", q: "Biology is the study of complex things that appear to have been designed for a purpose." },
-            { w1: "Ecology", m1: "The branch of biology that deals with the relations of organisms to one another and to their physical surroundings.", w2: "Adaptation", m2: "The action or process of adapting or being adapted.", q: "Nothing in biology makes sense except in the light of evolution." }
+            { w1: "Iconoclast", m1: "A person who attacks cherished beliefs.", w2: "Juxtapose", m2: "Place close together for contrasting effect.", q: "The future belongs to those who believe in the beauty of their dreams." }
         ];
-
-        // --- AUTOMATIC GENERATOR TO REACH 500 LINES (1000 WORDS) ---
-        // This ensures your app runs perfectly without crashing due to file size.
-        const fillerRoots = ["Macro", "Micro", "Poly", "Mono", "Hyper", "Hypo", "Inter", "Intra", "Multi", "Omni", "Auto", "Tele", "Circum", "Contra", "Super", "Sub", "Trans", "Uni", "Bi", "Tri"];
-        const fillerSuffixes = ["graphic", "nomic", "logy", "scopy", "metry", "biosis", "plasm", "chrome", "lithic", "morphic", "phobia", "philia", "synthesis", "genesis", "stasis", "kinesis", "tropism", "naut", "vorous", "centric"];
-
-        function generateFiller() {
-            const currentLength = ieltsDatabase.length;
-            const targetLength = 500;
-            
-            for (let i = currentLength; i < targetLength; i++) {
-                const root1 = fillerRoots[i % fillerRoots.length];
-                const suffix1 = fillerSuffixes[(i + 3) % fillerSuffixes.length];
-                const word1 = `${root1}${suffix1}`;
-                
-                const root2 = fillerRoots[(i + 5) % fillerRoots.length];
-                const suffix2 = fillerSuffixes[(i + 7) % fillerSuffixes.length];
-                const word2 = `${root2}${suffix2}`;
-                
-                ieltsDatabase.push({
-                    w1: word1,
-                    m1: `Scientific or academic term relating to ${root1.toLowerCase()} structures.`,
-                    w2: word2,
-                    m2: `Theoretical concept involving ${suffix2.toLowerCase()} principles.`,
-                    q: "Consistency is the key to mastery in any discipline."
-                });
-            }
-        }
-        
-        // Execute the generator immediately
-        generateFiller();
-
 
         // --- 2. DAILY LOGIC (Selects content based on Date) ---
         function renderDailyDose() {
             const container = document.getElementById('dailySection');
             const date = new Date();
             
-            // Format Date for display (e.g., "Monday, Oct 24")
+            // Format Date for display
             const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
             const dateString = date.toLocaleDateString('en-US', options);
 
-            // Calculate "Day of the Year" (1-366) to pick an index
+            // Calculate "Day of the Year"
             const start = new Date(date.getFullYear(), 0, 0);
             const diff = date - start;
             const oneDay = 1000 * 60 * 60 * 24;
             const dayOfYear = Math.floor(diff / oneDay);
             
-            // Cycle through the database (if day 500, and we have 5 items, it takes index 0)
+            // Cycle through database
             const index = dayOfYear % ieltsDatabase.length; 
             const todayContent = ieltsDatabase[index];
 
             container.innerHTML = `
                 <div class="daily-header">
-                    <span>⚡ Daily IELTS Dose</span>
+                    <span>⚡ Daily Grammar Dose</span>
                     <span>📅 ${dateString}</span>
                 </div>
                 <div class="daily-content">
@@ -538,35 +326,35 @@
         // --- 3. EXISTING SYLLABUS DATA ---
         const syllabusData = [
             {
-                id: 1, title: "Sentence", link: "sentence.html", color: "border-blue", note: "", 
+                id: 1, title: "Sentence", link: "module1.html", color: "border-blue", note: "", 
                 content: ["<strong>Structure:</strong> Simple, Complex, Compound", "<strong>Types:</strong> Affirmative, Negative, Interrogative", "Negative-Interrogative", "Imperative, Exclamatory"]
             },
             {
-                id: 2, title: "Part of Speech", link: "partofspeech.html", color: "border-green", note: "Comprehensive List",
+                id: 2, title: "Part of Speech", link: "module2.html", color: "border-green", note: "Comprehensive List",
                 content: ["Noun, Pronoun, Adjective", "<strong>Verb:</strong> Finite, Infinite, Modal, Aux., Helping, Action", "Adverb, Preposition", "Conjunction, Interjection"]
             },
             {
-                id: 3, title: "Tense", link: "tense.html", color: "border-purple", note: "",
+                id: 3, title: "Tense", link: "module3.html", color: "border-purple", note: "",
                 content: ["<strong>Present:</strong> Indefinite, Continuous, Perfect, Perfect Continuous", "<strong>Past:</strong> (All forms)", "<strong>Future:</strong> (All forms)"]
             },
             {
-                id: 4, title: "Voice Change", link: "passive.html", color: "border-orange", note: "(Without Subject)",
+                id: 4, title: "Voice Change", link: "module4.html", color: "border-orange", note: "(Without Subject)",
                 content: ["Active to Passive conversion", "Handling implicit subjects", "Standard transformation rules"]
             },
             {
-                id: 5, title: "Narration", link: "narration.html", color: "border-blue", note: "Ex: Someone says that I will be present",
+                id: 5, title: "Narration", link: "module5.html", color: "border-blue", note: "Ex: Someone says that I will be present",
                 content: ["Direct to Indirect Speech", "Reporting Verbs", "Tense changes in narration"]
             },
             {
-                id: 6, title: "Articles", link: "articles.html", color: "border-green", note: "",
+                id: 6, title: "Articles", link: "module6.html", color: "border-green", note: "",
                 content: ["Definite Article (The)", "Indefinite Articles (A, An)", "Omission of Articles"]
             },
             {
-                id: 7, title: "Prepositions", link: "preposition.html", color: "border-orange", note: "Deep Dive",
+                id: 7, title: "Prepositions", link: "module7.html", color: "border-orange", note: "Deep Dive",
                 content: ["Types of prepositions (place, time, direction)", "Prepositions of place (in, on, under, above)", "Prepositions of time (at, on, in)", "Common prepositional phrases"]
             },
             {
-                id: 8, title: "Important Usage", link: "usage.html", color: "border-purple", note: "IELTS Essentials",
+                id: 8, title: "Important Usage", link: "module8.html", color: "border-purple", note: "IELTS Essentials",
                 content: ["Adjective vs adjective-ing (amazed / amazing)", "Need to – questions and usage", "Having + V3 structure", "Get / Make / Have usage", "Let – permission structure", "Have been / Has been / Had been"]
             }
         ];
@@ -590,6 +378,11 @@
                     </div>
                 `;
             }).join('');
+        }
+
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            window.location.href = 'login.html';
         }
 
         // Initialize both sections
