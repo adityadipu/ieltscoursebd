@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Preparation</title>
+    <!-- SECURITY CHECK -->
+    <script>
+        if(localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+    </script>
+    <style>
+        body { background: #fff1f2; font-family: 'Segoe UI', sans-serif; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            background: white; padding: 20px; border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 30px;
+            border-left: 5px solid #e11d48;
+        }
+        .header-left h1 { margin: 0; color: #be123c; }
+        .home-link { text-decoration: none; color: #666; font-size: 0.9rem; margin-top: 5px; display: inline-block; }
+        .home-link:hover { color: #be123c; }
+
+        .logout-btn {
+            background: #be123c; color: white; border: none;
+            padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold;
+        }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        
+        .module-card {
+            background: white; padding: 25px; border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center;
+            transition: 0.2s; text-decoration: none; color: #1f2937; 
+            border: 1px solid #ffe4e6;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .module-card:hover { transform: translateY(-5px); border-color: #e11d48; box-shadow: 0 10px 15px rgba(225, 29, 72, 0.1); }
+        
+        .icon { font-size: 2.5rem; margin-bottom: 15px; background: #fff1f2; width: 70px; height: 70px; line-height: 70px; border-radius: 50%; }
+        .title { font-weight: bold; font-size: 1.2rem; color: #881337; margin-bottom: 5px; }
+        .desc { font-size: 0.85rem; color: #6b7280; }
+        
+        .coming-soon { opacity: 0.7; pointer-events: none; }
+        .badge { background: #f3f4f6; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; margin-top: 10px; color: #666; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <h1>IELTS Mastery</h1>
+                <a href="main_home.html" class="home-link">← Back to Main Home</a>
+            </div>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </header>
+
+        <div class="grid">
+            <!-- Reading Module -->
+            <a href="#" class="module-card">
+                <span class="icon">📖</span>
+                <span class="title">Reading</span>
+                <span class="desc">Skimming, Scanning & Detail</span>
+                <span class="badge">Module 1</span>
+            </a>
+
+            <!-- Writing Module -->
+            <a href="#" class="module-card">
+                <span class="icon">✍️</span>
+                <span class="title">Writing</span>
+                <span class="desc">Task 1 & Task 2 Essays</span>
+                <span class="badge">Module 2</span>
+            </a>
+
+            <!-- Listening Module -->
+            <a href="#" class="module-card">
+                <span class="icon">🎧</span>
+                <span class="title">Listening</span>
+                <span class="desc">Audio Comprehension</span>
+                <span class="badge">Module 3</span>
+            </a>
+
+            <!-- Speaking Module -->
+            <a href="#" class="module-card">
+                <span class="icon">🗣️</span>
+                <span class="title">Speaking</span>
+                <span class="desc">Fluency & Pronunciation</span>
+                <span class="badge">Module 4</span>
+            </a>
+
+            <!-- Vocabulary (Coming Soon) -->
+            <a href="#" class="module-card coming-soon">
+                <span class="icon">🧠</span>
+                <span class="title">Vocabulary</span>
+                <span class="desc">Band 8+ Words</span>
+                <span class="badge">Coming Soon</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            window.location.href = 'login.html';
+        }
+    </script>
+
+</body>
+</html>
