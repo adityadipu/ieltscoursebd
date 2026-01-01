@@ -83,6 +83,7 @@
         .part-icon { font-size: 2rem; display: block; margin-bottom: 10px; }
         .part-title { font-weight: bold; color: var(--primary); display: block; margin-bottom: 5px; }
         .part-desc { font-size: 0.9rem; color: #666; }
+        .speaker-count { background: #fee2e2; color: #881337; font-size: 0.8rem; padding: 2px 8px; border-radius: 10px; font-weight: bold; margin-top: 5px; display: inline-block; }
 
         /* --- 2. PREPOSITION JUDGE --- */
         .judge-box { background: #f0fdf4; border: 2px dashed #22c55e; padding: 20px; border-radius: 12px; text-align: center; }
@@ -91,6 +92,8 @@
         .judge-result { margin-top: 15px; font-weight: bold; min-height: 20px; }
         
         .rule-note { background: #fffbeb; border-left: 4px solid #f59e0b; padding: 10px; margin: 10px 0; font-size: 0.9rem; }
+        .example-list { list-style: none; padding: 0; }
+        .example-list li { margin-bottom: 5px; padding-left: 15px; border-left: 3px solid var(--accent); }
 
         /* --- 3. STRATEGY STEPPER --- */
         .step-container { display: flex; flex-direction: column; gap: 15px; }
@@ -157,22 +160,46 @@
                     <div class="part-card">
                         <span class="part-icon">☕</span>
                         <span class="part-title">Part 1</span>
-                        <div class="part-desc">Everyday Conversation<br><em>(Booking a hotel, Travel plans)</em></div>
+                        <span class="speaker-count">2 Speakers</span>
+                        <div class="part-desc" style="margin-top:5px;">Everyday Conversation<br><em>Ex: Booking a hotel, Travel plans, Asking for info, Restaurant booking, Meeting someone.</em></div>
                     </div>
                     <div class="part-card">
                         <span class="part-icon">🎤</span>
                         <span class="part-title">Part 2</span>
-                        <div class="part-desc">Everyday Monologue<br><em>(Guide explaining facilities)</em></div>
+                        <span class="speaker-count">1 Speaker</span>
+                        <div class="part-desc" style="margin-top:5px;">Everyday Monologue<br><em>Ex: Speech about local facilities, Tour guide explaining resort/history, Charity talk.</em></div>
                     </div>
                     <div class="part-card">
                         <span class="part-icon">🎓</span>
                         <span class="part-title">Part 3</span>
-                        <div class="part-desc">Academic Discussion<br><em>(Student assignment talk)</em></div>
+                        <span class="speaker-count">2-4 Speakers</span>
+                        <div class="part-desc" style="margin-top:5px;">Education / Training<br><em>Ex: University students discussing an assignment with a teacher.</em></div>
                     </div>
                     <div class="part-card">
                         <span class="part-icon">🏛️</span>
                         <span class="part-title">Part 4</span>
-                        <div class="part-desc">Academic Lecture<br><em>(History or Science talk)</em></div>
+                        <span class="speaker-count">1 Speaker</span>
+                        <div class="part-desc" style="margin-top:5px;">Academic Lecture<br><em>Ex: Lecture on Science, History, Education.</em></div>
+                    </div>
+                </div>
+
+                <h3>Question Types Gallery</h3>
+                <div class="parts-grid">
+                    <div class="part-card" style="background:#fff;">
+                        <span class="part-title">Multiple Choice</span>
+                        <div class="part-desc">Choose 1 (A,B,C) or Choose multiple from list. Focus on Main Ideas/Specific Details.</div>
+                    </div>
+                    <div class="part-card" style="background:#fff;">
+                        <span class="part-title">Map/Plan/Diagram</span>
+                        <div class="part-desc">Label a Map, Building Plan, Diagram, or Street. Follow directions (North, South).</div>
+                    </div>
+                    <div class="part-card" style="background:#fff;">
+                        <span class="part-title">Completion Tasks</span>
+                        <div class="part-desc">Form, Note, Flow-Chart, Table, Sentence, Summary Completion. Fill in missing info.</div>
+                    </div>
+                    <div class="part-card" style="background:#fff;">
+                        <span class="part-title">Short Answer</span>
+                        <div class="part-desc">Write a short answer (Facts: Time, Place, Number). Sometimes give 2/3 answers.</div>
                     </div>
                 </div>
             </div>
@@ -181,29 +208,45 @@
         <!-- TAB 2: RULES & PREPOSITIONS -->
         <div id="rules" class="section-content">
             <div class="card">
-                <h2>📏 Prepositions & Word Limits</h2>
-                <p>The PDF says: <em>"Should we write a preposition?"</em></p>
+                <h2>📏 Word Counts & Limits</h2>
                 <div class="rule-note">
-                    If the limit is <strong>"No more than 2 words"</strong>, writing "at the hospital" (3 words) is WRONG ❌. You must write "the hospital" (2 words) ✅.
+                    <strong>Golden Rule:</strong> "No more than TWO words and/or A NUMBER".
                 </div>
+                <ul class="check-list">
+                    <li><strong>All words count:</strong> Articles (a, an, the) are words!</li>
+                    <li>the library = <strong>2 words</strong></li>
+                    <li>the main library = <strong>3 words</strong></li>
+                    <li>the main city library = ❌ <strong>4 words</strong> (Too many!)</li>
+                    <li>a holiday = <strong>1 word</strong> (a is an article)</li>
+                    <li>1950 = <strong>1 word</strong> (Number)</li>
+                    <li>Part-time = <strong>1 word</strong> (Hyphenated)</li>
+                    <li>Part-time job = <strong>2 words</strong></li>
+                </ul>
+
+                <h3>Should we write a Preposition?</h3>
+                <p><strong>Example Question:</strong> PLACE: (2) HOSPITAL</p>
+                <div style="background:#fff; border:1px solid #ddd; padding:15px; border-radius:8px;">
+                    <p>❌ <em>"at the hospital"</em> (3 words) - <strong>WRONG</strong> if limit is 2 words.</p>
+                    <p>✅ <em>"the hospital"</em> (2 words) - <strong>CORRECT</strong>.</p>
+                    <p><em>The best place to meet is AT THE HOSPITAL.</em></p>
+                </div>
+
+                <h3>Formatting Tips</h3>
+                <ul class="check-list">
+                    <li><strong>Forms/Notes/Tables:</strong> Use short key words.</li>
+                    <li><strong>Sentence Completion:</strong> Must be a complete, grammatical phrase.</li>
+                    <li><strong>Spelling:</strong> Incorrect spelling = 0 Marks.</li>
+                    <li><strong>Capitalization:</strong> "GARDEN" or "Garden" are both accepted.</li>
+                </ul>
                 
                 <h3>Interactive Judge</h3>
                 <p style="font-size:0.9rem; color:#666;">Test your answer against a "2 Word Limit".</p>
-                
                 <div class="judge-box">
                     <label>Type your answer:</label><br>
                     <input type="text" id="wordInput" class="judge-input" placeholder="e.g. at the hospital">
                     <button class="judge-btn" onclick="checkWordCount()">Judge Me</button>
                     <div id="judgeResult" class="judge-result"></div>
                 </div>
-
-                <h3>Other Vital Rules</h3>
-                <ul class="check-list">
-                    <li><strong>Spelling:</strong> Incorrect spelling = 0 Marks.</li>
-                    <li><strong>Grammar:</strong> Sentences must be grammatically correct.</li>
-                    <li><strong>Capitalization:</strong> "GARDEN" or "garden" are both fine.</li>
-                    <li><strong>Hyphens:</strong> "Part-time" = 1 word.</li>
-                </ul>
             </div>
         </div>
 
@@ -216,7 +259,7 @@
                         <span class="step-num">1</span>
                         <div>
                             <strong>Look for Titles</strong><br>
-                            Read the title (e.g., "Library Form") and underline it. It tells you the context.
+                            Read the title (e.g., "Diagram Completion", "Map") and underline it. It gives context.
                         </div>
                     </div>
                     <div class="step-item">
@@ -230,7 +273,7 @@
                         <span class="step-num">3</span>
                         <div>
                             <strong>Predict the Answer Type</strong><br>
-                            Guess if the blank needs a Number, a Name, or a Place.
+                            Guess if the blank needs a Number, a Name, a Place, or a Time.
                         </div>
                     </div>
                 </div>
@@ -246,9 +289,24 @@
                     <div id="pred-feedback" style="margin-top:10px; font-weight:bold; height:20px;"></div>
                 </div>
 
-                <h3 style="margin-top:30px;">✍️ While Listening: Note Taking</h3>
+                <h3>🔄 Paraphrasing (The Key!)</h3>
+                <p>IELTS rarely uses the exact words. They use synonyms.</p>
+                <div style="background:#f0f9ff; border-left:4px solid #3b82f6; padding:15px; margin-bottom:20px;">
+                    <strong>Question:</strong> "The town square was built by SOMEONE..."<br>
+                    <strong>Audio might say:</strong> "...Constructed by..." OR "...Developed by..." OR "...Created by..."<br>
+                    <br>
+                    <em>Note: Technical and Academic language is usually NOT paraphrased.</em>
+                </div>
+
+                <h3>✍️ While Listening</h3>
+                <ul class="danger-list">
+                    <li><strong>Order:</strong> Answers follow the same order as the audio.</li>
+                    <li><strong>Gaps:</strong> Sometimes answers come quickly, sometimes there is a gap.</li>
+                    <li><strong>Gap Strategy:</strong> Listening -> Waiting -> Waiting -> No answer -> Nervous? -> Underline keyword -> Make note -> Move on!</li>
+                </ul>
+
+                <h3>📝 Note Taking Game</h3>
                 <p>Don't write full words if you are in a hurry. Use short versions!</p>
-                <p><strong>Match the abbreviation to the word:</strong></p>
                 <div class="note-game" id="noteGame">
                     <!-- Injected via JS -->
                 </div>
@@ -259,8 +317,15 @@
         <!-- TAB 4: TRAPS & TIPS -->
         <div id="traps" class="section-content">
             <div class="card">
-                <h2>⚠️ Trap Detector Game</h2>
-                <p>IELTS speakers often change their minds. Can you spot the real answer?</p>
+                <h2>⚠️ Trap Detector</h2>
+                
+                <div class="rule-note" style="border-left-color: #ef4444; background: #fef2f2;">
+                    <strong>The "Same Word" Trap:</strong> If you hear the <em>exact same word</em> as in the question -> Be careful! It's likely a trap. IELTS usually uses paraphrasing for the correct answer.
+                </div>
+
+                <div class="rule-note" style="border-left-color: #f59e0b; background: #fffbeb;">
+                    <strong>The "Correction" Trap:</strong> The speaker says something, then changes their mind.
+                </div>
                 
                 <div class="trap-box">
                     <div class="audio-script">
@@ -274,24 +339,21 @@
                     <div class="trap-msg" style="margin-top:10px; font-weight:bold;"></div>
                 </div>
 
-                <div class="trap-box" style="border-left-color: #8b5cf6;">
-                    <div class="audio-script">
-                        <strong>Audio:</strong> "Children must be accompanied by an adult at all times."
-                    </div>
-                    <p style="margin-bottom:10px;"><strong>Question:</strong> No children allowed without...</p>
-                    <div class="trap-options">
-                        <button class="trap-btn" style="border-color:#a78bfa; color:#7c3aed;" onclick="checkTrap(this, false)">an accompanied adult</button>
-                        <button class="trap-btn" style="border-color:#a78bfa; color:#7c3aed;" onclick="checkTrap(this, true)">an adult</button>
-                    </div>
-                    <div class="trap-msg" style="margin-top:10px; font-weight:bold;"></div>
-                </div>
+                <h3>🔄 Repeated Answers / Self-Correction Cues</h3>
+                <p>Listen for these phrases. The <strong>real answer</strong> usually comes AFTER them:</p>
+                <ul class="check-list">
+                    <li>"Is that what you mean? Did you mean this?"</li>
+                    <li>"Do you mean...?"</li>
+                    <li>"So that's...?"</li>
+                    <li>"Let me check..."</li>
+                </ul>
 
-                <h3>💡 Golden Tips</h3>
+                <h3>💡 Final Tips</h3>
                 <ul class="danger-list">
-                    <li><strong>Don't try to understand everything!</strong> Just focus on finding the specific answer.</li>
-                    <li><strong>Moving On:</strong> If the answer didn't come for a while, you probably missed it. Move to the next question immediately.</li>
-                    <li><strong>Plurals:</strong> "Student" vs "Students". Listen for the 'S'.</li>
-                    <li><strong>No Negative Marking:</strong> Never leave a blank. Guess if you have to!</li>
+                    <li><strong>Don't try to understand everything!</strong> Aim for the specific answer.</li>
+                    <li><strong>Plurals:</strong> "Student" ❌ vs "Students" ✅. Listen for the 'S'.</li>
+                    <li><strong>No Negative Marking:</strong> If you don't know, GUESS!</li>
+                    <li><strong>Check Headphones:</strong> Ensure they work before the test starts.</li>
                 </ul>
             </div>
         </div>
@@ -299,16 +361,11 @@
     </div>
 
     <script>
-        // --- FIXED TAB SWITCHING LOGIC ---
+        // --- TAB SWITCHING ---
         function switchTab(btnElement, tabId) {
-            // 1. Remove active class from all buttons
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            // 2. Remove active class from all content sections
             document.querySelectorAll('.section-content').forEach(content => content.classList.remove('active'));
-            
-            // 3. Add active class to the clicked button
             btnElement.classList.add('active');
-            // 4. Add active class to the target content ID
             document.getElementById(tabId).classList.add('active');
         }
 
@@ -322,28 +379,32 @@
                 return;
             }
 
-            // Split by spaces (simplified logic)
+            // Simple split by spaces/hyphens handling
+            // Hyphens connect words, so "Part-time" is one token if splitting by space.
             const words = input.split(/\s+/).filter(w => w.length > 0);
-            const count = words.length;
+            let count = words.length;
+            
+            // Check numbers: "1950" is 1 word. "60 local" is 2 words.
+            // Check hyphen: "Part-time" is 1 word. "Part time" is 2.
             
             let color = "#10b981"; // Green
             let msg = `${count} word(s). `;
 
             if (count > 2) {
                 color = "#ef4444"; // Red
-                msg += `⚠️ Too many for "2 word limit"! (Articles count!)`;
+                msg += `⚠️ Too many for "2 word limit"! (Articles 'a/an/the' count!)`;
             } else {
                 msg += "✅ Safe for " + '"No more than 2 words".';
             }
 
-            if (input.includes('at the')) {
-                msg += "<br>⚠️ Warning: Prepositions like 'at' count as words!";
+            if (input.toLowerCase().includes('at the')) {
+                msg += "<br>⚠️ Warning: Prepositions like 'at' count as words! You might exceed the limit.";
             }
 
             resultDiv.innerHTML = `<span style="color:${color}">${msg}</span>`;
         }
 
-        // --- PREDICTION PRACTICE (FIXED SYNTAX) ---
+        // --- PREDICTION PRACTICE ---
         // Defined properly as an array
         const pred_questions = [
             { q: "Meeting time: _______", type: "Number/Time" },
@@ -351,22 +412,29 @@
             { q: "Call: _______", type: "Person's Name" }
         ];
         
-        let predIdx = 0;
-
+        // Simple cycler for demo purposes
         function checkPred(guess) {
             const feedback = document.getElementById('pred-feedback');
             const currentText = document.getElementById('pred-q').innerText;
             
-            // Simple logic based on current text content
             if(currentText.includes("Meeting time") && guess === "Number/Time") {
-                feedback.innerHTML = "<span style='color:green'>Correct! Expect a number.</span>";
-                // Switch question after success
+                feedback.innerHTML = "<span style='color:green'>Correct! Expect a number/time.</span>";
                 setTimeout(() => {
                     document.getElementById('pred-q').innerText = "Location: _______ Room";
                     feedback.innerText = "";
                 }, 1500);
             } else if (currentText.includes("Location") && guess === "Place") {
                  feedback.innerHTML = "<span style='color:green'>Correct! Expect a place name.</span>";
+                 setTimeout(() => {
+                    document.getElementById('pred-q').innerText = "Caller Name: _______";
+                    feedback.innerText = "";
+                }, 1500);
+            } else if (currentText.includes("Caller Name") && guess === "Name") {
+                 feedback.innerHTML = "<span style='color:green'>Correct! Expect a person's name.</span>";
+                 setTimeout(() => {
+                    document.getElementById('pred-q').innerText = "Meeting time: _______"; // Cycle back
+                    feedback.innerText = "";
+                }, 1500);
             } else {
                 feedback.innerHTML = "<span style='color:red'>Try again. Context matters!</span>";
             }
@@ -384,7 +452,6 @@
         
         function initNoteGame() {
             const container = document.getElementById('noteGame');
-            // Shuffle
             const items = [];
             notePairs.forEach(p => {
                 items.push({ id: p.id, text: p.text });
@@ -411,14 +478,11 @@
                 el.style.background = "#eff6ff";
                 el.style.borderColor = "#3b82f6";
             } else {
-                // Check match
                 if(selectedNote.dataset.id === el.dataset.id && selectedNote !== el) {
-                    // Match!
                     selectedNote.classList.add('matched');
                     el.classList.add('matched');
                     document.getElementById('note-msg').innerText = "Match Found! ✅";
                 } else {
-                    // Reset
                     selectedNote.style.background = "white";
                     selectedNote.style.borderColor = "#ddd";
                     document.getElementById('note-msg').innerText = "Try Again ❌";
@@ -432,14 +496,13 @@
             const parent = btn.parentElement.nextElementSibling; 
             if(isCorrect) {
                 btn.style.backgroundColor = "#dcfce7";
-                parent.innerHTML = "<span style='color:#16a34a'>✅ Correct!</span>";
+                parent.innerHTML = "<span style='color:#16a34a'>✅ Correct! The speaker self-corrected.</span>";
             } else {
                 btn.style.backgroundColor = "#fee2e2";
                 parent.innerHTML = "<span style='color:#dc2626'>❌ Incorrect. That was the distracter.</span>";
             }
         }
 
-        // Init
         initNoteGame();
 
     </script>
