@@ -132,11 +132,12 @@
 
     <div class="container">
         
+        <!-- Updated onclick to pass 'this' for better reliability -->
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('overview')">1. Structure</button>
-            <button class="tab-btn" onclick="switchTab('rules')">2. Rules & Prepositions</button>
-            <button class="tab-btn" onclick="switchTab('strategy')">3. Smart Strategies</button>
-            <button class="tab-btn" onclick="switchTab('traps')">4. Traps & Tips</button>
+            <button class="tab-btn active" onclick="switchTab(this, 'overview')">1. Structure</button>
+            <button class="tab-btn" onclick="switchTab(this, 'rules')">2. Rules & Prepositions</button>
+            <button class="tab-btn" onclick="switchTab(this, 'strategy')">3. Smart Strategies</button>
+            <button class="tab-btn" onclick="switchTab(this, 'traps')">4. Traps & Tips</button>
         </div>
 
         <!-- TAB 1: OVERVIEW -->
@@ -298,11 +299,16 @@
     </div>
 
     <script>
-        function switchTab(tabId) {
+        // --- FIXED TAB SWITCHING LOGIC ---
+        function switchTab(btnElement, tabId) {
+            // 1. Remove active class from all buttons
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            // 2. Remove active class from all content sections
             document.querySelectorAll('.section-content').forEach(content => content.classList.remove('active'));
             
-            document.querySelector(`[onclick="switchTab('${tabId}')"]`).classList.add('active');
+            // 3. Add active class to the clicked button
+            btnElement.classList.add('active');
+            // 4. Add active class to the target content ID
             document.getElementById(tabId).classList.add('active');
         }
 
@@ -337,37 +343,29 @@
             resultDiv.innerHTML = `<span style="color:${color}">${msg}</span>`;
         }
 
-        // --- PREDICTION PRACTICE ---
-        const pred questions = [
+        // --- PREDICTION PRACTICE (FIXED SYNTAX) ---
+        // Defined properly as an array
+        const pred_questions = [
             { q: "Meeting time: _______", type: "Number/Time" },
             { q: "Meet at: _______ (Location)", type: "Place" },
-            { q: "Call: _______", type: "Person's Name" }, // Simplified logic for demo
-            { q: "Cost: $_______", type: "Number/Time" }
+            { q: "Call: _______", type: "Person's Name" }
         ];
+        
         let predIdx = 0;
 
         function checkPred(guess) {
-            const current = pred_questions[predIdx]; // Note: Fixed variable name in logic below
-            // Actually let's just cycle simple logic
-            const qData = [
-                {q: "Meeting time: _______", a: "Number/Time"},
-                {q: "Park Name: _______ Park", a: "Person's Name"}, // Often named after people
-                {q: "Address: 21 _______ Street", a: "Name"}, 
-                {q: "Total Cost: _______", a: "Number/Time"}
-            ];
-            
-            // Just use the first one for the demo or random
             const feedback = document.getElementById('pred-feedback');
+            const currentText = document.getElementById('pred-q').innerText;
             
-            // Simple check logic for the static example shown
-            // Current static text is "Meeting time: _______"
-            if(document.getElementById('pred-q').innerText.includes("Meeting time") && guess === "Number/Time") {
+            // Simple logic based on current text content
+            if(currentText.includes("Meeting time") && guess === "Number/Time") {
                 feedback.innerHTML = "<span style='color:green'>Correct! Expect a number.</span>";
+                // Switch question after success
                 setTimeout(() => {
                     document.getElementById('pred-q').innerText = "Location: _______ Room";
                     feedback.innerText = "";
                 }, 1500);
-            } else if (document.getElementById('pred-q').innerText.includes("Location") && guess === "Place") {
+            } else if (currentText.includes("Location") && guess === "Place") {
                  feedback.innerHTML = "<span style='color:green'>Correct! Expect a place name.</span>";
             } else {
                 feedback.innerHTML = "<span style='color:red'>Try again. Context matters!</span>";
@@ -382,7 +380,6 @@
             { id: 4, text: "bksp", match: "Bookshop" }
         ];
         
-        // Simple click to match implementation
         let selectedNote = null;
         
         function initNoteGame() {
@@ -390,13 +387,13 @@
             // Shuffle
             const items = [];
             notePairs.forEach(p => {
-                items.push({ id: p.id, text: p.text, type: 'short' });
-                items.push({ id: p.id, text: p.match, type: 'long' });
+                items.push({ id: p.id, text: p.text });
+                items.push({ id: p.id, text: p.match });
             });
             items.sort(() => Math.random() - 0.5);
 
             container.innerHTML = '';
-            items.forEach((item, idx) => {
+            items.forEach((item) => {
                 const div = document.createElement('div');
                 div.className = 'note-item';
                 div.innerText = item.text;
