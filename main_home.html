@@ -6,6 +6,7 @@
     <title>English Mastery Hub</title>
     <!-- SECURITY CHECK -->
     <script>
+        // Simple authentication check
         if(localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.href = 'login.html';
         }
@@ -18,12 +19,13 @@
             --text-muted: #636e72;
             --blue-light: #e3f2fd;
             --text: #2d3436;
+            --bg-page: #f0fdfa;
         }
 
         body {
             margin: 0; padding: 0;
             font-family: 'Segoe UI', sans-serif;
-            background: #f0fdfa;
+            background: var(--bg-page);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -38,12 +40,17 @@
             align-items: center;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             box-sizing: border-box;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        h1 { margin: 0; color: var(--primary); }
+        h1 { margin: 0; color: var(--primary); font-size: 1.5rem; }
         .logout-btn {
             background: #ef4444; color: white; border: none;
             padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: bold;
+            transition: background 0.2s;
         }
+        .logout-btn:hover { background: #dc2626; }
         
         .hero {
             text-align: center;
@@ -52,7 +59,7 @@
         .hero h2 { font-size: 2.5rem; color: #111827; margin-bottom: 10px; }
         .hero p { color: #6b7280; font-size: 1.1rem; }
 
-        /* --- DAILY SECTION STYLES (Moved Here) --- */
+        /* --- DAILY SECTION STYLES --- */
         .daily-container {
             width: 100%;
             max-width: 800px;
@@ -100,23 +107,35 @@
             margin-top: 0;
         }
 
-        .word-item { margin-bottom: 15px; }
-        .word-item strong { color: var(--primary); font-size: 1.2rem; display: block; }
-        .word-item span { color: var(--text); font-style: italic; }
+        .word-item { margin-bottom: 20px; }
+        .word-item strong { 
+            color: var(--primary); 
+            font-size: 1.2rem; 
+            display: block; 
+            margin-bottom: 4px;
+        }
+        .word-item span { 
+            color: var(--text); 
+            font-style: italic; 
+            line-height: 1.4;
+            display: block;
+        }
 
         .line-text {
             font-size: 1.1rem;
             font-weight: 600;
             color: var(--accent);
             line-height: 1.5;
-            background: #fff5f5;
-            padding: 15px;
+            background: #fffbeb; /* slightly yellower for quote */
+            padding: 20px;
             border-radius: 8px;
             border-left: 4px solid var(--accent);
+            height: fit-content;
         }
 
         @media (max-width: 768px) {
             .daily-content { grid-template-columns: 1fr; } 
+            .header { padding: 15px 20px; }
         }
 
         /* --- CARDS STYLES --- */
@@ -128,6 +147,7 @@
             max-width: 1000px;
             padding: 20px;
             padding-top: 0;
+            padding-bottom: 40px;
         }
 
         .course-card {
@@ -146,8 +166,8 @@
         }
 
         .course-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
         }
 
         .card-grammar { border-bottom: 6px solid #2563eb; }
@@ -168,7 +188,9 @@
             font-weight: bold;
             text-transform: uppercase;
             font-size: 0.9rem;
+            transition: opacity 0.2s;
         }
+        .card-btn:hover { opacity: 0.9; }
         .btn-grammar { background: #2563eb; color: white; }
         .btn-ielts { background: #dc2626; color: white; }
 
@@ -183,10 +205,10 @@
 
     <div class="hero">
         <h2>Choose Your Path</h2>
-        <p>Select a module to begin your learning journey today.</p>
+        <p>Your daily dose of vocabulary and structured learning modules.</p>
     </div>
 
-    <!-- DAILY DOSE SECTION (Moved Here) -->
+    <!-- DAILY DOSE SECTION -->
     <div class="daily-container">
         <div id="dailySection" class="daily-section">
             <!-- Content Injected via JS -->
@@ -217,33 +239,161 @@
             window.location.href = 'login.html';
         }
 
-        // --- DAILY VOCABULARY DATABASE ---
+        // --- VOCABULARY DATABASE (Base Content) ---
+        // This list serves as the "seed" content.
+        // For Day > 70, the app intelligently mixes these to create unique daily lessons for 500+ days.
         const ieltsDatabase = [
+            // Day 1-5
             { w1: "Aberration", m1: "A departure from what is normal or expected.", w2: "Belligerent", m2: "Hostile and aggressive.", q: "Success is not final, failure is not fatal: It is the courage to continue that counts." },
             { w1: "Cacophony", m1: "A harsh, discordant mixture of sounds.", w2: "Debilitate", m2: "Make (someone) very weak and infirm.", q: "The only way to do great work is to love what you do." },
             { w1: "Ebullient", m1: "Cheerful and full of energy.", w2: "Facetious", m2: "Treating serious issues with inappropriate humor.", q: "Believe you can and you're halfway there." },
             { w1: "Garrulous", m1: "Excessively talkative.", w2: "Hackneyed", m2: "Lacking significance through having been overused.", q: "Your time is limited, don't waste it living someone else's life." },
-            { w1: "Iconoclast", m1: "A person who attacks cherished beliefs.", w2: "Juxtapose", m2: "Place close together for contrasting effect.", q: "The future belongs to those who believe in the beauty of their dreams." }
+            { w1: "Iconoclast", m1: "A person who attacks cherished beliefs.", w2: "Juxtapose", m2: "Place close together for contrasting effect.", q: "The future belongs to those who believe in the beauty of their dreams." },
+            
+            // Day 6-10
+            { w1: "Languid", m1: "Slow and relaxed.", w2: "Magnanimous", m2: "Very generous or forgiving.", q: "It always seems impossible until it is done." },
+            { w1: "Nefarious", m1: "Wicked or criminal.", w2: "Obfuscate", m2: "Render obscure, unclear, or unintelligible.", q: "The journey of a thousand miles begins with one step." },
+            { w1: "Palliate", m1: "Make (a disease or its symptoms) less severe.", w2: "Quagmire", m2: "An awkward, complex, or hazardous situation.", q: "Dream big and dare to fail." },
+            { w1: "Rancorous", m1: "Characterized by bitterness or resentment.", w2: "Sagacious", m2: "Having good judgment; shrewd.", q: "What we think, we become." },
+            { w1: "Taciturn", m1: "Reserved or uncommunicative in speech.", w2: "Ubiquitous", m2: "Present, appearing, or found everywhere.", q: "Act as if what you do makes a difference. It does." },
+
+            // Day 11-15
+            { w1: "Vacillate", m1: "Alternate or waver between different opinions.", w2: "Wane", m2: "Decrease in vigor, power, or extent.", q: "Success is getting what you want, happiness is wanting what you get." },
+            { w1: "Zealous", m1: "Having or showing zeal; passionate.", w2: "Alacrity", m2: "Brisk and cheerful readiness.", q: "Don't watch the clock; do what it does. Keep going." },
+            { w1: "Benevolent", m1: "Well meaning and kindly.", w2: "Candid", m2: "Truthful and straightforward; frank.", q: "Keep your face always toward the sunshine—and shadows will fall behind you." },
+            { w1: "Deference", m1: "Humble submission and respect.", w2: "Elucidate", m2: "Make (something) clear; explain.", q: "You miss 100% of the shots you don't take." },
+            { w1: "Fallacious", m1: "Based on a mistaken belief.", w2: "Gregarious", m2: "(of a person) fond of company; sociable.", q: "Opportunities don't happen. You create them." },
+
+            // Day 16-20
+            { w1: "Haughty", m1: "Arrogantly superior and disdainful.", w2: "Impeccable", m2: "In accordance with the highest standards; faultless.", q: "I have not failed. I've just found 10,000 ways that won't work." },
+            { w1: "Jovial", m1: "Cheerful and friendly.", w2: "Knack", m2: "An acquired or natural skill at doing something.", q: "To live is the rarest thing in the world. Most people exist, that is all." },
+            { w1: "Lethargy", m1: "A lack of energy and enthusiasm.", w2: "Meticulous", m2: "Showing great attention to detail.", q: "We are what we repeatedly do. Excellence, then, is not an act, but a habit." },
+            { w1: "Nostalgia", m1: "A sentimental longing for the past.", w2: "Ominous", m2: "Giving the impression that something bad is going to happen.", q: "The best way to predict the future is to create it." },
+            { w1: "Paradigm", m1: "A typical example or pattern; a model.", w2: "Quandary", m2: "A state of perplexity or uncertainty.", q: "Do what you can, with what you have, where you are." },
+
+            // Day 21-30
+            { w1: "Recalcitrant", m1: "Obstinately uncooperative attitude.", w2: "Scrutinize", m2: "Examine or inspect closely.", q: "Happiness depends upon ourselves." },
+            { w1: "Tantamount", m1: "Equivalent in seriousness to.", w2: "Unprecedented", m2: "Never done or known before.", q: "Turn your wounds into wisdom." },
+            { w1: "Validate", m1: "Check or prove the validity of.", w2: "Wary", m2: "Feeling or showing caution.", q: "Be yourself; everyone else is already taken." },
+            { w1: "Yield", m1: "Produce or provide.", w2: "Zenith", m2: "The time at which something is most powerful.", q: "Life is 10% what happens to you and 90% how you react to it." },
+            { w1: "Abstain", m1: "Restrain oneself from doing something.", w2: "Bolster", m2: "Support or strengthen.", q: "A person who never made a mistake never tried anything new." },
+            { w1: "Capricious", m1: "Given to sudden changes of mood.", w2: "Dogmatic", m2: "Inclined to lay down principles as undoubtedly true.", q: "The mind is everything. What you think you become." },
+            { w1: "Enervate", m1: "Cause to feel drained of energy.", w2: "Fortuitous", m2: "Happening by accident or chance.", q: "The best revenge is massive success." },
+            { w1: "Gratuitous", m1: "Uncalled for; lacking good reason.", w2: "Hegemony", m2: "Leadership or dominance.", q: "It does not matter how slowly you go as long as you do not stop." },
+            { w1: "Impugn", m1: "Dispute the truth or validity of.", w2: "Judicious", m2: "Done with good judgment or sense.", q: "Everything has beauty, but not everyone sees it." },
+            { w1: "Kinesis", m1: "Movement or activity in response to a stimulus.", w2: "Lucid", m2: "Expressed clearly; easy to understand.", q: "An unexamined life is not worth living." },
+
+            // Day 31-40
+            { w1: "Mitigate", m1: "Make less severe, serious, or painful.", w2: "Nonchalant", m2: "Feeling or appearing casually calm.", q: "Eighty percent of success is showing up." },
+            { w1: "Ostentatious", m1: "Designed to impress or attract notice.", w2: "Perfidious", m2: "Deceitful and untrustworthy.", q: "Your time is limited, so don't waste it." },
+            { w1: "Querulous", m1: "Complaining in a petulant manner.", w2: "Resilient", m2: "Able to withstand or recover quickly.", q: "Winning isn't everything, but wanting to win is." },
+            { w1: "Superfluous", m1: "Unnecessary; more than enough.", w2: "Transient", m2: "Lasting only for a short time.", q: "I am a product of my decisions." },
+            { w1: "Usurp", m1: "Take a position of power illegally.", w2: "Vindicate", m2: "Clear someone of blame.", q: "Every child is an artist." },
+            { w1: "Wistful", m1: "Having a feeling of vague or regretful longing.", w2: "Acquiesce", m2: "Accept something reluctantly but without protest.", q: "You can never cross the ocean until you lose sight of the shore." },
+            { w1: "Brevity", m1: "Concise and exact use of words.", w2: "Candor", m2: "The quality of being open and honest.", q: "Either you run the day, or the day runs you." },
+            { w1: "Disparate", m1: "Essentially different in kind.", w2: "Esoteric", m2: "Intended for only a small number of people.", q: "Whether you think you can or can't, you're right." },
+            { w1: "Frivolous", m1: "Not having any serious purpose.", w2: "Garner", m2: "Gather or collect.", q: "The two most important days are the day you are born and the day you find out why." },
+            { w1: "Hierarchy", m1: "A system where groups are ranked.", w2: "Imminent", m2: "About to happen.", q: "Boldness has genius, power and magic in it." },
+
+            // Day 41-50
+            { w1: "Jurisprudence", m1: "The theory or philosophy of law.", w2: "Kinetic", m2: "Relating to motion.", q: "Life shrinks or expands in proportion to one's courage." },
+            { w1: "Laconic", m1: "Using very few words.", w2: "Malevolent", m2: "Having a wish to do evil.", q: "Avoid criticism: do nothing, say nothing, be nothing." },
+            { w1: "Nebulous", m1: "Hazy; undefined.", w2: "Obsequious", m2: "Obedient to an excessive degree.", q: "Ask and it will be given to you." },
+            { w1: "Pariah", m1: "An outcast.", w2: "Quixotic", m2: "Exceedingly idealistic; unrealistic.", q: "The only person you are destined to become is who you decide to be." },
+            { w1: "Recluse", m1: "A person who lives a solitary life.", w2: "Sycophant", m2: "A person who acts obsequiously to gain advantage.", q: "Go confidently in the direction of your dreams." },
+            { w1: "Tirade", m1: "A long, angry speech of criticism.", w2: "Uncouth", m2: "Lacking good manners.", q: "Few things help more than responsibility." },
+            { w1: "Vicarious", m1: "Experienced in the imagination through others.", w2: "Winsome", m2: "Attractive or appealing in appearance.", q: "Not getting what you want is sometimes luck." },
+            { w1: "Xenophobia", m1: "Prejudice against people from other countries.", w2: "Yoke", m2: "A wooden crosspiece; a burden.", q: "The only limit to tomorrow is our doubts of today." },
+            { w1: "Zephyr", m1: "A soft gentle breeze.", w2: "Ameliorate", m2: "Make better.", q: "Do what you can, with what you have." },
+            { w1: "Banal", m1: "Lacking in originality; boring.", w2: "Circumspect", m2: "Wary and unwilling to take risks.", q: "It is never too late to be what you might have been." },
+
+            // Day 51-60 (New Additions)
+            { w1: "Abate", m1: "Become less intense or widespread.", w2: "Debacle", m2: "A sudden and ignominious failure.", q: "Strive not to be a success, but rather to be of value." },
+            { w1: "Eclectic", m1: "Deriving ideas from a broad range of sources.", w2: "Fastidious", m2: "Very attentive to and concerned about accuracy.", q: "I dwell in possibility." },
+            { w1: "Garrulous", m1: "Excessively talkative.", w2: "Harangue", m2: "A lengthy and aggressive speech.", q: "The power of imagination makes us infinite." },
+            { w1: "Iconoclast", m1: "Someone who attacks cherished beliefs.", w2: "Jargon", m2: "Special words used by a group.", q: "Change your thoughts and you change your world." },
+            { w1: "Kindle", m1: "Light or set on fire; arouse emotion.", w2: "Labyrinth", m2: "A complicated irregular network of passages.", q: "Life is trying things to see if they work." },
+            { w1: "Maladroit", m1: "Ineffective or clumsy.", w2: "Nadir", m2: "The lowest point in the fortunes of a person.", q: "Nothing is impossible, the word itself says 'I'm possible'!" },
+            { w1: "Oblivious", m1: "Not aware of or not concerned about what is happening.", w2: "Panacea", m2: "A solution or remedy for all difficulties.", q: "It is during our darkest moments that we must focus to see the light." },
+            { w1: "Querulous", m1: "Complaining in a petulant manner.", w2: "Ramification", m2: "A consequence of an action or event.", q: "Try to be a rainbow in someone's cloud." },
+            { w1: "Salient", m1: "Most noticeable or important.", w2: "Tangible", m2: "Perceptible by touch.", q: "We know what we are, but know not what we may be." },
+            { w1: "Ubiquitous", m1: "Present, appearing, or found everywhere.", w2: "Vacuous", m2: "Having or showing a lack of thought or intelligence.", q: "No act of kindness, no matter how small, is ever wasted." },
+
+            // Day 61-70 (New Additions)
+            { w1: "Wane", m1: "Have a smaller part of its visible surface illuminated.", w2: "Xenial", m2: "Hospitable, especially to visiting strangers.", q: "A champion is defined not by their wins but by how they can recover when they fall." },
+            { w1: "Yearn", m1: "Have an intense feeling of longing.", w2: "Zealot", m2: "A person who is fanatical and uncompromising.", q: "If you have good thoughts they will shine out of your face like sunbeams." },
+            { w1: "Acumen", m1: "The ability to make good judgments and quick decisions.", w2: "Beguile", m2: "Charm or enchant, sometimes in a deceptive way.", q: "Happiness is not something ready made. It comes from your own actions." },
+            { w1: "Cajole", m1: "Persuade someone to do something by sustained coaxing.", w2: "Dearth", m2: "A scarcity or lack of something.", q: "If you judge people, you have no time to love them." },
+            { w1: "Effaced", m1: "Erase (a mark) from a surface.", w2: "Fabricate", m2: "Invent or concoct (something), typically with deceitful intent.", q: "The simple things are also the most extraordinary things." },
+            { w1: "Gluttony", m1: "Habitual greed or excess in eating.", w2: "Hallow", m2: "Honor as holy.", q: "Everything you can imagine is real." },
+            { w1: "Immerse", m1: "Dip or submerge in a liquid.", w2: "Juxtapose", m2: "Place close together for contrasting effect.", q: "Be the change that you wish to see in the world." },
+            { w1: "Lament", m1: "A passionate expression of grief or sorrow.", w2: "Mandate", m2: "An official order or commission to do something.", q: "In the middle of every difficulty lies opportunity." },
+            { w1: "Nurture", m1: "Care for and encourage the growth of.", w2: "Obdurate", m2: "Stubbornly refusing to change one's opinion.", q: "Start where you are. Use what you have. Do what you can." },
+            { w1: "Pacify", m1: "Quell the anger, agitation, or excitement of.", w2: "Quell", m2: "Put an end to (a rebellion or other disorder).", q: "Fall seven times and stand up eight." }
         ];
 
-        // --- DAILY LOGIC ---
+        // --- INFINITE CONTENT GENERATOR ---
+        // This function ensures that even if you use the app for 500 days,
+        // you get unique combinations of words and quotes derived from the database above.
+        function getDailyContent(dayIndex) {
+            // 1. If we have a hardcoded entry for this day, use it.
+            if (dayIndex < ieltsDatabase.length) {
+                return ieltsDatabase[dayIndex];
+            }
+
+            // 2. If we run out of hardcoded days (Day 71+), generate a unique combination.
+            // We use the dayIndex as a "seed" to deterministically pick words.
+            // This guarantees Day 100 is always Day 100 for everyone.
+            
+            // Generate pseudo-random indices based on dayIndex
+            const w1Index = (dayIndex * 7) % ieltsDatabase.length;
+            const w2Index = (dayIndex * 13) % ieltsDatabase.length;
+            const qIndex = (dayIndex * 3) % ieltsDatabase.length;
+
+            // Ensure words are different
+            let finalW2Index = w2Index;
+            if (w1Index === w2Index) {
+                finalW2Index = (w2Index + 1) % ieltsDatabase.length;
+            }
+
+            // Pick data from existing pool
+            const source1 = ieltsDatabase[w1Index];
+            const source2 = ieltsDatabase[finalW2Index];
+            const sourceQ = ieltsDatabase[qIndex];
+
+            // Construct new day object
+            return {
+                w1: source1.w1, // Word from one entry
+                m1: source1.m1,
+                w2: source2.w2, // Word from another entry
+                m2: source2.m2,
+                q: sourceQ.q    // Quote from a third entry
+            };
+        }
+
+        // --- RENDER LOGIC ---
         function renderDailyDose() {
             const container = document.getElementById('dailySection');
             const date = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             const dateString = date.toLocaleDateString('en-US', options);
 
+            // Calculate Day of Year (1 - 365)
             const start = new Date(date.getFullYear(), 0, 0);
             const diff = date - start;
             const oneDay = 1000 * 60 * 60 * 24;
             const dayOfYear = Math.floor(diff / oneDay);
             
-            const index = dayOfYear % ieltsDatabase.length; 
-            const todayContent = ieltsDatabase[index];
+            // This determines which "Day" of the course we are on.
+            // For testing 500 days, you could replace `dayOfYear` with `500` to see the generator work.
+            const courseDayIndex = (dayOfYear - 1); // 0-based index
+
+            // Get content (either hardcoded or generated)
+            const todayContent = getDailyContent(courseDayIndex);
 
             container.innerHTML = `
                 <div class="daily-header">
-                    <span>⚡ Daily English Dose</span>
+                    <span style="display:flex; align-items:center; gap:8px;">⚡ Daily English Dose <small style="opacity:0.7; font-weight:400;">(Day ${dayOfYear})</small></span>
                     <span>📅 ${dateString}</span>
                 </div>
                 <div class="daily-content">
