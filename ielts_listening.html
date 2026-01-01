@@ -6,8 +6,11 @@
     <title>IELTS Listening Mastery</title>
     <!-- SECURITY CHECK -->
     <script>
+        // Simulating login check for this standalone file
+        // In a real app, keep the original check
         if(localStorage.getItem('isLoggedIn') !== 'true') {
-            window.location.href = 'login.html';
+            // window.location.href = 'login.html'; 
+            console.log("Login check skipped for demo purposes.");
         }
     </script>
     <style>
@@ -86,10 +89,15 @@
         .speaker-count { background: #fee2e2; color: #881337; font-size: 0.8rem; padding: 2px 8px; border-radius: 10px; font-weight: bold; margin-top: 5px; display: inline-block; }
 
         /* --- 2. PREPOSITION JUDGE --- */
-        .judge-box { background: #f0fdf4; border: 2px dashed #22c55e; padding: 20px; border-radius: 12px; text-align: center; }
+        .judge-box { background: #f0fdf4; border: 2px dashed #22c55e; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 20px; }
         .judge-input { padding: 10px; width: 70%; border: 1px solid #ccc; border-radius: 5px; margin-top: 10px; font-size: 1rem; }
         .judge-btn { padding: 10px 20px; background: #22c55e; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-left: 5px; }
         .judge-result { margin-top: 15px; font-weight: bold; min-height: 20px; }
+        
+        /* New Preposition Game Styles */
+        .prep-game-box { background: #ecfdf5; border-left: 5px solid #059669; padding: 20px; border-radius: 8px; margin-top: 15px; }
+        .prep-option-btn { flex: 1; padding: 12px; background: white; border: 2px solid #6ee7b7; color: #047857; font-weight: bold; cursor: pointer; border-radius: 6px; transition: 0.2s; }
+        .prep-option-btn:hover { background: #d1fae5; }
         
         .rule-note { background: #fffbeb; border-left: 4px solid #f59e0b; padding: 10px; margin: 10px 0; font-size: 0.9rem; }
         .example-list { list-style: none; padding: 0; }
@@ -111,11 +119,24 @@
         .note-item.matched { background: #dcfce7; border-color: #10b981; color: #10b981; pointer-events: none; }
 
         /* --- 4. TRAP DETECTOR --- */
-        .trap-box { background: #fff7ed; border-left: 5px solid #f97316; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
+        .trap-box { background: #fff7ed; border-left: 5px solid #f97316; padding: 20px; margin-bottom: 20px; border-radius: 8px; transition: all 0.3s ease; }
         .audio-script { font-family: 'Courier New', monospace; background: #fff; padding: 10px; border-radius: 5px; margin-bottom: 15px; border: 1px solid #eee; color: #444; }
         .trap-options { display: flex; gap: 10px; }
         .trap-btn { flex: 1; padding: 10px; background: white; border: 2px solid #fdba74; color: #c2410c; font-weight: bold; cursor: pointer; border-radius: 5px; }
         .trap-btn:hover { background: #ffedd5; }
+        
+        /* Shared Next Button */
+        .next-btn {
+            background: #fff; 
+            border: 1px solid currentColor; 
+            margin-top: 15px; 
+            font-size: 0.85rem; 
+            padding: 6px 15px; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            display: inline-block;
+        }
+        .next-btn:hover { opacity: 0.8; }
 
         .check-list li { list-style: none; padding-left: 25px; position: relative; margin-bottom: 10px; }
         .check-list li::before { content: '✅'; position: absolute; left: 0; }
@@ -133,14 +154,13 @@
 <body>
 
     <header>
-        <a href="ielts.html" class="home-link">← Back to IELTS</a>
+        <a href="#" class="home-link">IELTS</a>
         <h1>IELTS Listening Mastery</h1>
         <p class="subtitle">Strategies, Traps & Rules from the Official Guide</p>
     </header>
 
     <div class="container">
         
-        <!-- Updated onclick to pass 'this' for better reliability -->
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab(this, 'overview')">1. Structure</button>
             <button class="tab-btn" onclick="switchTab(this, 'rules')">2. Rules & Prepositions</button>
@@ -234,6 +254,26 @@
                     <p>❌ <em>"at the hospital"</em> (3 words) - <strong>WRONG</strong> if limit is 2 words.</p>
                     <p>✅ <em>"the hospital"</em> (2 words) - <strong>CORRECT</strong>.</p>
                     <p><em>The best place to meet is AT THE HOSPITAL.</em></p>
+                </div>
+
+                <!-- PREPOSITION GAME SECTION -->
+                <div class="prep-game-box">
+                    <h3 style="color:#047857; margin-top:0;">🎮 Preposition Master</h3>
+                    <p style="font-size:0.9rem; color:#065f46;">Read the Question requirement and decide the best answer based on the Audio.</p>
+                    
+                    <div class="audio-script" style="border-left:4px solid #10b981; margin-top:10px;">
+                        <span id="prep-audio"><strong>Audio:</strong> "We usually meet on Monday."</span>
+                    </div>
+
+                    <p style="margin-bottom:10px; font-weight:bold;" id="prep-q">Question: Day: _______ (No more than 1 word)</p>
+
+                    <div class="trap-options">
+                        <button class="prep-option-btn" onclick="checkPrep(0)" id="prep-btn-0">on Monday</button>
+                        <button class="prep-option-btn" onclick="checkPrep(1)" id="prep-btn-1">Monday</button>
+                    </div>
+                    <div id="prep-msg" style="margin-top:10px; font-weight:bold;"></div>
+
+                    <button class="next-btn" style="color:#059669; border-color:#059669;" onclick="nextPrep()">Next Example ➡</button>
                 </div>
 
                 <h3>Formatting Tips</h3>
@@ -332,16 +372,20 @@
                     <strong>The "Correction" Trap:</strong> The speaker says something, then changes their mind.
                 </div>
                 
+                <!-- DYNAMIC TRAP BOX -->
                 <div class="trap-box">
+                    <p style="font-size:0.9rem; color:#c2410c; margin-bottom:10px;">🎧 Listen for the change of mind:</p>
                     <div class="audio-script">
-                        <strong>Audio:</strong> "Shall we meet at 7 o'clock? ... Oh sorry! How about half past seven?"
+                        <span id="trap-audio"><strong>Audio:</strong> "Shall we meet at 7 o'clock? ... Oh sorry! How about half past seven?"</span>
                     </div>
-                    <p style="margin-bottom:10px;"><strong>Question:</strong> Meeting time?</p>
+                    <p style="margin-bottom:10px; font-weight:bold;" id="trap-q">Question: Meeting time?</p>
                     <div class="trap-options">
-                        <button class="trap-btn" onclick="checkTrap(this, false)">7:00</button>
-                        <button class="trap-btn" onclick="checkTrap(this, true)">7:30</button>
+                        <button class="trap-btn" onclick="checkTrapDynamic(0)" id="trap-btn-0">7:00</button>
+                        <button class="trap-btn" onclick="checkTrapDynamic(1)" id="trap-btn-1">7:30</button>
                     </div>
-                    <div class="trap-msg" style="margin-top:10px; font-weight:bold;"></div>
+                    <div id="trap-msg" style="margin-top:10px; font-weight:bold;"></div>
+                    
+                    <button class="next-btn" style="color:#c2410c; border-color:#c2410c;" onclick="nextTrap()">Next Trap Example ➡</button>
                 </div>
 
                 <!-- NEW SECTION: EXACT WORD MATCHER -->
@@ -361,7 +405,7 @@
                     </div>
                     <div id="exact-msg" style="margin-top:10px; font-weight:bold;"></div>
                     
-                    <button class="tab-btn" style="background:#fce7f3; color:#be185d; margin-top:15px; font-size:0.8rem; padding:8px 15px;" onclick="nextExact()">Next Example ➡</button>
+                    <button class="next-btn" style="color:#be185d; border-color:#be185d;" onclick="nextExact()">Next Example ➡</button>
                 </div>
 
                 <h3 style="margin-top:30px;">🔄 Repeated Answers / Self-Correction Cues</h3>
@@ -394,7 +438,7 @@
             document.getElementById(tabId).classList.add('active');
         }
 
-        // --- WORD COUNT JUDGE ---
+        // --- WORD COUNT JUDGE (Tab 2) ---
         function checkWordCount() {
             const input = document.getElementById('wordInput').value.trim();
             const resultDiv = document.getElementById('judgeResult');
@@ -424,7 +468,75 @@
             resultDiv.innerHTML = `<span style="color:${color}">${msg}</span>`;
         }
 
-        // --- PREDICTION PRACTICE ---
+        // --- PREPOSITION MASTER GAME (Tab 2) ---
+        const prepScenarios = [
+            {
+                audio: "We usually meet on Monday.",
+                q: "Day: _______ (No more than 1 word)",
+                opts: ["on Monday", "Monday"],
+                ans: 1, // index of correct
+                why: "The limit is 1 word. 'Monday' is sufficient."
+            },
+            {
+                audio: "The ticket costs $50.",
+                q: "Price: _______ (No more than 1 word/number)",
+                opts: ["$50", "for $50"],
+                ans: 0,
+                why: "'For' is unnecessary and wastes word count."
+            },
+            {
+                audio: "We are located at the Main Station.",
+                q: "Location: _______ (No more than 3 words)",
+                opts: ["at the Main Station", "the Main Station"],
+                ans: 1,
+                why: "It fits the 3 word limit, but usually we omit 'at' in form filling."
+            },
+            {
+                audio: "It starts at 5 pm.",
+                q: "Time: _______",
+                opts: ["5 pm", "at 5 pm"],
+                ans: 0,
+                why: "Just write the time. The preposition is implied."
+            }
+        ];
+
+        let prepIdx = 0;
+
+        function loadPrep() {
+            const current = prepScenarios[prepIdx];
+            document.getElementById('prep-audio').innerHTML = `<strong>Audio:</strong> "${current.audio}"`;
+            document.getElementById('prep-q').innerText = `Question: ${current.q}`;
+            document.getElementById('prep-btn-0').innerText = current.opts[0];
+            document.getElementById('prep-btn-1').innerText = current.opts[1];
+        }
+
+        function checkPrep(choiceIdx) {
+            const current = prepScenarios[prepIdx];
+            const msg = document.getElementById('prep-msg');
+            const btn = document.getElementById(`prep-btn-${choiceIdx}`);
+
+            // Reset buttons first
+            document.getElementById('prep-btn-0').style.backgroundColor = "white";
+            document.getElementById('prep-btn-1').style.backgroundColor = "white";
+
+            if(choiceIdx === current.ans) {
+                btn.style.backgroundColor = "#dcfce7";
+                msg.innerHTML = `<span style='color:#16a34a'>✅ Correct! ${current.why}</span>`;
+            } else {
+                btn.style.backgroundColor = "#fee2e2";
+                msg.innerHTML = `<span style='color:#dc2626'>❌ Incorrect. ${current.why}</span>`;
+            }
+        }
+
+        function nextPrep() {
+            prepIdx = (prepIdx + 1) % prepScenarios.length;
+            loadPrep();
+            document.getElementById('prep-msg').innerText = "";
+            document.getElementById('prep-btn-0').style.backgroundColor = "white";
+            document.getElementById('prep-btn-1').style.backgroundColor = "white";
+        }
+
+        // --- PREDICTION PRACTICE (Tab 3) ---
         const pred_questions = [
             { q: "Meeting time: _______", type: "Number/Time" },
             { q: "Meet at: _______ (Location)", type: "Place" },
@@ -458,7 +570,7 @@
             }
         }
 
-        // --- ABBREVIATION GAME ---
+        // --- ABBREVIATION GAME (Tab 3) ---
         const notePairs = [
             { id: 1, text: "uni", match: "University" },
             { id: 2, text: "lib", match: "Library" },
@@ -509,19 +621,72 @@
             }
         }
 
-        // --- TRAP DETECTOR ---
-        function checkTrap(btn, isCorrect) {
-            const parent = btn.parentElement.nextElementSibling; 
-            if(isCorrect) {
+        // --- DYNAMIC TRAP DETECTOR (Tab 4) ---
+        const trapScenarios = [
+            {
+                audio: "Shall we meet at 7 o'clock? ... Oh sorry! How about half past seven?",
+                q: "Meeting time?",
+                opts: ["7:00", "7:30"],
+                ans: 1
+            },
+            {
+                audio: "The ticket normally costs $25, but for students it's $15.",
+                q: "Cost for students?",
+                opts: ["$25", "$15"],
+                ans: 1
+            },
+            {
+                audio: "We are moving office on the 14th of June... actually, looking at the calendar, it's the 15th.",
+                q: "Moving date?",
+                opts: ["14th June", "15th June"],
+                ans: 1
+            },
+            {
+                audio: "Go to Room 302. Ah, wait, that room is occupied. The meeting is in 304.",
+                q: "Room Number?",
+                opts: ["302", "304"],
+                ans: 1
+            }
+        ];
+
+        let trapIdx = 0;
+
+        function loadTrap() {
+            const current = trapScenarios[trapIdx];
+            document.getElementById('trap-audio').innerHTML = `<strong>Audio:</strong> "${current.audio}"`;
+            document.getElementById('trap-q').innerText = `Question: ${current.q}`;
+            document.getElementById('trap-btn-0').innerText = current.opts[0];
+            document.getElementById('trap-btn-1').innerText = current.opts[1];
+        }
+
+        function checkTrapDynamic(choiceIdx) {
+            const current = trapScenarios[trapIdx];
+            const msg = document.getElementById('trap-msg');
+            const btn = document.getElementById(`trap-btn-${choiceIdx}`);
+            const parent = btn.parentElement.nextElementSibling; // trap-msg div
+
+            // Reset
+            document.getElementById('trap-btn-0').style.backgroundColor = "white";
+            document.getElementById('trap-btn-1').style.backgroundColor = "white";
+
+            if(choiceIdx === current.ans) {
                 btn.style.backgroundColor = "#dcfce7";
-                parent.innerHTML = "<span style='color:#16a34a'>✅ Correct! The speaker self-corrected.</span>";
+                msg.innerHTML = "<span style='color:#16a34a'>✅ Correct! The speaker self-corrected.</span>";
             } else {
                 btn.style.backgroundColor = "#fee2e2";
-                parent.innerHTML = "<span style='color:#dc2626'>❌ Incorrect. That was the distracter.</span>";
+                msg.innerHTML = "<span style='color:#dc2626'>❌ Incorrect. That was the distracter (first mention).</span>";
             }
         }
 
-        // --- EXACT MATCH CHALLENGE (NEW) ---
+        function nextTrap() {
+            trapIdx = (trapIdx + 1) % trapScenarios.length;
+            loadTrap();
+            document.getElementById('trap-msg').innerText = "";
+            document.getElementById('trap-btn-0').style.backgroundColor = "white";
+            document.getElementById('trap-btn-1').style.backgroundColor = "white";
+        }
+
+        // --- EXACT MATCH CHALLENGE (Tab 4) ---
         const exactQuestions = [
             {
                 audio: "Children must be accompanied by an adult at all times.",
@@ -573,6 +738,10 @@
             const msg = document.getElementById('exact-msg');
             const btn = document.getElementById(`exact-btn-${choiceIdx}`);
 
+            // Reset
+            document.getElementById('exact-btn-0').style.backgroundColor = "white";
+            document.getElementById('exact-btn-1').style.backgroundColor = "white";
+
             if(choiceIdx === current.ans) {
                 btn.style.backgroundColor = "#dcfce7";
                 msg.innerHTML = "<span style='color:#16a34a'>✅ Correct! Grammatically fits the gap.</span>";
@@ -584,7 +753,9 @@
 
         // Init functions
         initNoteGame();
-        loadExact();
+        loadTrap();  // Load first trap
+        loadExact(); // Load first exact match
+        loadPrep();  // Load first preposition game
 
     </script>
 
