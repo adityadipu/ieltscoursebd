@@ -110,25 +110,22 @@
         .note-item { background: white; padding: 10px; border: 1px solid #ddd; text-align: center; cursor: pointer; border-radius: 5px; }
         .note-item.matched { background: #dcfce7; border-color: #10b981; color: #10b981; pointer-events: none; }
 
-        /* --- 4. TRAP DETECTOR & EXACT MATCH --- */
+        /* --- 4. TRAP DETECTOR --- */
         .trap-box { background: #fff7ed; border-left: 5px solid #f97316; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
         .audio-script { font-family: 'Courier New', monospace; background: #fff; padding: 10px; border-radius: 5px; margin-bottom: 15px; border: 1px solid #eee; color: #444; }
         .trap-options { display: flex; gap: 10px; }
         .trap-btn { flex: 1; padding: 10px; background: white; border: 2px solid #fdba74; color: #c2410c; font-weight: bold; cursor: pointer; border-radius: 5px; }
         .trap-btn:hover { background: #ffedd5; }
 
-        .exact-box { background: #fdf2f8; border-left: 5px solid #db2777; padding: 20px; border-radius: 8px; margin-top: 20px; }
-        .exact-btn { flex: 1; padding: 10px; background: white; border: 2px solid #f9a8d4; color: #be185d; font-weight: bold; cursor: pointer; border-radius: 5px; }
-        .exact-btn:hover { background: #fce7f3; }
-
         .check-list li { list-style: none; padding-left: 25px; position: relative; margin-bottom: 10px; }
         .check-list li::before { content: '✅'; position: absolute; left: 0; }
         .danger-list li { list-style: none; padding-left: 25px; position: relative; margin-bottom: 10px; }
         .danger-list li::before { content: '⚠️'; position: absolute; left: 0; }
 
-        /* Type List for Tab 1 */
-        .type-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .type-item { background: #f3f4f6; padding: 8px 12px; border-radius: 6px; font-size: 0.9rem; font-weight: 600; color: #4b5563; }
+        /* New Matcher for Exact Words */
+        .exact-box { background: #fdf2f8; border-left: 5px solid #db2777; padding: 20px; border-radius: 8px; margin-top: 20px; }
+        .exact-btn { flex: 1; padding: 10px; background: white; border: 2px solid #f9a8d4; color: #be185d; font-weight: bold; cursor: pointer; border-radius: 5px; }
+        .exact-btn:hover { background: #fce7f3; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -143,7 +140,7 @@
 
     <div class="container">
         
-        <!-- Tabs -->
+        <!-- Updated onclick to pass 'this' for better reliability -->
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab(this, 'overview')">1. Structure</button>
             <button class="tab-btn" onclick="switchTab(this, 'rules')">2. Rules & Prepositions</button>
@@ -169,13 +166,13 @@
                         <span class="part-icon">☕</span>
                         <span class="part-title">Part 1</span>
                         <span class="speaker-count">2 Speakers</span>
-                        <div class="part-desc" style="margin-top:5px;">Everyday Conversation<br><em>Ex: Booking a hotel, Travel plans, Booking a restaurant table, Meeting someone.</em></div>
+                        <div class="part-desc" style="margin-top:5px;">Everyday Conversation<br><em>Ex: Booking a hotel, Travel plans, Asking for info, Restaurant booking, Meeting someone.</em></div>
                     </div>
                     <div class="part-card">
                         <span class="part-icon">🎤</span>
                         <span class="part-title">Part 2</span>
                         <span class="speaker-count">1 Speaker</span>
-                        <div class="part-desc" style="margin-top:5px;">Everyday Monologue<br><em>Ex: Speech about local facilities, Services, Events, Tour Guide explaining resort or history.</em></div>
+                        <div class="part-desc" style="margin-top:5px;">Everyday Monologue<br><em>Ex: Speech about local facilities, Tour guide explaining resort/history, Charity talk.</em></div>
                     </div>
                     <div class="part-card">
                         <span class="part-icon">🎓</span>
@@ -187,22 +184,28 @@
                         <span class="part-icon">🏛️</span>
                         <span class="part-title">Part 4</span>
                         <span class="speaker-count">1 Speaker</span>
-                        <div class="part-desc" style="margin-top:5px;">Academic Lecture<br><em>Ex: A lecture on Science, History, or Education.</em></div>
+                        <div class="part-desc" style="margin-top:5px;">Academic Lecture<br><em>Ex: Lecture on Science, History, Education.</em></div>
                     </div>
                 </div>
 
-                <h3>Types of Questions</h3>
-                <div class="type-list">
-                    <div class="type-item">✅ Multiple Choice</div>
-                    <div class="type-item">✅ Map Completion</div>
-                    <div class="type-item">✅ Diagram Labelling</div>
-                    <div class="type-item">✅ Form Completion</div>
-                    <div class="type-item">✅ Note Completion</div>
-                    <div class="type-item">✅ Flow-Chart Completion</div>
-                    <div class="type-item">✅ Sentence Completion</div>
-                    <div class="type-item">✅ Summary Completion</div>
-                    <div class="type-item">✅ Short Answer Questions</div>
-                    <div class="type-item">✅ Table Completion</div>
+                <h3>Question Types Gallery</h3>
+                <div class="parts-grid">
+                    <div class="part-card" style="background:#fff;">
+                        <span class="part-title">Multiple Choice</span>
+                        <div class="part-desc">Choose 1 (A,B,C) or Choose multiple from list. Focus on Main Ideas/Specific Details.</div>
+                    </div>
+                    <div class="part-card" style="background:#fff;">
+                        <span class="part-title">Map/Plan/Diagram</span>
+                        <div class="part-desc">Label a Map, Building Plan, Diagram, or Street. Follow directions (North, South).</div>
+                    </div>
+                    <div class="part-card" style="background:#fff;">
+                        <span class="part-title">Completion Tasks</span>
+                        <div class="part-desc">Form, Note, Flow-Chart, Table, Sentence, Summary Completion. Fill in missing info.</div>
+                    </div>
+                    <div class="part-card" style="background:#fff;">
+                        <span class="part-title">Short Answer</span>
+                        <div class="part-desc">Write a short answer (Facts: Time, Place, Number). Sometimes give 2/3 answers.</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -212,32 +215,33 @@
             <div class="card">
                 <h2>📏 Word Counts & Limits</h2>
                 <div class="rule-note">
-                    <strong>Golden Rule:</strong> "No more than TWO words and/or A NUMBER". <br>
-                    <em>Note: All words and numbers are counted!</em>
+                    <strong>Golden Rule:</strong> "No more than TWO words and/or A NUMBER".
                 </div>
                 <ul class="check-list">
-                    <li><strong>Articles count as words:</strong></li>
+                    <li><strong>All words count:</strong> Articles (a, an, the) are words!</li>
                     <li>the library = <strong>2 words</strong></li>
                     <li>the main library = <strong>3 words</strong></li>
                     <li>the main city library = ❌ <strong>4 words</strong> (Too many!)</li>
-                    <li>a holiday = <strong>1 word</strong></li>
-                    <li>1950 = <strong>1 word</strong></li>
+                    <li>a holiday = <strong>1 word</strong> (a is an article)</li>
+                    <li>1950 = <strong>1 word</strong> (Number)</li>
                     <li>Part-time = <strong>1 word</strong> (Hyphenated)</li>
                     <li>Part-time job = <strong>2 words</strong></li>
                 </ul>
 
                 <h3>Should we write a Preposition?</h3>
                 <p><strong>Example Question:</strong> PLACE: (2) HOSPITAL</p>
-                <div style="background:#fff; border:1px solid #ddd; padding:15px; border-radius:8px; margin-bottom:20px;">
+                <div style="background:#fff; border:1px solid #ddd; padding:15px; border-radius:8px;">
                     <p>❌ <em>"at the hospital"</em> (3 words) - <strong>WRONG</strong> if limit is 2 words.</p>
                     <p>✅ <em>"the hospital"</em> (2 words) - <strong>CORRECT</strong>.</p>
-                    <p><em>"The best place to meet is AT THE HOSPITAL."</em></p>
+                    <p><em>The best place to meet is AT THE HOSPITAL.</em></p>
                 </div>
 
-                <h3>Forms vs Sentences</h3>
-                <ul class="example-list">
+                <h3>Formatting Tips</h3>
+                <ul class="check-list">
                     <li><strong>Forms/Notes/Tables:</strong> Use short key words.</li>
                     <li><strong>Sentence Completion:</strong> Must be a complete, grammatical phrase.</li>
+                    <li><strong>Spelling:</strong> Incorrect spelling = 0 Marks.</li>
+                    <li><strong>Capitalization:</strong> "GARDEN" or "Garden" are both accepted.</li>
                 </ul>
                 
                 <h3>Interactive Judge</h3>
@@ -255,23 +259,19 @@
         <div id="strategy" class="section-content">
             <div class="card">
                 <h2>🚀 Preparation Phase (Before Audio)</h2>
-                <div class="rule-note" style="border-left-color: #3b82f6; background: #eff6ff;">
-                    <strong>Crucial:</strong> Answers follow the same order as the audio.
-                </div>
-                
                 <div class="step-container">
                     <div class="step-item">
                         <span class="step-num">1</span>
                         <div>
                             <strong>Look for Titles</strong><br>
-                            Read titles like "Diagram Completion", "Map", "Table Completion". Underline them!
+                            Read the title (e.g., "Diagram Completion", "Map") and underline it. It gives context.
                         </div>
                     </div>
                     <div class="step-item">
                         <span class="step-num">2</span>
                         <div>
                             <strong>Check the Range</strong><br>
-                            When told "Prepare for questions 1 to 7", ONLY look at 1-7. Don't waste time looking ahead yet.
+                            When told "Prepare for questions 1 to 7", ONLY look at 1-7. Don't waste time on others.
                         </div>
                     </div>
                     <div class="step-item">
@@ -300,15 +300,15 @@
                     <strong>Question:</strong> "The town square was built by SOMEONE..."<br>
                     <strong>Audio might say:</strong> "...Constructed by..." OR "...Developed by..." OR "...Created by..."<br>
                     <br>
-                    <em>⚠️ Note: Technical and Academic language is usually NOT paraphrased.</em>
+                    <em>Note: Technical and Academic language is usually NOT paraphrased.</em>
                 </div>
 
-                <h3>✍️ While Listening: The Gap Strategy</h3>
-                <p>Answers can come quickly, or there might be a gap.</p>
-                <div style="background:#fff7ed; padding:15px; border-radius:8px; border:1px solid #fdba74;">
-                    <strong>The Nervous Cycle:</strong><br>
-                    Listening → Waiting → Waiting → <em>No answer?</em> → Nervous → <u>Underline keywords</u> → Make a note → <strong>Move on!</strong>
-                </div>
+                <h3>✍️ While Listening</h3>
+                <ul class="danger-list">
+                    <li><strong>Order:</strong> Answers follow the same order as the audio.</li>
+                    <li><strong>Gaps:</strong> Sometimes answers come quickly, sometimes there is a gap.</li>
+                    <li><strong>Gap Strategy:</strong> Listening -> Waiting -> Waiting -> No answer -> Nervous? -> Underline keyword -> Make note -> Move on!</li>
+                </ul>
 
                 <h3>📝 Note Taking Game</h3>
                 <p>Don't write full words if you are in a hurry. Use short versions!</p>
@@ -325,7 +325,7 @@
                 <h2>⚠️ Trap Detector</h2>
                 
                 <div class="rule-note" style="border-left-color: #ef4444; background: #fef2f2;">
-                    <strong>The "Same Word" Trap:</strong> If you hear the <em>exact same word</em> as in the question → Be careful! It's likely a trap. IELTS usually uses paraphrasing for the correct answer.
+                    <strong>The "Same Word" Trap:</strong> If you hear the <em>exact same word</em> as in the question -> Be careful! It's likely a trap. IELTS usually uses paraphrasing for the correct answer.
                 </div>
 
                 <div class="rule-note" style="border-left-color: #f59e0b; background: #fffbeb;">
@@ -347,7 +347,7 @@
                 <!-- NEW SECTION: EXACT WORD MATCHER -->
                 <div class="exact-box">
                     <h3 style="color:#be185d; margin-top:0;">✍️ Write What You Hear</h3>
-                    <p style="color:#831843; font-size:0.9rem;">Write the words you hear. Do not change the word form unless necessary.</p>
+                    <p style="color:#831843; font-size:0.9rem;">Don't change the word form unless necessary. Fit the grammar of the gap.</p>
                     
                     <div class="audio-script" style="border-left:4px solid #db2777;">
                         <span id="exact-audio"><strong>Audio:</strong> "Children must be accompanied by an adult at all times."</span>
@@ -412,7 +412,7 @@
 
             if (count > 2) {
                 color = "#ef4444"; 
-                msg += `⚠️ Too many for "2 word limit"! (Articles count!)`;
+                msg += `⚠️ Too many for "2 word limit"! (Articles 'a/an/the' count!)`;
             } else {
                 msg += "✅ Safe for " + '"No more than 2 words".';
             }
@@ -425,6 +425,12 @@
         }
 
         // --- PREDICTION PRACTICE ---
+        const pred_questions = [
+            { q: "Meeting time: _______", type: "Number/Time" },
+            { q: "Meet at: _______ (Location)", type: "Place" },
+            { q: "Call: _______", type: "Person's Name" }
+        ];
+        
         function checkPred(guess) {
             const feedback = document.getElementById('pred-feedback');
             const currentText = document.getElementById('pred-q').innerText;
@@ -515,13 +521,13 @@
             }
         }
 
-        // --- EXACT MATCH CHALLENGE (CYCLES) ---
+        // --- EXACT MATCH CHALLENGE (NEW) ---
         const exactQuestions = [
             {
                 audio: "Children must be accompanied by an adult at all times.",
                 q: "No children are allowed without _______.",
                 opts: ["an accompanied adult", "an adult"],
-                ans: 1 
+                ans: 1 // index of correct
             },
             {
                 audio: "The assignment must be submitted to the tutor directly.",
@@ -549,6 +555,7 @@
             exactIdx = (exactIdx + 1) % exactQuestions.length;
             loadExact();
             document.getElementById('exact-msg').innerText = "";
+            // Reset buttons
             document.getElementById('exact-btn-0').style.backgroundColor = "white";
             document.getElementById('exact-btn-1').style.backgroundColor = "white";
         }
@@ -568,10 +575,10 @@
 
             if(choiceIdx === current.ans) {
                 btn.style.backgroundColor = "#dcfce7";
-                msg.innerHTML = "<span style='color:#16a34a'>✅ Correct! Fits grammatically.</span>";
+                msg.innerHTML = "<span style='color:#16a34a'>✅ Correct! Grammatically fits the gap.</span>";
             } else {
                 btn.style.backgroundColor = "#fee2e2";
-                msg.innerHTML = "<span style='color:#dc2626'>❌ Incorrect. Includes unnecessary words.</span>";
+                msg.innerHTML = "<span style='color:#dc2626'>❌ Incorrect. Don't include words that don't fit!</span>";
             }
         }
 
