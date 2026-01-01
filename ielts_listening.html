@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Listening Mastery</title>
+    <!-- SECURITY CHECK -->
+    <script>
+        if(localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+    </script>
+    <style>
+        /* --- VARIABLES & RESET --- */
+        :root {
+            --primary: #be123c;    /* Rose Red for IELTS */
+            --secondary: #881337;
+            --accent: #fb7185;
+            --bg: #fff1f2;
+            --card-bg: #ffffff;
+            --text: #374151;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg); color: var(--text); padding-bottom: 50px; }
+
+        /* --- HEADER --- */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .home-link {
+            position: absolute; top: 20px; left: 20px;
+            color: rgba(255,255,255,0.9); text-decoration: none; font-weight: bold;
+        }
+        .home-link:hover { text-decoration: underline; }
+
+        h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+        .subtitle { font-size: 1rem; opacity: 0.9; }
+
+        /* --- LAYOUT --- */
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+        /* --- TABS --- */
+        .tabs { display: flex; gap: 10px; margin: -25px auto 30px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 10; }
+        .tab-btn {
+            padding: 12px 25px;
+            background: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 700;
+            color: var(--text);
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+            flex: 1;
+            min-width: 140px;
+            max-width: 200px;
+            text-align: center;
+        }
+        .tab-btn.active { background: var(--primary); color: white; transform: translateY(-3px); box-shadow: 0 6px 12px rgba(190, 18, 60, 0.3); }
+
+        /* --- SECTIONS --- */
+        .section-content { display: none; animation: fadeIn 0.4s ease; }
+        .section-content.active { display: block; }
+        .card { background: var(--card-bg); border-radius: 16px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        h2 { color: var(--primary); border-bottom: 2px solid #ffe4e6; padding-bottom: 10px; margin-bottom: 20px; }
+        h3 { color: var(--secondary); margin: 20px 0 10px; }
+
+        /* --- 1. OVERVIEW GRID --- */
+        .parts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .part-card { 
+            background: #fff0f1; border: 1px solid #fda4af; padding: 15px; border-radius: 10px; text-align: center; transition: 0.3s;
+        }
+        .part-card:hover { transform: translateY(-5px); background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .part-icon { font-size: 2rem; display: block; margin-bottom: 10px; }
+        .part-title { font-weight: bold; color: var(--primary); display: block; margin-bottom: 5px; }
+        .part-desc { font-size: 0.9rem; color: #666; }
+
+        /* --- 2. WORD COUNT JUDGE --- */
+        .judge-box { background: #f0fdf4; border: 2px dashed #22c55e; padding: 20px; border-radius: 12px; text-align: center; }
+        .judge-input { padding: 10px; width: 70%; border: 1px solid #ccc; border-radius: 5px; margin-top: 10px; font-size: 1rem; }
+        .judge-btn { padding: 10px 20px; background: #22c55e; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-left: 5px; }
+        .judge-result { margin-top: 15px; font-weight: bold; min-height: 20px; }
+
+        /* --- 3. TRAP DETECTOR --- */
+        .trap-box { background: #fff7ed; border-left: 5px solid #f97316; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
+        .audio-script { font-family: 'Courier New', monospace; background: #fff; padding: 10px; border-radius: 5px; margin-bottom: 15px; border: 1px solid #eee; color: #444; }
+        .trap-options { display: flex; gap: 10px; }
+        .trap-btn { flex: 1; padding: 10px; background: white; border: 2px solid #fdba74; color: #c2410c; font-weight: bold; cursor: pointer; border-radius: 5px; }
+        .trap-btn:hover { background: #ffedd5; }
+
+        /* --- 4. LISTS & TIPS --- */
+        .check-list li { list-style: none; padding-left: 25px; position: relative; margin-bottom: 10px; }
+        .check-list li::before { content: '✅'; position: absolute; left: 0; }
+        .danger-list li { list-style: none; padding-left: 25px; position: relative; margin-bottom: 10px; }
+        .danger-list li::before { content: '⚠️'; position: absolute; left: 0; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="ielts.html" class="home-link">← Back to IELTS</a>
+        <h1>IELTS Listening Mastery</h1>
+        <p class="subtitle">Strategies, Traps & Rules from the Official Guide</p>
+    </header>
+
+    <div class="container">
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('overview')">1. Structure</button>
+            <button class="tab-btn" onclick="switchTab('rules')">2. Rules & Counts</button>
+            <button class="tab-btn" onclick="switchTab('types')">3. Question Types</button>
+            <button class="tab-btn" onclick="switchTab('traps')">4. Traps & Tips</button>
+        </div>
+
+        <!-- TAB 1: OVERVIEW -->
+        <div id="overview" class="section-content active">
+            <div class="card">
+                <h2>The 40-Minute Breakdown</h2>
+                <div style="display:flex; justify-content:space-around; text-align:center; margin-bottom:30px; font-weight:bold; color:#444;">
+                    <div>🎧 30 Minutes<br><span style="font-size:0.9rem; font-weight:normal;">Listening</span></div>
+                    <div style="font-size:1.5rem;">+</div>
+                    <div>📝 2-10 Minutes<br><span style="font-size:0.9rem; font-weight:normal;">Check/Transfer</span></div>
+                    <div style="font-size:1.5rem;">=</div>
+                    <div>🏆 40 Questions<br><span style="font-size:0.9rem; font-weight:normal;">1 Mark Each</span></div>
+                </div>
+
+                <h3>The 4 Sections</h3>
+                <div class="parts-grid">
+                    <div class="part-card">
+                        <span class="part-icon">☕</span>
+                        <span class="part-title">Part 1</span>
+                        <div class="part-desc">Everyday Conversation<br>(2 People)<br><em>Ex: Booking a hotel</em></div>
+                    </div>
+                    <div class="part-card">
+                        <span class="part-icon">🎤</span>
+                        <span class="part-title">Part 2</span>
+                        <div class="part-desc">Everyday Monologue<br>(1 Person)<br><em>Ex: Guide explaining a resort</em></div>
+                    </div>
+                    <div class="part-card">
+                        <span class="part-icon">🎓</span>
+                        <span class="part-title">Part 3</span>
+                        <div class="part-desc">Academic Discussion<br>(2-4 People)<br><em>Ex: Student & Professor</em></div>
+                    </div>
+                    <div class="part-card">
+                        <span class="part-icon">🏛️</span>
+                        <span class="part-title">Part 4</span>
+                        <div class="part-desc">Academic Lecture<br>(1 Person)<br><em>Ex: History Lecture</em></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: RULES & WORD COUNTS -->
+        <div id="rules" class="section-content">
+            <div class="card">
+                <h2>Interactive Word Count Judge</h2>
+                <p><strong>Rule:</strong> "No more than TWO words and/or A NUMBER".</p>
+                <p style="font-size:0.9rem; color:#666;">Instructions: Articles (a, an, the) COUNT as words!</p>
+                
+                <div class="judge-box">
+                    <label>Type an answer to check its count:</label><br>
+                    <input type="text" id="wordInput" class="judge-input" placeholder="e.g. the main city library">
+                    <button class="judge-btn" onclick="checkWordCount()">Judge Me</button>
+                    <div id="judgeResult" class="judge-result"></div>
+                </div>
+
+                <h3>Common Scoring Rules</h3>
+                <ul class="check-list">
+                    <li><strong>Spelling Matters:</strong> Incorrect spelling = 0 Marks.</li>
+                    <li><strong>Grammar Matters:</strong> Sentences must be grammatically correct (e.g., singular vs plural).</li>
+                    <li><strong>Capitalization:</strong> You can write in ALL CAPS (e.g., GARDEN) or standard (Garden). Both are accepted.</li>
+                    <li><strong>Hyphens:</strong> "Part-time" counts as 1 word.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TAB 3: QUESTION TYPES -->
+        <div id="types" class="section-content">
+            <div class="card">
+                <h2>Question Type Gallery</h2>
+                <div class="parts-grid">
+                    <div class="part-card" style="background:#fff;">
+                        <span class="part-title">Multiple Choice</span>
+                        <div class="part-desc">Choose 1 (A,B,C) or Choose 2 from 5 options. Focus on specific details.</div>
+                    </div>
+                    <div class="part-card" style="background:#fff;">
+                        <span class="part-title">Map/Plan Labelling</span>
+                        <div class="part-desc">Follow directions (North, South, Next to). Label buildings or rooms.</div>
+                    </div>
+                    <div class="part-card" style="background:#fff;">
+                        <span class="part-title">Form Completion</span>
+                        <div class="part-desc">Fill in missing info (Names, Phone Numbers, Dates). Listen for spelling!</div>
+                    </div>
+                    <div class="part-card" style="background:#fff;">
+                        <span class="part-title">Flow Chart</span>
+                        <div class="part-desc">Understand a process or sequence of events (Cause & Effect).</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: TRAPS & TIPS -->
+        <div id="traps" class="section-content">
+            <div class="card">
+                <h2>⚠️ Trap Detector Game</h2>
+                <p>IELTS speakers often change their minds. Can you spot the real answer?</p>
+                
+                <div class="trap-box">
+                    <div class="audio-script">
+                        <strong>Audio:</strong> "Shall we meet at 7 o'clock? ... Oh sorry! I have a meeting then. How about half past seven?"
+                    </div>
+                    <p style="margin-bottom:10px;"><strong>Question:</strong> What time will they meet?</p>
+                    <div class="trap-options">
+                        <button class="trap-btn" onclick="checkTrap(this, false)">7:00</button>
+                        <button class="trap-btn" onclick="checkTrap(this, true)">7:30</button>
+                    </div>
+                    <div id="trapMsg1" style="margin-top:10px; font-weight:bold;"></div>
+                </div>
+
+                <div class="trap-box" style="border-left-color: #8b5cf6;">
+                    <div class="audio-script">
+                        <strong>Audio:</strong> "Children must be accompanied by an adult at all times."
+                    </div>
+                    <p style="margin-bottom:10px;"><strong>Question:</strong> No children allowed without...</p>
+                    <div class="trap-options">
+                        <button class="trap-btn" style="border-color:#a78bfa; color:#7c3aed;" onclick="checkTrap(this, false)">an accompanied adult</button>
+                        <button class="trap-btn" style="border-color:#a78bfa; color:#7c3aed;" onclick="checkTrap(this, true)">an adult</button>
+                    </div>
+                    <div id="trapMsg2" style="margin-top:10px; font-weight:bold;"></div>
+                </div>
+
+                <h3>Key Strategies</h3>
+                <ul class="danger-list">
+                    <li><strong>Signpost Words:</strong> Listen for "However", "But", "Actually". The answer usually changes after these!</li>
+                    <li><strong>Plurals:</strong> Be careful! "Student" vs "Students". If you miss the 's', it's wrong.</li>
+                    <li><strong>Prediction:</strong> In the preparation time, read the question and GUESS the type (Is it a number? A place? A name?).</li>
+                    <li><strong>Moving On:</strong> If you miss an answer, panic is your enemy. Move instantly to the next question.</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.section-content').forEach(content => content.classList.remove('active'));
+            
+            document.querySelector(`[onclick="switchTab('${tabId}')"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // --- WORD COUNT JUDGE ---
+        function checkWordCount() {
+            const input = document.getElementById('wordInput').value.trim();
+            const resultDiv = document.getElementById('judgeResult');
+            
+            if(!input) {
+                resultDiv.innerHTML = "Please type something first.";
+                return;
+            }
+
+            // Split by spaces (simplified logic)
+            const words = input.split(/\s+/).filter(w => w.length > 0);
+            const count = words.length;
+            
+            // Check for specific PDF examples
+            let color = "#10b981"; // Green
+            let msg = `${count} word(s). OK for "No more than 2 words".`;
+
+            if (count > 2) {
+                color = "#ef4444"; // Red
+                msg = `${count} words. ⚠️ Too many! (Limit is usually 2 or 3)`;
+            }
+
+            // Hyphen check
+            if (input.includes('-')) {
+                msg += " (Hyphenated words count as 1 word!)";
+            }
+
+            resultDiv.innerHTML = `<span style="color:${color}">${msg}</span>`;
+        }
+
+        // --- TRAP DETECTOR ---
+        function checkTrap(btn, isCorrect) {
+            const parent = btn.parentElement.nextElementSibling; // The msg div
+            if(isCorrect) {
+                btn.style.backgroundColor = "#dcfce7";
+                parent.innerHTML = "<span style='color:#16a34a'>✅ Correct! The speaker corrected themselves.</span>";
+            } else {
+                btn.style.backgroundColor = "#fee2e2";
+                parent.innerHTML = "<span style='color:#dc2626'>❌ Incorrect. That was the 'distractor'.</span>";
+            }
+        }
+    </script>
+
+</body>
+</html>
