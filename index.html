@@ -20,7 +20,6 @@
             --text: #2d3436;
             --text-muted: #636e72;
             --shadow: 0 10px 20px rgba(0,0,0,0.05);
-            --blue-light: #e3f2fd; /* New for Daily Section */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
@@ -80,75 +79,6 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
-        }
-
-        /* --- DAILY SECTION STYLES --- */
-        .daily-section {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            margin-bottom: 40px;
-            overflow: hidden;
-            border-top: 5px solid var(--accent);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .daily-header {
-            background: var(--blue-light);
-            padding: 15px 25px;
-            color: var(--primary);
-            font-weight: 700;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .daily-content {
-            padding: 25px;
-            display: grid;
-            grid-template-columns: 2fr 1fr; /* Word section wider than line section */
-            gap: 30px;
-        }
-
-        .daily-words h3, .daily-line h3 {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 5px;
-        }
-
-        .word-item {
-            margin-bottom: 15px;
-        }
-
-        .word-item strong {
-            color: var(--primary);
-            font-size: 1.2rem;
-            display: block;
-        }
-
-        .word-item span {
-            color: var(--text);
-            font-style: italic;
-        }
-
-        .line-text {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--accent);
-            line-height: 1.5;
-            background: #fff5f5;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid var(--accent);
-        }
-
-        @media (max-width: 768px) {
-            .daily-content { grid-template-columns: 1fr; } 
         }
 
         /* --- GRID & CARDS --- */
@@ -258,72 +188,13 @@
 
     <div class="container">
         
-        <div id="dailySection" class="daily-section">
-            <!-- Content Injected via JS -->
-        </div>
-
         <div id="courseGrid" class="grid">
             <!-- Cards Injected via JS -->
         </div>
     </div>
 
     <script>
-        // --- 1. DAILY VOCABULARY DATABASE ---
-        const ieltsDatabase = [
-            { w1: "Aberration", m1: "A departure from what is normal or expected.", w2: "Belligerent", m2: "Hostile and aggressive.", q: "Success is not final, failure is not fatal: It is the courage to continue that counts." },
-            { w1: "Cacophony", m1: "A harsh, discordant mixture of sounds.", w2: "Debilitate", m2: "Make (someone) very weak and infirm.", q: "The only way to do great work is to love what you do." },
-            { w1: "Ebullient", m1: "Cheerful and full of energy.", w2: "Facetious", m2: "Treating serious issues with inappropriate humor.", q: "Believe you can and you're halfway there." },
-            { w1: "Garrulous", m1: "Excessively talkative.", w2: "Hackneyed", m2: "Lacking significance through having been overused.", q: "Your time is limited, don't waste it living someone else's life." },
-            { w1: "Iconoclast", m1: "A person who attacks cherished beliefs.", w2: "Juxtapose", m2: "Place close together for contrasting effect.", q: "The future belongs to those who believe in the beauty of their dreams." }
-        ];
-
-        // --- 2. DAILY LOGIC (Selects content based on Date) ---
-        function renderDailyDose() {
-            const container = document.getElementById('dailySection');
-            const date = new Date();
-            
-            // Format Date for display
-            const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
-            const dateString = date.toLocaleDateString('en-US', options);
-
-            // Calculate "Day of the Year"
-            const start = new Date(date.getFullYear(), 0, 0);
-            const diff = date - start;
-            const oneDay = 1000 * 60 * 60 * 24;
-            const dayOfYear = Math.floor(diff / oneDay);
-            
-            // Cycle through database
-            const index = dayOfYear % ieltsDatabase.length; 
-            const todayContent = ieltsDatabase[index];
-
-            container.innerHTML = `
-                <div class="daily-header">
-                    <span>⚡ Daily Grammar Dose</span>
-                    <span>📅 ${dateString}</span>
-                </div>
-                <div class="daily-content">
-                    <div class="daily-words">
-                        <h3>Today's Vocabulary</h3>
-                        <div class="word-item">
-                            <strong>1. ${todayContent.w1}</strong>
-                            <span>"${todayContent.m1}"</span>
-                        </div>
-                        <div class="word-item">
-                            <strong>2. ${todayContent.w2}</strong>
-                            <span>"${todayContent.m2}"</span>
-                        </div>
-                    </div>
-                    <div class="daily-line">
-                        <h3>Line of the Day</h3>
-                        <div class="line-text">
-                            “${todayContent.q}”
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        // --- 3. EXISTING SYLLABUS DATA ---
+        // --- EXISTING SYLLABUS DATA ---
         const syllabusData = [
             {
                 id: 1, title: "Sentence", link: "module1.html", color: "border-blue", note: "", 
@@ -385,8 +256,7 @@
             window.location.href = 'login.html';
         }
 
-        // Initialize both sections
-        renderDailyDose();
+        // Initialize Syllabus Only
         renderSyllabus();
 
     </script>
