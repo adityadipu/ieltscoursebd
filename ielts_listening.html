@@ -122,6 +122,11 @@
         .danger-list li { list-style: none; padding-left: 25px; position: relative; margin-bottom: 10px; }
         .danger-list li::before { content: '⚠️'; position: absolute; left: 0; }
 
+        /* New Matcher for Exact Words */
+        .exact-box { background: #fdf2f8; border-left: 5px solid #db2777; padding: 20px; border-radius: 8px; margin-top: 20px; }
+        .exact-btn { flex: 1; padding: 10px; background: white; border: 2px solid #f9a8d4; color: #be185d; font-weight: bold; cursor: pointer; border-radius: 5px; }
+        .exact-btn:hover { background: #fce7f3; }
+
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -338,56 +343,28 @@
                     </div>
                     <div class="trap-msg" style="margin-top:10px; font-weight:bold;"></div>
                 </div>
-                
-                <div class="trap-box">
-                    <div class="audio-script">
-                        <strong>Audio:</strong> "The appointment is on Friday… oh no, sorry — I mean Thursday."
+
+                <!-- NEW SECTION: EXACT WORD MATCHER -->
+                <div class="exact-box">
+                    <h3 style="color:#be185d; margin-top:0;">✍️ Write What You Hear</h3>
+                    <p style="color:#831843; font-size:0.9rem;">Don't change the word form unless necessary. Fit the grammar of the gap.</p>
+                    
+                    <div class="audio-script" style="border-left:4px solid #db2777;">
+                        <span id="exact-audio"><strong>Audio:</strong> "Children must be accompanied by an adult at all times."</span>
                     </div>
-                    <p style="margin-bottom:10px;"><strong>Question:</strong> Appointment day?</p>
+                    
+                    <p style="margin-bottom:10px; font-weight:bold;" id="exact-q">Question: "No children are allowed without _______."</p>
+                    
                     <div class="trap-options">
-                        <button class="trap-btn" onclick="checkTrap(this, false)">Friday</button>
-                        <button class="trap-btn" onclick="checkTrap(this, true)">Thursday</button>
+                        <button class="exact-btn" onclick="checkExact(0)" id="exact-btn-0">an accompanied adult</button>
+                        <button class="exact-btn" onclick="checkExact(1)" id="exact-btn-1">an adult</button>
                     </div>
-                    <div class="trap-msg" style="margin-top:10px; font-weight:bold;"></div>
-                </div>
-                
-                <div class="trap-box">
-                    <div class="audio-script">
-                        <strong>Audio:</strong> "The ticket costs £15… actually, it’s £50."
-                    </div>
-                    <p style="margin-bottom:10px;"><strong>Question:</strong> Ticket price?</p>
-                    <div class="trap-options">
-                        <button class="trap-btn" onclick="checkTrap(this, false)">£15</button>
-                        <button class="trap-btn" onclick="checkTrap(this, true)">£50</button>
-                    </div>
-                    <div class="trap-msg" style="margin-top:10px; font-weight:bold;"></div>
+                    <div id="exact-msg" style="margin-top:10px; font-weight:bold;"></div>
+                    
+                    <button class="tab-btn" style="background:#fce7f3; color:#be185d; margin-top:15px; font-size:0.8rem; padding:8px 15px;" onclick="nextExact()">Next Example ➡</button>
                 </div>
 
-                <div class="trap-box">
-                    <div class="audio-script">
-                        <strong>Audio:</strong> "Let’s meet outside the cinema… sorry, I mean the café next door."
-                    </div>
-                    <p style="margin-bottom:10px;"><strong>Question:</strong> Meeting place?</p>
-                    <div class="trap-options">
-                        <button class="trap-btn" onclick="checkTrap(this, false)">Cinema</button>
-                        <button class="trap-btn" onclick="checkTrap(this, true)">Café</button>
-                    </div>
-                    <div class="trap-msg" style="margin-top:10px; font-weight:bold;"></div>
-                </div>
-                
-                <div class="trap-box">
-                    <div class="audio-script">
-                        <strong>Audio:</strong> "The class starts at 9… oh wait, it actually starts at 9:15."
-                    </div>
-                    <p style="margin-bottom:10px;"><strong>Question:</strong> Class start time?</p>
-                    <div class="trap-options">
-                        <button class="trap-btn" onclick="checkTrap(this, false)">9:00</button>
-                        <button class="trap-btn" onclick="checkTrap(this, true)">9:15</button>
-                    </div>
-                    <div class="trap-msg" style="margin-top:10px; font-weight:bold;"></div>
-                </div>
-                
-                <h3>🔄 Repeated Answers / Self-Correction Cues</h3>
+                <h3 style="margin-top:30px;">🔄 Repeated Answers / Self-Correction Cues</h3>
                 <p>Listen for these phrases. The <strong>real answer</strong> usually comes AFTER them:</p>
                 <ul class="check-list">
                     <li>"Is that what you mean? Did you mean this?"</li>
@@ -427,19 +404,14 @@
                 return;
             }
 
-            // Simple split by spaces/hyphens handling
-            // Hyphens connect words, so "Part-time" is one token if splitting by space.
             const words = input.split(/\s+/).filter(w => w.length > 0);
             let count = words.length;
             
-            // Check numbers: "1950" is 1 word. "60 local" is 2 words.
-            // Check hyphen: "Part-time" is 1 word. "Part time" is 2.
-            
-            let color = "#10b981"; // Green
+            let color = "#10b981"; 
             let msg = `${count} word(s). `;
 
             if (count > 2) {
-                color = "#ef4444"; // Red
+                color = "#ef4444"; 
                 msg += `⚠️ Too many for "2 word limit"! (Articles 'a/an/the' count!)`;
             } else {
                 msg += "✅ Safe for " + '"No more than 2 words".';
@@ -453,14 +425,12 @@
         }
 
         // --- PREDICTION PRACTICE ---
-        // Defined properly as an array
         const pred_questions = [
             { q: "Meeting time: _______", type: "Number/Time" },
             { q: "Meet at: _______ (Location)", type: "Place" },
             { q: "Call: _______", type: "Person's Name" }
         ];
         
-        // Simple cycler for demo purposes
         function checkPred(guess) {
             const feedback = document.getElementById('pred-feedback');
             const currentText = document.getElementById('pred-q').innerText;
@@ -480,7 +450,7 @@
             } else if (currentText.includes("Caller Name") && guess === "Name") {
                  feedback.innerHTML = "<span style='color:green'>Correct! Expect a person's name.</span>";
                  setTimeout(() => {
-                    document.getElementById('pred-q').innerText = "Meeting time: _______"; // Cycle back
+                    document.getElementById('pred-q').innerText = "Meeting time: _______"; 
                     feedback.innerText = "";
                 }, 1500);
             } else {
@@ -551,7 +521,70 @@
             }
         }
 
+        // --- EXACT MATCH CHALLENGE (NEW) ---
+        const exactQuestions = [
+            {
+                audio: "Children must be accompanied by an adult at all times.",
+                q: "No children are allowed without _______.",
+                opts: ["an accompanied adult", "an adult"],
+                ans: 1 // index of correct
+            },
+            {
+                audio: "The assignment must be submitted to the tutor directly.",
+                q: "Hand the work in to _______.",
+                opts: ["a submitted tutor", "the tutor"],
+                ans: 1
+            },
+            {
+                audio: "Guests are required to wear formal attire.",
+                q: "Guests must wear _______.",
+                opts: ["formal attire", "required attire"],
+                ans: 0
+            },
+            {
+                audio: "The car needs to be washed by a professional.",
+                q: "Job must be done by _______.",
+                opts: ["a washed professional", "a professional"],
+                ans: 1
+            }
+        ];
+        
+        let exactIdx = 0;
+
+        function nextExact() {
+            exactIdx = (exactIdx + 1) % exactQuestions.length;
+            loadExact();
+            document.getElementById('exact-msg').innerText = "";
+            // Reset buttons
+            document.getElementById('exact-btn-0').style.backgroundColor = "white";
+            document.getElementById('exact-btn-1').style.backgroundColor = "white";
+        }
+
+        function loadExact() {
+            const current = exactQuestions[exactIdx];
+            document.getElementById('exact-audio').innerHTML = `<strong>Audio:</strong> "${current.audio}"`;
+            document.getElementById('exact-q').innerText = `Question: ${current.q}`;
+            document.getElementById('exact-btn-0').innerText = current.opts[0];
+            document.getElementById('exact-btn-1').innerText = current.opts[1];
+        }
+
+        function checkExact(choiceIdx) {
+            const current = exactQuestions[exactIdx];
+            const msg = document.getElementById('exact-msg');
+            const btn = document.getElementById(`exact-btn-${choiceIdx}`);
+
+            if(choiceIdx === current.ans) {
+                btn.style.backgroundColor = "#dcfce7";
+                msg.innerHTML = "<span style='color:#16a34a'>✅ Correct! Grammatically fits the gap.</span>";
+            } else {
+                btn.style.backgroundColor = "#fee2e2";
+                msg.innerHTML = "<span style='color:#dc2626'>❌ Incorrect. Don't include words that don't fit!</span>";
+            }
+        }
+
+        // Init functions
         initNoteGame();
+        loadExact();
 
     </script>
 
