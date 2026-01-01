@@ -11,6 +11,15 @@
         }
     </script>
     <style>
+        /* --- VARIABLES --- */
+        :root {
+            --primary: #0f766e;
+            --accent: #f59e0b;
+            --text-muted: #636e72;
+            --blue-light: #e3f2fd;
+            --text: #2d3436;
+        }
+
         body {
             margin: 0; padding: 0;
             font-family: 'Segoe UI', sans-serif;
@@ -30,7 +39,7 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             box-sizing: border-box;
         }
-        h1 { margin: 0; color: #0f766e; }
+        h1 { margin: 0; color: var(--primary); }
         .logout-btn {
             background: #ef4444; color: white; border: none;
             padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: bold;
@@ -38,11 +47,79 @@
         
         .hero {
             text-align: center;
-            margin: 50px 20px 30px;
+            margin: 40px 20px 20px;
         }
         .hero h2 { font-size: 2.5rem; color: #111827; margin-bottom: 10px; }
         .hero p { color: #6b7280; font-size: 1.1rem; }
 
+        /* --- DAILY SECTION STYLES (Moved Here) --- */
+        .daily-container {
+            width: 100%;
+            max-width: 800px;
+            padding: 0 20px;
+            margin-bottom: 30px;
+            box-sizing: border-box;
+        }
+
+        .daily-section {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            overflow: hidden;
+            border-top: 5px solid var(--accent);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .daily-header {
+            background: var(--blue-light);
+            padding: 15px 25px;
+            color: #2c3e50;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .daily-content {
+            padding: 25px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            text-align: left;
+        }
+
+        .daily-words h3, .daily-line h3 {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+            margin-top: 0;
+        }
+
+        .word-item { margin-bottom: 15px; }
+        .word-item strong { color: var(--primary); font-size: 1.2rem; display: block; }
+        .word-item span { color: var(--text); font-style: italic; }
+
+        .line-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent);
+            line-height: 1.5;
+            background: #fff5f5;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .daily-content { grid-template-columns: 1fr; } 
+        }
+
+        /* --- CARDS STYLES --- */
         .cards-container {
             display: flex;
             gap: 30px;
@@ -50,6 +127,7 @@
             justify-content: center;
             max-width: 1000px;
             padding: 20px;
+            padding-top: 0;
         }
 
         .course-card {
@@ -72,12 +150,10 @@
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
-        /* Grammar Card Specifics */
         .card-grammar { border-bottom: 6px solid #2563eb; }
         .card-grammar:hover { border-color: #2563eb; }
         .icon-grammar { font-size: 4rem; background: #eff6ff; width: 100px; height: 100px; line-height: 100px; border-radius: 50%; margin: 0 auto 20px; display: block; }
 
-        /* IELTS Card Specifics */
         .card-ielts { border-bottom: 6px solid #dc2626; }
         .card-ielts:hover { border-color: #dc2626; }
         .icon-ielts { font-size: 4rem; background: #fef2f2; width: 100px; height: 100px; line-height: 100px; border-radius: 50%; margin: 0 auto 20px; display: block; }
@@ -110,8 +186,15 @@
         <p>Select a module to begin your learning journey today.</p>
     </div>
 
+    <!-- DAILY DOSE SECTION (Moved Here) -->
+    <div class="daily-container">
+        <div id="dailySection" class="daily-section">
+            <!-- Content Injected via JS -->
+        </div>
+    </div>
+
     <div class="cards-container">
-        <!-- Grammar Option (Links to your existing index.html) -->
+        <!-- Grammar Option -->
         <a href="index.html" class="course-card card-grammar">
             <span class="icon-grammar">📘</span>
             <span class="card-title">General Grammar</span>
@@ -119,7 +202,7 @@
             <span class="card-btn btn-grammar">Open Course</span>
         </a>
 
-        <!-- IELTS Option (Links to the new ielts.html) -->
+        <!-- IELTS Option -->
         <a href="ielts.html" class="course-card card-ielts">
             <span class="icon-ielts">🌍</span>
             <span class="card-title">IELTS Prep</span>
@@ -133,6 +216,59 @@
             localStorage.removeItem('isLoggedIn');
             window.location.href = 'login.html';
         }
+
+        // --- DAILY VOCABULARY DATABASE ---
+        const ieltsDatabase = [
+            { w1: "Aberration", m1: "A departure from what is normal or expected.", w2: "Belligerent", m2: "Hostile and aggressive.", q: "Success is not final, failure is not fatal: It is the courage to continue that counts." },
+            { w1: "Cacophony", m1: "A harsh, discordant mixture of sounds.", w2: "Debilitate", m2: "Make (someone) very weak and infirm.", q: "The only way to do great work is to love what you do." },
+            { w1: "Ebullient", m1: "Cheerful and full of energy.", w2: "Facetious", m2: "Treating serious issues with inappropriate humor.", q: "Believe you can and you're halfway there." },
+            { w1: "Garrulous", m1: "Excessively talkative.", w2: "Hackneyed", m2: "Lacking significance through having been overused.", q: "Your time is limited, don't waste it living someone else's life." },
+            { w1: "Iconoclast", m1: "A person who attacks cherished beliefs.", w2: "Juxtapose", m2: "Place close together for contrasting effect.", q: "The future belongs to those who believe in the beauty of their dreams." }
+        ];
+
+        // --- DAILY LOGIC ---
+        function renderDailyDose() {
+            const container = document.getElementById('dailySection');
+            const date = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+            const dateString = date.toLocaleDateString('en-US', options);
+
+            const start = new Date(date.getFullYear(), 0, 0);
+            const diff = date - start;
+            const oneDay = 1000 * 60 * 60 * 24;
+            const dayOfYear = Math.floor(diff / oneDay);
+            
+            const index = dayOfYear % ieltsDatabase.length; 
+            const todayContent = ieltsDatabase[index];
+
+            container.innerHTML = `
+                <div class="daily-header">
+                    <span>⚡ Daily English Dose</span>
+                    <span>📅 ${dateString}</span>
+                </div>
+                <div class="daily-content">
+                    <div class="daily-words">
+                        <h3>Today's Vocabulary</h3>
+                        <div class="word-item">
+                            <strong>1. ${todayContent.w1}</strong>
+                            <span>"${todayContent.m1}"</span>
+                        </div>
+                        <div class="word-item">
+                            <strong>2. ${todayContent.w2}</strong>
+                            <span>"${todayContent.m2}"</span>
+                        </div>
+                    </div>
+                    <div class="daily-line">
+                        <h3>Line of the Day</h3>
+                        <div class="line-text">
+                            “${todayContent.q}”
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        renderDailyDose();
     </script>
 
 </body>
