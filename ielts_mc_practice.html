@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Multiple Choice Master Class</title>
+    <style>
+        :root {
+            /* Restored Rose Red Theme */
+            --primary: #be123c;
+            --primary-dark: #881337;
+            --primary-light: #fff1f2;
+            --accent: #fb7185;
+            --text: #374151;
+            --bg: #fff1f2;
+            --white: #ffffff;
+            --success: #10b981;
+            --danger: #ef4444;
+            --info: #3b82f6;
+        }
+        
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: var(--bg); color: var(--text); padding-bottom: 60px; margin: 0; }
+
+        /* HEADER */
+        header { 
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
+            color: white; 
+            padding: 1.5rem; 
+            text-align: center; 
+            position: relative; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+        }
+        .back-btn { 
+            position: absolute; left: 20px; top: 50%; transform: translateY(-50%); 
+            color: white; text-decoration: none; font-weight: bold; 
+            background: rgba(255,255,255,0.2); padding: 8px 15px; 
+            border-radius: 20px; transition: 0.2s; 
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.3); }
+        h1 { margin: 0; font-size: 1.8rem; }
+        
+        .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
+
+        /* SECTIONS */
+        .section-card { 
+            background: var(--white); border-radius: 16px; padding: 25px; 
+            margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+            border: 1px solid #ffe4e6; 
+        }
+        h2 { color: var(--primary); border-bottom: 2px solid var(--primary-light); padding-bottom: 10px; margin-top: 0; }
+        
+        /* TIPS GRID */
+        .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        .tip-card { 
+            background: var(--primary-light); padding: 15px; border-radius: 10px; 
+            border-left: 4px solid var(--primary); 
+        }
+        .tip-title { font-weight: bold; color: var(--primary-dark); display: block; margin-bottom: 5px; }
+        
+        /* PRACTICE BOX */
+        .practice-box { border: 2px solid #e5e7eb; border-radius: 12px; padding: 20px; margin-top: 20px; position: relative; transition: border-color 0.3s; }
+        .practice-box:hover { border-color: var(--primary-light); }
+        .p-title { 
+            background: var(--primary); color: white; display: inline-block; 
+            padding: 5px 15px; border-radius: 15px; font-size: 0.85rem; 
+            font-weight: bold; margin-bottom: 15px; 
+        }
+        
+        /* AUDIO PLAYER */
+        .audio-player { 
+            background: #f3f4f6; padding: 10px; border-radius: 8px; 
+            margin-bottom: 20px; display: flex; align-items: center; gap: 10px; 
+            border: 1px solid #e5e7eb;
+        }
+        .play-btn { 
+            background: var(--primary); color: white; border: none; 
+            width: 40px; height: 40px; border-radius: 50%; cursor: pointer; 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 1.2rem; transition: 0.2s; 
+        }
+        .play-btn:hover { transform: scale(1.1); background: var(--primary-dark); }
+        .audio-label { font-size: 0.9rem; font-weight: bold; color: #666; }
+        
+        /* Animation Bars */
+        .speaking-animation { height: 20px; display: none; gap: 3px; align-items: flex-end; }
+        .bar { width: 3px; background: var(--primary); animation: sound 0.5s infinite alternate; }
+        .bar:nth-child(2) { animation-delay: 0.1s; height: 15px; }
+        .bar:nth-child(3) { animation-delay: 0.2s; height: 10px; }
+        @keyframes sound { from { height: 5px; } to { height: 20px; } }
+
+        /* IMAGES */
+        .practice-img { 
+            max-width: 100%; height: auto; border-radius: 8px; 
+            margin-bottom: 15px; border: 1px solid #ddd; display: block;
+        }
+
+        /* QUESTIONS */
+        .question-text { font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; color: #1f2937; }
+        .options-list { display: flex; flex-direction: column; gap: 8px; }
+        .opt-label { 
+            display: flex; align-items: center; gap: 10px; padding: 10px; 
+            border: 1px solid #e5e7eb; border-radius: 8px; cursor: pointer; 
+            transition: 0.2s; background: white;
+        }
+        .opt-label:hover { background: #fff1f2; border-color: var(--accent); }
+        .opt-label input { accent-color: var(--primary); transform: scale(1.2); }
+
+        /* CONTROLS */
+        .controls { margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
+        .btn { padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; border: none; font-size: 0.9rem; transition: 0.2s; }
+        .btn-check { background: var(--success); color: white; }
+        .btn-check:hover { background: #059669; }
+        .btn-script { background: white; border: 1px solid #ccc; color: #444; }
+        .btn-script:hover { background: #f3f4f6; }
+
+        /* HIDDEN CONTENT */
+        .hidden-content { display: none; margin-top: 20px; padding-top: 20px; border-top: 2px dashed #e5e7eb; animation: slideDown 0.4s ease; }
+        .script-text { font-family: 'Courier New', monospace; background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #eee; line-height: 1.5; color: #555; white-space: pre-wrap; }
+        .explanation { margin-top: 15px; background: #ecfdf5; border-left: 4px solid var(--success); padding: 15px; }
+        .vocab-box { margin-top: 10px; background: #fff7ed; border-left: 4px solid #f97316; padding: 15px; }
+        
+        .highlight { background-color: #fde047; padding: 0 2px; border-radius: 2px; }
+        
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* TYPES GRID */
+        .types-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+        .type-item { background: #f0f9ff; padding: 10px; border-radius: 8px; border: 1px solid #bae6fd; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="ielts_mastery_hub.html" class="back-btn">← Home</a>
+        <h1>Multiple Choice Master Class</h1>
+        <p style="opacity:0.9; margin-top:5px;">Strategies, Audio Practice & Explanations</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- STRATEGY SECTION -->
+        <div class="section-card">
+            <h2>🧠 Top 10 Strategies</h2>
+            <div class="tips-grid">
+                <div class="tip-card"><span class="tip-title">1. Titles First</span>Always read the Title to get context immediately.</div>
+                <div class="tip-card"><span class="tip-title">2. Highlight Keywords</span>Find keywords (e.g., "3 items", "recommended") before listening.</div>
+                <div class="tip-card"><span class="tip-title">3. Paraphrasing</span>The audio will NOT use the exact words. Think of synonyms (Recommended -> Suggested).</div>
+                <div class="tip-card"><span class="tip-title">4. The "Correction" Trap</span>Listen for "But", "However", "Actually". The speaker often changes their mind.</div>
+                <div class="tip-card"><span class="tip-title">5. Distractors</span>Phrases like "I'll leave it to you" or "Optional" usually mean it's NOT the answer.</div>
+                <div class="tip-card"><span class="tip-title">6. All Options Mentioned</span>Don't pick the first thing you hear. They usually mention ALL options to trick you.</div>
+                <div class="tip-card"><span class="tip-title">7. Order</span>The options (A, B, C) might not be mentioned in alphabetical order.</div>
+                <div class="tip-card"><span class="tip-title">8. Answers are Letters</span>Write 'A', not the full text 'Camera' on your answer sheet.</div>
+                <div class="tip-card"><span class="tip-title">9. Speed Reading</span>Use the 20-30 seconds break to read specific questions, not everything.</div>
+                <div class="tip-card"><span class="tip-title">10. Guessing</span>Never leave a blank. There is no negative marking!</div>
+            </div>
+
+            <h3 style="margin-top:20px; color:var(--primary-dark);">Question Types</h3>
+            <div class="types-grid">
+                <div class="type-item"><strong>Type 1:</strong> 3 Option Selection (A, B, C)</div>
+                <div class="type-item"><strong>Type 2:</strong> Long List Selection (Pick 2 or 3 from A-G)</div>
+                <div class="type-item"><strong>Type 3:</strong> Sentence Completion</div>
+                <div class="type-item"><strong>Type 4:</strong> Picture/Logo Selection <img src="image1.png" alt="Coffee Shop Logos" class="practice-img"> </div>
+            </div>
+        </div>
+
+        <!-- PRACTICE 1 -->
+        <div class="section-card">
+            <span class="p-title">Practice 1: Rainforest Excursion</span>
+            
+            <div class="audio-player">
+                <button class="play-btn" onclick="playAudio('recording1.mp3', this)">▶</button>
+                <div class="audio-info">
+                    <div class="audio-label">recording1.mp3</div>
+                    <div class="speaking-animation">
+                        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="question-text">Questions 4-6: What 3 items are recommended to take with you?</p>
+            
+            <div class="options-list" id="p1-options">
+                <!-- Injected via JS -->
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-check" onclick="checkAnswer(1)">Check Answer</button>
+                <button class="btn btn-script" onclick="toggleReveal('reveal-1')">Toggle Script & Vocab</button>
+            </div>
+
+            <div id="reveal-1" class="hidden-content">
+                <div class="script-text">Let me give you some information about today's excursion into the rainforest... The walk will be around six miles, so it's very important that you wear strong footwear, such as a good pair of walking boots. There will be plenty of opportunities to take photographs, however, I'm afraid that cameras are not allowed in the rainforest... Most of the track will be shaded, so there's no need to worry about sunscreen. Mosquito repellent is often useful, but not at this time of year... We'll be walking for several hours, so you should bring some refreshments with you. This is essential. I'd also recommend bringing a medium-sized rucksack... Finally, some asked about local currency... I'll leave that decision up to you.</div>
+                
+                <div class="explanation">
+                    <strong>Correct Answers: B (Food & Drink), D (Walking Boots), F (Large Bag)</strong><br><br>
+                    1. Walking Boots: "Important that you wear strong footwear... good pair of walking boots."<br>
+                    2. Food & Drink: "Bring some refreshments... essential."<br>
+                    3. Large Bag: "Recommend bringing a medium-sized rucksack."
+                </div>
+                <div class="vocab-box">
+                    <strong>Vocabulary Paraphrasing:</strong><br>
+                    • Recommended -> Essential, Important, You should.<br>
+                    • Walking Boots -> Strong footwear.<br>
+                    • Food & Drink -> Refreshments.<br>
+                    • Large Bag -> Medium-sized rucksack.<br>
+                    • NOT Answers: Camera (Not allowed), Sunscreen (No need), Mosquito repellent (Not this time of year), Cash (Leave decision to you).
+                </div>
+            </div>
+        </div>
+
+        <!-- PRACTICE 2 -->
+        <div class="section-card">
+            <span class="p-title">Practice 2: Health Care Conference</span>
+            
+            <div class="audio-player">
+                <button class="play-btn" onclick="playAudio('recording2.mp3', this)">▶</button>
+                <div class="audio-info">
+                    <div class="audio-label">recording2.mp3</div>
+                    <div class="speaking-animation"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+                </div>
+            </div>
+
+            <p class="question-text">Questions 1-3: Who will be LECTURING at the conference today?</p>
+            
+            <div class="options-list" id="p2-options">
+                <!-- Injected via JS -->
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-check" onclick="checkAnswer(2)">Check Answer</button>
+                <button class="btn btn-script" onclick="toggleReveal('reveal-2')">Toggle Script & Vocab</button>
+            </div>
+
+            <div id="reveal-2" class="hidden-content">
+                <div class="script-text">The morning will be kicked off by Dr Roger Dean who will be presenting his speech summarising the major changes... Following him, will be Dr William Benson who will oversee the debate... After lunch, Dr Daisy Mandalay will be showing a revealing video... Dr Christopher Lord will then address everyone on the problems faced by family doctors... Dr David Bishop... will take the floor to tell you about his current research... Dr Ralph Morris will be responsible for collecting your feedback... Dr George Ripley has agreed to lecture you all tomorrow.</div>
+                
+                <div class="explanation">
+                    <strong>Correct Answers: A (Lord), B (Bishop), E (Dean)</strong><br><br>
+                    (E) Dr Roger Dean: "Presenting his speech" = Lecturing.<br>
+                    (A) Dr Christopher Lord: "Address everyone" = Lecturing.<br>
+                    (B) Dr David Bishop: "Take the floor to tell you" = Lecturing.
+                </div>
+                <div class="vocab-box">
+                    <strong>Distractors (Traps):</strong><br>
+                    • Dr William Benson (Oversee debate - NOT lecture)<br>
+                    • Dr Daisy Mandalay (Showing video - NOT lecture)<br>
+                    • Dr Ralph Morris (Collecting feedback - NOT lecture)<br>
+                    • Dr George Ripley (Lecture tomorrow - NOT today)
+                </div>
+            </div>
+        </div>
+
+        <!-- PRACTICE 3 -->
+        <div class="section-card">
+            <span class="p-title">Practice 3: Mammoths</span>
+            
+            <div class="audio-player">
+                <button class="play-btn" onclick="playAudio('recording3.mp3', this)">▶</button>
+                <div class="audio-info">
+                    <div class="audio-label">recording3.mp3</div>
+                    <div class="speaking-animation"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+                </div>
+            </div>
+
+            <!-- MAMMOTH IMAGE -->
+            <img src="image2.png" alt="Mammoth Types Diagram" class="practice-img">
+
+            <p class="question-text">Which type of Mammoth is the lecture going to focus on?</p>
+            
+            <div class="options-list">
+                <label class="opt-label"><input type="radio" name="p3" value="A"> A. Ambelodon (20m years ago)</label>
+                <label class="opt-label"><input type="radio" name="p3" value="B"> B. Stegodon (Huge curving tusks)</label>
+                <label class="opt-label"><input type="radio" name="p3" value="C"> C. Stegotetrabelodon (4 tusks)</label>
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-check" onclick="checkAnswer(3)">Check Answer</button>
+                <button class="btn btn-script" onclick="toggleReveal('reveal-3')">Toggle Script & Vocab</button>
+            </div>
+
+            <div id="reveal-3" class="hidden-content">
+                <div class="script-text">There is evidence of much change... We can see the Ambelodon 20 million years ago, the Stegodon 12 million years ago and finally the Stegotetrabelodon... Today, I'm going to be focusing on the one most of us associate with the so-called classic shape... and which is most known for its huge curving tusks and colossal size.</div>
+                
+                <div class="explanation">
+                    <strong>Correct Answer: B (Stegodon)</strong><br>
+                    The audio mentions all three (A, B, C), but explicitly states "Focusing on... huge curving tusks". This description matches the Stegodon feature.
+                </div>
+                <div class="vocab-box">
+                    <strong>Vocabulary:</strong><br>
+                    • Colossal = Enormous, Gigantic, Huge.<br>
+                    • Prominent = Major, Outstanding.<br>
+                    • Physiology = Make-up/Structure.
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- PRACTICE 4 -->
+        <div class="section-card">
+            <span class="p-title">Practice 4: Dashford Study Centre</span>
+            
+            <div class="audio-player">
+                <button class="play-btn" onclick="playAudio('recording4.mp3', this)">▶</button>
+                <div class="audio-info">
+                    <div class="audio-label">recording4.mp3</div>
+                    <div class="speaking-animation"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+                </div>
+            </div>
+
+            <div class="options-list">
+                <div style="margin-bottom:15px;">
+                    <p class="question-text">1. Membership is 20 pounds...</p>
+                    <label class="opt-label"><input type="radio" name="p4-1" value="A"> A. For everyone</label>
+                    <label class="opt-label"><input type="radio" name="p4-1" value="B"> B. For everyone except elderly & students</label>
+                    <label class="opt-label"><input type="radio" name="p4-1" value="C"> C. For everyone, each year</label>
+                </div>
+                <div style="margin-bottom:15px;">
+                    <p class="question-text">2. Members are able to take out...</p>
+                    <label class="opt-label"><input type="radio" name="p4-2" value="A"> A. Unlimited books</label>
+                    <label class="opt-label"><input type="radio" name="p4-2" value="B"> B. Max 3 books</label>
+                    <label class="opt-label"><input type="radio" name="p4-2" value="C"> C. 3 books for 3 days</label>
+                </div>
+                <div>
+                    <p class="question-text">3. Booking is unnecessary for...</p>
+                    <label class="opt-label"><input type="radio" name="p4-3" value="A"> A. Yoga/Dance</label>
+                    <label class="opt-label"><input type="radio" name="p4-3" value="B"> B. Fitness classes</label>
+                    <label class="opt-label"><input type="radio" name="p4-3" value="C"> C. Walking class</label>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-check" onclick="checkAnswer(4)">Check Answers</button>
+                <button class="btn btn-script" onclick="toggleReveal('reveal-4')">Toggle Script & Vocab</button>
+            </div>
+
+            <div id="reveal-4" class="hidden-content">
+                <div class="script-text">Membership is free for over 65's as well as for students... For everyone else it is an annual membership of 20 pounds... As members, you are able to borrow up to 3 books at a time for up to 4 days... Our yoga, dance and gentle exercise classes are extremely popular and booking ahead is required... However, our walking group, who meet once a week, offer unlimited places.</div>
+                
+                <div class="explanation">
+                    <strong>Correct Answers: 1(B), 2(B), 3(C)</strong><br><br>
+                    1. B: Free for elderly/students, others pay 20.<br>
+                    2. B: "Up to 3 books" (Matches Max 3).<br>
+                    3. C: Walking group offers "unlimited places" (Booking unnecessary), while yoga/dance "require booking".
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Data for Lists
+        const p1Opts = [
+            {v: 'a', t: 'Camera'}, {v: 'b', t: 'Food & Drink'}, {v: 'c', t: 'Mosquito Repellent'},
+            {v: 'd', t: 'Walking Boots'}, {v: 'e', t: 'Sunscreen'}, {v: 'f', t: 'Large Bag'},
+            {v: 'g', t: 'Cash'}, {v: 'h', t: 'Extra Clothes'}
+        ];
+        const p2Opts = [
+            {v: 'A', t: 'Dr Cristopher Lord'}, {v: 'B', t: 'Dr David Bishop'}, {v: 'C', t: 'Dr George Ripley'},
+            {v: 'D', t: 'Dr William Benson'}, {v: 'E', t: 'Dr Roger Dean'}, {v: 'F', t: 'Dr Daisy Mandalay'}, {v: 'G', t: 'Dr Ralph Morris'}
+        ];
+
+        // Init
+        window.onload = function() {
+            const c1 = document.getElementById('p1-options');
+            p1Opts.forEach(o => {
+                c1.innerHTML += `<label class="opt-label"><input type="checkbox" value="${o.v}"> ${o.v.toUpperCase()}. ${o.t}</label>`;
+            });
+
+            const c2 = document.getElementById('p2-options');
+            p2Opts.forEach(o => {
+                c2.innerHTML += `<label class="opt-label"><input type="checkbox" value="${o.v}"> ${o.v}. ${o.t}</label>`;
+            });
+        };
+
+        // Functions
+        function toggleReveal(id) {
+            const el = document.getElementById(id);
+            el.style.display = el.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function checkAnswer(num) {
+            document.getElementById(`reveal-${num}`).style.display = 'block';
+            
+            // Logic for Practice 1
+            if(num === 1) {
+                const correct = ['b','d','f'];
+                const inputs = document.querySelectorAll('#p1-options input');
+                inputs.forEach(inp => {
+                    const parent = inp.parentElement;
+                    if(correct.includes(inp.value)) parent.style.background = "#d1fae5"; // Green
+                    else if(inp.checked) parent.style.background = "#fee2e2"; // Red
+                    else parent.style.background = "white";
+                });
+            }
+            // Logic for Practice 2
+            if(num === 2) {
+                const correct = ['A','B','E'];
+                const inputs = document.querySelectorAll('#p2-options input');
+                inputs.forEach(inp => {
+                    const parent = inp.parentElement;
+                    if(correct.includes(inp.value)) parent.style.background = "#d1fae5";
+                    else if(inp.checked) parent.style.background = "#fee2e2";
+                    else parent.style.background = "white";
+                });
+            }
+            // Logic for Practice 3
+            if(num === 3) {
+                const selected = document.querySelector('input[name="p3"]:checked');
+                const labels = document.querySelectorAll('input[name="p3"]');
+                labels.forEach(l => l.parentElement.style.background = 'white');
+                
+                if(selected && selected.value === 'B') selected.parentElement.style.background = "#d1fae5";
+                else if(selected) selected.parentElement.style.background = "#fee2e2";
+            }
+            // Logic for Visual Practice
+            if(num === 'visual') {
+                const selected = document.querySelector('input[name="p-visual"]:checked');
+                const labels = document.querySelectorAll('input[name="p-visual"]');
+                labels.forEach(l => l.parentElement.style.background = 'white');
+                
+                if(selected && selected.value === 'C') selected.parentElement.style.background = "#d1fae5";
+                else if(selected) selected.parentElement.style.background = "#fee2e2";
+            }
+            // Logic for Practice 4
+            if(num === 4) {
+                const a1 = document.querySelector('input[name="p4-1"]:checked');
+                const a2 = document.querySelector('input[name="p4-2"]:checked');
+                const a3 = document.querySelector('input[name="p4-3"]:checked');
+                
+                if(a1 && a1.value === 'B') a1.parentElement.style.background = "#d1fae5";
+                else if(a1) a1.parentElement.style.background = "#fee2e2";
+
+                if(a2 && a2.value === 'B') a2.parentElement.style.background = "#d1fae5";
+                else if(a2) a2.parentElement.style.background = "#fee2e2";
+
+                if(a3 && a3.value === 'C') a3.parentElement.style.background = "#d1fae5";
+                else if(a3) a3.parentElement.style.background = "#fee2e2";
+            }
+        }
+
+        // --- AUDIO PLAYER ---
+        let currentAudio = null;
+
+        function playAudio(src, btn) {
+            // Stop existing audio if any
+            if(currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                resetAllButtons();
+            }
+
+            // If hitting the same button to stop
+            if(btn.innerText === "⏹") {
+                return;
+            }
+
+            currentAudio = new Audio(src);
+            currentAudio.play();
+            
+            // UI Update
+            const anim = btn.nextElementSibling.querySelector('.speaking-animation');
+            btn.innerText = "⏹";
+            anim.style.display = 'flex';
+
+            currentAudio.onended = () => {
+                resetPlayer(btn);
+            };
+        }
+
+        function resetAllButtons() {
+            document.querySelectorAll('.play-btn').forEach(b => {
+                b.innerText = "▶";
+                const anim = b.nextElementSibling.querySelector('.speaking-animation');
+                if(anim) anim.style.display = 'none';
+            });
+        }
+
+        function resetPlayer(btn) {
+            btn.innerText = "▶";
+            const anim = btn.nextElementSibling.querySelector('.speaking-animation');
+            anim.style.display = 'none';
+        }
+
+    </script>
+</body>
+</html>
