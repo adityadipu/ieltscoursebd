@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Diagram Labeling Practice</title>
+    <!-- Tailwind CSS for utility classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #be123c; /* Rose-700 */
+            --primary-dark: #881337; /* Rose-900 */
+            --primary-light: #fff1f2; /* Rose-50 */
+            --accent: #fb7185;
+            --text: #374151;
+            --bg: #f9fafb;
+            --white: #ffffff;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text); 
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Merriweather', serif; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Interactive Inputs */
+        .answer-input {
+            transition: all 0.3s ease;
+        }
+        .answer-input:focus {
+            box-shadow: 0 0 0 3px rgba(190, 18, 60, 0.2);
+            border-color: var(--primary);
+        }
+
+        .correct-answer {
+            background-color: #dcfce7 !important;
+            border-color: #10b981 !important;
+            color: #065f46 !important;
+        }
+        .incorrect-answer {
+            background-color: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #991b1b !important;
+        }
+        
+        /* Practice Image Styling */
+        .practice-image {
+            width: 100%;
+            height: auto;
+            border-radius: 0.75rem;
+            border: 2px solid #e5e7eb;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Visualization Box Styles */
+        .vis-box {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .vis-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        .vis-icon {
+            height: 60px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+            background: var(--primary-light);
+            border-radius: 6px;
+            color: var(--primary);
+        }
+
+        .feedback-text {
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        .feedback-correct {
+            color: #059669;
+        }
+        .feedback-incorrect {
+            color: #dc2626;
+        }
+    </style>
+</head>
+<body class="pb-20">
+
+    <!-- NAVIGATION -->
+    <nav class="sticky top-0 z-50 bg-white shadow-md border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-4">
+                    <!-- Back Button -->
+                    <a href="ielts_listening.html" class="flex items-center gap-2 text-gray-600 hover:text-rose-700 transition-colors group">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        <span class="font-semibold hidden sm:inline">Back</span>
+                    </a>
+                    <div class="h-6 w-px bg-gray-300 hidden sm:block"></div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-2xl">⚙️</span>
+                        <span class="font-bold text-xl text-gray-800 tracking-tight">IELTS Diagram Master</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#tips" class="text-gray-500 hover:text-rose-700 font-medium transition">Tips</a>
+                    <a href="#language" class="text-gray-500 hover:text-rose-700 font-medium transition">Visual Language</a>
+                    <a href="#practice" class="bg-rose-700 text-white px-4 py-2 rounded-full font-medium hover:bg-rose-800 transition shadow-lg shadow-rose-200">Start Practice</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <div class="bg-gradient-to-br from-rose-900 to-rose-700 text-white py-16">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Master Diagram Labeling</h1>
+            <p class="text-rose-100 text-lg md:text-xl mb-8 max-w-2xl mx-auto">
+                Learn to label technical drawings and process charts efficiently. Understand parts, functions, and sequences.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-6 py-3">
+                    <span class="block text-2xl font-bold">10</span>
+                    <span class="text-sm opacity-80">Pro Strategies</span>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-6 py-3">
+                    <span class="block text-2xl font-bold">Visual</span>
+                    <span class="text-sm opacity-80">Language Guide</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 mt-12 space-y-20">
+
+        <!-- TIPS SECTION -->
+        <section id="tips" class="scroll-mt-24">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center text-rose-700 text-xl font-bold">1</div>
+                <h2 class="text-3xl font-bold text-gray-800">10 Essential Strategies</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Tip 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:border-rose-200 transition">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">01</span> Analyze the Title</div>
+                    <p class="text-gray-600 text-sm">The title predicts the content. "Library Layout" = rooms. "A Machine" = parts. "A Process" = steps.</p>
+                </div>
+                <!-- Tip 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:border-rose-200 transition">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">02</span> Focus on Gaps</div>
+                    <p class="text-gray-600 text-sm">Don't try to understand the whole picture immediately. Find keywords and focus specifically on the parts with gaps.</p>
+                </div>
+                <!-- Tip 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:border-rose-200 transition">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">03</span> Predict Question Type</div>
+                    <p class="text-gray-600 text-sm"><strong>Note Completion:</strong> Look for grammatical clues (noun, number).<br><strong>Empty Labels:</strong> Usually a name of a component.</p>
+                </div>
+                <!-- Tip 4 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:border-rose-200 transition">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">04</span> Follow Audio Order</div>
+                    <p class="text-gray-600 text-sm">Answers follow the audio sequence. Do not let your eyes jump around; let the audio guide you.</p>
+                </div>
+                <!-- Tip 5 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:border-rose-200 transition">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">05</span> Check Word Limits</div>
+                    <p class="text-gray-600 text-sm">Strictly follow instructions (e.g., "No more than two words"). Extra words make the answer wrong.</p>
+                </div>
+                <!-- Tip 6 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:border-rose-200 transition">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">06</span> Use Existing Labels</div>
+                    <p class="text-gray-600 text-sm">Use words already written in the diagram as "signposts". They help you stay oriented while listening.</p>
+                </div>
+                <!-- Tip 7 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:border-rose-200 transition">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">07</span> Keep Moving</div>
+                    <p class="text-gray-600 text-sm">If you miss an answer, do not panic. Move immediately to the next question to avoid a chain reaction.</p>
+                </div>
+                <!-- Tip 8 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:border-rose-200 transition">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">08</span> Guess if Needed</div>
+                    <p class="text-gray-600 text-sm">Never leave a blank. If you missed it, make a logical guess based on the diagram's context.</p>
+                </div>
+                <!-- Tip 9 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:border-rose-200 transition">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">09</span> Diagram Language</div>
+                    <p class="text-gray-600 text-sm">Listen for location words: <em>At the top, Below, Adjacent to, In the center, On the periphery.</em></p>
+                </div>
+                <!-- Tip 10 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:border-rose-200 transition">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">10</span> Audio Signals</div>
+                    <p class="text-gray-600 text-sm">Phrases like "As you can see in the illustration..." are signals to focus hard immediately.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- VISUAL LANGUAGE SECTION -->
+        <section id="language" class="scroll-mt-24">
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 bg-rose-200 rounded-full flex items-center justify-center text-rose-800 text-xl font-bold">2</div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Visual Diagram Language</h2>
+                        <p class="text-gray-500 text-sm">Visualize location words to relate things in the diagram.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    
+                    <!-- Box 1: Vertical Position -->
+                    <div class="vis-box">
+                        <div class="vis-icon">
+                            <svg viewBox="0 0 100 60" class="w-20 h-12 stroke-current fill-none stroke-2">
+                                <rect x="20" y="5" width="60" height="50" rx="4" class="text-rose-300 opacity-50"/>
+                                <rect x="20" y="5" width="60" height="10" rx="2" class="fill-rose-600 stroke-none"/>
+                                <rect x="20" y="45" width="60" height="10" rx="2" class="fill-rose-600 stroke-none"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-2">Vertical Extremes</h3>
+                        <p class="text-xs text-gray-600 bg-gray-50 p-2 rounded w-full">At the top • At the bottom • On the side of</p>
+                    </div>
+
+                    <!-- Box 2: Horizontal Position -->
+                    <div class="vis-box">
+                        <div class="vis-icon">
+                            <svg viewBox="0 0 100 60" class="w-20 h-12 stroke-current fill-none stroke-2">
+                                <rect x="10" y="15" width="20" height="30" rx="2" class="fill-rose-600 stroke-none"/>
+                                <rect x="40" y="15" width="20" height="30" rx="2" class="text-rose-200 fill-current stroke-none"/>
+                                <rect x="70" y="15" width="20" height="30" rx="2" class="fill-rose-600 stroke-none"/>
+                                <path d="M5 30 L95 30" class="stroke-rose-300 stroke-1 dashed"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-2">Horizontal Position</h3>
+                        <p class="text-xs text-gray-600 bg-gray-50 p-2 rounded w-full">To the left • To the right • Both sides • Either side</p>
+                    </div>
+
+                    <!-- Box 3: Relative Position -->
+                    <div class="vis-box">
+                        <div class="vis-icon">
+                            <svg viewBox="0 0 100 60" class="w-20 h-12 stroke-current fill-none stroke-2">
+                                <rect x="25" y="20" width="20" height="20" class="fill-rose-600 stroke-none"/>
+                                <rect x="55" y="20" width="20" height="20" class="text-rose-400 fill-current stroke-none"/>
+                                <path d="M45 30 L55 30" marker-end="url(#arrow)" class="stroke-rose-600"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-2">Relative Position</h3>
+                        <p class="text-xs text-gray-600 bg-gray-50 p-2 rounded w-full">Next to • Adjacent to • Opposite • In front of</p>
+                    </div>
+
+                    <!-- Box 4: Vertical Relative -->
+                    <div class="vis-box">
+                        <div class="vis-icon">
+                            <svg viewBox="0 0 100 60" class="w-20 h-12 stroke-current fill-none stroke-2">
+                                <rect x="40" y="5" width="20" height="20" class="fill-rose-600 stroke-none"/>
+                                <rect x="40" y="35" width="20" height="20" class="text-rose-400 fill-current stroke-none"/>
+                                <path d="M50 25 L50 35" class="stroke-rose-600"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-2">Vertical Relative</h3>
+                        <p class="text-xs text-gray-600 bg-gray-50 p-2 rounded w-full">Above • On top of • Below • Underneath</p>
+                    </div>
+
+                    <!-- Box 5: Centrality -->
+                    <div class="vis-box">
+                        <div class="vis-icon">
+                            <svg viewBox="0 0 100 60" class="w-20 h-12 stroke-current fill-none stroke-2">
+                                <circle cx="50" cy="30" r="25" class="stroke-rose-300"/>
+                                <circle cx="50" cy="30" r="8" class="fill-rose-600 stroke-none"/>
+                                <path d="M50 30 L75 30" class="stroke-rose-300"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-2">Centre vs Periphery</h3>
+                        <p class="text-xs text-gray-600 bg-gray-50 p-2 rounded w-full">The Centre • The Periphery • Focal Point • Inside</p>
+                    </div>
+
+                    <!-- Box 6: Orientation -->
+                    <div class="vis-box">
+                        <div class="vis-icon">
+                            <svg viewBox="0 0 100 60" class="w-20 h-12 stroke-current fill-none stroke-2">
+                                <rect x="35" y="10" width="30" height="40" class="stroke-rose-600"/>
+                                <path d="M50 20 L50 40 M40 30 L60 30" class="stroke-rose-600"/>
+                                <text x="80" y="50" font-size="20" class="fill-rose-400">?</text>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-2">Orientation</h3>
+                        <p class="text-xs text-gray-600 bg-gray-50 p-2 rounded w-full">Upside down • The right way up • Facing</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- PRACTICE SECTION -->
+        <section id="practice" class="scroll-mt-24 space-y-12">
+            <div class="text-center">
+                <span class="bg-rose-100 text-rose-800 text-sm font-bold px-3 py-1 rounded-full uppercase tracking-wide">Practice Module</span>
+                <h2 class="text-3xl font-bold text-gray-900 mt-2">The Mars Insight Probe</h2>
+                <p class="text-gray-500 mt-2">Listen to the recording and complete the diagram labels and sentences.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                <!-- Header & Audio -->
+                <div class="bg-gray-50 p-6 border-b border-gray-200 flex justify-between items-center flex-wrap gap-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800">Practice Problem 1</h3>
+                        <p class="text-sm text-gray-500">Topic: Mars Exploration Technology</p>
+                    </div>
+                    <div class="w-full md:w-auto">
+                        <audio controls class="w-full md:w-64">
+                            <source src="recording8.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+
+                <div class="p-6 lg:p-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                        
+                        <!-- LEFT COLUMN: Image & Vocabulary -->
+                        <div class="space-y-6">
+                            <!-- Image Placeholder -->
+                            <div class="relative group">
+                                <img src="image9.jpg" alt="Mars Insight Probe Diagram" class="practice-image">
+                            </div>
+
+                            <!-- Controls -->
+                             <button onclick="toggleVocab()" class="w-full bg-yellow-100 text-yellow-800 border border-yellow-200 px-4 py-2 rounded-lg font-bold hover:bg-yellow-200 transition text-sm flex items-center justify-center gap-2">
+                                <span>📚</span> Toggle Key Vocabulary
+                             </button>
+
+                            <!-- Vocabulary Box (Initially Hidden) -->
+                            <div id="vocab" class="hidden bg-yellow-50 border border-yellow-200 rounded-xl p-5 animate-fade-in">
+                                <h4 class="font-bold text-yellow-800 mb-3 flex items-center gap-2">
+                                    <span>📚</span> Key Vocabulary
+                                </h4>
+                                <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-yellow-900">
+                                    <li><strong>Plunge:</strong> Dive, Descent</li>
+                                    <li><strong>Vast:</strong> Enormous</li>
+                                    <li><strong>Plain:</strong> Flat land</li>
+                                    <li><strong>Core:</strong> Centre</li>
+                                    <li><strong>Crust:</strong> Hard outer layer</li>
+                                    <li><strong>Seismometer:</strong> Measures quakes</li>
+                                    <li><strong>Orbit:</strong> Circle around</li>
+                                    <li><strong>Deploy:</strong> Move into position</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT COLUMN: Questions -->
+                        <div class="space-y-8">
+                            
+                            <!-- Part 1: Sentences -->
+                            <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                                <h4 class="font-bold text-gray-700 mb-4 border-b pb-2">Questions 1-3: Sentence Completion</h4>
+                                <p class="text-xs text-gray-500 mb-4 uppercase font-semibold">No more than ONE word/number</p>
+                                
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm text-gray-600 mb-1">1. The Insight probe will investigate Mars' <input type="text" id="q1" class="answer-input inline-block w-32 p-1 text-sm border border-gray-300 rounded mx-1" placeholder="...">.</label>
+                                        <div id="fb-q1" class="feedback-text"></div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-600 mb-1">2. The probe is currently situated in Mars' <input type="text" id="q2" class="answer-input inline-block w-32 p-1 text-sm border border-gray-300 rounded mx-1" placeholder="...">.</label>
+                                        <div id="fb-q2" class="feedback-text"></div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-600 mb-1">3. Scientists aim to learn about Mars' composition from its core to its <input type="text" id="q3" class="answer-input inline-block w-32 p-1 text-sm border border-gray-300 rounded mx-1" placeholder="...">.</label>
+                                        <div id="fb-q3" class="feedback-text"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Part 2: Diagram Labels -->
+                            <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                                <h4 class="font-bold text-gray-700 mb-4 border-b pb-2">Questions 4-7: Diagram Labeling</h4>
+                                <p class="text-xs text-gray-500 mb-4 uppercase font-semibold">No more than TWO words/numbers</p>
+                                
+                                <div class="space-y-3">
+                                    <div class="flex items-start gap-3">
+                                        <span class="w-6 h-6 bg-rose-100 text-rose-700 rounded-full flex items-center justify-center font-bold text-sm mt-1">4</span>
+                                        <div class="flex-1">
+                                            <label class="text-xs font-bold text-gray-500 block">Top component places instruments:</label>
+                                            <input type="text" id="q4" class="answer-input w-full p-2 rounded border border-gray-300 text-sm" placeholder="Name of part...">
+                                            <div id="fb-q4" class="feedback-text"></div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <span class="w-6 h-6 bg-rose-100 text-rose-700 rounded-full flex items-center justify-center font-bold text-sm mt-1">5</span>
+                                        <div class="flex-1">
+                                            <label class="text-xs font-bold text-gray-500 block">Sensors for:</label>
+                                            <input type="text" id="q5" class="answer-input w-full p-2 rounded border border-gray-300 text-sm" placeholder="Measurement type...">
+                                            <div id="fb-q5" class="feedback-text"></div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <span class="w-6 h-6 bg-rose-100 text-rose-700 rounded-full flex items-center justify-center font-bold text-sm mt-1">6</span>
+                                        <div class="flex-1">
+                                            <label class="text-xs font-bold text-gray-500 block">Large circular parts on either side:</label>
+                                            <input type="text" id="q6" class="answer-input w-full p-2 rounded border border-gray-300 text-sm" placeholder="Component name...">
+                                            <div id="fb-q6" class="feedback-text"></div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <span class="w-6 h-6 bg-rose-100 text-rose-700 rounded-full flex items-center justify-center font-bold text-sm mt-1">7</span>
+                                        <div class="flex-1">
+                                            <label class="text-xs font-bold text-gray-500 block">Depth of heat flow probe:</label>
+                                            <div class="flex items-center gap-2">
+                                                <input type="text" id="q7" class="answer-input w-20 p-2 rounded border border-gray-300 text-sm" placeholder="...">
+                                                <span class="text-sm text-gray-600">m (meters)</span>
+                                            </div>
+                                            <div id="fb-q7" class="feedback-text"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Controls -->
+                            <div class="flex gap-3">
+                                <button onclick="checkAnswers()" class="flex-1 bg-rose-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-rose-700 transition shadow-md">Check Answers</button>
+                                <button onclick="toggleScript()" class="flex-1 bg-white text-gray-700 border border-gray-300 px-6 py-3 rounded-lg font-bold hover:bg-gray-50 transition">View Script</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- HIDDEN SCRIPT -->
+                    <div id="script-box" class="hidden mt-8 p-6 bg-rose-50 rounded-xl border border-rose-100 text-sm leading-relaxed">
+                         <p class="text-gray-700">The US space agency Nasa has landed a new robot on Mars, otherwise known as the Red Planet, after a dramatic seven-minute plunge to the surface. The Insight probe aims to study the world’s deep interior and make it the only planet apart from Earth that has been examined in this way. Insight is now sitting on a vast, flat plain close to the Red Planet’s equator. This will be the first probe to dedicate its investigations to understanding Mars’ interior. Scientists want to know how the world is constructed from its core to its crust. Looking at the functions of the Insight probe shown on the diagram, we can see that at the top there is a robotic arm which places instruments such as the seismometer on the planet’s surface. Attached to the arm is an instrument monitoring camera. On the main body of the probe there are sensors for both temperature and wind as well as a rise antenna. This measures the movement of Mars’ North Pole as it orbits the sun, giving pointers about the iron-rich centre of the planet and more information about the composition and size of the planet’s core. On either side of the main body of the probe are two large circular solar panels which were deployed immediately on landing to operate its systems and warm equipment in the sub-zero temperatures on the planet. To delve deep into the ground and measure the planet’s temperature, there is a heat flow probe that will penetrate to a depth of 5m or 16ft.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-400 py-8 mt-20 text-center">
+        <p>© 2024 IELTS Diagram Labeling Module. Educational Practice Material.</p>
+    </footer>
+
+    <script>
+        function checkAnswers() {
+            const answers = {
+                'q1': { valid: ['INTERIOR'], reason: 'Found in text: "...study the world\'s deep interior"' },
+                'q2': { valid: ['EQUATOR'], reason: 'Found in text: "...close to the Red Planet\'s equator"' },
+                'q3': { valid: ['CRUST'], reason: 'Found in text: "...from its core to its crust"' },
+                'q4': { valid: ['ROBOTIC ARM', 'ROBOT ARM'], reason: 'Found in text: "...at the top there is a robotic arm"' },
+                'q5': { valid: ['TEMPERATURE', 'WIND', 'TEMPERATURE AND WIND', 'TEMPERATURE & WIND'], reason: 'Found in text: "...sensors for both temperature and wind"' },
+                'q6': { valid: ['SOLAR PANELS', 'PANELS'], reason: 'Found in text: "...two large circular solar panels"' },
+                'q7': { valid: ['5'], reason: 'Found in text: "...depth of 5m or 16ft"' }
+            };
+
+            for (const [id, data] of Object.entries(answers)) {
+                const input = document.getElementById(id);
+                const feedbackEl = document.getElementById('fb-' + id);
+                const userVal = input.value.trim().toUpperCase().replace(/[.,]/g, ''); // Clean input
+                
+                input.classList.remove('correct-answer', 'incorrect-answer');
+                feedbackEl.classList.remove('feedback-correct', 'feedback-incorrect');
+                feedbackEl.style.display = 'block';
+
+                // Flexible checking for contained words if strict match fails
+                const isCorrect = data.valid.some(ans => userVal === ans || (ans.includes(' ') && userVal.includes(ans)));
+                
+                if (isCorrect) {
+                    input.classList.add('correct-answer');
+                    feedbackEl.textContent = "Correct! " + data.reason;
+                    feedbackEl.classList.add('feedback-correct');
+                } else {
+                    input.classList.add('incorrect-answer');
+                    feedbackEl.textContent = "Incorrect. Correct answer: " + data.valid[0];
+                    feedbackEl.classList.add('feedback-incorrect');
+                }
+            }
+        }
+
+        function toggleScript() {
+            const box = document.getElementById('script-box');
+            box.classList.toggle('hidden');
+        }
+
+        function toggleVocab() {
+            const box = document.getElementById('vocab');
+            box.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
