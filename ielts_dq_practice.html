@@ -469,22 +469,24 @@
                 'q2': { valid: ['EQUATOR'], reason: 'Found in text: "...close to the Red Planet\'s equator"' },
                 'q3': { valid: ['CRUST'], reason: 'Found in text: "...from its core to its crust"' },
                 'q4': { valid: ['ROBOTIC ARM', 'ROBOT ARM'], reason: 'Found in text: "...at the top there is a robotic arm"' },
-                'q5': { valid: ['TEMPERATURE', 'WIND', 'TEMPERATURE AND WIND', 'TEMPERATURE & WIND'], reason: 'Found in text: "...sensors for both temperature and wind"' },
+                'q5': { valid: ['TEMPERATURE WIND', 'TEMPERATURE AND WIND', 'TEMPERATURE & WIND', 'TEMPERATURE', 'WIND'], reason: 'Found in text: "...sensors for both temperature and wind"' },
                 'q6': { valid: ['SOLAR PANELS', 'PANELS'], reason: 'Found in text: "...two large circular solar panels"' },
-                'q7': { valid: ['5'], reason: 'Found in text: "...depth of 5m or 16ft"' }
+                'q7': { valid: ['5 16'], reason: 'Found in text: "...depth of 5m or 16ft". (Limit: 2 words/numbers)' }
             };
 
             for (const [id, data] of Object.entries(answers)) {
                 const input = document.getElementById(id);
                 const feedbackEl = document.getElementById('fb-' + id);
-                const userVal = input.value.trim().toUpperCase().replace(/[.,]/g, ''); // Clean input
+                // Clean input: remove punctuation but keep spaces to allow "Temperature Wind" or "5 16"
+                const userVal = input.value.trim().toUpperCase().replace(/[.,]/g, ''); 
                 
                 input.classList.remove('correct-answer', 'incorrect-answer');
                 feedbackEl.classList.remove('feedback-correct', 'feedback-incorrect');
                 feedbackEl.style.display = 'block';
 
-                // Flexible checking for contained words if strict match fails
-                const isCorrect = data.valid.some(ans => userVal === ans || (ans.includes(' ') && userVal.includes(ans)));
+                // Flexible checking: strict match OR check if valid answer is contained in user input (risky for short words)
+                // Better approach for Q5: Check if userVal exactly matches one of the valid options
+                const isCorrect = data.valid.includes(userVal);
                 
                 if (isCorrect) {
                     input.classList.add('correct-answer');
