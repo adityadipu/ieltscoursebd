@@ -71,26 +71,11 @@
         
         /* AUDIO PLAYER */
         .audio-player { 
-            background: #f3f4f6; padding: 10px; border-radius: 8px; 
-            margin-bottom: 20px; display: flex; align-items: center; gap: 10px; 
-            border: 1px solid #e5e7eb;
+            background: #f3f4f6; padding: 15px; border-radius: 8px; 
+            margin-bottom: 20px; border: 1px solid #e5e7eb;
         }
-        .play-btn { 
-            background: var(--primary); color: white; border: none; 
-            width: 40px; height: 40px; border-radius: 50%; cursor: pointer; 
-            display: flex; align-items: center; justify-content: center; 
-            font-size: 1.2rem; transition: 0.2s; 
-        }
-        .play-btn:hover { transform: scale(1.1); background: var(--primary-dark); }
-        .audio-label { font-size: 0.9rem; font-weight: bold; color: #4b5563; }
+        .audio-label { font-size: 0.9rem; font-weight: bold; color: #4b5563; margin-bottom: 8px; display: block; }
         
-        /* Animation Bars */
-        .speaking-animation { height: 20px; display: none; gap: 3px; align-items: flex-end; margin-left: auto; }
-        .bar { width: 3px; background: var(--primary); animation: sound 0.5s infinite alternate; }
-        .bar:nth-child(2) { animation-delay: 0.1s; height: 15px; }
-        .bar:nth-child(3) { animation-delay: 0.2s; height: 10px; }
-        @keyframes sound { from { height: 5px; } to { height: 20px; } }
-
         /* IMAGES */
         .practice-img { 
             max-width: 100%; height: auto; border-radius: 8px; 
@@ -189,14 +174,8 @@
             <span class="p-title">Practice 1: Rainforest Excursion</span>
             
             <div class="audio-player">
-                <button class="play-btn" onclick="playAudio('recording1.mp3', this)">▶</button>
-                <div class="audio-info" style="flex-grow:1; display:flex; align-items:center;">
-                    <!-- Fixed Audio Label -->
-                    <div class="audio-label">🎧 Rainforest_Track_01.mp3</div>
-                    <div class="speaking-animation">
-                        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-                    </div>
-                </div>
+                <div class="audio-label">🎧 Rainforest_Track_01.mp3</div>
+                <audio controls src="recording1.mp3" style="width: 100%;"></audio>
             </div>
 
             <p class="question-text">Questions 4-6: What 3 items are recommended to take with you?</p>
@@ -236,12 +215,8 @@
             <span class="p-title">Practice 2: Health Care Conference</span>
             
             <div class="audio-player">
-                <button class="play-btn" onclick="playAudio('recording2.mp3', this)">▶</button>
-                <div class="audio-info" style="flex-grow:1; display:flex; align-items:center;">
-                    <!-- Fixed Audio Label -->
-                    <div class="audio-label">🎧 Conference_Speakers.mp3</div>
-                    <div class="speaking-animation"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
-                </div>
+                <div class="audio-label">🎧 Conference_Speakers.mp3</div>
+                <audio controls src="recording2.mp3" style="width: 100%;"></audio>
             </div>
 
             <p class="question-text">Questions 1-3: Who will be LECTURING at the conference today?</p>
@@ -278,12 +253,8 @@
             <span class="p-title">Practice 3: Mammoths</span>
             
             <div class="audio-player">
-                <button class="play-btn" onclick="playAudio('recording3.mp3', this)">▶</button>
-                <div class="audio-info" style="flex-grow:1; display:flex; align-items:center;">
-                    <!-- Fixed Audio Label -->
-                    <div class="audio-label">🎧 Mammoth_History.mp3</div>
-                    <div class="speaking-animation"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
-                </div>
+                <div class="audio-label">🎧 Mammoth_History.mp3</div>
+                <audio controls src="recording3.mp3" style="width: 100%;"></audio>
             </div>
 
             <!-- MAMMOTH IMAGE PLACEHOLDER -->
@@ -328,12 +299,8 @@
             <span class="p-title">Practice 4: Dashford Study Centre</span>
             
             <div class="audio-player">
-                <button class="play-btn" onclick="playAudio('recording4.mp3', this)">▶</button>
-                <div class="audio-info" style="flex-grow:1; display:flex; align-items:center;">
-                    <!-- Fixed Audio Label -->
-                    <div class="audio-label">🎧 Study_Centre_Details.mp3</div>
-                    <div class="speaking-animation"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
-                </div>
+                <div class="audio-label">🎧 Study_Centre_Details.mp3</div>
+                <audio controls src="recording4.mp3" style="width: 100%;"></audio>
             </div>
 
             <div class="options-list">
@@ -456,58 +423,7 @@
                 else if(a3) a3.parentElement.style.background = "#fee2e2";
             }
         }
-
-        // --- AUDIO PLAYER ---
-    // --- AUDIO PLAYER (PLAY / PAUSE / STOP) ---
-    let currentAudio = null;
-
-    function playAudio(src, btn) {
-        // FIXED LOGIC: If clicking the same button which is now STOP
-        if(btn.innerText === "⏹") {
-            if(currentAudio) {
-                currentAudio.pause();
-                currentAudio.currentTime = 0;
-            }
-            resetPlayer(btn);
-            currentAudio = null;
-            return;
-        }
-
-        // If clicking PLAY, stop any other existing audio
-        if(currentAudio) {
-            currentAudio.pause();
-            currentAudio.currentTime = 0;
-            resetAllButtons();
-        }
-
-        currentAudio = new Audio(src);
-        currentAudio.play();
-        
-        // UI Update
-        const anim = btn.nextElementSibling.querySelector('.speaking-animation');
-        btn.innerText = "⏹";
-        if(anim) anim.style.display = 'flex';
-
-        currentAudio.onended = () => {
-            resetPlayer(btn);
-            currentAudio = null;
-        };
-    }
-
-    function resetAllButtons() {
-        document.querySelectorAll('.play-btn').forEach(b => {
-            b.innerText = "▶";
-            const anim = b.nextElementSibling.querySelector('.speaking-animation');
-            if(anim) anim.style.display = 'none';
-        });
-    }
-
-    function resetPlayer(btn) {
-        btn.innerText = "▶";
-        const anim = btn.nextElementSibling.querySelector('.speaking-animation');
-        if(anim) anim.style.display = 'none';
-    }
-</script>
+    </script>
 
 </body>
 </html>
