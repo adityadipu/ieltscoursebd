@@ -462,46 +462,35 @@
     let currentAudio = null;
 
     function playAudio(src, btn) {
-
-        // SAME BUTTON CLICKED
-        if (currentBtn === btn && currentAudio) {
-
-            // PAUSE
-            if (!currentAudio.paused) {
+        // FIXED LOGIC: If clicking the same button which is now STOP
+        if(btn.innerText === "⏹") {
+            if(currentAudio) {
                 currentAudio.pause();
-                btn.innerText = "⏸";
-                return;
+                currentAudio.currentTime = 0;
             }
-
-            // RESUME
-            if (currentAudio.paused) {
-                currentAudio.play();
-                btn.innerText = "⏹";
-                return;
-            }
+            resetPlayer(btn);
+            currentAudio = null;
+            return;
         }
 
-        // STOP ANY OTHER AUDIO
-        if (currentAudio) {
+        // If clicking PLAY, stop any other existing audio
+        if(currentAudio) {
             currentAudio.pause();
             currentAudio.currentTime = 0;
             resetAllButtons();
         }
 
-        // PLAY NEW AUDIO
         currentAudio = new Audio(src);
-        currentBtn = btn;
         currentAudio.play();
-
-        // UI UPDATE
-        btn.innerText = "⏹";
+        
+        // UI Update
         const anim = btn.nextElementSibling.querySelector('.speaking-animation');
-        if (anim) anim.style.display = 'flex';
+        btn.innerText = "⏹";
+        if(anim) anim.style.display = 'flex';
 
         currentAudio.onended = () => {
-            resetAllButtons();
+            resetPlayer(btn);
             currentAudio = null;
-            currentBtn = null;
         };
     }
 
@@ -509,8 +498,14 @@
         document.querySelectorAll('.play-btn').forEach(b => {
             b.innerText = "▶";
             const anim = b.nextElementSibling.querySelector('.speaking-animation');
-            if (anim) anim.style.display = 'none';
+            if(anim) anim.style.display = 'none';
         });
+    }
+
+    function resetPlayer(btn) {
+        btn.innerText = "▶";
+        const anim = btn.nextElementSibling.querySelector('.speaking-animation');
+        if(anim) anim.style.display = 'none';
     }
 </script>
 
