@@ -458,55 +458,61 @@
         }
 
         // --- AUDIO PLAYER ---
-        let currentAudio = null;
+    // --- AUDIO PLAYER (PLAY / PAUSE / STOP) ---
+    let currentAudio = null;
 
-        function playAudio(src, btn) {
-            // FIXED LOGIC: If clicking the same button which is now STOP
-            if(btn.innerText === "⏹") {
-                if(currentAudio) {
-                    currentAudio.pause();
-                    currentAudio.currentTime = 0;
-                }
-                resetPlayer(btn);
-                currentAudio = null;
+    function playAudio(src, btn) {
+
+        // SAME BUTTON CLICKED
+        if (currentBtn === btn && currentAudio) {
+
+            // PAUSE
+            if (!currentAudio.paused) {
+                currentAudio.pause();
+                btn.innerText = "⏸";
                 return;
             }
 
-            // If clicking PLAY, stop any other existing audio
-            if(currentAudio) {
-                currentAudio.pause();
-                currentAudio.currentTime = 0;
-                resetAllButtons();
+            // RESUME
+            if (currentAudio.paused) {
+                currentAudio.play();
+                btn.innerText = "⏹";
+                return;
             }
-
-            currentAudio = new Audio(src);
-            currentAudio.play();
-            
-            // UI Update
-            const anim = btn.nextElementSibling.querySelector('.speaking-animation');
-            btn.innerText = "⏹";
-            if(anim) anim.style.display = 'flex';
-
-            currentAudio.onended = () => {
-                resetPlayer(btn);
-                currentAudio = null;
-            };
         }
 
-        function resetAllButtons() {
-            document.querySelectorAll('.play-btn').forEach(b => {
-                b.innerText = "▶";
-                const anim = b.nextElementSibling.querySelector('.speaking-animation');
-                if(anim) anim.style.display = 'none';
-            });
+        // STOP ANY OTHER AUDIO
+        if (currentAudio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+            resetAllButtons();
         }
 
-        function resetPlayer(btn) {
-            btn.innerText = "▶";
-            const anim = btn.nextElementSibling.querySelector('.speaking-animation');
-            if(anim) anim.style.display = 'none';
-        }
+        // PLAY NEW AUDIO
+        currentAudio = new Audio(src);
+        currentBtn = btn;
+        currentAudio.play();
 
-    </script>
+        // UI UPDATE
+        btn.innerText = "⏹";
+        const anim = btn.nextElementSibling.querySelector('.speaking-animation');
+        if (anim) anim.style.display = 'flex';
+
+        currentAudio.onended = () => {
+            resetAllButtons();
+            currentAudio = null;
+            currentBtn = null;
+        };
+    }
+
+    function resetAllButtons() {
+        document.querySelectorAll('.play-btn').forEach(b => {
+            b.innerText = "▶";
+            const anim = b.nextElementSibling.querySelector('.speaking-animation');
+            if (anim) anim.style.display = 'none';
+        });
+    }
+</script>
+
 </body>
 </html>
