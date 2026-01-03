@@ -25,29 +25,139 @@
             --success: #10b981;
             --warning: #f59e0b;
             --info: #3b82f6;
+            --sidebar-width-collapsed: 70px;
+            --sidebar-width-expanded: 260px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: var(--bg); color: var(--text); padding-bottom: 50px; }
+        body { 
+            background-color: var(--bg); 
+            color: var(--text); 
+            padding-bottom: 50px; 
+            margin-left: var(--sidebar-width-collapsed); /* Space for sidebar */
+            transition: margin-left 0.3s ease;
+        }
+
+        /* --- VERTICAL SIDEBAR (LOGO BAR) --- */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: var(--sidebar-width-collapsed);
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            color: white;
+            z-index: 1000;
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Expand on Hover or Click */
+        .sidebar:hover, .sidebar.active {
+            width: var(--sidebar-width-expanded);
+        }
+
+        /* Sidebar Logo Area */
+        .sidebar-header {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            white-space: nowrap;
+        }
+        
+        .logo-icon {
+            font-size: 1.8rem;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .logo-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-left: 15px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .sidebar:hover .logo-text, .sidebar.active .logo-text {
+            opacity: 1;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar-nav {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 0 10px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(255,255,255,0.15);
+            color: white;
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .nav-label {
+            margin-left: 15px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .sidebar:hover .nav-label, .sidebar.active .nav-label {
+            opacity: 1;
+        }
+
 
         /* --- HEADER --- */
         header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
+            background: white; /* Changed to white to contrast with sidebar */
+            color: var(--primary);
             padding: 2rem;
             text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             position: relative;
         }
-        .home-link {
-            position: absolute; top: 20px; left: 20px;
-            color: rgba(255,255,255,0.9); text-decoration: none; font-weight: bold;
-            transition: opacity 0.2s;
+        
+        /* Mobile Toggle for Sidebar */
+        .mobile-toggle {
+            display: none; /* Hidden on desktop */
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--primary);
         }
-        .home-link:hover { opacity: 0.8; text-decoration: underline; }
 
         h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
-        .subtitle { font-size: 1rem; opacity: 0.9; }
+        .subtitle { font-size: 1rem; opacity: 0.8; color: #666; }
 
         /* --- LAYOUT --- */
         .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
@@ -78,16 +188,45 @@
         h2 { color: var(--primary); border-bottom: 2px solid #ffe4e6; padding-bottom: 10px; margin-bottom: 20px; }
         h3 { color: var(--secondary); margin: 20px 0 10px; font-size: 1.1rem; }
 
-        /* --- 1. OVERVIEW GRID --- */
+        /* --- 1. OVERVIEW GRID & LINKS --- */
         .parts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
         .part-card { 
             background: #fff0f1; border: 1px solid #fda4af; padding: 15px; border-radius: 10px; text-align: center; transition: 0.3s;
+            height: 100%; /* Ensure full height for links */
+            display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
         }
         .part-card:hover { transform: translateY(-5px); background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .part-icon { font-size: 2rem; display: block; margin-bottom: 10px; }
         .part-title { font-weight: bold; color: var(--primary); display: block; margin-bottom: 5px; }
         .part-desc { font-size: 0.9rem; color: #666; }
         .speaker-count { background: #fee2e2; color: #881337; font-size: 0.8rem; padding: 2px 8px; border-radius: 10px; font-weight: bold; margin-top: 5px; display: inline-block; }
+        
+        /* New Link Styling for Cards */
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            height: 100%;
+        }
+        .card-link .part-card {
+            cursor: pointer;
+            border-color: var(--primary);
+            background: #fff;
+        }
+        .card-link:hover .part-card {
+            background: #fff1f2;
+            border-color: var(--secondary);
+        }
+        .link-badge {
+            margin-top: auto;
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 15px;
+            margin-top: 10px;
+        }
 
         /* --- 2. PREPOSITION JUDGE --- */
         .judge-box { background: #f0fdf4; border: 2px dashed #22c55e; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 20px; }
@@ -150,12 +289,59 @@
         .exact-btn:hover { background: #fce7f3; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* RESPONSIVE Sidebar */
+        @media (max-width: 768px) {
+            body { margin-left: 0; }
+            .sidebar { transform: translateX(-100%); width: 260px; }
+            .sidebar.active { transform: translateX(0); }
+            .mobile-toggle { display: block; }
+            .sidebar-header { justify-content: space-between; }
+            .logo-text, .nav-label { opacity: 1; } /* Always show text on mobile when open */
+            .tabs { margin-top: 10px; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- INTERACTIVE VERTICAL SIDEBAR -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header" onclick="toggleSidebar()">
+            <div style="display:flex; align-items:center;">
+                <span class="logo-icon">🎧</span>
+                <span class="logo-text">IELTS Master</span>
+            </div>
+            <!-- Close button for mobile -->
+            <span style="font-size:1.5rem; display:none;" class="mobile-close">&times;</span>
+        </div>
+
+        <div class="sidebar-nav">
+            <div class="nav-item" onclick="switchTab(null, 'overview')">
+                <span class="nav-icon">📊</span>
+                <span class="nav-label">Overview & Links</span>
+            </div>
+            <div class="nav-item" onclick="switchTab(null, 'rules')">
+                <span class="nav-icon">📏</span>
+                <span class="nav-label">Rules & Prepositions</span>
+            </div>
+            <div class="nav-item" onclick="switchTab(null, 'strategy')">
+                <span class="nav-icon">🚀</span>
+                <span class="nav-label">Strategies</span>
+            </div>
+            <div class="nav-item" onclick="switchTab(null, 'traps')">
+                <span class="nav-icon">⚠️</span>
+                <span class="nav-label">Trap Detector</span>
+            </div>
+            <div style="height:1px; background:rgba(255,255,255,0.2); margin:10px 15px;"></div>
+            <a href="javascript:history.back()" class="nav-item">
+                <span class="nav-icon">⬅</span>
+                <span class="nav-label">Exit / Back</span>
+            </a>
+        </div>
+    </nav>
+
     <header>
-        <a href="javascript:history.back()" class="home-link">← Back</a>
+        <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
         <h1>IELTS Listening Mastery</h1>
         <p class="subtitle">Strategies, Traps & Rules from the Official Guide</p>
     </header>
@@ -163,10 +349,10 @@
     <div class="container">
         
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab(this, 'overview')">1. Structure</button>
-            <button class="tab-btn" onclick="switchTab(this, 'rules')">2. Rules & Prepositions</button>
-            <button class="tab-btn" onclick="switchTab(this, 'strategy')">3. Smart Strategies</button>
-            <button class="tab-btn" onclick="switchTab(this, 'traps')">4. Traps & Tips</button>
+            <button class="tab-btn active" id="btn-overview" onclick="switchTab(this, 'overview')">1. Structure</button>
+            <button class="tab-btn" id="btn-rules" onclick="switchTab(this, 'rules')">2. Rules & Prepositions</button>
+            <button class="tab-btn" id="btn-strategy" onclick="switchTab(this, 'strategy')">3. Smart Strategies</button>
+            <button class="tab-btn" id="btn-traps" onclick="switchTab(this, 'traps')">4. Traps & Tips</button>
         </div>
 
         <!-- TAB 1: OVERVIEW -->
@@ -187,45 +373,61 @@
                         <span class="part-icon">☕</span>
                         <span class="part-title">Part 1</span>
                         <span class="speaker-count">2 Speakers</span>
-                        <div class="part-desc" style="margin-top:5px;">Everyday Conversation<br><em>Ex: Booking a hotel, Travel plans, Asking for info, Restaurant booking, Meeting someone.</em></div>
+                        <div class="part-desc" style="margin-top:5px;">Everyday Conversation<br><em>Ex: Booking a hotel.</em></div>
                     </div>
                     <div class="part-card">
                         <span class="part-icon">🎤</span>
                         <span class="part-title">Part 2</span>
                         <span class="speaker-count">1 Speaker</span>
-                        <div class="part-desc" style="margin-top:5px;">Everyday Monologue<br><em>Ex: Speech about local facilities, Tour guide explaining resort/history, Charity talk.</em></div>
+                        <div class="part-desc" style="margin-top:5px;">Everyday Monologue<br><em>Ex: Tour guide speech.</em></div>
                     </div>
                     <div class="part-card">
                         <span class="part-icon">🎓</span>
                         <span class="part-title">Part 3</span>
                         <span class="speaker-count">2-4 Speakers</span>
-                        <div class="part-desc" style="margin-top:5px;">Education / Training<br><em>Ex: University students discussing an assignment with a teacher.</em></div>
+                        <div class="part-desc" style="margin-top:5px;">Education / Training<br><em>Ex: Student discussion.</em></div>
                     </div>
                     <div class="part-card">
                         <span class="part-icon">🏛️</span>
                         <span class="part-title">Part 4</span>
                         <span class="speaker-count">1 Speaker</span>
-                        <div class="part-desc" style="margin-top:5px;">Academic Lecture<br><em>Ex: Lecture on Science, History, Education.</em></div>
+                        <div class="part-desc" style="margin-top:5px;">Academic Lecture<br><em>Ex: Science history.</em></div>
                     </div>
                 </div>
 
-                <h3>Question Types Gallery</h3>
+                <h3>Question Types Gallery (Click to Practice)</h3>
                 <div class="parts-grid">
-                    <div class="part-card" style="background:#fff;">
-                        <span class="part-title">Multiple Choice</span>
-                        <div class="part-desc">Choose 1 (A,B,C) or Choose multiple from list. Focus on Main Ideas/Specific Details.</div>
-                    </div>
-                    <div class="part-card" style="background:#fff;">
-                        <span class="part-title">Map/Plan/Diagram</span>
-                        <div class="part-desc">Label a Map, Building Plan, Diagram, or Street. Follow directions (North, South).</div>
-                    </div>
+                    
+                    <!-- LINKED CARD: MULTIPLE CHOICE -->
+                    <a href="ielts_mc_practice.html" class="card-link">
+                        <div class="part-card">
+                            <span class="part-title">Multiple Choice</span>
+                            <div class="part-desc">Choose 1 (A,B,C) or Choose multiple. Focus on Main Ideas.</div>
+                            <span class="link-badge">Start Practice ➜</span>
+                        </div>
+                    </a>
+
+                    <!-- LINKED CARD: MAPS -->
+                    <a href="ielts_mq_practice.html" class="card-link">
+                        <div class="part-card">
+                            <span class="part-title">Map Questions</span>
+                            <div class="part-desc">Label a Map, Building Plan, or Street. Follow directions (North/South).</div>
+                            <span class="link-badge">Open Maps ➜</span>
+                        </div>
+                    </a>
+
+                    <!-- LINKED CARD: DIAGRAMS -->
+                    <a href="ielts_dq_practice.html" class="card-link">
+                        <div class="part-card">
+                            <span class="part-title">Diagram Labeling</span>
+                            <div class="part-desc">Label parts of a machine or process flow.</div>
+                            <span class="link-badge">Open Diagrams ➜</span>
+                        </div>
+                    </a>
+
                     <div class="part-card" style="background:#fff;">
                         <span class="part-title">Completion Tasks</span>
-                        <div class="part-desc">Form, Note, Flow-Chart, Table, Sentence, Summary Completion. Fill in missing info.</div>
-                    </div>
-                    <div class="part-card" style="background:#fff;">
-                        <span class="part-title">Short Answer</span>
-                        <div class="part-desc">Write a short answer (Facts: Time, Place, Number). Sometimes give 2/3 answers.</div>
+                        <div class="part-desc">Form, Note, Table, Sentence, Summary Completion.</div>
                     </div>
                 </div>
             </div>
@@ -428,20 +630,36 @@
             </div>
         </div>
 
-        <!-- Bottom Back Link -->
-        <div style="text-align: center; margin: 40px 0;">
-            <a href="javascript:history.back()" style="color: var(--secondary); text-decoration: none; font-weight: bold; padding: 10px 20px; background: white; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">← Back to Menu</a>
-        </div>
-
     </div>
 
     <script>
+        // --- SIDEBAR TOGGLE ---
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
         // --- TAB SWITCHING ---
         function switchTab(btnElement, tabId) {
+            // Update Tab Buttons (Top)
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            // If triggered from top button, activate it
+            if(btnElement) {
+                btnElement.classList.add('active');
+            } else {
+                // If triggered from sidebar, activate the corresponding top button
+                const topBtn = document.getElementById('btn-' + tabId);
+                if(topBtn) topBtn.classList.add('active');
+            }
+
+            // Update Sections
             document.querySelectorAll('.section-content').forEach(content => content.classList.remove('active'));
-            btnElement.classList.add('active');
             document.getElementById(tabId).classList.add('active');
+
+            // On mobile, close sidebar after clicking
+            if(window.innerWidth < 768) {
+                document.getElementById('sidebar').classList.remove('active');
+            }
         }
 
         // --- WORD COUNT JUDGE (Tab 2) ---
@@ -669,7 +887,6 @@
             const current = trapScenarios[trapIdx];
             const msg = document.getElementById('trap-msg');
             const btn = document.getElementById(`trap-btn-${choiceIdx}`);
-            const parent = btn.parentElement.nextElementSibling; // trap-msg div
 
             // Reset
             document.getElementById('trap-btn-0').style.backgroundColor = "white";
