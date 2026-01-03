@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Map Labeling Master Class</title>
+    <!-- Tailwind CSS for utility classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #be123c;
+            --primary-dark: #881337;
+            --primary-light: #fff1f2;
+            --accent: #fb7185;
+            --text: #374151;
+            --bg: #f9fafb;
+            --white: #ffffff;
+            --success: #10b981;
+            --danger: #ef4444;
+            --info: #3b82f6;
+        }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text); 
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Merriweather', serif; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Interactive Inputs */
+        .answer-input {
+            transition: all 0.3s ease;
+        }
+        .answer-input:focus {
+            box-shadow: 0 0 0 3px rgba(190, 18, 60, 0.2);
+            border-color: var(--primary);
+        }
+
+        .correct-answer {
+            background-color: #dcfce7 !important;
+            border-color: #10b981 !important;
+            color: #065f46 !important;
+        }
+        .incorrect-answer {
+            background-color: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #991b1b !important;
+        }
+
+        /* Image Styles */
+        .practice-image {
+            width: 100%;
+            height: auto;
+            border-radius: 0.75rem; /* rounded-xl */
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="pb-20">
+
+    <!-- NAVIGATION -->
+    <nav class="sticky top-0 z-50 bg-white shadow-md border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl">🗺️</span>
+                    <span class="font-bold text-xl text-gray-800 tracking-tight">IELTS Map Master</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#strategy" class="text-gray-500 hover:text-rose-700 font-medium transition">Strategy & Tips</a>
+                    <a href="#vocab" class="text-gray-500 hover:text-rose-700 font-medium transition">Vocabulary</a>
+                    <a href="#practice" class="bg-rose-700 text-white px-4 py-2 rounded-full font-medium hover:bg-rose-800 transition shadow-lg shadow-rose-200">Start Practice</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <div class="bg-gradient-to-br from-rose-900 to-rose-700 text-white py-16">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Master Map Labeling</h1>
+            <p class="text-rose-100 text-lg md:text-xl mb-8 max-w-2xl mx-auto">
+                A complete interactive guide based on your PDF materials. Learn the 11 golden tips, master direction vocabulary, and solve real map scenarios.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-6 py-3">
+                    <span class="block text-2xl font-bold">11</span>
+                    <span class="text-sm opacity-80">Pro Tips</span>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-6 py-3">
+                    <span class="block text-2xl font-bold">3</span>
+                    <span class="text-sm opacity-80">Interactive Maps</span>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-6 py-3">
+                    <span class="block text-2xl font-bold">100%</span>
+                    <span class="text-sm opacity-80">Self-Contained</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 mt-12 space-y-16">
+
+        <!-- STRATEGY SECTION -->
+        <section id="strategy" class="scroll-mt-24">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center text-rose-700 text-xl font-bold">1</div>
+                <h2 class="text-3xl font-bold text-gray-800">The 11 Golden Tips</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Tip 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
+                    <div class="text-rose-600 font-bold mb-2">Tip 1: Context</div>
+                    <p class="text-gray-600 text-sm">Map questions usually appear in <strong>Section 2</strong>. It's often one speaker talking about a general interest topic (farm, museum, park).</p>
+                </div>
+                <!-- Tip 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
+                    <div class="text-rose-600 font-bold mb-2">Tip 2: Visual Check (20s)</div>
+                    <p class="text-gray-600 text-sm">Use the 20 seconds before audio to check: How many buildings? What are the names? Where are the entrances and roads?</p>
+                </div>
+                <!-- Tip 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
+                    <div class="text-rose-600 font-bold mb-2">Tip 3: Read Title</div>
+                    <p class="text-gray-600 text-sm">The title predicts the content. "City Museum" means you'll hear about rooms and exhibitions. "Park" means paths and trees.</p>
+                </div>
+                <!-- Tip 4 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
+                    <div class="text-rose-600 font-bold mb-2">Tip 4: Labels</div>
+                    <p class="text-gray-600 text-sm">Use existing labels as anchors. If you see "Library", listen for "Next to the library...".</p>
+                </div>
+                <!-- Tip 5 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
+                    <div class="text-rose-600 font-bold mb-2">Tip 5: Position Words</div>
+                    <p class="text-gray-600 text-sm">Key vocabulary: <em>Opposite, Beyond, Beside, Facing</em>. These are your primary clues.</p>
+                </div>
+                <!-- Tip 6 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
+                    <div class="text-rose-600 font-bold mb-2">Tip 6: Question Order</div>
+                    <p class="text-gray-600 text-sm">Questions (11, 12, 13) match the audio order. Locate them on the map <em>before</em> listening so you don't get lost.</p>
+                </div>
+                <!-- Tip 7 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
+                    <div class="text-rose-600 font-bold mb-2">Tip 7: Find North</div>
+                    <p class="text-gray-600 text-sm">Look for the 'N' arrow. If Up is North, then Right is East. This prevents confusion with left/right.</p>
+                </div>
+                <!-- Tip 8 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
+                    <div class="text-rose-600 font-bold mb-2">Tip 8: Follow the Tour</div>
+                    <p class="text-gray-600 text-sm">Trace the path with your finger/eyes. "We enter the garden, then walk to the lake..." - move your eyes accordingly.</p>
+                </div>
+                <!-- Tip 9 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
+                    <div class="text-rose-600 font-bold mb-2">Tip 9: Signposting</div>
+                    <p class="text-gray-600 text-sm">Listen for: "First...", "Next...", "Then...", "Finally...". Don't jump around randomly.</p>
+                </div>
+                <!-- Tip 10 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
+                    <div class="text-rose-600 font-bold mb-2">Tip 10: Tour Guide Persona</div>
+                    <p class="text-gray-600 text-sm">The speaker acts like a guide. Follow their mental journey step-by-step.</p>
+                </div>
+                <!-- Tip 11 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
+                    <div class="text-rose-600 font-bold mb-2">Tip 11: Ignore Distractors</div>
+                    <p class="text-gray-600 text-sm">Ignore adjectives like "renovated" or "popular". Focus purely on <strong>location data</strong>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- VOCAB SECTION -->
+        <section id="vocab" class="scroll-mt-24">
+            <div class="bg-rose-50 rounded-2xl p-8 border border-rose-100">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 bg-rose-200 rounded-full flex items-center justify-center text-rose-800 text-xl font-bold">2</div>
+                    <h2 class="text-2xl font-bold text-gray-800">Essential Vocabulary</h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-rose-100 text-rose-900">
+                                <th class="p-4 rounded-tl-lg font-bold">Keyword</th>
+                                <th class="p-4 rounded-tr-lg font-bold">Action / Meaning</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-rose-200 bg-white">
+                            <tr><td class="p-4 font-semibold text-gray-700">Next to / Beside</td><td class="p-4 text-gray-600">The building immediately to the side.</td></tr>
+                            <tr><td class="p-4 font-semibold text-gray-700">Opposite / Facing</td><td class="p-4 text-gray-600">Look across the road or path.</td></tr>
+                            <tr><td class="p-4 font-semibold text-gray-700">Beyond / Past</td><td class="p-4 text-gray-600">Go further than that point.</td></tr>
+                            <tr><td class="p-4 font-semibold text-gray-700">Adjoining</td><td class="p-4 text-gray-600">Touching or connected to.</td></tr>
+                            <tr><td class="p-4 font-semibold text-gray-700">Dead end / Cul-de-sac</td><td class="p-4 text-gray-600">A road with no exit.</td></tr>
+                            <tr><td class="p-4 font-semibold text-gray-700">Intersection / Junction</td><td class="p-4 text-gray-600">Where two or more roads cross.</td></tr>
+                            <tr><td class="p-4 font-semibold text-gray-700">Bend</td><td class="p-4 text-gray-600">A curve in the road.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRACTICE SECTION -->
+        <section id="practice" class="scroll-mt-24 space-y-20">
+            <div class="text-center mb-12">
+                <span class="bg-rose-100 text-rose-800 text-sm font-bold px-3 py-1 rounded-full uppercase tracking-wide">Interactive Modules</span>
+                <h2 class="text-3xl font-bold text-gray-900 mt-2">Let's Practice</h2>
+                <p class="text-gray-500 mt-2">Listen to the audio, follow the map, and type your answers.</p>
+            </div>
+
+            <!-- PRACTICE 1: TAJ MAHAL -->
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                <div class="bg-gray-50 p-6 border-b border-gray-200 flex justify-between items-center flex-wrap gap-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800">Practice 1: The Taj Mahal</h3>
+                        <p class="text-sm text-gray-500">Historical Monument Layout</p>
+                    </div>
+                    <!-- Audio Player -->
+                    <div class="w-full md:w-auto">
+                        <audio controls class="w-full md:w-64">
+                            <source src="recording5.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+
+                <div class="p-6 lg:p-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Image Map -->
+                        <div>
+                            <img src="image6.jpg" alt="Taj Mahal Map" class="practice-image mb-4">
+                            <div class="bg-yellow-50 p-4 rounded-lg text-sm text-yellow-800 border border-yellow-200">
+                                <strong>💡 Hint:</strong> Start at the Entrance. The speaker moves towards the Mausoleum.
+                            </div>
+                        </div>
+
+                        <!-- QUESTIONS -->
+                        <div>
+                            <div class="space-y-4">
+                                <div class="bg-gray-100 p-3 rounded-lg text-sm font-semibold text-gray-700">Questions 1-2: Complete sentences</div>
+                                <div class="grid grid-cols-1 gap-3">
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">1. Taj Mahal completed in:</label>
+                                        <input type="text" id="p1-q1" class="answer-input w-full p-2 rounded border border-gray-300 bg-white" placeholder="Year">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">2. Labourers used:</label>
+                                        <input type="text" id="p1-q2" class="answer-input w-full p-2 rounded border border-gray-300 bg-white" placeholder="Number">
+                                    </div>
+                                </div>
+
+                                <div class="bg-gray-100 p-3 rounded-lg text-sm font-semibold text-gray-700 mt-4">Questions 3-7: Label the Map</div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-6 h-6 bg-rose-100 text-rose-800 rounded flex items-center justify-center font-bold text-xs">3</span>
+                                        <input type="text" id="p1-q3" class="answer-input flex-1 p-2 rounded border border-gray-300 text-sm" placeholder="Area in front of gate">
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-6 h-6 bg-rose-100 text-rose-800 rounded flex items-center justify-center font-bold text-xs">4</span>
+                                        <input type="text" id="p1-q4" class="answer-input flex-1 p-2 rounded border border-gray-300 text-sm" placeholder="Gate after straight path">
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-6 h-6 bg-rose-100 text-rose-800 rounded flex items-center justify-center font-bold text-xs">5</span>
+                                        <input type="text" id="p1-q5" class="answer-input flex-1 p-2 rounded border border-gray-300 text-sm" placeholder="Midway intersection">
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-6 h-6 bg-rose-100 text-rose-800 rounded flex items-center justify-center font-bold text-xs">6</span>
+                                        <input type="text" id="p1-q6" class="answer-input flex-1 p-2 rounded border border-gray-300 text-sm" placeholder="Main Building">
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-6 h-6 bg-rose-100 text-rose-800 rounded flex items-center justify-center font-bold text-xs">7</span>
+                                        <input type="text" id="p1-q7" class="answer-input flex-1 p-2 rounded border border-gray-300 text-sm" placeholder="Building to the right">
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-2 mt-6">
+                                    <button onclick="checkAnswers(1)" class="bg-rose-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-rose-700 transition w-full shadow-md">Check Answers</button>
+                                    <button onclick="toggleScript(1)" class="bg-white text-gray-600 border border-gray-300 px-4 py-2 rounded-lg font-bold hover:bg-gray-50 transition">Script</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- HIDDEN SCRIPT -->
+                    <div id="script-1" class="hidden mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm leading-relaxed">
+                        <h4 class="font-bold text-gray-800 mb-2">Transcript & Explanation:</h4>
+                        <p class="text-gray-600 font-mono text-xs mb-3">KEY: <span class="bg-green-100 text-green-800 px-1 rounded">Answer Location</span></p>
+                        <p>
+                            "...built between 1631 and <span class="bg-green-100 text-green-800 font-bold">1653</span> (Q1)... construction involved some <span class="bg-green-100 text-green-800 font-bold">20,000</span> (Q2) workers... We are here at the Outer Gate and directly in front of us is the <span class="bg-green-100 text-green-800 font-bold">forecourt</span> (Q3). If you go straight ahead, you will come to the <span class="bg-green-100 text-green-800 font-bold">Great Gate</span> (Q4)... Midway, where the paths intersect, is a <span class="bg-green-100 text-green-800 font-bold">marble pond</span> (Q5)... come to the <span class="bg-green-100 text-green-800 font-bold">mausoleum</span> (Q6) itself... To the left is the mosque and to the right you can find a <span class="bg-green-100 text-green-800 font-bold">guesthouse</span> (Q7)."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRACTICE 2: THE FARM -->
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                <div class="bg-gray-50 p-6 border-b border-gray-200 flex justify-between items-center flex-wrap gap-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800">Practice 2: The Farm</h3>
+                        <p class="text-sm text-gray-500">Agricultural Layout (North/South orientation)</p>
+                    </div>
+                    <!-- Audio Player -->
+                    <div class="w-full md:w-auto">
+                        <audio controls class="w-full md:w-64">
+                            <source src="recording6.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+
+                <div class="p-6 lg:p-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Image Map -->
+                        <div>
+                            <img src="image7.jpg" alt="Farm Map" class="practice-image mb-4">
+                            <div class="bg-yellow-50 p-4 rounded-lg text-sm text-yellow-800 border border-yellow-200">
+                                <strong>💡 Hint:</strong> "Northwest" is top-left. "East of parking" is right of the parking square.
+                            </div>
+                        </div>
+
+                        <!-- QUESTIONS -->
+                        <div>
+                            <div class="bg-gray-100 p-3 rounded-lg text-sm font-semibold text-gray-700 mb-4">Questions 1-4: Label the Diagram</div>
+                            <div class="space-y-3">
+                                <div class="space-y-1">
+                                    <label class="text-xs font-bold text-gray-500 uppercase">1. Northwest corner (Grassy expanse)</label>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-6 h-6 bg-rose-100 text-rose-800 rounded flex items-center justify-center font-bold text-xs">1</span>
+                                        <input type="text" id="p2-q1" class="answer-input flex-1 p-2 rounded border border-gray-300 text-sm">
+                                    </div>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-xs font-bold text-gray-500 uppercase">2. East of Parking Area (Used daily)</label>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-6 h-6 bg-rose-100 text-rose-800 rounded flex items-center justify-center font-bold text-xs">2</span>
+                                        <input type="text" id="p2-q2" class="answer-input flex-1 p-2 rounded border border-gray-300 text-sm">
+                                    </div>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-xs font-bold text-gray-500 uppercase">3. Pens near Calf Hutches</label>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-6 h-6 bg-rose-100 text-rose-800 rounded flex items-center justify-center font-bold text-xs">3</span>
+                                        <input type="text" id="p2-q3" class="answer-input flex-1 p-2 rounded border border-gray-300 text-sm">
+                                    </div>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-xs font-bold text-gray-500 uppercase">4. Circular area to the south</label>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-6 h-6 bg-rose-100 text-rose-800 rounded flex items-center justify-center font-bold text-xs">4</span>
+                                        <input type="text" id="p2-q4" class="answer-input flex-1 p-2 rounded border border-gray-300 text-sm">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-2 mt-6">
+                                <button onclick="checkAnswers(2)" class="bg-rose-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-rose-700 transition w-full shadow-md">Check Answers</button>
+                                <button onclick="toggleScript(2)" class="bg-white text-gray-600 border border-gray-300 px-4 py-2 rounded-lg font-bold hover:bg-gray-50 transition">Script</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- HIDDEN SCRIPT -->
+                    <div id="script-2" class="hidden mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm leading-relaxed">
+                         <h4 class="font-bold text-gray-800 mb-2">Transcript & Explanation:</h4>
+                        <p class="text-gray-600 font-mono text-xs mb-3">KEY: <span class="bg-green-100 text-green-800 px-1 rounded">Answer Location</span></p>
+                        <p>
+                            "...In the northwest corner... is a <span class="bg-green-100 text-green-800 font-bold">pasture area</span> (Q1)... From the parking area, you go east through the <span class="bg-green-100 text-green-800 font-bold">milk house</span> (Q2)... To the north you will find the calf hutches which are located just beyond the <span class="bg-green-100 text-green-800 font-bold">maternity pens</span> (Q3)... To the south are two circular areas, one of which is the <span class="bg-green-100 text-green-800 font-bold">feed storage</span> (Q4) and the other the deadstock area."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRACTICE 3: BEDFORD SURGERY -->
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                <div class="bg-gray-50 p-6 border-b border-gray-200 flex justify-between items-center flex-wrap gap-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800">Practice 3: Bedford Surgery</h3>
+                        <p class="text-sm text-gray-500">Floor Plan & Interiors</p>
+                    </div>
+                    <!-- Audio Player -->
+                    <div class="w-full md:w-auto">
+                        <audio controls class="w-full md:w-64">
+                            <source src="recording7.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+
+                <div class="p-6 lg:p-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Image Map -->
+                        <div>
+                            <img src="image8.jpg" alt="Bedford Surgery Map" class="practice-image mb-4">
+                        </div>
+
+                        <!-- QUESTIONS -->
+                        <div>
+                            <div class="bg-gray-100 p-3 rounded-lg text-sm font-semibold text-gray-700 mb-4">Questions 1-6: Complete the Map</div>
+                            <div class="grid grid-cols-1 gap-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-6 h-6 bg-rose-100 text-rose-800 rounded flex items-center justify-center font-bold text-xs">1</span>
+                                    <input type="text" id="p3-q1" class="answer-input flex-1 p-2 rounded border border-gray-300 text-sm" placeholder="Left of entrance">
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-6 h-6 bg-rose-100 text-rose-800 rounded flex items-center justify-center font-bold text-xs">2</span>
+                                    <input type="text" id="p3-q2" class="answer-input flex-1 p-2 rounded border border-gray-300 text-sm" placeholder="Other end of building">
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-6 h-6 bg-rose-100 text-rose-800 rounded flex items-center justify-center font-bold text-xs">3</span>
+                                    <input type="text" id="p3-q3" class="answer-input flex-1 p-2 rounded border border-gray-300 text-sm" placeholder="First room right of stairs">
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-6 h-6 bg-rose-100 text-rose-800 rounded flex items-center justify-center font-bold text-xs">4</span>
+                                    <input type="text" id="p3-q4" class="answer-input flex-1 p-2 rounded border border-gray-300 text-sm" placeholder="Room next to it">
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-6 h-6 bg-rose-100 text-rose-800 rounded flex items-center justify-center font-bold text-xs">5</span>
+                                    <input type="text" id="p3-q5" class="answer-input flex-1 p-2 rounded border border-gray-300 text-sm" placeholder="Small waiting area">
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-6 h-6 bg-rose-100 text-rose-800 rounded flex items-center justify-center font-bold text-xs">6</span>
+                                    <input type="text" id="p3-q6" class="answer-input flex-1 p-2 rounded border border-gray-300 text-sm" placeholder="Nurse room">
+                                </div>
+                            </div>
+
+                            <div class="flex gap-2 mt-6">
+                                <button onclick="checkAnswers(3)" class="bg-rose-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-rose-700 transition w-full shadow-md">Check Answers</button>
+                                <button onclick="toggleScript(3)" class="bg-white text-gray-600 border border-gray-300 px-4 py-2 rounded-lg font-bold hover:bg-gray-50 transition">Script</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                     <!-- HIDDEN SCRIPT -->
+                    <div id="script-3" class="hidden mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm leading-relaxed">
+                        <h4 class="font-bold text-gray-800 mb-2">Transcript & Explanation:</h4>
+                        <p class="text-gray-600 font-mono text-xs mb-3">KEY: <span class="bg-green-100 text-green-800 px-1 rounded">Answer Location</span></p>
+                        <p>
+                            "...go straight to the <span class="bg-green-100 text-green-800 font-bold">reception room</span> (Q1) on the left... leave them in the <span class="bg-green-100 text-green-800 font-bold">cloakroom</span> (Q2) which is located at the other end... The first one is <span class="bg-green-100 text-green-800 font-bold">consultation room A</span> (Q3)... and <span class="bg-green-100 text-green-800 font-bold">consultation room B</span> (Q4), next to it... next to the cloakroom is a <span class="bg-green-100 text-green-800 font-bold">small waiting area</span> (Q5)... The <span class="bg-green-100 text-green-800 font-bold">practice nurse room</span> (Q6) is right next the waiting area."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-400 py-8 mt-20 text-center">
+        <p>© 2024 IELTS Map Labeling Master Class. Adapted from provided PDF.</p>
+    </footer>
+
+    <script>
+        // --- LOGIC ---
+        
+        // Correct Answers Database
+        const answerKey = {
+            1: {
+                'p1-q1': ['1653'],
+                'p1-q2': ['20000', '20,000'],
+                'p1-q3': ['FORECOURT', 'FORE COURT'],
+                'p1-q4': ['GREAT GATE', 'MAIN GATE'],
+                'p1-q5': ['MARBLE POND', 'POND'],
+                'p1-q6': ['MAUSOLEUM'],
+                'p1-q7': ['GUEST HOUSE', 'GUESTHOUSE']
+            },
+            2: {
+                'p2-q1': ['PASTURE AREA', 'PASTURE'],
+                'p2-q2': ['MILK HOUSE', 'MILKHOUSE'],
+                'p2-q3': ['MATERNITY PENS', 'PENS'],
+                'p2-q4': ['FEED STORAGE', 'STORAGE']
+            },
+            3: {
+                'p3-q1': ['RECEPTION ROOM', 'RECEPTION'],
+                'p3-q2': ['CLOAK ROOM', 'CLOAKROOM'],
+                'p3-q3': ['CONSULTATION ROOM A', 'ROOM A'],
+                'p3-q4': ['CONSULTATION ROOM B', 'ROOM B'],
+                'p3-q5': ['SMALL WAITING AREA', 'WAITING AREA'],
+                'p3-q6': ['PRACTICE NURSE ROOM', 'NURSE ROOM']
+            }
+        };
+
+        function checkAnswers(practiceId) {
+            const currentAnswers = answerKey[practiceId];
+            
+            for (const [id, validAnswers] of Object.entries(currentAnswers)) {
+                const input = document.getElementById(id);
+                const userVal = input.value.trim().toUpperCase();
+                
+                // Remove previous classes
+                input.classList.remove('correct-answer', 'incorrect-answer');
+                
+                if (validAnswers.includes(userVal)) {
+                    input.classList.add('correct-answer');
+                } else {
+                    input.classList.add('incorrect-answer');
+                }
+            }
+        }
+
+        function toggleScript(id) {
+            const el = document.getElementById(`script-${id}`);
+            if (el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+            } else {
+                el.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
