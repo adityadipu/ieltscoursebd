@@ -36,6 +36,8 @@
             color: white; text-decoration: none; font-weight: bold; 
             background: rgba(255,255,255,0.2); padding: 8px 15px; 
             border-radius: 20px; transition: 0.2s; 
+            font-size: 0.9rem;
+            display: flex; align-items: center; gap: 5px;
         }
         .back-btn:hover { background: rgba(255,255,255,0.3); }
         h1 { margin: 0; font-size: 1.8rem; }
@@ -80,10 +82,10 @@
             font-size: 1.2rem; transition: 0.2s; 
         }
         .play-btn:hover { transform: scale(1.1); background: var(--primary-dark); }
-        .audio-label { font-size: 0.9rem; font-weight: bold; color: #666; }
+        .audio-label { font-size: 0.9rem; font-weight: bold; color: #4b5563; }
         
         /* Animation Bars */
-        .speaking-animation { height: 20px; display: none; gap: 3px; align-items: flex-end; }
+        .speaking-animation { height: 20px; display: none; gap: 3px; align-items: flex-end; margin-left: auto; }
         .bar { width: 3px; background: var(--primary); animation: sound 0.5s infinite alternate; }
         .bar:nth-child(2) { animation-delay: 0.1s; height: 15px; }
         .bar:nth-child(3) { animation-delay: 0.2s; height: 10px; }
@@ -127,12 +129,22 @@
         /* TYPES GRID */
         .types-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
         .type-item { background: #f0f9ff; padding: 10px; border-radius: 8px; border: 1px solid #bae6fd; font-size: 0.9rem; }
+
+        /* Responsive Back Button */
+        @media (max-width: 600px) {
+            .back-btn span { display: none; }
+            .back-btn { padding: 8px 12px; }
+            h1 { font-size: 1.4rem; }
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <a href="ielts_mastery_hub.html" class="back-btn">← Home</a>
+        <!-- Corrected Back Button Link -->
+        <a href="ielts_listening_mastery.html" class="back-btn">
+            ← <span>Back to Menu</span>
+        </a>
         <h1>Multiple Choice Master Class</h1>
         <p style="opacity:0.9; margin-top:5px;">Strategies, Audio Practice & Explanations</p>
     </header>
@@ -160,7 +172,7 @@
                 <div class="type-item"><strong>Type 1:</strong> 3 Option Selection (A, B, C)</div>
                 <div class="type-item"><strong>Type 2:</strong> Long List Selection (Pick 2 or 3 from A-G)</div>
                 <div class="type-item"><strong>Type 3:</strong> Sentence Completion</div>
-                <div class="type-item"><strong>Type 4:</strong> Picture/Logo Selection <img src="image1.png" alt="Coffee Shop Logos" class="practice-img"> </div>
+                <div class="type-item"><strong>Type 4:</strong> Picture/Logo Selection <img src="image1.png" alt="Logos" class="practice-img" style="height:30px; width:auto; display:inline; vertical-align:middle; border:none; margin:0;"> </div>
             </div>
         </div>
 
@@ -170,8 +182,9 @@
             
             <div class="audio-player">
                 <button class="play-btn" onclick="playAudio('recording1.mp3', this)">▶</button>
-                <div class="audio-info">
-                    <div class="audio-label">recording1.mp3</div>
+                <div class="audio-info" style="flex-grow:1; display:flex; align-items:center;">
+                    <!-- Fixed Audio Label -->
+                    <div class="audio-label">🎧 Rainforest_Track_01.mp3</div>
                     <div class="speaking-animation">
                         <div class="bar"></div><div class="bar"></div><div class="bar"></div>
                     </div>
@@ -215,8 +228,9 @@
             
             <div class="audio-player">
                 <button class="play-btn" onclick="playAudio('recording2.mp3', this)">▶</button>
-                <div class="audio-info">
-                    <div class="audio-label">recording2.mp3</div>
+                <div class="audio-info" style="flex-grow:1; display:flex; align-items:center;">
+                    <!-- Fixed Audio Label -->
+                    <div class="audio-label">🎧 Conference_Speakers.mp3</div>
                     <div class="speaking-animation"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
                 </div>
             </div>
@@ -257,14 +271,21 @@
             
             <div class="audio-player">
                 <button class="play-btn" onclick="playAudio('recording3.mp3', this)">▶</button>
-                <div class="audio-info">
-                    <div class="audio-label">recording3.mp3</div>
+                <div class="audio-info" style="flex-grow:1; display:flex; align-items:center;">
+                    <!-- Fixed Audio Label -->
+                    <div class="audio-label">🎧 Mammoth_History.mp3</div>
                     <div class="speaking-animation"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
                 </div>
             </div>
 
-            <!-- MAMMOTH IMAGE -->
-            <img src="image2.png" alt="Mammoth Types Diagram" class="practice-img">
+            <!-- MAMMOTH IMAGE PLACEHOLDER -->
+            <div style="background:#f3f4f6; border:1px solid #ddd; height:150px; border-radius:8px; display:flex; align-items:center; justify-content:center; margin-bottom:15px; color:#666;">
+                    <img 
+                        src="image1png"
+                        alt="Mammoth Diagram"
+                        style="max-width:100%; max-height:100%; object-fit:contain;"
+                    >
+            </div>
 
             <p class="question-text">Which type of Mammoth is the lecture going to focus on?</p>
             
@@ -295,18 +316,15 @@
             </div>
         </div>
 
-
-
-
-
         <!-- PRACTICE 4 -->
         <div class="section-card">
             <span class="p-title">Practice 4: Dashford Study Centre</span>
             
             <div class="audio-player">
                 <button class="play-btn" onclick="playAudio('recording4.mp3', this)">▶</button>
-                <div class="audio-info">
-                    <div class="audio-label">recording4.mp3</div>
+                <div class="audio-info" style="flex-grow:1; display:flex; align-items:center;">
+                    <!-- Fixed Audio Label -->
+                    <div class="audio-label">🎧 Study_Centre_Details.mp3</div>
                     <div class="speaking-animation"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
                 </div>
             </div>
@@ -416,15 +434,6 @@
                 if(selected && selected.value === 'B') selected.parentElement.style.background = "#d1fae5";
                 else if(selected) selected.parentElement.style.background = "#fee2e2";
             }
-            // Logic for Visual Practice
-            if(num === 'visual') {
-                const selected = document.querySelector('input[name="p-visual"]:checked');
-                const labels = document.querySelectorAll('input[name="p-visual"]');
-                labels.forEach(l => l.parentElement.style.background = 'white');
-                
-                if(selected && selected.value === 'C') selected.parentElement.style.background = "#d1fae5";
-                else if(selected) selected.parentElement.style.background = "#fee2e2";
-            }
             // Logic for Practice 4
             if(num === 4) {
                 const a1 = document.querySelector('input[name="p4-1"]:checked');
@@ -446,16 +455,22 @@
         let currentAudio = null;
 
         function playAudio(src, btn) {
-            // Stop existing audio if any
+            // FIXED LOGIC: If clicking the same button which is now STOP
+            if(btn.innerText === "⏹") {
+                if(currentAudio) {
+                    currentAudio.pause();
+                    currentAudio.currentTime = 0;
+                }
+                resetPlayer(btn);
+                currentAudio = null;
+                return;
+            }
+
+            // If clicking PLAY, stop any other existing audio
             if(currentAudio) {
                 currentAudio.pause();
                 currentAudio.currentTime = 0;
                 resetAllButtons();
-            }
-
-            // If hitting the same button to stop
-            if(btn.innerText === "⏹") {
-                return;
             }
 
             currentAudio = new Audio(src);
@@ -464,10 +479,11 @@
             // UI Update
             const anim = btn.nextElementSibling.querySelector('.speaking-animation');
             btn.innerText = "⏹";
-            anim.style.display = 'flex';
+            if(anim) anim.style.display = 'flex';
 
             currentAudio.onended = () => {
                 resetPlayer(btn);
+                currentAudio = null;
             };
         }
 
@@ -482,7 +498,7 @@
         function resetPlayer(btn) {
             btn.innerText = "▶";
             const anim = btn.nextElementSibling.querySelector('.speaking-animation');
-            anim.style.display = 'none';
+            if(anim) anim.style.display = 'none';
         }
 
     </script>
