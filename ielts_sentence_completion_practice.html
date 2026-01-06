@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Sentence Completion Master Class</title>
+    <!-- Tailwind CSS for utility classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #be123c; /* Rose-700 */
+            --primary-dark: #881337; /* Rose-900 */
+            --primary-light: #fff1f2; /* Rose-50 */
+            --text: #374151;
+            --bg: #f9fafb;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text); 
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Merriweather', serif; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Interactive Inputs */
+        .answer-input {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid #cbd5e1;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-radius: 0;
+            padding: 0 0.5rem 0.25rem 0.5rem;
+            background: transparent;
+            font-weight: 600;
+            color: var(--primary);
+            text-align: center;
+        }
+        .answer-input:focus {
+            box-shadow: none;
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .correct-answer {
+            border-color: #10b981 !important;
+            color: #065f46 !important;
+            background-color: rgba(16, 185, 129, 0.1);
+        }
+        .incorrect-answer {
+            border-color: #ef4444 !important;
+            color: #991b1b !important;
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+
+        /* Tip Cards */
+        .tip-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .tip-card:hover {
+            border-color: #fca5a5;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tip-example {
+            background-color: var(--primary-light);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--primary-dark);
+            margin-top: auto;
+            border-left: 3px solid var(--primary);
+        }
+
+        .feedback-text {
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        .feedback-correct { color: #059669; }
+        .feedback-incorrect { color: #dc2626; }
+        
+        /* Table Styles */
+        .vocab-table th { background: var(--primary-light); color: var(--primary-dark); }
+        .vocab-table td { border-bottom: 1px solid #e5e7eb; }
+    </style>
+</head>
+<body class="pb-20">
+
+    <!-- NAVIGATION -->
+    <nav class="sticky top-0 z-50 bg-white shadow-md border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-4">
+                    <!-- Back Button -->
+                    <a href="ielts_listening.html" class="flex items-center gap-2 text-gray-600 hover:text-rose-700 transition-colors group">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        <span class="font-semibold hidden sm:inline">Back</span>
+                    </a>
+                    <div class="h-6 w-px bg-gray-300 hidden sm:block"></div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-2xl">✍️</span>
+                        <span class="font-bold text-xl text-gray-800 tracking-tight">Sentence Completion</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#tips" class="text-gray-500 hover:text-rose-700 font-medium transition">12 Tips</a>
+                    <a href="#paraphrase" class="text-gray-500 hover:text-rose-700 font-medium transition">Paraphrasing</a>
+                    <a href="#practice" class="bg-rose-700 text-white px-4 py-2 rounded-full font-medium hover:bg-rose-800 transition shadow-lg shadow-rose-200">Start Practice</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <div class="bg-gradient-to-br from-rose-900 to-rose-700 text-white py-16">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Master Sentence Completion</h1>
+            <p class="text-rose-100 text-lg md:text-xl mb-8 max-w-2xl mx-auto">
+                Learn to predict answers using grammar, spot paraphrasing, and catch keywords before and after the gap.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-6 py-3">
+                    <span class="block text-2xl font-bold">12</span>
+                    <span class="text-sm opacity-80">Proven Tips</span>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-6 py-3">
+                    <span class="block text-2xl font-bold">2</span>
+                    <span class="text-sm opacity-80">Practice Sets</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 mt-12 space-y-20">
+
+        <!-- TIPS SECTION -->
+        <section id="tips" class="scroll-mt-24">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center text-rose-700 text-xl font-bold">1</div>
+                <h2 class="text-3xl font-bold text-gray-800">12 Essential Strategies</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Tip 1 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">01</span> Prepare First</div>
+                    <p class="text-gray-600 text-sm">Read through the sentences <strong>before</strong> the recording starts. This gives you context.</p>
+                </div>
+                <!-- Tip 2 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">02</span> Predict Answer Type</div>
+                    <p class="text-gray-600 text-sm">Decide if the gap needs a Noun, Verb, or Number.</p>
+                    <div class="tip-example">"Festivals are useful to..." (to + Verb) -> Predict: Preserve/Protect.</div>
+                </div>
+                <!-- Tip 3 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">03</span> Use Grammar</div>
+                    <p class="text-gray-600 text-sm">The sentence must be grammatically correct. Check if "a/the" is needed or if a noun should be plural.</p>
+                    <div class="tip-example">"are put aside" -> Requires plural noun (e.g., differences).</div>
+                </div>
+                <!-- Tip 4 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">04</span> Order of Answers</div>
+                    <p class="text-gray-600 text-sm">Answers always appear in the same order as the recording. Follow Q1 -> Q2 -> Q3.</p>
+                </div>
+                <!-- Tip 5 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">05</span> Word Limits</div>
+                    <p class="text-gray-600 text-sm">Strictly follow instructions (e.g., "NO MORE THAN ONE WORD"). Hyphenated words often count as one.</p>
+                </div>
+                <!-- Tip 6 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">06</span> Keywords</div>
+                    <p class="text-gray-600 text-sm">Identify keywords before the gap to help locate the answer in the audio.</p>
+                </div>
+                <!-- Tip 7 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">07</span> Paraphrasing</div>
+                    <p class="text-gray-600 text-sm">The speaker often uses different words with the same meaning. Listen for the <em>meaning</em>, not exact matches.</p>
+                    <div class="tip-example">"Traced back" in question = "Originated" in audio.</div>
+                </div>
+                <!-- Tip 8 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">08</span> Speed</div>
+                    <p class="text-gray-600 text-sm">You won't have much time. Practice spotting keywords and paraphrases quickly.</p>
+                </div>
+                <!-- Tip 9 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">09</span> Location of Answer</div>
+                    <p class="text-gray-600 text-sm">Don't just wait for keywords. The answer might come <strong>before</strong> or <strong>after</strong> the keyword you spotted.</p>
+                </div>
+                <!-- Tip 10-12 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">10-12</span> Final Checks</div>
+                    <p class="text-gray-600 text-sm">
+                        10. Guess! Never leave it empty.<br>
+                        11. Spelling counts.<br>
+                        12. Check your work.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PARAPHRASE SECTION -->
+        <section id="paraphrase" class="scroll-mt-24">
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 bg-rose-200 rounded-full flex items-center justify-center text-rose-800 text-xl font-bold">2</div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Paraphrasing Strategy</h2>
+                        <p class="text-gray-500 text-sm">Match the words in the question to what you hear.</p>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto rounded-lg border border-gray-200">
+                    <table class="w-full text-left vocab-table">
+                        <thead>
+                            <tr>
+                                <th class="p-4 font-bold w-1/2">Question Words</th>
+                                <th class="p-4 font-bold w-1/2">What You Hear (Audio)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white">
+                            <tr><td class="p-4 text-gray-700">Traditions</td><td class="p-4 text-rose-700 font-semibold">Heritage</td></tr>
+                            <tr><td class="p-4 text-gray-700">Traced back</td><td class="p-4 text-rose-700 font-semibold">Originated</td></tr>
+                            <tr><td class="p-4 text-gray-700">Different</td><td class="p-4 text-rose-700 font-semibold">Various</td></tr>
+                            <tr><td class="p-4 text-gray-700">Put aside</td><td class="p-4 text-rose-700 font-semibold">Forgotten</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRACTICE 1: AUTISM -->
+        <section id="practice" class="scroll-mt-24 space-y-12">
+            <div class="text-center">
+                <span class="bg-rose-100 text-rose-800 text-sm font-bold px-3 py-1 rounded-full uppercase tracking-wide">Practice 1</span>
+                <h2 class="text-3xl font-bold text-gray-900 mt-2">Topic: Autism</h2>
+                <p class="text-gray-500 mt-2">Write <strong>NO MORE THAN TWO WORDS AND/OR A NUMBER</strong>.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                <div class="bg-gray-50 p-6 border-b border-gray-200 flex justify-between items-center flex-wrap gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold">P1</div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800">Autism Awareness</h3>
+                            <p class="text-xs text-gray-500">Audio: recording10.mp3</p>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-auto">
+                        <audio controls class="w-full md:w-64">
+                            <source src="recording10.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+
+                <div class="p-6 lg:p-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                        
+                        <!-- Questions -->
+                        <div class="space-y-6 text-lg leading-loose text-gray-700 font-medium">
+                            <p>
+                                1. Autism can affect how someone 
+                                <input type="text" id="p1-q1" class="answer-input w-40" placeholder="..."> 
+                                with others and how they experience the world around them.
+                                <div id="fb-p1-q1" class="feedback-text"></div>
+                            </p>
+                            
+                            <p>
+                                2. Businesses should 
+                                <input type="text" id="p1-q2" class="answer-input w-32" placeholder="..."> 
+                                their lights and reduce noise during Autism Hour.
+                                <div id="fb-p1-q2" class="feedback-text"></div>
+                            </p>
+
+                            <p>
+                                3. Too much light and noise can lead to sensory 
+                                <input type="text" id="p1-q3" class="answer-input w-40" placeholder="..."> 
+                                which can be painful for people with autism.
+                                <div id="fb-p1-q3" class="feedback-text"></div>
+                            </p>
+
+                            <p>
+                                4. Society is mostly 
+                                <input type="text" id="p1-q4" class="answer-input w-40" placeholder="..."> 
+                                toward neurotypical people.
+                                <div id="fb-p1-q4" class="feedback-text"></div>
+                            </p>
+
+                            <p>
+                                5. Some people with other illnesses can also struggle to cope with 
+                                <input type="text" id="p1-q5" class="answer-input w-40" placeholder="..."> 
+                                information.
+                                <div id="fb-p1-q5" class="feedback-text"></div>
+                            </p>
+                        </div>
+
+                        <!-- Right Panel: Vocab & Controls -->
+                        <div class="space-y-6">
+                            <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-5">
+                                <h4 class="font-bold text-yellow-800 mb-3 border-b border-yellow-200 pb-2">Vocabulary</h4>
+                                <ul class="space-y-2 text-sm text-yellow-900">
+                                    <li><strong>Dim:</strong> Reduce intensity.</li>
+                                    <li><strong>Sensory Overload:</strong> Bodies get over-stimulated from environments.</li>
+                                    <li><strong>Geared:</strong> Prepared/Set for.</li>
+                                    <li><strong>Neurotypical:</strong> Normal Person (non-autistic).</li>
+                                    <li><strong>Cope:</strong> Manage difficult situations.</li>
+                                </ul>
+                            </div>
+
+                            <div class="flex gap-3">
+                                <button onclick="checkAnswers(1)" class="flex-1 bg-rose-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-rose-700 transition shadow-md">Check P1</button>
+                                <button onclick="toggleScript(1)" class="flex-1 bg-white text-gray-700 border border-gray-300 px-6 py-3 rounded-lg font-bold hover:bg-gray-50 transition">Script</button>
+                            </div>
+
+                            <div id="script-1" class="hidden mt-4 p-4 bg-gray-100 rounded-lg text-sm text-gray-600 leading-relaxed">
+                                <p><strong>Script:</strong> "...Autism is a lifelong disability which affects how a person <span class="text-green-600 font-bold">communicates</span> and responds to people... Autism Hour is when businesses agree to <span class="text-green-600 font-bold">dim</span> their lights... leading to sensory <span class="text-green-600 font-bold">overload</span>... In a world <span class="text-green-600 font-bold">geared</span> towards neuro-typical people... affecting their ability to cope with light or noise or any other type of <span class="text-green-600 font-bold">sensory</span> information."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRACTICE 2: FESTIVALS -->
+        <section class="space-y-12 pb-24">
+            <div class="text-center">
+                <span class="bg-rose-100 text-rose-800 text-sm font-bold px-3 py-1 rounded-full uppercase tracking-wide">Practice 2</span>
+                <h2 class="text-3xl font-bold text-gray-900 mt-2">Topic: Why do we have festivals?</h2>
+                <p class="text-gray-500 mt-2">Write <strong>NO MORE THAN ONE WORD AND/OR A NUMBER</strong>.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                <div class="bg-gray-50 p-6 border-b border-gray-200 flex justify-between items-center flex-wrap gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center text-teal-600 font-bold">P2</div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800">Cultural Festivals</h3>
+                            <p class="text-xs text-gray-500">Audio: recording11.mp3</p>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-auto">
+                        <audio controls class="w-full md:w-64">
+                            <source src="recording11.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+
+                <div class="p-6 lg:p-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                        
+                        <!-- Questions -->
+                        <div class="space-y-6 text-lg leading-loose text-gray-700 font-medium">
+                            <p>
+                                1. Festivals are useful to 
+                                <input type="text" id="p2-q1" class="answer-input w-40" placeholder="..."> 
+                                the cultural traditions of different countries.
+                                <div id="fb-p2-q1" class="feedback-text"></div>
+                            </p>
+                            
+                            <p>
+                                2. The majority of festivals can be traced back to a cultural 
+                                <input type="text" id="p2-q2" class="answer-input w-40" placeholder="..."> 
+                                .
+                                <div id="fb-p2-q2" class="feedback-text"></div>
+                            </p>
+
+                            <p>
+                                3. Festivals are a time when 
+                                <input type="text" id="p2-q3" class="answer-input w-40" placeholder="..."> 
+                                are put aside.
+                                <div id="fb-p2-q3" class="feedback-text"></div>
+                            </p>
+
+                            <p>
+                                4. Although countries have different festivals, their 
+                                <input type="text" id="p2-q4" class="answer-input w-40" placeholder="..."> 
+                                is often the same.
+                                <div id="fb-p2-q4" class="feedback-text"></div>
+                            </p>
+                        </div>
+
+                        <!-- Right Panel: Vocab & Controls -->
+                        <div class="space-y-6">
+                            <div class="bg-teal-50 border border-teal-200 rounded-xl p-5">
+                                <h4 class="font-bold text-teal-800 mb-3 border-b border-teal-200 pb-2">Vocabulary</h4>
+                                <ul class="space-y-2 text-sm text-teal-900">
+                                    <li><strong>Propagate:</strong> Spread.</li>
+                                    <li><strong>Purpose:</strong> Goal.</li>
+                                    <li><strong>Solidarity:</strong> Unity.</li>
+                                    <li><strong>Predominate:</strong> Majority/Main element.</li>
+                                </ul>
+                            </div>
+
+                            <div class="flex gap-3">
+                                <button onclick="checkAnswers(2)" class="flex-1 bg-rose-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-rose-700 transition shadow-md">Check P2</button>
+                                <button onclick="toggleScript(2)" class="flex-1 bg-white text-gray-700 border border-gray-300 px-6 py-3 rounded-lg font-bold hover:bg-gray-50 transition">Script</button>
+                            </div>
+
+                            <div id="script-2" class="hidden mt-4 p-4 bg-gray-100 rounded-lg text-sm text-gray-600 leading-relaxed">
+                                <p><strong>Script:</strong> "...Festivals are mostly celebrated to <span class="text-green-600 font-bold">propagate</span> the cultural heritage... origins in a cultural <span class="text-green-600 font-bold">belief</span>... During this time, <span class="text-green-600 font-bold">differences</span> are forgotten... there is a similarity in the <span class="text-green-600 font-bold">purpose</span> that the festival serves."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-400 py-8 mt-20 text-center">
+        <p>© 2024 IELTS Sentence Completion Module. Educational Practice Material.</p>
+    </footer>
+
+    <script>
+        function checkAnswers(practiceId) {
+            const keys = {
+                1: {
+                    'p1-q1': { valid: ['COMMUNICATES'], reason: 'Subject "someone" (singular) + verb "communicates".' },
+                    'p1-q2': { valid: ['DIM'], reason: '"dim their lights".' },
+                    'p1-q3': { valid: ['OVERLOAD'], reason: '"sensory overload".' },
+                    'p1-q4': { valid: ['GEARED'], reason: '"geared towards neuro-typical people".' },
+                    'p1-q5': { valid: ['SENSORY'], reason: '"sensory information".' }
+                },
+                2: {
+                    'p2-q1': { valid: ['PROPAGATE'], reason: '"propagate the cultural heritage".' },
+                    'p2-q2': { valid: ['BELIEF'], reason: '"cultural belief".' },
+                    'p2-q3': { valid: ['DIFFERENCES'], reason: '"differences are forgotten" (put aside).' },
+                    'p2-q4': { valid: ['PURPOSE'], reason: '"similarity in the purpose".' }
+                }
+            };
+
+            const currentSet = keys[practiceId];
+
+            for (const [id, data] of Object.entries(currentSet)) {
+                const input = document.getElementById(id);
+                const feedbackEl = document.getElementById('fb-' + id);
+                const userVal = input.value.trim().toUpperCase().replace(/[.,]/g, ''); 
+                
+                input.classList.remove('correct-answer', 'incorrect-answer');
+                feedbackEl.classList.remove('feedback-correct', 'feedback-incorrect');
+                feedbackEl.style.display = 'block';
+
+                const isCorrect = data.valid.includes(userVal);
+                
+                if (isCorrect) {
+                    input.classList.add('correct-answer');
+                    feedbackEl.textContent = "Correct! " + data.reason;
+                    feedbackEl.classList.add('feedback-correct');
+                } else {
+                    input.classList.add('incorrect-answer');
+                    feedbackEl.textContent = "Incorrect. Correct: " + data.valid[0];
+                    feedbackEl.classList.add('feedback-incorrect');
+                }
+            }
+        }
+
+        function toggleScript(id) {
+            const box = document.getElementById('script-' + id);
+            box.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
