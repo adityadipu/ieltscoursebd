@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Summary Completion Master Class</title>
+    <!-- Tailwind CSS for utility classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #be123c; /* Rose-700 */
+            --primary-dark: #881337; /* Rose-900 */
+            --primary-light: #fff1f2; /* Rose-50 */
+            --text: #374151;
+            --bg: #f9fafb;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text); 
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Merriweather', serif; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Interactive Inputs */
+        .answer-input {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid #cbd5e1;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-radius: 0;
+            padding: 0 0.5rem 0.25rem 0.5rem;
+            background: transparent;
+            font-weight: 600;
+            color: var(--primary);
+            text-align: center;
+        }
+        .answer-input:focus {
+            box-shadow: none;
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .correct-answer {
+            border-color: #10b981 !important;
+            color: #065f46 !important;
+            background-color: rgba(16, 185, 129, 0.1);
+        }
+        .incorrect-answer {
+            border-color: #ef4444 !important;
+            color: #991b1b !important;
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+
+        /* Tip Cards */
+        .tip-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .tip-card:hover {
+            border-color: #fca5a5;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tip-example {
+            background-color: var(--primary-light);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--primary-dark);
+            margin-top: auto;
+            border-left: 3px solid var(--primary);
+        }
+
+        .feedback-text {
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        .feedback-correct { color: #059669; }
+        .feedback-incorrect { color: #dc2626; }
+    </style>
+</head>
+<body class="pb-20">
+
+    <!-- NAVIGATION -->
+    <nav class="sticky top-0 z-50 bg-white shadow-md border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-4">
+                    <!-- Back Button -->
+                    <a href="ielts_listening.html" class="flex items-center gap-2 text-gray-600 hover:text-rose-700 transition-colors group">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        <span class="font-semibold hidden sm:inline">Back</span>
+                    </a>
+                    <div class="h-6 w-px bg-gray-300 hidden sm:block"></div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-2xl">📝</span>
+                        <span class="font-bold text-xl text-gray-800 tracking-tight">Summary Completion</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#tips" class="text-gray-500 hover:text-rose-700 font-medium transition">9 Tips</a>
+                    <a href="#practice" class="bg-rose-700 text-white px-4 py-2 rounded-full font-medium hover:bg-rose-800 transition shadow-lg shadow-rose-200">Start Practice</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <div class="bg-gradient-to-br from-rose-900 to-rose-700 text-white py-16">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Master Summary Completion</h1>
+            <p class="text-rose-100 text-lg md:text-xl mb-8 max-w-2xl mx-auto">
+                Fill in the gaps of a summarized paragraph. Learn to identify main ideas, paraphrase, and maintain grammatical accuracy.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-6 py-3">
+                    <span class="block text-2xl font-bold">9</span>
+                    <span class="text-sm opacity-80">Proven Tips</span>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-6 py-3">
+                    <span class="block text-2xl font-bold">2</span>
+                    <span class="text-sm opacity-80">Practice Summaries</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 mt-12 space-y-20">
+
+        <!-- TIPS SECTION -->
+        <section id="tips" class="scroll-mt-24">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center text-rose-700 text-xl font-bold">1</div>
+                <h2 class="text-3xl font-bold text-gray-800">9 Essential Strategies</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Tip 1 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">01</span> Fill in the Gaps</div>
+                    <p class="text-gray-600 text-sm">You will see a paragraph with missing words. Your job is to listen for them.</p>
+                    <div class="tip-example">"How ___ affects climate change" -> Answer: Human Activity.</div>
+                </div>
+                <!-- Tip 2 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">02</span> Summary, Not Exact</div>
+                    <p class="text-gray-600 text-sm">The text summarizes ideas. Words on the page may differ from the audio, but meaning is the same.</p>
+                    <div class="tip-example">"New law to reduce..." = "Regulations to cut down air pollution". Answer: Pollution.</div>
+                </div>
+                <!-- Tip 3 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">03</span> Use the Title</div>
+                    <p class="text-gray-600 text-sm">The title focuses your mind on the main topic.</p>
+                    <div class="tip-example">"The cause of obesity" -> Topic relates to healthcare/lifestyle.</div>
+                </div>
+                <!-- Tip 4 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">04</span> Follow Order</div>
+                    <p class="text-gray-600 text-sm">Answers appear in the same order as the recording.</p>
+                </div>
+                <!-- Tip 5 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">05</span> Word Limit</div>
+                    <p class="text-gray-600 text-sm">Strictly check word limits (e.g., "NO MORE THAN TWO WORDS").</p>
+                </div>
+                <!-- Tip 6 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">06</span> Grammar Check</div>
+                    <p class="text-gray-600 text-sm">Predict word type (Noun/Verb). Ensure grammatical fit.</p>
+                    <div class="tip-example">"The delay was..." -> Noun (Bad Weather). "The company..." -> Verb (Increased).</div>
+                </div>
+                <!-- Tip 7 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">07</span> Paraphrasing</div>
+                    <p class="text-gray-600 text-sm">Listen for synonyms. Words change but meaning stays.</p>
+                    <div class="tip-example">"Experience stress" = "Cause pressure". Stress = Pressure.</div>
+                </div>
+                <!-- Tip 8 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">08</span> Exact Words</div>
+                    <p class="text-gray-600 text-sm">Listen exactly to the words you hear for the answer itself.</p>
+                </div>
+                <!-- Tip 9 & Final -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">09</span> Checklist</div>
+                    <p class="text-gray-600 text-sm">1. Read title. 2. Predict word type. 3. Listen for keywords. 4. Check grammar. 5. Check spelling.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRACTICE 1: BUCKINGHAM PALACE -->
+        <section id="practice" class="scroll-mt-24 space-y-12">
+            <div class="text-center">
+                <span class="bg-rose-100 text-rose-800 text-sm font-bold px-3 py-1 rounded-full uppercase tracking-wide">Practice 1</span>
+                <h2 class="text-3xl font-bold text-gray-900 mt-2">Topic: Buckingham Palace</h2>
+                <p class="text-gray-500 mt-2">Write <strong>NO MORE THAN ONE WORD OR A NUMBER</strong>.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                <div class="bg-gray-50 p-6 border-b border-gray-200 flex justify-between items-center flex-wrap gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold">P1</div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800">The Queen's Residence</h3>
+                            <p class="text-xs text-gray-500">Audio: recording12.mp3</p>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-auto">
+                        <audio controls class="w-full md:w-64">
+                            <source src="recording12.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+
+                <div class="p-6 lg:p-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                        
+                        <!-- Summary Text with Inputs -->
+                        <div class="text-lg leading-loose text-gray-700 font-medium space-y-4">
+                            <p>
+                                Buckingham Palace is where the Queen officially resides when she is in London, and it's also famous for its 
+                                <input type="text" id="p1-q1" class="answer-input w-32" placeholder="(1)"> 
+                                appearance in 
+                                <input type="text" id="p1-q2" class="answer-input w-24" placeholder="(2)"> 
+                                which was used for the first time by a royal during an official occasion.
+                            </p>
+                            <p>
+                                There were 
+                                <input type="text" id="p1-q3" class="answer-input w-16" placeholder="(3)"> 
+                                bomb hits to the palace in World War II, which struck the palace with absolute precision.
+                            </p>
+                            <p>
+                                There is a range of services available to the royal residents in the palace, which has a total of 
+                                <input type="text" id="p1-q4" class="answer-input w-24" placeholder="(4)"> 
+                                rooms.
+                            </p>
+                            <p>
+                                There are 1,514 doors in the palace and 
+                                <input type="text" id="p1-q5" class="answer-input w-24" placeholder="(5)"> 
+                                windows, which are cleaned once every six weeks.
+                            </p>
+                            <p>
+                                The queen hosts more than 
+                                <input type="text" id="p1-q6" class="answer-input w-32" placeholder="(6)"> 
+                                people each year for occasions such as banquets, various meals, reception and 
+                                <input type="text" id="p1-q7" class="answer-input w-32" placeholder="(7)"> 
+                                parties.
+                            </p>
+                            <div id="feedback-p1" class="hidden mt-4 p-3 rounded-lg text-sm font-semibold"></div>
+                        </div>
+
+                        <!-- Right Panel: Vocab & Controls -->
+                        <div class="space-y-6">
+                            <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-5">
+                                <h4 class="font-bold text-indigo-800 mb-3 border-b border-indigo-200 pb-2">Vocabulary</h4>
+                                <ul class="space-y-2 text-sm text-indigo-900">
+                                    <li><strong>Struck (Strike):</strong> Hit.</li>
+                                    <li><strong>Precision:</strong> Accuracy/Exactness.</li>
+                                    <li><strong>Resides:</strong> Lives.</li>
+                                    <li><strong>Banquets:</strong> Formal dinners.</li>
+                                </ul>
+                            </div>
+
+                            <div class="flex gap-3">
+                                <button onclick="checkAnswers(1)" class="flex-1 bg-rose-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-rose-700 transition shadow-md">Check P1</button>
+                                <button onclick="toggleScript(1)" class="flex-1 bg-white text-gray-700 border border-gray-300 px-6 py-3 rounded-lg font-bold hover:bg-gray-50 transition">Script</button>
+                            </div>
+
+                            <div id="script-1" class="hidden mt-4 p-4 bg-gray-100 rounded-lg text-sm text-gray-600 leading-relaxed">
+                                <p><strong>Script:</strong> "The <span class="text-green-600 font-bold">balcony</span> of Buckingham Palace is one of the most famous... first recorded Royal balcony appearance took place in <span class="text-green-600 font-bold">1851</span>... suffered <span class="text-green-600 font-bold">nine</span> direct bomb hits... There are <span class="text-green-600 font-bold">775</span> rooms... There are <span class="text-green-600 font-bold">1,514</span> doors and <span class="text-green-600 font-bold">760</span> windows... More than <span class="text-green-600 font-bold">50,000</span> people visit... receptions and <span class="text-green-600 font-bold">garden</span> parties."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRACTICE 2: TERRACOTTA ARMY -->
+        <section class="space-y-12 pb-24">
+            <div class="text-center">
+                <span class="bg-rose-100 text-rose-800 text-sm font-bold px-3 py-1 rounded-full uppercase tracking-wide">Practice 2</span>
+                <h2 class="text-3xl font-bold text-gray-900 mt-2">Topic: The Terracotta Army</h2>
+                <p class="text-gray-500 mt-2">Write <strong>NO MORE THAN THREE WORDS AND/OR A NUMBER</strong>.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                <div class="bg-gray-50 p-6 border-b border-gray-200 flex justify-between items-center flex-wrap gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center text-amber-600 font-bold">P2</div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800">Ancient Chinese History</h3>
+                            <p class="text-xs text-gray-500">Audio: recording13.mp3</p>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-auto">
+                        <audio controls class="w-full md:w-64">
+                            <source src="recording13.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+
+                <div class="p-6 lg:p-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                        
+                        <!-- Summary Text with Inputs -->
+                        <div class="text-lg leading-loose text-gray-700 font-medium space-y-4">
+                            <p>
+                                The terracotta army was made in order to 
+                                <input type="text" id="p2-q1" class="answer-input w-32" placeholder="(1)"> 
+                                the emperor after his death in his afterlife.
+                            </p>
+                            <p>
+                                The funerary art has been estimated to be from the 
+                                <input type="text" id="p2-q2" class="answer-input w-48" placeholder="(2)"> 
+                                and was discovered in 1974 by the 
+                                <input type="text" id="p2-q3" class="answer-input w-40" placeholder="(3)">.
+                            </p>
+                            <p>
+                                The majority of the sculptures were 
+                                <input type="text" id="p2-q4" class="answer-input w-32" placeholder="(4)"> 
+                                and 
+                                <input type="text" id="p2-q5" class="answer-input w-24" placeholder="(5)"> 
+                                sculptures of cavalry horses were also found.
+                            </p>
+                            <div id="feedback-p2" class="hidden mt-4 p-3 rounded-lg text-sm font-semibold"></div>
+                        </div>
+
+                        <!-- Right Panel: Vocab & Controls -->
+                        <div class="space-y-6">
+                            <div class="bg-amber-50 border border-amber-200 rounded-xl p-5">
+                                <h4 class="font-bold text-amber-800 mb-3 border-b border-amber-200 pb-2">Vocabulary</h4>
+                                <ul class="space-y-2 text-sm text-amber-900">
+                                    <li><strong>Sculpture:</strong> 3D work of art.</li>
+                                    <li><strong>To Depict:</strong> To show.</li>
+                                    <li><strong>Funerary Art:</strong> Art used for funerals.</li>
+                                    <li><strong>Afterlife:</strong> Life after death.</li>
+                                    <li><strong>Warrior:</strong> Soldier.</li>
+                                    <li><strong>Chariots:</strong> Horse-drawn vehicles.</li>
+                                    <li><strong>A Pit:</strong> A hole in the ground.</li>
+                                </ul>
+                            </div>
+
+                            <div class="flex gap-3">
+                                <button onclick="checkAnswers(2)" class="flex-1 bg-rose-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-rose-700 transition shadow-md">Check P2</button>
+                                <button onclick="toggleScript(2)" class="flex-1 bg-white text-gray-700 border border-gray-300 px-6 py-3 rounded-lg font-bold hover:bg-gray-50 transition">Script</button>
+                            </div>
+
+                            <div id="script-2" class="hidden mt-4 p-4 bg-gray-100 rounded-lg text-sm text-gray-600 leading-relaxed">
+                                <p><strong>Script:</strong> "...whose purpose was to <span class="text-green-600 font-bold">protect</span> the emperor... dating from approximately the late <span class="text-green-600 font-bold">third century BC</span>... discovered in 1974 by <span class="text-green-600 font-bold">local farmers</span>... more than 8,000 <span class="text-green-600 font-bold">soldiers</span>... and <span class="text-green-600 font-bold">150</span> cavalry horses..."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-400 py-8 mt-20 text-center">
+        <p>© 2024 IELTS Summary Completion Module. Educational Practice Material.</p>
+    </footer>
+
+    <script>
+        function checkAnswers(practiceId) {
+            const keys = {
+                1: {
+                    'p1-q1': { valid: ['BALCONY'], reason: 'Correct.' },
+                    'p1-q2': { valid: ['1851'], reason: 'Correct.' },
+                    'p1-q3': { valid: ['9', 'NINE'], reason: 'Correct.' },
+                    'p1-q4': { valid: ['775'], reason: 'Correct. (Note: Question asked for total rooms, PDF answer key lists 1514 but script says 775 rooms. 1514 is doors. I will accept 775 based on script logic, but also 1514 if user follows PDF key literally, though it seems to match "doors" in text.) Wait, PDF says "has a total of 4 rooms" -> Answer "1514". Script says "775 rooms... 1514 doors". This is a PDF error. I will accept 775 as the logical answer for "rooms", and 1514 if they follow the potentially mismatched key.' }, 
+                    // Correction: PDF key says "4. 1514" for the gap about rooms? Let's check text: "total of 4 rooms". Q4 is usually answer 4.
+                    // PDF Text: "...palace, which has a total of 4 rooms. There are doors...". 
+                    // Script: "There are 775 rooms... There are 1,514 doors".
+                    // Gap 4 is for rooms. Logical answer is 775. 
+                    // Gap 5 is for windows (cleaned every 6 weeks). Script says 760 windows. PDF Key says "5. 760".
+                    // So Key 4 is 1514? That matches doors. 
+                    // It seems the PDF summary text layout might have missed a gap or the key is shifted. 
+                    // Let's stick to the script logic: Rooms = 775.
+                    'p1-q4': { valid: ['775'], reason: 'Script: "There are 775 rooms".' },
+                    'p1-q5': { valid: ['760'], reason: 'Script: "760 windows".' },
+                    'p1-q6': { valid: ['50000', '50,000'], reason: 'Correct.' },
+                    'p1-q7': { valid: ['GARDEN'], reason: 'Correct.' }
+                },
+                2: {
+                    'p2-q1': { valid: ['PROTECT'], reason: 'Correct.' },
+                    'p2-q2': { valid: ['THIRD CENTURY BC', '3RD CENTURY BC'], reason: 'Correct.' },
+                    'p2-q3': { valid: ['LOCAL FARMERS', 'FARMERS'], reason: 'Correct.' },
+                    'p2-q4': { valid: ['SOLDIERS', 'WARRIORS'], reason: 'Correct.' },
+                    'p2-q5': { valid: ['150'], reason: 'Correct.' }
+                }
+            };
+
+            const currentSet = keys[practiceId];
+            let allCorrect = true;
+
+            for (const [id, data] of Object.entries(currentSet)) {
+                const input = document.getElementById(id);
+                const userVal = input.value.trim().toUpperCase().replace(/[.,]/g, ''); 
+                
+                input.classList.remove('correct-answer', 'incorrect-answer');
+
+                const isCorrect = data.valid.includes(userVal);
+                
+                if (isCorrect) {
+                    input.classList.add('correct-answer');
+                } else {
+                    input.classList.add('incorrect-answer');
+                    allCorrect = false;
+                }
+            }
+            
+            const fbBox = document.getElementById('feedback-p' + practiceId);
+            fbBox.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+            if (allCorrect) {
+                fbBox.textContent = "All answers correct! Great job.";
+                fbBox.classList.add('bg-green-100', 'text-green-800');
+            } else {
+                fbBox.textContent = "Some answers are incorrect. Check the script/tips.";
+                fbBox.classList.add('bg-red-100', 'text-red-800');
+            }
+            fbBox.style.display = 'block';
+        }
+
+        function toggleScript(id) {
+            const box = document.getElementById('script-' + id);
+            box.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
