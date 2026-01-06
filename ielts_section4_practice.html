@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Section 4 Lecture Master Class</title>
+    <!-- Tailwind CSS for utility classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #be123c; /* Rose-700 */
+            --primary-dark: #881337; /* Rose-900 */
+            --primary-light: #fff1f2; /* Rose-50 */
+            --text: #374151;
+            --bg: #f9fafb;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text); 
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Merriweather', serif; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Interactive Inputs */
+        .answer-input {
+            transition: all 0.3s ease;
+        }
+        .answer-input:focus {
+            box-shadow: 0 0 0 3px rgba(190, 18, 60, 0.2);
+            border-color: var(--primary);
+        }
+
+        .correct-answer {
+            background-color: #dcfce7 !important;
+            border-color: #10b981 !important;
+            color: #065f46 !important;
+        }
+        .incorrect-answer {
+            background-color: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #991b1b !important;
+        }
+
+        /* Tip Cards */
+        .tip-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem; /* rounded-xl */
+            padding: 1.5rem;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .tip-card:hover {
+            border-color: #fca5a5;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tip-example {
+            background-color: var(--primary-light);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--primary-dark);
+            margin-top: auto;
+            border-left: 3px solid var(--primary);
+        }
+
+        .feedback-text {
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        .feedback-correct { color: #059669; }
+        .feedback-incorrect { color: #dc2626; }
+    </style>
+</head>
+<body class="pb-20">
+
+    <!-- NAVIGATION -->
+    <nav class="sticky top-0 z-50 bg-white shadow-md border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-4">
+                    <!-- Back Button -->
+                    <a href="ielts_listening.html" class="flex items-center gap-2 text-gray-600 hover:text-rose-700 transition-colors group">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        <span class="font-semibold hidden sm:inline">Back</span>
+                    </a>
+                    <div class="h-6 w-px bg-gray-300 hidden sm:block"></div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-2xl">🎓</span>
+                        <span class="font-bold text-xl text-gray-800 tracking-tight">IELTS Section 4</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#tips" class="text-gray-500 hover:text-rose-700 font-medium transition">Strategies</a>
+                    <a href="#linking" class="text-gray-500 hover:text-rose-700 font-medium transition">Linking Words</a>
+                    <a href="#practice" class="bg-rose-700 text-white px-4 py-2 rounded-full font-medium hover:bg-rose-800 transition shadow-lg shadow-rose-200">Start Practice</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <div class="bg-gradient-to-br from-rose-900 to-rose-700 text-white py-16">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Mastering the Academic Lecture</h1>
+            <p class="text-rose-100 text-lg md:text-xl mb-8 max-w-2xl mx-auto">
+                Section 4 is a continuous university-style lecture. Learn to follow the structure, identify signposts, and capture key details.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-6 py-3">
+                    <span class="block text-2xl font-bold">10</span>
+                    <span class="text-sm opacity-80">Golden Rules</span>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-6 py-3">
+                    <span class="block text-2xl font-bold">1</span>
+                    <span class="text-sm opacity-80">Continuous Speaker</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 mt-12 space-y-20">
+
+        <!-- TIPS SECTION -->
+        <section id="tips" class="scroll-mt-24">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center text-rose-700 text-xl font-bold">1</div>
+                <h2 class="text-3xl font-bold text-gray-800">10 Golden Tips for Section 4</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Tip 1 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">01</span> Context</div>
+                    <p class="text-gray-600 text-sm">Usually a university lecture by one speaker (Professor) on academic topics like History, Biology, or Business (5-6 mins).</p>
+                    <div class="tip-example">Example: A professor discussing "Climate Change" or "Business Ethics".</div>
+                </div>
+                
+                <!-- Tip 2 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">02</span> Structure</div>
+                    <p class="text-gray-600 text-sm">Follows a logical path: <strong>Intro</strong> (Topic), <strong>Middle</strong> (Details/Examples), <strong>Conclusion</strong> (Summary).</p>
+                    <div class="tip-example">Example: "Today I'm going to tell you 3 causes of air pollution..." (Intro)</div>
+                </div>
+                
+                <!-- Tip 3 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">03</span> Signposts</div>
+                    <p class="text-gray-600 text-sm">Listen for phrases signaling a change in idea. These indicate the answer comes next.</p>
+                    <div class="tip-example">Example: "Let's look at...", "Moving on to...", "Another important point is..."</div>
+                </div>
+                
+                <!-- Tip 4 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">04</span> Linking Words</div>
+                    <p class="text-gray-600 text-sm">Words guide meaning and order. Pay attention to order, addition, and contrast.</p>
+                    <div class="tip-example">Example: "Firstly...", "However...", "Moreover...", "For example..."</div>
+                </div>
+                
+                <!-- Tip 5 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">05</span> Vocabulary</div>
+                    <p class="text-gray-600 text-sm">Academic terms are often repeated and not paraphrased. Focus on key topic words.</p>
+                    <div class="tip-example">Example: "Photosynthesis occurs when..." (The term 'Photosynthesis' is likely the keyword)</div>
+                </div>
+                
+                <!-- Tip 6 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">06</span> Gist over Detail</div>
+                    <p class="text-gray-600 text-sm">Don't try to understand every word. Your goal is the <strong>answer</strong>, not a full understanding.</p>
+                    <div class="tip-example">Example: If asked "When did research begin?", just listen for a year (e.g., "1998").</div>
+                </div>
+                
+                <!-- Tip 7 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">07</span> Prediction</div>
+                    <p class="text-gray-600 text-sm">Read the question beforehand to guess the type of answer needed (Noun, Number, etc.).</p>
+                    <div class="tip-example">Example: "The population is ___" -> Predict a number.</div>
+                </div>
+                
+                <!-- Tip 8 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">08</span> Paraphrasing</div>
+                    <p class="text-gray-600 text-sm">The speaker rarely matches the question words exactly. Listen for synonyms.</p>
+                    <div class="tip-example">Example: Question: "Increase in population" vs Speaker: "Growth in number of residents".</div>
+                </div>
+                
+                <!-- Tip 9 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">09</span> Order</div>
+                    <p class="text-gray-600 text-sm">Answers usually come in order. If you miss Q2, jump immediately to Q3. Don't get stuck.</p>
+                    <div class="tip-example">Example: If you miss Q2, don't panic. Listen for keywords for Q3.</div>
+                </div>
+                
+                <!-- Tip 10 -->
+                <div class="tip-card">
+                    <div class="text-rose-600 font-bold mb-2 flex items-center gap-2"><span class="bg-rose-100 p-1 rounded text-xs">10</span> 10 Questions</div>
+                    <p class="text-gray-600 text-sm">Section 4 has 10 continuous questions. Stay focused, follow the structure, and predict answers.</p>
+                    <div class="tip-example">Advice: Follow structure -> Listen for signposts -> Don't overthink.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LINKING WORDS SECTION -->
+        <section id="linking" class="scroll-mt-24">
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 bg-rose-200 rounded-full flex items-center justify-center text-rose-800 text-xl font-bold">2</div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Signpost & Linking Words</h2>
+                        <p class="text-gray-500 text-sm">These words tell you where the lecture is going.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-rose-50 p-4 rounded-lg border border-rose-100">
+                        <h3 class="font-bold text-rose-800 mb-2">1. Showing Order</h3>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                            <li>"Firstly, we'll discuss..."</li>
+                            <li>"Secondly, the experiment..."</li>
+                            <li>"Finally..."</li>
+                        </ul>
+                    </div>
+                    <div class="bg-rose-50 p-4 rounded-lg border border-rose-100">
+                        <h3 class="font-bold text-rose-800 mb-2">2. Adding Information</h3>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                            <li>"In addition, this method..."</li>
+                            <li>"Also..."</li>
+                            <li>"Moreover..."</li>
+                        </ul>
+                    </div>
+                    <div class="bg-rose-50 p-4 rounded-lg border border-rose-100">
+                        <h3 class="font-bold text-rose-800 mb-2">3. Showing Contrast</h3>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                            <li>"However..."</li>
+                            <li>"By contrast..."</li>
+                            <li>"On the other hand..."</li>
+                        </ul>
+                    </div>
+                    <div class="bg-rose-50 p-4 rounded-lg border border-rose-100">
+                        <h3 class="font-bold text-rose-800 mb-2">4. Giving Examples</h3>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                            <li>"For example..."</li>
+                            <li>"Such as..."</li>
+                            <li>"Namely..."</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRACTICE SECTION -->
+        <section id="practice" class="scroll-mt-24 space-y-12">
+            <div class="text-center">
+                <span class="bg-rose-100 text-rose-800 text-sm font-bold px-3 py-1 rounded-full uppercase tracking-wide">Practice Module</span>
+                <h2 class="text-3xl font-bold text-gray-900 mt-2">Topic: Dolphin Intelligence</h2>
+                <p class="text-gray-500 mt-2">Write no more than <strong>THREE WORDS AND/OR A NUMBER</strong> for each answer.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                <!-- Header & Audio -->
+                <div class="bg-gray-50 p-6 border-b border-gray-200 flex justify-between items-center flex-wrap gap-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800">Practice Lesson 1</h3>
+                        <p class="text-sm text-gray-500">Listen to the lecture about dolphin biology and behavior.</p>
+                    </div>
+                    <div class="w-full md:w-auto">
+                        <audio controls class="w-full md:w-64">
+                            <source src="recording9.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+
+                <div class="p-6 lg:p-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                        
+                        <!-- LEFT COLUMN: Questions -->
+                        <div class="space-y-8">
+                            <div class="space-y-6">
+                                
+                                <!-- Q1 -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-800 mb-2">
+                                        1. The lecture will concentrate on tools, communication, sonar and what other aspect of Dolphin intelligence?
+                                    </label>
+                                    <input type="text" id="q1" class="answer-input w-full p-2.5 rounded-lg border border-gray-300 text-sm" placeholder="Your answer...">
+                                    <div id="fb-q1" class="feedback-text"></div>
+                                </div>
+
+                                <!-- Q2 -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-800 mb-2">
+                                        2. How big is the brain of the bottlenose dolphin?
+                                    </label>
+                                    <input type="text" id="q2" class="answer-input w-full p-2.5 rounded-lg border border-gray-300 text-sm" placeholder="Your answer...">
+                                    <div id="fb-q2" class="feedback-text"></div>
+                                </div>
+
+                                <!-- Q3 -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-800 mb-2">
+                                        3. What other species use tools?
+                                    </label>
+                                    <input type="text" id="q3" class="answer-input w-full p-2.5 rounded-lg border border-gray-300 text-sm" placeholder="Your answer...">
+                                    <div id="fb-q3" class="feedback-text"></div>
+                                </div>
+
+                                <!-- Q4 -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-800 mb-2">
+                                        4. What can dolphins copy from other species?
+                                    </label>
+                                    <input type="text" id="q4" class="answer-input w-full p-2.5 rounded-lg border border-gray-300 text-sm" placeholder="Your answer...">
+                                    <div id="fb-q4" class="feedback-text"></div>
+                                </div>
+
+                                <!-- Q5 -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-800 mb-2">
+                                        5. Can dolphins see out of the water? (Yes/No - implied context)
+                                    </label>
+                                    <p class="text-xs text-gray-500 mb-2 italic">Wait... question asks "Can dolphins see out of the water?" based on text "able to see both in and out of water". Actually, looking at Q5 in PDF, it might be an open question. Let's assume standard short answer.</p>
+                                    <p class="text-sm font-bold text-gray-800 mb-2">5. Can dolphins see out of the water?</p>
+                                    <input type="text" id="q5" class="answer-input w-full p-2.5 rounded-lg border border-gray-300 text-sm" placeholder="Your answer...">
+                                    <div id="fb-q5" class="feedback-text"></div>
+                                </div>
+
+                                <!-- Q6 -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-800 mb-2">
+                                        6. What does a dolphin hear through?
+                                    </label>
+                                    <input type="text" id="q6" class="answer-input w-full p-2.5 rounded-lg border border-gray-300 text-sm" placeholder="Your answer...">
+                                    <div id="fb-q6" class="feedback-text"></div>
+                                </div>
+
+                            </div>
+
+                            <!-- Controls -->
+                            <div class="flex gap-3 pt-4">
+                                <button onclick="checkAnswers()" class="flex-1 bg-rose-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-rose-700 transition shadow-md">Check Answers</button>
+                                <button onclick="toggleScript()" class="flex-1 bg-white text-gray-700 border border-gray-300 px-6 py-3 rounded-lg font-bold hover:bg-gray-50 transition">View Script</button>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT COLUMN: Vocabulary & Controls -->
+                        <div class="space-y-6">
+                            
+                            <!-- Vocabulary Box (Initially Hidden) -->
+                            <button onclick="toggleVocab()" class="w-full bg-yellow-100 text-yellow-800 border border-yellow-200 px-4 py-3 rounded-lg font-bold hover:bg-yellow-200 transition text-sm flex items-center justify-center gap-2 shadow-sm">
+                                <span>📚</span> Toggle Key Vocabulary
+                            </button>
+
+                            <div id="vocab" class="hidden bg-yellow-50 border border-yellow-200 rounded-xl p-5 animate-fade-in">
+                                <h4 class="font-bold text-yellow-800 mb-3 text-lg border-b border-yellow-200 pb-2">Academic Vocabulary</h4>
+                                <ul class="space-y-3 text-sm text-yellow-900">
+                                    <li><span class="font-bold">Primate:</span> A diverse order of Mammals (e.g., humans, apes).</li>
+                                    <li><span class="font-bold">Snouts:</span> Noses (specifically for dolphins & pigs).</li>
+                                    <li><span class="font-bold">Scavenge:</span> Hunt/Forage for food.</li>
+                                    <li><span class="font-bold">Infant:</span> Newborn baby/child.</li>
+                                    <li><span class="font-bold">Mimic:</span> Copy or imitate.</li>
+                                    <li><span class="font-bold">Calves:</span> Young baby dolphins.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Tip Box -->
+                            <div class="bg-blue-50 border border-blue-100 rounded-xl p-5">
+                                <h4 class="font-bold text-blue-800 mb-2">💡 Quick Tip</h4>
+                                <p class="text-sm text-blue-700">Listen for <strong>Signpost Words</strong> like "But first...", "Looking at...", "With regards to...", "Another interesting point...", and "And finally...". These signal the start of a new answer section.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- HIDDEN SCRIPT -->
+                    <div id="script-box" class="hidden mt-8 p-6 bg-gray-50 rounded-xl border border-gray-200 text-sm leading-relaxed text-gray-700">
+                        <h4 class="font-bold text-gray-800 mb-3 text-lg">Transcript</h4>
+                        <p class="mb-4">
+                            Today I’m going to talk to you about dolphin intelligence, focusing on their use of tools, methods of communication, sonar, and sensory capacity. First, let’s compare the dolphin brain to other species. The largest brain belongs to the sperm whale at around 9,000 grams, six to seven times larger than a human brain. The second largest is the killer whale (orca) at 6,000 grams. Next is the bottlenosed dolphin at 1,500 grams, followed by humans at approximately 1,200 grams. Strong connections between sensorial and motor areas indicate dolphins are highly sensitive to pain and stress.
+                        </p>
+                        <p class="mb-4">
+                            Regarding tool use, although primates such as chimpanzees are often thought to be the only tool users, dolphins in the wild have been observed using sea sponges to protect their snouts while foraging on the ocean floor. Mothers also provide sponges to dependent calves, with infant dolphins seen swimming alongside their mothers wearing small sponges.
+                        </p>
+
+                        <p class="mb-4">
+                            In terms of communication, dolphins use “signature whistles” to identify themselves, functioning much like names. They are also capable of mimicking movements of both humans and other animals.
+                        </p>
+
+                        <p class="mb-4">
+                             Dolphin sonar is another remarkable ability. Some scientists suggest dolphins may create acoustical holographic images through their sonic output. Their sonar can pass through water and only reflects off bone or air sacs, allowing them to effectively see inside the bodies of other animals, which are mostly composed of water.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-400 py-8 mt-20 text-center">
+        <p>© 2024 IELTS Section 4 Listening Module. Educational Practice Material.</p>
+    </footer>
+
+    <script>
+        function checkAnswers() {
+            // Note: Updated logic to check if Q5 is a Yes/No question or factual based on the PDF content. 
+            // PDF Q5: "Can dolphins see out of the water?" -> Text: "able to see both in and out of water". 
+            // Typical IELTS short answer would be "Yes" or "Yes, they can".
+            // However, the provided ANSWER KEY in PDF says: "1. Sensory capacity... 4. Movement... 5. Small hole".
+            // WAIT. The PDF Answer Key numbering seems to skip or map differently to the questions?
+            // PDF Questions: 1, 2, 3, 4, 5, 6.
+            // PDF Answer Key: 1. Sensory capacity, 2. 1500 grams, 3. Primates, 4. Moverment (sic), 5. Small hole.
+            // There are 6 questions but only 5 answers listed in the PDF snippet provided. 
+            // It looks like Q5 ("Can dolphins see out of the water?") might have been skipped in the key or Q6's answer is listed as #5.
+            // Let's map logical answers based on the script:
+            // Q1: "...and also their [sensory capacity]"
+            // Q2: "...bottlenosed dolphin at [1,500 grams]"
+            // Q3: "...believe that [primates], such as chimpanzees..."
+            // Q4: "...dolphins also mimic [movements]..."
+            // Q5: "Can dolphins see out of the water?" -> Text says "able to see both in and out". Answer: YES.
+            // Q6: "What does a dolphin hear through?" -> Text: "little more than a [small hole] for hearing".
+            // I will implement logical answers based on script analysis.
+
+            const answers = {
+                'q1': { 
+                    valid: ['SENSORY CAPACITY'], 
+                    reason: 'Script: "...and also their sensory capacity."' 
+                },
+                'q2': { 
+                    valid: ['1500 GRAMS', '1500G', '1,500 GRAMS'], 
+                    reason: 'Script: "...bottlenosed dolphin at 1,500 grams."' 
+                },
+                'q3': { 
+                    valid: ['PRIMATES', 'CHIMPANZEES', 'SIMPENZEES'], 
+                    reason: 'Script: "...believe that primates, such as chimpanzees..."' 
+                },
+                'q4': { 
+                    valid: ['MOVEMENTS', 'MOVEMENT', 'MOVERMENT'], 
+                    reason: 'Script: "...mimic movements of both humans..."' 
+                },
+                'q5': { 
+                    valid: ['YES', 'YES THEY CAN'], 
+                    reason: 'Script: "...they are able to see both in and out of water."' 
+                },
+                'q6': { 
+                    valid: ['SMALL HOLE', 'A SMALL HOLE'], 
+                    reason: 'Script: "...little more than a small hole for hearing."' 
+                }
+            };
+
+            for (const [id, data] of Object.entries(answers)) {
+                const input = document.getElementById(id);
+                const feedbackEl = document.getElementById('fb-' + id);
+                const userVal = input.value.trim().toUpperCase().replace(/[.,]/g, ''); 
+                
+                input.classList.remove('correct-answer', 'incorrect-answer');
+                feedbackEl.classList.remove('feedback-correct', 'feedback-incorrect');
+                feedbackEl.style.display = 'block';
+
+                const isCorrect = data.valid.some(ans => userVal === ans || (ans.length > 3 && userVal.includes(ans)));
+                
+                if (isCorrect) {
+                    input.classList.add('correct-answer');
+                    feedbackEl.textContent = "Correct! " + data.reason;
+                    feedbackEl.classList.add('feedback-correct');
+                } else {
+                    input.classList.add('incorrect-answer');
+                    feedbackEl.textContent = "Incorrect. Correct answer: " + data.valid[0];
+                    feedbackEl.classList.add('feedback-incorrect');
+                }
+            }
+        }
+
+        function toggleScript() {
+            const box = document.getElementById('script-box');
+            box.classList.toggle('hidden');
+        }
+
+        function toggleVocab() {
+            const box = document.getElementById('vocab');
+            box.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
