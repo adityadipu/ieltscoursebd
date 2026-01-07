@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Listening Common Traps Master Class</title>
+    <!-- Tailwind CSS for utility classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #be123c; /* Rose-700 */
+            --primary-dark: #881337; /* Rose-900 */
+            --primary-light: #fff1f2; /* Rose-50 */
+            --text: #374151;
+            --bg: #f9fafb;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text); 
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Merriweather', serif; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Interactive Inputs */
+        .answer-input {
+            transition: all 0.3s ease;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            width: 100%;
+            min-width: 100px;
+        }
+        .answer-input:focus {
+            box-shadow: 0 0 0 3px rgba(190, 18, 60, 0.2);
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .correct-answer {
+            border-color: #10b981 !important;
+            background-color: #ecfdf5 !important;
+            color: #065f46 !important;
+        }
+        .incorrect-answer {
+            border-color: #ef4444 !important;
+            background-color: #fef2f2 !important;
+            color: #991b1b !important;
+        }
+
+        /* Tip Cards */
+        .tip-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .tip-card:hover {
+            border-color: #fca5a5;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        
+        .feedback-text {
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        .feedback-correct { color: #059669; }
+        .feedback-incorrect { color: #dc2626; }
+
+        /* Table Styles */
+        .trap-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+        .trap-table th {
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            font-weight: 700;
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .trap-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: top;
+        }
+        .trap-table tr:last-child td {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body class="pb-20">
+
+    <!-- NAVIGATION -->
+    <nav class="sticky top-0 z-50 bg-white shadow-md border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-4">
+                    <!-- Back Button -->
+                    <a href="ielts_listening.html" class="flex items-center gap-2 text-gray-600 hover:text-rose-700 transition-colors group">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        <span class="font-semibold hidden sm:inline">Back</span>
+                    </a>
+                    <div class="h-6 w-px bg-gray-300 hidden sm:block"></div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-2xl">⚠️</span>
+                        <span class="font-bold text-xl text-gray-800 tracking-tight">Common Traps</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#numbers" class="text-gray-500 hover:text-rose-700 font-medium transition">Numbers</a>
+                    <a href="#time" class="text-gray-500 hover:text-rose-700 font-medium transition">Time</a>
+                    <a href="#names" class="text-gray-500 hover:text-rose-700 font-medium transition">Names</a>
+                    <a href="#plurals" class="text-gray-500 hover:text-rose-700 font-medium transition">Plurals</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <div class="bg-gradient-to-br from-rose-900 to-rose-700 text-white py-16">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Avoid Common IELTS Traps</h1>
+            <p class="text-rose-100 text-lg md:text-xl mb-8 max-w-2xl mx-auto">
+                Master the tricky parts: "Teen" vs "Ty", Time formats, Spelling names, and sneaky Plurals.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-6 py-3">
+                    <span class="block text-2xl font-bold">4</span>
+                    <span class="text-sm opacity-80">Key Areas</span>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-6 py-3">
+                    <span class="block text-2xl font-bold">5</span>
+                    <span class="text-sm opacity-80">Practice Sets</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 mt-12 space-y-20">
+
+        <!-- SECTION 1: NUMBERS (Teen vs Ty) -->
+        <section id="numbers" class="scroll-mt-24">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center text-rose-700 text-xl font-bold">1</div>
+                <h2 class="text-3xl font-bold text-gray-800">Confusion: Teen vs Ty</h2>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+                <p class="text-gray-600 mb-4"><strong>Tip:</strong> Listen for the stress.</p>
+                <div class="grid grid-cols-2 gap-4 text-center">
+                    <div class="bg-rose-50 p-4 rounded-lg border border-rose-100">
+                        <span class="block text-2xl font-bold text-rose-700">sixTEEN</span>
+                        <span class="text-sm text-gray-500">Stress on the end (Longer)</span>
+                    </div>
+                    <div class="bg-rose-50 p-4 rounded-lg border border-rose-100">
+                        <span class="block text-2xl font-bold text-rose-700">SIXty</span>
+                        <span class="text-sm text-gray-500">Stress on the start (Shorter)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Practice 1 -->
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                <div class="bg-gray-50 p-6 border-b border-gray-200 flex justify-between items-center flex-wrap gap-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-800">Practice 1: A Busy School Day</h3>
+                        <p class="text-xs text-gray-500">Audio: recording19.mp3 | Write the number you hear</p>
+                    </div>
+                    <audio controls class="w-full md:w-64">
+                        <source src="recording19.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+                <div class="p-6 lg:p-10">
+                    <div class="space-y-4 leading-loose text-gray-700">
+                        <p>1. Arrived at <input type="text" id="p1-q1" class="answer-input w-24 inline-block mx-2" placeholder="#"> minutes past seven.</p>
+                        <p>2. <input type="text" id="p1-q2" class="answer-input w-24 inline-block mx-2" placeholder="#"> students waiting, but only <input type="text" id="p1-q2b" class="answer-input w-24 inline-block mx-2" placeholder="#"> chairs.</p>
+                        <p>3. Teacher said <input type="text" id="p1-q3" class="answer-input w-24 inline-block mx-2" placeholder="#"> students would join, but only <input type="text" id="p1-q3b" class="answer-input w-24 inline-block mx-2" placeholder="#"> came.</p>
+                        <p>4. Bell rang at <input type="text" id="p1-q4" class="answer-input w-24 inline-block mx-2" placeholder="#"> past eight, not <input type="text" id="p1-q4b" class="answer-input w-24 inline-block mx-2" placeholder="#"> past.</p>
+                        <p>5. Solved <input type="text" id="p1-q5" class="answer-input w-24 inline-block mx-2" placeholder="#"> problems, not <input type="text" id="p1-q5b" class="answer-input w-24 inline-block mx-2" placeholder="#">.</p>
+                        <p>6. <input type="text" id="p1-q6" class="answer-input w-24 inline-block mx-2" placeholder="#"> answers correct, but <input type="text" id="p1-q6b" class="answer-input w-24 inline-block mx-2" placeholder="#"> written on board.</p>
+                        <p>7. <input type="text" id="p1-q7" class="answer-input w-24 inline-block mx-2" placeholder="#"> students went outside, <input type="text" id="p1-q7b" class="answer-input w-24 inline-block mx-2" placeholder="#"> stayed inside.</p>
+                        <p>8. Snacks cost <input type="text" id="p1-q8" class="answer-input w-24 inline-block mx-2" placeholder="#"> dollars, not <input type="text" id="p1-q8b" class="answer-input w-24 inline-block mx-2" placeholder="#">.</p>
+                        <p>9. Lesson lasted <input type="text" id="p1-q9" class="answer-input w-24 inline-block mx-2" placeholder="#"> minutes, not <input type="text" id="p1-q9b" class="answer-input w-24 inline-block mx-2" placeholder="#">.</p>
+                        <p>10. <input type="text" id="p1-q10" class="answer-input w-24 inline-block mx-2" placeholder="#"> felt tired, <input type="text" id="p1-q10b" class="answer-input w-24 inline-block mx-2" placeholder="#"> had energy.</p>
+                        
+                        <div class="flex gap-3 mt-6">
+                            <button onclick="checkAnswers(1)" class="bg-rose-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-rose-700 transition">Check P1</button>
+                            <button onclick="toggleScript(1)" class="bg-white text-gray-700 border border-gray-300 px-6 py-2 rounded-lg font-bold hover:bg-gray-50 transition">Script</button>
+                        </div>
+                        <div id="script-1" class="hidden mt-4 p-4 bg-gray-100 rounded-lg text-sm text-gray-600">
+                            <strong>Key:</strong> 1. 16, 2. 16/60, 3. 30/13, 4. 14/40, 5. 15/50, 6. 18/80, 7. 17/70, 8. 19/90, 9. 16/60, 10. 14/40.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: TIME -->
+        <section id="time" class="scroll-mt-24">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center text-rose-700 text-xl font-bold">2</div>
+                <h2 class="text-3xl font-bold text-gray-800">Time: Past vs To</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="tip-card text-center">
+                    <div class="text-rose-600 font-bold mb-2">Digital Style</div>
+                    <p class="text-gray-600 text-sm">Five Twenty (5:20)</p>
+                    <p class="text-gray-600 text-sm">Four Forty (4:40)</p>
+                </div>
+                <div class="tip-card text-center">
+                    <div class="text-rose-600 font-bold mb-2">"Past" (After hour)</div>
+                    <p class="text-gray-600 text-sm">Twenty past five (5:20)</p>
+                    <p class="text-gray-600 text-sm">Rule: Mins + Past + Hour</p>
+                </div>
+                <div class="tip-card text-center">
+                    <div class="text-rose-600 font-bold mb-2">"To" (Before next hour)</div>
+                    <p class="text-gray-600 text-sm">Ten to two (1:50)</p>
+                    <p class="text-gray-600 text-sm">Quarter to eight (7:45)</p>
+                    <p class="text-gray-600 text-sm">Rule: Mins + To + Next Hour</p>
+                </div>
+            </div>
+
+            <!-- Practice 2 (Quick) -->
+            <div class="bg-white rounded-xl border border-gray-200 p-6 mb-8">
+                <h3 class="font-bold text-gray-800 mb-4">Quick Practice: Write the digital time (e.g., 5:30)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-1">"Quarter to eight"</label>
+                        <input type="text" id="p2-q1" class="answer-input" placeholder="0:00">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-1">"Five twenty"</label>
+                        <input type="text" id="p2-q2" class="answer-input" placeholder="0:00">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-1">"Twenty-five to three"</label>
+                        <input type="text" id="p2-q3" class="answer-input" placeholder="0:00">
+                    </div>
+                </div>
+                <button onclick="checkAnswers(2)" class="mt-4 bg-rose-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-rose-700 transition">Check</button>
+            </div>
+
+            <!-- Practice 3 (IELTS Style) -->
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                <div class="bg-gray-50 p-6 border-b border-gray-200 flex justify-between items-center flex-wrap gap-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-800">Practice 3: City Learning Centre</h3>
+                        <p class="text-xs text-gray-500">Audio: recording20.mp3 | NO MORE THAN TWO WORDS AND/OR A NUMBER</p>
+                    </div>
+                    <audio controls class="w-full md:w-64">
+                        <source src="recording20.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+                <div class="p-6 lg:p-10">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">1. Course starts at</label>
+                            <input type="text" id="p3-q1" class="answer-input">
+                            <div id="fb-p3-q1" class="feedback-text"></div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">2. Course finishes at</label>
+                            <input type="text" id="p3-q2" class="answer-input">
+                            <div id="fb-p3-q2" class="feedback-text"></div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">3. Break time for evening class</label>
+                            <input type="text" id="p3-q3" class="answer-input">
+                            <div id="fb-p3-q3" class="feedback-text"></div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">4. Registration opens at</label>
+                            <input type="text" id="p3-q4" class="answer-input">
+                            <div id="fb-p3-q4" class="feedback-text"></div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">5. Speaking workshop begins at</label>
+                            <input type="text" id="p3-q5" class="answer-input">
+                            <div id="fb-p3-q5" class="feedback-text"></div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">6. Placement test arrival time</label>
+                            <input type="text" id="p3-q6" class="answer-input">
+                            <div id="fb-p3-q6" class="feedback-text"></div>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 mt-6">
+                        <button onclick="checkAnswers(3)" class="bg-rose-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-rose-700 transition">Check P3</button>
+                        <button onclick="toggleScript(3)" class="bg-white text-gray-700 border border-gray-300 px-6 py-2 rounded-lg font-bold hover:bg-gray-50 transition">Script</button>
+                    </div>
+                    <div id="script-3" class="hidden mt-4 p-4 bg-gray-100 rounded-lg text-sm text-gray-600 leading-relaxed">
+                        <p><strong>Script:</strong> "...starts at ten to two (1:50 pm)... finishes at five twenty (5:20)... break at quarter to eight (7:45)... Registration opens at four forty (4:40)... begins at half past six (6:30)... arrive by twenty-five to three (2:35 pm)."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: NAMES & SPELLING -->
+        <section id="names" class="scroll-mt-24">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center text-rose-700 text-xl font-bold">3</div>
+                <h2 class="text-3xl font-bold text-gray-800">Names & Spelling</h2>
+            </div>
+
+            <!-- Practice 4 -->
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                <div class="bg-gray-50 p-6 border-b border-gray-200 flex justify-between items-center flex-wrap gap-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-800">Practice 4: Course Registration</h3>
+                        <p class="text-xs text-gray-500">Audio: recording21.mp3 | Capital letters matter!</p>
+                    </div>
+                    <audio controls class="w-full md:w-64">
+                        <source src="recording21.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+                <div class="p-6 lg:p-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                        <div class="space-y-4">
+                            <h4 class="font-bold text-gray-700">Form Completion</h4>
+                            <div><label class="block text-sm text-gray-600">1. Student's first name:</label><input type="text" id="p4-q1" class="answer-input"><div id="fb-p4-q1" class="feedback-text"></div></div>
+                            <div><label class="block text-sm text-gray-600">2. Student's family name:</label><input type="text" id="p4-q2" class="answer-input"><div id="fb-p4-q2" class="feedback-text"></div></div>
+                            <div><label class="block text-sm text-gray-600">3. Recommended by: Dr</label><input type="text" id="p4-q3" class="answer-input" placeholder="... Collins"><div id="fb-p4-q3" class="feedback-text"></div></div>
+                            <div><label class="block text-sm text-gray-600">4. Emergency contact: Mr</label><input type="text" id="p4-q4" class="answer-input"><div id="fb-p4-q4" class="feedback-text"></div></div>
+                            <div><label class="block text-sm text-gray-600">5. Main instructor: Miss</label><input type="text" id="p4-q5" class="answer-input"><div id="fb-p4-q5" class="feedback-text"></div></div>
+                        </div>
+                        <div class="space-y-4">
+                            <h4 class="font-bold text-gray-700">Multiple Choice</h4>
+                            <div>
+                                <p class="text-sm font-semibold mb-1">6. Who is Mrs Robinson?</p>
+                                <select id="p4-q6" class="answer-input"><option value="">Select...</option><option value="A">A. Main instructor</option><option value="B">B. Course coordinator</option><option value="C">C. Receptionist</option></select>
+                                <div id="fb-p4-q6" class="feedback-text"></div>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold mb-1">7. Who is Lady Bennett?</p>
+                                <select id="p4-q7" class="answer-input"><option value="">Select...</option><option value="A">A. Teacher</option><option value="B">B. Student</option><option value="C">C. Guest speaker</option></select>
+                                <div id="fb-p4-q7" class="feedback-text"></div>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold mb-1">8. Why is "Ms" used for Rebecca Turner?</p>
+                                <select id="p4-q8" class="answer-input"><option value="">Select...</option><option value="A">A. Married</option><option value="B">B. Informal</option><option value="C">C. Status unknown</option></select>
+                                <div id="fb-p4-q8" class="feedback-text"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 mt-6">
+                        <button onclick="checkAnswers(4)" class="bg-rose-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-rose-700 transition">Check P4</button>
+                        <button onclick="toggleScript(4)" class="bg-white text-gray-700 border border-gray-300 px-6 py-2 rounded-lg font-bold hover:bg-gray-50 transition">Script</button>
+                    </div>
+                    <div id="script-4" class="hidden mt-4 p-4 bg-gray-100 rounded-lg text-sm text-gray-600 leading-relaxed">
+                        <p><strong>Script:</strong> "It's <span class="font-bold text-green-600">Rebecca Turner</span>... Turner <span class="font-bold text-green-600">T-U-R-N-E-R</span>... Recommended by Dr <span class="font-bold text-green-600">Andrew</span> Collins... Contact: Mr <span class="font-bold text-green-600">James Wilson</span> (Jim is short for James, but audio says James Wilson)... Main instructor will be Miss <span class="font-bold text-green-600">Emma Clark</span>... Coordinator is Mrs Robinson... Guest talks by Lady Bennett (Patron/Guest Speaker)... Ms is used because her marital status is unknown/neutral."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: PLURALS & UNCOUNTABLE -->
+        <section id="plurals" class="scroll-mt-24 mb-24">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center text-rose-700 text-xl font-bold">4</div>
+                <h2 class="text-3xl font-bold text-gray-800">Plurals & Uncountable Nouns</h2>
+            </div>
+
+            <!-- Practice 5 -->
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                <div class="bg-gray-50 p-6 border-b border-gray-200 flex justify-between items-center flex-wrap gap-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-800">Practice 5: Charity Project</h3>
+                        <p class="text-xs text-gray-500">Audio: recording22.mp3 | Watch for 'S' at the end!</p>
+                    </div>
+                    <audio controls class="w-full md:w-64">
+                        <source src="recording22.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+                <div class="p-6 lg:p-10">
+                    <div class="space-y-4">
+                        <div><label class="block text-sm text-gray-600">1. The charity is a <input type="text" id="p5-q1" class="answer-input w-40 inline-block mx-2"> project.</label><div id="fb-p5-q1" class="feedback-text"></div></div>
+                        <div><label class="block text-sm text-gray-600">2. The charity is aimed at helping <input type="text" id="p5-q2" class="answer-input w-48 inline-block mx-2">.</label><div id="fb-p5-q2" class="feedback-text"></div></div>
+                        <div><label class="block text-sm text-gray-600">3. Give money donations or even <input type="text" id="p5-q3" class="answer-input w-32 inline-block mx-2">.</label><div id="fb-p5-q3" class="feedback-text"></div></div>
+                        <div><label class="block text-sm text-gray-600">4. Be actively involved in the coming <input type="text" id="p5-q4" class="answer-input w-32 inline-block mx-2">.</label><div id="fb-p5-q4" class="feedback-text"></div></div>
+                        <div><label class="block text-sm text-gray-600">5. The aim is to raise £ <input type="text" id="p5-q5" class="answer-input w-32 inline-block mx-2">.</label><div id="fb-p5-q5" class="feedback-text"></div></div>
+                        <div><label class="block text-sm text-gray-600">6. For communities to thrive, <input type="text" id="p5-q6" class="answer-input w-40 inline-block mx-2"> should not be ignored.</label><div id="fb-p5-q6" class="feedback-text"></div></div>
+                    </div>
+                    <div class="flex gap-3 mt-6">
+                        <button onclick="checkAnswers(5)" class="bg-rose-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-rose-700 transition">Check P5</button>
+                        <button onclick="toggleScript(5)" class="bg-white text-gray-700 border border-gray-300 px-6 py-2 rounded-lg font-bold hover:bg-gray-50 transition">Script</button>
+                    </div>
+                    <div id="script-5" class="hidden mt-4 p-4 bg-gray-100 rounded-lg text-sm text-gray-600 leading-relaxed">
+                        <p><strong>Script:</strong> "...is a <span class="font-bold text-green-600">grassroots</span> project... helping <span class="font-bold text-green-600">local communities</span>... objects like <span class="font-bold text-green-600">bicycles</span> (Plural 's' because 'objects')... holding a <span class="font-bold text-green-600">fundraiser</span> (Singular because of 'a')... raise <span class="font-bold text-green-600">150,000</span> pounds... <span class="font-bold text-green-600">Charity work</span> (Uncountable, no 's') is so important."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-400 py-8 mt-20 text-center">
+        <p>© 2024 IELTS Common Traps Module. Educational Practice Material.</p>
+    </footer>
+
+    <script>
+        function checkAnswers(practiceId) {
+            const keys = {
+                1: {
+                    'p1-q1': ['16', 'SIXTEEN'], 'p1-q2': ['16', 'SIXTEEN'], 'p1-q2b': ['60', 'SIXTY'], 
+                    'p1-q3': ['30', 'THIRTY'], 'p1-q3b': ['13', 'THIRTEEN'], 'p1-q4': ['14', 'FOURTEEN'], 'p1-q4b': ['40', 'FORTY'],
+                    'p1-q5': ['15', 'FIFTEEN'], 'p1-q5b': ['50', 'FIFTY'], 'p1-q6': ['18', 'EIGHTEEN'], 'p1-q6b': ['80', 'EIGHTY'],
+                    'p1-q7': ['17', 'SEVENTEEN'], 'p1-q7b': ['70', 'SEVENTY'], 'p1-q8': ['19', 'NINETEEN'], 'p1-q8b': ['90', 'NINETY'],
+                    'p1-q9': ['16', 'SIXTEEN'], 'p1-q9b': ['60', 'SIXTY'], 'p1-q10': ['14', 'FOURTEEN'], 'p1-q10b': ['40', 'FORTY']
+                },
+                2: {
+                    'p2-q1': ['7:45'], 'p2-q2': ['5:20'], 'p2-q3': ['2:35']
+                },
+                3: {
+                    'p3-q1': ['1:50 PM', '1:50PM', '1.50 PM', '1.50PM', '13:50', '1:50'],
+                    'p3-q2': ['5:20', '5.20', '17:20'],
+                    'p3-q3': ['7:45', '7.45', '19:45'],
+                    'p3-q4': ['4:40', '4.40', '16:40'],
+                    'p3-q5': ['6:30', '6.30', '18:30'],
+                    'p3-q6': ['2:35 PM', '2:35PM', '2.35 PM', '2.35PM', '14:35', '2:35']
+                },
+                4: {
+                    'p4-q1': ['REBECCA', 'REBECCA TURNER'],
+                    'p4-q2': ['TURNER'],
+                    'p4-q3': ['ANDREW', 'ANDREW COLLINS'],
+                    'p4-q4': ['JAMES WILSON', 'JIM WILSON', 'JAMES', 'JIM'],
+                    'p4-q5': ['EMMA CLARK', 'EMMA'],
+                    'p4-q6': ['B'], 'p4-q7': ['C'], 'p4-q8': ['C']
+                },
+                5: {
+                    'p5-q1': ['GRASSROOTS'],
+                    'p5-q2': ['LOCAL COMMUNITIES', 'COMMUNITIES'],
+                    'p5-q3': ['BICYCLES'],
+                    'p5-q4': ['FUNDRAISER'],
+                    'p5-q5': ['150,000', '150000', '150 000'],
+                    'p5-q6': ['CHARITY WORK', 'WORK']
+                }
+            };
+
+            const currentSet = keys[practiceId];
+
+            for (const [id, valid] of Object.entries(currentSet)) {
+                const input = document.getElementById(id);
+                const feedbackEl = document.getElementById('fb-' + id) || document.createElement('div');
+                const userVal = input.value.trim().toUpperCase().replace(/[.,]$/g, ''); 
+                
+                input.classList.remove('correct-answer', 'incorrect-answer');
+                
+                if (valid.includes(userVal)) {
+                    input.classList.add('correct-answer');
+                } else {
+                    input.classList.add('incorrect-answer');
+                }
+            }
+        }
+
+        function toggleScript(id) {
+            const box = document.getElementById('script-' + id);
+            box.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
