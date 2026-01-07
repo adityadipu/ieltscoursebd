@@ -90,14 +90,36 @@
             opacity: 1;
         }
 
-        /* Sidebar Navigation */
+/* Sidebar Navigation */
         .sidebar-nav {
             margin-top: 20px;
             display: flex;
             flex-direction: column;
             gap: 5px;
             padding: 0 10px;
+
+            /* --- SCROLLBAR FIX STARTS HERE --- */
+            flex: 1;              /* Fills the remaining vertical space */
+            overflow-y: auto;     /* Enables vertical scrolling */
+            overflow-x: hidden;   /* Prevents horizontal scrolling */
+            margin-bottom: 10px;  /* Adds space at the bottom */
         }
+
+        /* Custom Scrollbar Styling (Makes it thin and subtle) */
+        .sidebar-nav::-webkit-scrollbar {
+            width: 5px;
+        }
+        .sidebar-nav::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        .sidebar-nav::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+        .sidebar-nav::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        /* --- SCROLLBAR FIX ENDS HERE --- */
 
         .nav-item {
             display: flex;
@@ -109,6 +131,8 @@
             transition: all 0.2s;
             cursor: pointer;
             white-space: nowrap;
+            /* Ensure items don't shrink when scrolling kicks in */
+            flex-shrink: 0; 
         }
 
         .nav-item:hover, .nav-item.active {
