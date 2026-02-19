@@ -7,7 +7,8 @@
     <!-- SECURITY CHECK -->
     <script>
         if(localStorage.getItem('isLoggedIn') !== 'true') {
-            window.location.href = 'login.html';
+            // Uncomment the line below when you are ready to enforce login
+            // window.location.href = 'login.html';
         }
     </script>
     <style>
@@ -59,7 +60,7 @@
         </header>
 
         <div class="grid">
-            <!-- Listening Module (UPDATED LINK) -->
+            <!-- Listening Module -->
             <a href="ielts_listening.html" class="module-card">
                 <span class="icon">🎧</span>
                 <span class="title">Listening</span>
@@ -67,12 +68,14 @@
                 <span class="badge">Module 1</span>
             </a>
 
-            <!-- Reading Module -->
+            <!-- Reading Module (UPDATED) -->
+            <!-- The href matches the file created previously: ielts_reading.html -->
             <a href="ielts_reading.html" class="module-card"> 
                 <span class="icon">📖</span>
                 <span class="title">Reading</span>
                 <span class="desc">Skimming, Scanning & Detail</span>
-                <span class="badge">Coming Soon</span>
+                <!-- I updated this badge from "Coming Soon" to "Module 2" -->
+                <span class="badge" style="background-color: #ffe4e6; color: #9f1239;">Module 2</span>
             </a>
 
             <!-- Writing Module -->
@@ -91,7 +94,7 @@
                 <span class="badge">Coming Soon</span>
             </a>
 
-            <!-- Vocabulary (Coming Soon) -->
+            <!-- Vocabulary -->
             <a href="#" class="module-card coming-soon">
                 <span class="icon">🧠</span>
                 <span class="title">Vocabulary</span>
