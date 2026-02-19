@@ -61,7 +61,8 @@
           PieChart,
           ChevronDown,
           ChevronUp,
-          AlertTriangle
+          AlertTriangle,
+          ArrowLeft
         } from 'lucide-react';
 
         // --- Reusable Components ---
@@ -1100,6 +1101,11 @@
                 </div>
 
                 <nav className="p-4 space-y-2">
+                  <a href="dashboard.html" className="w-full flex items-center gap-4 px-4 py-3 rounded-lg text-rose-100 hover:bg-rose-800 hover:text-white transition-all duration-200 text-sm font-medium mb-2 border border-rose-800/30">
+                    <ArrowLeft size={18} />
+                    Back to Dashboard
+                  </a>
+                  
                   {navItems.map((item) => (
                     <button
                       key={item.id}
