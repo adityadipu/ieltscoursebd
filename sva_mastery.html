@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SVA Ultimate Mastery</title>
+
+<style>
+:root{
+--primary:#2563eb;
+--secondary:#1e40af;
+--bg:#f3f4f6;
+--card:#ffffff;
+--success:#10b981;
+--danger:#ef4444;
+--accent:#f59e0b;
+}
+
+body{font-family:Segoe UI;background:var(--bg);margin:0;}
+
+header{
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+color:white;
+text-align:center;
+padding:30px;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+margin-top:-20px;
+padding:20px;
+}
+
+.tabs{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+justify-content:center;
+margin-bottom:20px;
+}
+
+.tab-btn{
+padding:10px 15px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+background:white;
+font-weight:bold;
+}
+
+.tab-btn.active{background:var(--secondary);color:white;}
+
+.section{display:none;}
+.section.active{display:block;}
+
+.card{
+background:white;
+padding:20px;
+border-radius:10px;
+margin-bottom:20px;
+}
+
+h2{color:var(--primary);}
+
+.reason{
+background:#fff7ed;
+border-left:4px solid var(--accent);
+padding:10px;
+margin:10px 0;
+}
+
+.example{
+background:#eef2ff;
+padding:10px;
+margin:10px 0;
+border-left:4px solid var(--primary);
+}
+
+.quiz-box{display:none;text-align:center;}
+
+.option{
+background:#e5e7eb;
+padding:12px;
+margin:8px;
+border-radius:6px;
+cursor:pointer;
+}
+
+.option:hover{background:#d1d5db;}
+
+.correct{background:var(--success)!important;color:white;}
+.wrong{background:var(--danger)!important;color:white;}
+
+button{
+padding:10px 20px;
+margin-top:10px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+background:var(--accent);
+color:white;
+font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Subject–Verb Agreement Ultimate Mastery</h1>
+<button onclick="startQuiz()">Start Practice</button>
+</header>
+
+<div class="container">
+
+<div class="tabs">
+<button class="tab-btn active" onclick="showTab('rules')">Rules + Reasons</button>
+<button class="tab-btn" onclick="showTab('lists')">Word Lists</button>
+</div>
+
+<!-- RULES -->
+<div id="rules" class="section active">
+
+<div class="card">
+<h2>1. Basic Rule</h2>
+<p>Singular → verb + s | Plural → base verb</p>
+
+<div class="reason">
+👉 Reason: English verbs change only for singular subjects in present tense.
+</div>
+
+<div class="example">
+He plays football.<br>
+They play football.
+</div>
+</div>
+
+<div class="card">
+<h2>2. Compound Subjects</h2>
+
+<div class="reason">
+👉 Reason: “A and B” means more than one → plural.  
+But if it is one idea or same person → singular.
+</div>
+
+<div class="example">
+Reading and writing are important.<br>
+Bread and butter is my breakfast.<br>
+The CEO and founder is speaking.
+</div>
+</div>
+
+<div class="card">
+<h2>3. Indefinite Pronouns</h2>
+
+<div class="reason">
+👉 Reason: Words like everyone, someone refer to one person at a time → singular.
+</div>
+
+<div class="example">
+Everyone is happy.<br>
+Someone has called.
+</div>
+</div>
+
+<div class="card">
+<h2>4. Ignore Extra Phrases</h2>
+
+<div class="reason">
+👉 Reason: Words after “along with / as well as” are NOT the real subject.
+</div>
+
+<div class="example">
+The teacher along with students is coming.
+</div>
+</div>
+
+<div class="card">
+<h2>5. A number vs The number</h2>
+
+<div class="reason">
+👉 “A number” = many → plural  
+👉 “The number” = one total → singular
+</div>
+
+<div class="example">
+A number of students are absent.<br>
+The number of students is increasing.
+</div>
+</div>
+
+<div class="card">
+<h2>6. Either / Neither</h2>
+
+<div class="reason">
+👉 Verb follows nearest subject (last noun).
+</div>
+
+<div class="example">
+Either the teacher or students are ready.<br>
+Neither of the answers is correct.
+</div>
+</div>
+
+<div class="card">
+<h2>7. Percentage</h2>
+
+<div class="reason">
+👉 Verb depends on noun after “of”.
+</div>
+
+<div class="example">
+50% of water is polluted.<br>
+50% of students are present.
+</div>
+</div>
+
+<div class="card">
+<h2>8. Uncountable Nouns</h2>
+
+<div class="reason">
+👉 These cannot be counted → always treated as singular.
+</div>
+
+<div class="example">
+Information is useful.<br>
+Advice is helpful.
+</div>
+</div>
+
+<div class="card">
+<h2>9. Gerund</h2>
+
+<div class="reason">
+👉 “-ing” acts like one activity → singular.
+</div>
+
+<div class="example">
+Swimming is good.<br>
+Reading helps learning.
+</div>
+</div>
+
+<div class="card">
+<h2>10. Collective Nouns</h2>
+
+<div class="reason">
+👉 A group acts as one unit → singular  
+👉 Members acting separately → plural
+</div>
+
+<div class="example">
+The team is winning.<br>
+The staff are arguing.
+</div>
+</div>
+
+</div>
+
+<!-- LISTS -->
+<div id="lists" class="section">
+
+<div class="card">
+<h2>Plural but Singular</h2>
+<p>
+News, Mathematics, Physics, Economics, Ethics, Statistics, Measles, Mumps, Diabetes, Linguistics, Athletics, Gymnastics, Electronics, Phonetics, Genetics, Headquarters, Billiards, Darts, Summons
+</p>
+
+<div class="reason">
+👉 These are subjects, diseases, or fields → treated as one thing.
+</div>
+
+<div class="example">
+Mathematics is difficult.<br>
+The news is shocking.
+</div>
+</div>
+
+<div class="card">
+<h2>Always Plural</h2>
+<p>
+Clothes, Scissors, Trousers, Jeans, Shoes, Staff, Cattle, People, Parents, Children, Barracks, Goods, Assets, Proceeds, Earrings, Customs, Funds, Riches, Beggars, Surroundings, Manners, Wings, Premises, Credentials, Scales, Amenities, Shorts, Athletics, Groceries
+</p>
+
+<div class="reason">
+👉 These refer to pairs or groups → always plural.
+</div>
+
+<div class="example">
+The police are here.<br>
+My trousers are tight.
+</div>
+</div>
+
+<div class="card">
+<h2>Collective Nouns</h2>
+<p>
+Team, Family, Group, Audience, Committee, Class, Crew, Staff, Crowd, Government, Organization, Panel, Population, Faculty, Herd, Fleet, Board, Tribe, Association, Council, Choir, Army, Congregation, Band, Company, Club, Jury, Delegation, Assembly, Chorus, Flock, Pack, Squad, Mob, Gang, Public, Union, Tribe
+</p>
+
+<div class="reason">
+👉 These represent one group → singular verb (usually).
+</div>
+
+<div class="example">
+The team is winning.<br>
+The government has taken action.
+</div>
+</div>
+
+</div>
+
+<!-- QUIZ -->
+<div class="card quiz-box" id="quiz">
+<h2 id="question"></h2>
+<div id="options"></div>
+<div id="explanation"></div>
+<button onclick="nextQ()">Next</button>
+</div>
+
+</div>
+
+<script>
+
+function showTab(id){
+document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+event.target.classList.add('active');
+}
+
+const base = [
+{q:"Everyone ___ happy.",o:["is","are"],a:0,e:"Everyone is singular"},
+{q:"A number of students ___ absent.",o:["is","are"],a:1,e:"A number = plural"},
+{q:"The number of students ___ increasing.",o:["is","are"],a:0,e:"The number = singular"},
+{q:"The police ___ here.",o:["is","are"],a:1,e:"Police = plural"},
+{q:"Mathematics ___ difficult.",o:["is","are"],a:0,e:"Singular subject"}
+];
+
+const subs = [
+{t:"He",v:"plays",w:"play"},
+{t:"They",v:"play",w:"plays"},
+{t:"My friend",v:"works",w:"work"},
+{t:"The boys",v:"play",w:"plays"}
+];
+
+let questions=[...base];
+
+for(let i=0;i<100;i++){
+let s=subs[Math.floor(Math.random()*subs.length)];
+questions.push({
+q:`${s.t} ___ football.`,
+o:[s.v,s.w],
+a:0,
+e:"Check subject carefully"
+});
+}
+
+let i=0;
+
+function startQuiz(){
+document.getElementById("quiz").style.display="block";
+i=0;
+load();
+}
+
+function load(){
+let q=questions[i];
+document.getElementById("question").innerText=q.q;
+
+let html="";
+q.o.forEach((opt,index)=>{
+html+=`<div class="option" onclick="check(${index},this)">${opt}</div>`;
+});
+document.getElementById("options").innerHTML=html;
+document.getElementById("explanation").innerHTML="";
+}
+
+function check(index,el){
+let q=questions[i];
+
+document.querySelectorAll('.option').forEach(o=>o.onclick=null);
+
+if(index===q.a){
+el.classList.add("correct");
+document.getElementById("explanation").innerHTML="✅ "+q.e;
+}else{
+el.classList.add("wrong");
+document.getElementById("explanation").innerHTML="❌ Correct: "+q.o[q.a]+"<br>"+q.e;
+}
+}
+
+function nextQ(){
+i=(i+1)%questions.length;
+load();
+}
+
+</script>
+
+</body>
+</html>
