@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grammar Mastery Course</title>
-    <!-- SECURITY CHECK -->
+
     <script>
         if(localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.href = 'login.html';
         }
     </script>
+
     <style>
-        /* --- VARIABLES & RESET --- */
         :root {
-            --primary: #2c3e50;    /* Dark Slate */
-            --accent: #e74c3c;     /* Red/Orange for highlights */
+            --primary: #2c3e50;
+            --accent: #e74c3c;
             --bg: #f8f9fa;
             --card-bg: #ffffff;
             --text: #2d3436;
@@ -26,7 +26,6 @@
 
         body { background-color: var(--bg); color: var(--text); padding-bottom: 50px; }
 
-        /* --- HEADER --- */
         header {
             background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
             color: white;
@@ -37,9 +36,7 @@
             position: relative;
         }
 
-        .header-top {
-            position: absolute; top: 15px; left: 20px;
-        }
+        .header-top { position: absolute; top: 15px; left: 20px; }
         .home-link { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; font-weight: bold; }
         .home-link:hover { color: white; text-decoration: underline; }
 
@@ -53,7 +50,6 @@
         h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
         .subtitle { font-size: 1.1rem; opacity: 0.9; }
 
-        /* --- FINAL EXAM BUTTON --- */
         .final-exam-btn {
             background: var(--accent);
             color: white;
@@ -74,14 +70,12 @@
             background: #c0392b;
         }
 
-        /* --- LAYOUT --- */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        /* --- GRID & CARDS --- */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -145,7 +139,6 @@
         }
 
         .topic-list li:last-child { border-bottom: none; }
-        .topic-list strong { color: var(--text); font-weight: 600; }
 
         .btn {
             background-color: var(--primary);
@@ -155,14 +148,10 @@
             border-radius: 6px;
             text-decoration: none;
             font-weight: 600;
-            transition: background 0.2s;
             cursor: pointer;
-            border: none;
             width: 100%;
             display: block;
         }
-
-        .btn:hover { filter: brightness(1.1); }
 
         .border-blue { border-left-color: #3498db; }
         .border-green { border-left-color: #27ae60; }
@@ -173,93 +162,91 @@
 </head>
 <body>
 
-    <header>
-        <div class="header-top">
-            <a href="main_home.html" class="home-link">← Back to Main Home</a>
-        </div>
-        <button class="logout-btn" onclick="logout()">Logout</button>
-        
-        <div class="container">
-            <h1>Grammar Mastery Syllabus</h1>
-            <p class="subtitle">Interactive Learning Path based on your curriculum</p>
-            <a href="final_exam.html" class="final-exam-btn">🏆 Take Final Exam (100 Marks)</a>
-        </div>
-    </header>
+<header>
+    <div class="header-top">
+        <a href="main_home.html" class="home-link">← Back to Main Home</a>
+    </div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
 
     <div class="container">
-        
-        <div id="courseGrid" class="grid">
-            <!-- Cards Injected via JS -->
-        </div>
+        <h1>Grammar Mastery Syllabus</h1>
+        <p class="subtitle">Interactive Learning Path based on your curriculum</p>
+        <a href="final_exam.html" class="final-exam-btn">🏆 Take Final Exam (100 Marks)</a>
     </div>
+</header>
 
-    <script>
-        // --- EXISTING SYLLABUS DATA ---
-        const syllabusData = [
-            {
-                id: 1, title: "Sentence", link: "sentence.html", color: "border-blue", note: "", 
-                content: ["<strong>Structure:</strong> Simple, Complex, Compound", "<strong>Types:</strong> Affirmative, Negative, Interrogative", "Negative-Interrogative", "Imperative, Exclamatory"]
-            },
-            {
-                id: 2, title: "Part of Speech", link: "partofspeech.html", color: "border-green", note: "Comprehensive List",
-                content: ["Noun, Pronoun, Adjective", "<strong>Verb:</strong> Finite, Infinite, Modal, Aux., Helping, Action", "Adverb, Preposition", "Conjunction, Interjection"]
-            },
-            {
-                id: 3, title: "Tense", link: "tense.html", color: "border-purple", note: "",
-                content: ["<strong>Present:</strong> Indefinite, Continuous, Perfect, Perfect Continuous", "<strong>Past:</strong> (All forms)", "<strong>Future:</strong> (All forms)"]
-            },
-            {
-                id: 4, title: "Voice Change", link: "passive.html", color: "border-orange", note: "(Without Subject)",
-                content: ["Active to Passive conversion", "Handling implicit subjects", "Standard transformation rules"]
-            },
-            {
-                id: 5, title: "Narration", link: "narration.html", color: "border-blue", note: "Ex: Someone says that I will be present",
-                content: ["Direct to Indirect Speech", "Reporting Verbs", "Tense changes in narration"]
-            },
-            {
-                id: 6, title: "Articles", link: "articles.html", color: "border-green", note: "",
-                content: ["Definite Article (The)", "Indefinite Articles (A, An)", "Omission of Articles"]
-            },
-            {
-                id: 7, title: "Prepositions", link: "preposition.html", color: "border-orange", note: "Deep Dive",
-                content: ["Types of prepositions (place, time, direction)", "Prepositions of place (in, on, under, above)", "Prepositions of time (at, on, in)", "Common prepositional phrases"]
-            },
-            {
-                id: 8, title: "Important Usage", link: "usage.html", color: "border-purple", note: "IELTS Essentials",
-                content: ["Adjective vs adjective-ing (amazed / amazing)", "Need to – questions and usage", "Having + V3 structure", "Get / Make / Have usage", "Let – permission structure", "Have been / Has been / Had been"]
-            }
-        ];
+<div class="container">
+    <div id="courseGrid" class="grid"></div>
+</div>
 
-        const grid = document.getElementById('courseGrid');
+<script>
+const syllabusData = [
+    { id: 1, title: "Sentence", link: "sentence.html", color: "border-blue", note: "", 
+      content: ["Structure: Simple, Complex, Compound","Types: Affirmative, Negative, Interrogative"] },
 
-        function renderSyllabus() {
-            grid.innerHTML = syllabusData.map(item => {
-                const noteHtml = item.note ? `<div class="card-note">${item.note}</div>` : '';
-                const listItems = item.content.map(text => `<li>${text}</li>`).join('');
+    { id: 2, title: "Part of Speech", link: "partofspeech.html", color: "border-green", note: "Comprehensive List",
+      content: ["Noun, Pronoun, Adjective","Verb types","Adverb, Preposition"] },
 
-                return `
-                    <div class="card ${item.color}">
-                        <div class="card-number">Module ${item.id}</div>
-                        <h2 class="card-title">${item.title}</h2>
-                        ${noteHtml}
-                        <ul class="topic-list">
-                            ${listItems}
-                        </ul>
-                        <a href="${item.link}" class="btn">Start Module</a>
-                    </div>
-                `;
-            }).join('');
-        }
+    { id: 3, title: "Tense", link: "tense.html", color: "border-purple", note: "",
+      content: ["Present, Past, Future forms"] },
 
-        function logout() {
-            localStorage.removeItem('isLoggedIn');
-            window.location.href = 'login.html';
-        }
+    { id: 4, title: "Voice Change", link: "passive.html", color: "border-orange", note: "",
+      content: ["Active ↔ Passive"] },
 
-        // Initialize Syllabus Only
-        renderSyllabus();
+    { id: 5, title: "Narration", link: "narration.html", color: "border-blue", note: "",
+      content: ["Direct ↔ Indirect"] },
 
-    </script>
+    { id: 6, title: "Articles", link: "articles.html", color: "border-green", note: "",
+      content: ["A, An, The"] },
+
+    { id: 7, title: "Prepositions", link: "preposition.html", color: "border-orange", note: "",
+      content: ["Place, Time, Direction"] },
+
+    { id: 8, title: "Important Usage", link: "usage.html", color: "border-purple", note: "",
+      content: ["IELTS essentials"] },
+
+    /* ✅ NEW MODULE ADDED */
+    {
+        id: 9,
+        title: "Subject-Verb Agreement (SVA)",
+        link: "sva_mastery.html",
+        color: "border-blue",
+        note: "Core Grammar Rule",
+        content: [
+            "Singular vs Plural agreement",
+            "Rules with 'and', 'or', 'either/neither'",
+            "Indefinite pronouns",
+            "Special cases (everyone, each, etc.)"
+        ]
+    }
+];
+
+const grid = document.getElementById('courseGrid');
+
+function renderSyllabus() {
+    grid.innerHTML = syllabusData.map(item => {
+        const noteHtml = item.note ? `<div class="card-note">${item.note}</div>` : '';
+        const listItems = item.content.map(text => `<li>${text}</li>`).join('');
+
+        return `
+            <div class="card ${item.color}">
+                <div class="card-number">Module ${item.id}</div>
+                <h2 class="card-title">${item.title}</h2>
+                ${noteHtml}
+                <ul class="topic-list">${listItems}</ul>
+                <a href="${item.link}" class="btn">Start Module</a>
+            </div>
+        `;
+    }).join('');
+}
+
+function logout() {
+    localStorage.removeItem('isLoggedIn');
+    window.location.href = 'login.html';
+}
+
+renderSyllabus();
+</script>
+
 </body>
 </html>
-
