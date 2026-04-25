@@ -1,400 +1,550 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SVA Ultimate Mastery</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVA Ultimate Mastery</title>
 
-<style>
-:root{
---primary:#2563eb;
---secondary:#1e40af;
---bg:#f3f4f6;
---card:#ffffff;
---success:#10b981;
---danger:#ef4444;
---accent:#f59e0b;
-}
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #2d3436;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
 
-body{font-family:Segoe UI;background:var(--bg);margin:0;}
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
 
-header{
-background:linear-gradient(135deg,var(--primary),var(--secondary));
-color:white;
-text-align:center;
-padding:30px;
-}
+        body { background-color: var(--bg); color: var(--text); padding-bottom: 50px; }
 
-.container{
-max-width:1100px;
-margin:auto;
-margin-top:-20px;
-padding:20px;
-}
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
 
-.tabs{
-display:flex;
-flex-wrap:wrap;
-gap:10px;
-justify-content:center;
-margin-bottom:20px;
-}
+        .header-top { position: absolute; top: 15px; left: 20px; }
+        .home-link { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; font-weight: bold; }
+        .home-link:hover { color: white; text-decoration: underline; }
 
-.tab-btn{
-padding:10px 15px;
-border:none;
-border-radius:8px;
-cursor:pointer;
-background:white;
-font-weight:bold;
-}
+        h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .subtitle { font-size: 1.1rem; opacity: 0.9; margin-bottom: 20px; }
 
-.tab-btn.active{background:var(--secondary);color:white;}
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-.section{display:none;}
-.section.active{display:block;}
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
 
-.card{
-background:white;
-padding:20px;
-border-radius:10px;
-margin-bottom:20px;
-}
+        .tab-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            background: white;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
 
-h2{color:var(--primary);}
+        .tab-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+        .tab-btn.active { background: var(--primary); color: white; }
+        .tab-btn.exam-btn { background: var(--accent); color: white; }
+        .tab-btn.exam-btn.active { background: #c0392b; }
 
-.reason{
-background:#fff7ed;
-border-left:4px solid var(--accent);
-padding:10px;
-margin:10px 0;
-}
+        .section { display: none; animation: fadeIn 0.4s ease; }
+        .section.active { display: block; }
 
-.example{
-background:#eef2ff;
-padding:10px;
-margin:10px 0;
-border-left:4px solid var(--primary);
-}
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-.quiz-box{display:none;text-align:center;}
+        .card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--secondary);
+        }
 
-.option{
-background:#e5e7eb;
-padding:12px;
-margin:8px;
-border-radius:6px;
-cursor:pointer;
-}
+        h2 { color: var(--primary); margin-bottom: 15px; font-size: 1.5rem; }
+        h3 { color: var(--secondary); margin-top: 15px; margin-bottom: 10px; }
 
-.option:hover{background:#d1d5db;}
+        .reason {
+            background: #fff3cd;
+            border-left: 4px solid var(--warning);
+            padding: 12px;
+            margin: 15px 0;
+            color: #856404;
+            font-weight: 500;
+            border-radius: 0 8px 8px 0;
+        }
 
-.correct{background:var(--success)!important;color:white;}
-.wrong{background:var(--danger)!important;color:white;}
+        .example {
+            background: #eef2ff;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid var(--secondary);
+            border-radius: 0 8px 8px 0;
+            line-height: 1.6;
+        }
 
-button{
-padding:10px 20px;
-margin-top:10px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-background:var(--accent);
-color:white;
-font-weight:bold;
-}
-</style>
+        /* Quiz Styles */
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .score-badge {
+            background: var(--primary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .option {
+            background: #f1f2f6;
+            padding: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .option:hover { background: #dfe4ea; border-color: var(--secondary); }
+        .option.correct { background: var(--success) !important; color: white; border-color: var(--success); }
+        .option.wrong { background: var(--danger) !important; color: white; border-color: var(--danger); }
+        .option.disabled { pointer-events: none; }
+
+        .explanation-box {
+            display: none;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        .explanation-box.show { display: block; animation: fadeIn 0.3s ease; }
+        .exp-correct { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .exp-wrong { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+        .next-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: none;
+            margin: 0 auto;
+            transition: background 0.3s;
+        }
+        .next-btn:hover { background: #2980b9; }
+
+        @media(max-width: 768px) {
+            .options-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
-
 <body>
 
 <header>
-<h1>Subject–Verb Agreement Ultimate Mastery</h1>
-<button onclick="startQuiz()">Start Practice</button>
+    <div class="header-top">
+        <a href="main_home.html" class="home-link">← Back to Course Grid</a>
+    </div>
+    <h1>Subject–Verb Agreement (SVA)</h1>
+    <p class="subtitle">Module 9: Complete Mastery System</p>
 </header>
 
 <div class="container">
 
-<div class="tabs">
-<button class="tab-btn active" onclick="showTab('rules')">Rules + Reasons</button>
-<button class="tab-btn" onclick="showTab('lists')">Word Lists</button>
-</div>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="showTab('rules')">📖 Rules + Reasons</button>
+        <button class="tab-btn" onclick="showTab('lists')">📝 Word Lists</button>
+        <button class="tab-btn exam-btn" onclick="startQuiz()">🏆 Ultimate Test (150 Qs)</button>
+    </div>
 
-<!-- RULES -->
-<div id="rules" class="section active">
+    <div id="rules" class="section active">
+        <div class="card">
+            <h2>1. Basic Rule</h2>
+            <p>Singular subject → verb + s (or is/has/was)<br>Plural subject → base verb (or are/have/were)</p>
+            <div class="reason">👉 Reason: English verbs change only for singular subjects in the present tense to show agreement.</div>
+            <div class="example">
+                <strong>Correct:</strong> He <em>plays</em> football.<br>
+                <strong>Correct:</strong> They <em>play</em> football.
+            </div>
+        </div>
 
-<div class="card">
-<h2>1. Basic Rule</h2>
-<p>Singular → verb + s | Plural → base verb</p>
+        <div class="card">
+            <h2>2. Compound Subjects (and)</h2>
+            <div class="reason">👉 Reason: “A and B” means more than one, creating a plural subject. However, if the two nouns refer to the exact same person or a single unified concept, it is singular.</div>
+            <div class="example">
+                <strong>Plural:</strong> Reading and writing <em>are</em> important.<br>
+                <strong>Singular (One concept):</strong> Bread and butter <em>is</em> my breakfast.<br>
+                <strong>Singular (Same person):</strong> The CEO and founder <em>is</em> speaking.<br>
+                <strong>Plural (Two people):</strong> The CEO and the manager <em>are</em> here.
+            </div>
+        </div>
 
-<div class="reason">
-👉 Reason: English verbs change only for singular subjects in present tense.
-</div>
+        <div class="card">
+            <h2>3. Indefinite Pronouns</h2>
+            <div class="reason">👉 Reason: Words like <em>everyone, someone, nobody, anyone, each, either, neither</em> refer to one person/thing at a time, so they are grammatically singular.</div>
+            <div class="example">
+                <strong>Correct:</strong> Everyone <em>is</em> happy.<br>
+                <strong>Correct:</strong> Each student <em>has</em> a book.<br>
+                <strong>Correct:</strong> Nobody <em>knows</em> the answer.
+            </div>
+        </div>
 
-<div class="example">
-He plays football.<br>
-They play football.
-</div>
-</div>
+        <div class="card">
+            <h2>4. Ignore Extra Phrases</h2>
+            <div class="reason">👉 Reason: Phrases separated by commas or starting with <em>"along with", "as well as", "in addition to", "together with"</em> are NOT part of the real subject. Ignore them to find the verb.</div>
+            <div class="example">
+                <strong>Correct:</strong> The teacher, along with his students, <em>is</em> coming.<br>
+                <strong>Correct:</strong> The manager as well as the staff <em>works</em> hard.
+            </div>
+        </div>
 
-<div class="card">
-<h2>2. Compound Subjects</h2>
+        <div class="card">
+            <h2>5. A number vs. The number</h2>
+            <div class="reason">👉 Reason: "A number" means "many" (Plural). "The number" refers to one specific total figure (Singular).</div>
+            <div class="example">
+                <strong>Plural:</strong> A number of students <em>are</em> absent.<br>
+                <strong>Singular:</strong> The number of students <em>is</em> increasing.
+            </div>
+        </div>
 
-<div class="reason">
-👉 Reason: “A and B” means more than one → plural.  
-But if it is one idea or same person → singular.
-</div>
+        <div class="card">
+            <h2>6. Or / Nor (Proximity Rule)</h2>
+            <div class="reason">👉 Reason: When subjects are joined by <em>or, nor, either...or, neither...nor</em>, the verb agrees with the subject CLOSEST to it.</div>
+            <div class="example">
+                <strong>Correct:</strong> Either the teacher or the students <em>are</em> ready. (Agrees with students)<br>
+                <strong>Correct:</strong> Neither the students nor the teacher <em>is</em> ready. (Agrees with teacher)
+            </div>
+        </div>
 
-<div class="example">
-Reading and writing are important.<br>
-Bread and butter is my breakfast.<br>
-The CEO and founder is speaking.
-</div>
-</div>
+        <div class="card">
+            <h2>7. Fractions and Percentages</h2>
+            <div class="reason">👉 Reason: For fractions (half of, a third of) and percentages (50% of), the verb depends entirely on the noun that comes AFTER the word "of".</div>
+            <div class="example">
+                <strong>Singular:</strong> 50% of the water <em>is</em> polluted. (Water is uncountable/singular)<br>
+                <strong>Plural:</strong> 50% of the students <em>are</em> present. (Students is plural)
+            </div>
+        </div>
 
-<div class="card">
-<h2>3. Indefinite Pronouns</h2>
+        <div class="card">
+            <h2>8. Uncountable Nouns</h2>
+            <div class="reason">👉 Reason: Things you cannot physically count (Information, advice, furniture, luggage, water) are always treated as singular.</div>
+            <div class="example">
+                <strong>Correct:</strong> The information <em>is</em> highly useful.<br>
+                <strong>Correct:</strong> Her advice <em>was</em> helpful.
+            </div>
+        </div>
 
-<div class="reason">
-👉 Reason: Words like everyone, someone refer to one person at a time → singular.
-</div>
+        <div class="card">
+            <h2>9. Gerunds (V+ing) as Subjects</h2>
+            <div class="reason">👉 Reason: An "-ing" word acting as a noun represents a single activity or concept, taking a singular verb.</div>
+            <div class="example">
+                <strong>Correct:</strong> Swimming <em>is</em> excellent exercise.<br>
+                <strong>Correct:</strong> Reading books <em>helps</em> your grammar.
+            </div>
+        </div>
 
-<div class="example">
-Everyone is happy.<br>
-Someone has called.
-</div>
-</div>
+        <div class="card">
+            <h2>10. Here and There</h2>
+            <div class="reason">👉 Reason: "Here" and "There" are never the subject. The real subject comes AFTER the verb in these sentences.</div>
+            <div class="example">
+                <strong>Singular:</strong> There <em>is</em> a problem.<br>
+                <strong>Plural:</strong> There <em>are</em> many problems.
+            </div>
+        </div>
+    </div>
 
-<div class="card">
-<h2>4. Ignore Extra Phrases</h2>
+    <div id="lists" class="section">
+        <div class="card border-purple">
+            <h2>1. Plural Form but Singular Meaning</h2>
+            <p><strong>List:</strong> News, Mathematics, Physics, Economics, Ethics, Statistics, Measles, Mumps, Diabetes, Linguistics, Athletics, Gymnastics, Electronics, Phonetics, Genetics, Headquarters, Billiards, Darts, Summons</p>
+            <div class="reason">👉 Reason: These words end in "-s", making them look plural, but they refer to a single subject, disease, or field of study. Treat them as singular.</div>
+            <div class="example">
+                Mathematics <em>is</em> difficult.<br>
+                The news <em>is</em> shocking.
+            </div>
+        </div>
 
-<div class="reason">
-👉 Reason: Words after “along with / as well as” are NOT the real subject.
-</div>
+        <div class="card border-orange">
+            <h2>2. Always Plural Nouns</h2>
+            <p><strong>Pairs List:</strong> Clothes, Scissors, Trousers, Jeans, Shoes, Shorts, Glasses, Binoculars.<br>
+               <strong>Group List:</strong> Police, Staff, Cattle, People, Parents, Children, Barracks, Goods, Assets, Proceeds, Earrings, Customs, Funds, Riches, Beggars, Surroundings, Manners, Wings, Premises, Credentials, Scales, Amenities, Groceries.</p>
+            <div class="reason">👉 Reason: These nouns represent items with two parts (like scissors) or collective groups considered as multiples. They always take plural verbs.</div>
+            <div class="example">
+                The police <em>are</em> investigating the crime.<br>
+                My trousers <em>are</em> tight.<br>
+                The cattle <em>are</em> grazing.
+            </div>
+        </div>
 
-<div class="example">
-The teacher along with students is coming.
-</div>
-</div>
+        <div class="card border-green">
+            <h2>3. Collective Nouns</h2>
+            <p><strong>List:</strong> Team, Family, Group, Audience, Committee, Class, Crew, Staff, Crowd, Government, Organization, Panel, Population, Faculty, Herd, Fleet, Board, Tribe, Association, Council, Choir, Army, Congregation, Band, Company, Club, Jury, Delegation, Assembly, Chorus, Flock, Pack, Squad, Mob, Gang, Public, Union.</p>
+            <div class="reason">👉 Reason: If the group acts as a single, unified body, use a SINGULAR verb. If the members of the group are acting individually/arguing, use a PLURAL verb. (In IELTS, singular is safest unless specified).</div>
+            <div class="example">
+                <strong>Unified (Singular):</strong> The team <em>is</em> winning the championship.<br>
+                <strong>Divided (Plural):</strong> The jury <em>are</em> arguing among themselves.
+            </div>
+        </div>
+    </div>
 
-<div class="card">
-<h2>5. A number vs The number</h2>
-
-<div class="reason">
-👉 “A number” = many → plural  
-👉 “The number” = one total → singular
-</div>
-
-<div class="example">
-A number of students are absent.<br>
-The number of students is increasing.
-</div>
-</div>
-
-<div class="card">
-<h2>6. Either / Neither</h2>
-
-<div class="reason">
-👉 Verb follows nearest subject (last noun).
-</div>
-
-<div class="example">
-Either the teacher or students are ready.<br>
-Neither of the answers is correct.
-</div>
-</div>
-
-<div class="card">
-<h2>7. Percentage</h2>
-
-<div class="reason">
-👉 Verb depends on noun after “of”.
-</div>
-
-<div class="example">
-50% of water is polluted.<br>
-50% of students are present.
-</div>
-</div>
-
-<div class="card">
-<h2>8. Uncountable Nouns</h2>
-
-<div class="reason">
-👉 These cannot be counted → always treated as singular.
-</div>
-
-<div class="example">
-Information is useful.<br>
-Advice is helpful.
-</div>
-</div>
-
-<div class="card">
-<h2>9. Gerund</h2>
-
-<div class="reason">
-👉 “-ing” acts like one activity → singular.
-</div>
-
-<div class="example">
-Swimming is good.<br>
-Reading helps learning.
-</div>
-</div>
-
-<div class="card">
-<h2>10. Collective Nouns</h2>
-
-<div class="reason">
-👉 A group acts as one unit → singular  
-👉 Members acting separately → plural
-</div>
-
-<div class="example">
-The team is winning.<br>
-The staff are arguing.
-</div>
-</div>
-
-</div>
-
-<!-- LISTS -->
-<div id="lists" class="section">
-
-<div class="card">
-<h2>Plural but Singular</h2>
-<p>
-News, Mathematics, Physics, Economics, Ethics, Statistics, Measles, Mumps, Diabetes, Linguistics, Athletics, Gymnastics, Electronics, Phonetics, Genetics, Headquarters, Billiards, Darts, Summons
-</p>
-
-<div class="reason">
-👉 These are subjects, diseases, or fields → treated as one thing.
-</div>
-
-<div class="example">
-Mathematics is difficult.<br>
-The news is shocking.
-</div>
-</div>
-
-<div class="card">
-<h2>Always Plural</h2>
-<p>
-Clothes, Scissors, Trousers, Jeans, Shoes, Staff, Cattle, People, Parents, Children, Barracks, Goods, Assets, Proceeds, Earrings, Customs, Funds, Riches, Beggars, Surroundings, Manners, Wings, Premises, Credentials, Scales, Amenities, Shorts, Athletics, Groceries
-</p>
-
-<div class="reason">
-👉 These refer to pairs or groups → always plural.
-</div>
-
-<div class="example">
-The police are here.<br>
-My trousers are tight.
-</div>
-</div>
-
-<div class="card">
-<h2>Collective Nouns</h2>
-<p>
-Team, Family, Group, Audience, Committee, Class, Crew, Staff, Crowd, Government, Organization, Panel, Population, Faculty, Herd, Fleet, Board, Tribe, Association, Council, Choir, Army, Congregation, Band, Company, Club, Jury, Delegation, Assembly, Chorus, Flock, Pack, Squad, Mob, Gang, Public, Union, Tribe
-</p>
-
-<div class="reason">
-👉 These represent one group → singular verb (usually).
-</div>
-
-<div class="example">
-The team is winning.<br>
-The government has taken action.
-</div>
-</div>
-
-</div>
-
-<!-- QUIZ -->
-<div class="card quiz-box" id="quiz">
-<h2 id="question"></h2>
-<div id="options"></div>
-<div id="explanation"></div>
-<button onclick="nextQ()">Next</button>
-</div>
+    <div id="quiz" class="section">
+        <div class="card">
+            <div class="quiz-header">
+                <h3>Mixed SVA Rules Test</h3>
+                <div class="score-badge">Score: <span id="score">0</span> / <span id="total-answered">0</span></div>
+            </div>
+            
+            <div id="quiz-progress" style="text-align: center; color: var(--text-muted); margin-bottom: 10px;">Question 1 of 150</div>
+            
+            <div class="question-text" id="question">Loading question...</div>
+            
+            <div class="options-grid" id="options">
+                </div>
+            
+            <div id="explanation" class="explanation-box"></div>
+            
+            <button class="next-btn" id="next-btn" onclick="nextQuestion()">Next Question ➔</button>
+        </div>
+    </div>
 
 </div>
 
 <script>
+    // UI Tab Navigation
+    function showTab(id) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        event.target.classList.add('active');
+    }
 
-function showTab(id){
-document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-document.getElementById(id).classList.add('active');
-event.target.classList.add('active');
-}
+    // --- MEGA QUESTION GENERATOR (150 Mixed Questions) ---
+    // We dynamically build 150 questions from various rule templates to ensure deep, mixed practice.
+    
+    const ruleTemplates = [
+        // Rule 1: Basic
+        { s: ["The dog", "The boy", "The machine", "The car"], v1: "runs", v2: "run", ans: 0, rule: "Singular subject takes a singular verb (verb+s)." },
+        { s: ["The dogs", "The boys", "The machines", "The cars"], v1: "run", v2: "runs", ans: 0, rule: "Plural subject takes a plural verb (base verb)." },
+        
+        // Rule 2: Compound
+        { s: ["Tom and Jerry", "Gold and silver", "Time and tide", "Fire and water"], v1: "are", v2: "is", ans: 0, rule: "Two subjects joined by 'and' make a plural subject." },
+        { s: ["Bread and butter", "Rice and curry", "Slow and steady"], v1: "is", v2: "are", ans: 0, rule: "Two nouns expressing a single unified idea take a singular verb." },
+        { s: ["The CEO and founder", "The writer and director", "The principal and secretary"], v1: "is", v2: "are", ans: 0, rule: "When two titles refer to the SAME person (only one 'The'), the verb is singular." },
+        { s: ["The CEO and the founder", "The writer and the director"], v1: "are", v2: "is", ans: 0, rule: "When 'The' is repeated, they are two different people -> plural verb." },
 
-const base = [
-{q:"Everyone ___ happy.",o:["is","are"],a:0,e:"Everyone is singular"},
-{q:"A number of students ___ absent.",o:["is","are"],a:1,e:"A number = plural"},
-{q:"The number of students ___ increasing.",o:["is","are"],a:0,e:"The number = singular"},
-{q:"The police ___ here.",o:["is","are"],a:1,e:"Police = plural"},
-{q:"Mathematics ___ difficult.",o:["is","are"],a:0,e:"Singular subject"}
-];
+        // Rule 3: Indefinite Pronouns
+        { s: ["Everyone", "Someone", "Nobody", "Anyone", "Everybody", "No one"], v1: "is", v2: "are", ans: 0, rule: "Indefinite pronouns (everyone, someone, nobody) are always singular." },
+        { s: ["Each of the boys", "Neither of the girls", "Either of the plans", "Each of the cars"], v1: "has", v2: "have", ans: 0, rule: "'Each of', 'Either of', and 'Neither of' take a singular verb." },
 
-const subs = [
-{t:"He",v:"plays",w:"play"},
-{t:"They",v:"play",w:"plays"},
-{t:"My friend",v:"works",w:"work"},
-{t:"The boys",v:"play",w:"plays"}
-];
+        // Rule 4: Ignore Extra Phrases
+        { pre: "The manager,", mid: ["along with the staff", "as well as the workers", "together with his team"], v1: "is", v2: "are", post: "working late.", ans: 0, rule: "Phrases starting with 'along with' or 'as well as' are ignored. The subject 'manager' is singular." },
+        { pre: "The players,", mid: ["along with the coach", "as well as the manager"], v1: "are", v2: "is", post: "arriving now.", ans: 0, rule: "Ignore the extra phrase. The real subject 'players' is plural." },
 
-let questions=[...base];
+        // Rule 5: A number vs The number
+        { s: ["A number of students", "A number of issues", "A number of cars"], v1: "are", v2: "is", ans: 0, rule: "'A number of' means 'many' -> plural verb." },
+        { s: ["The number of students", "The number of issues", "The number of cars"], v1: "is", v2: "are", ans: 0, rule: "'The number of' refers to a specific total -> singular verb." },
 
-for(let i=0;i<100;i++){
-let s=subs[Math.floor(Math.random()*subs.length)];
-questions.push({
-q:`${s.t} ___ football.`,
-o:[s.v,s.w],
-a:0,
-e:"Check subject carefully"
-});
-}
+        // Rule 6: Proximity (Either/Or)
+        { pre: "Either the manager or the workers", v1: "are", v2: "is", post: "responsible.", ans: 0, rule: "With 'either...or', the verb agrees with the closest subject ('workers' is plural)." },
+        { pre: "Neither the workers nor the manager", v1: "is", v2: "are", post: "responsible.", ans: 0, rule: "With 'neither...nor', the verb agrees with the closest subject ('manager' is singular)." },
 
-let i=0;
+        // Rule 7: Percentage/Fraction
+        { pre: "50% of the cake", v1: "has", v2: "have", post: "been eaten.", ans: 0, rule: "For percentages, look at the noun after 'of'. 'Cake' is singular/uncountable." },
+        { pre: "50% of the apples", v1: "have", v2: "has", post: "been eaten.", ans: 0, rule: "For percentages, look at the noun after 'of'. 'Apples' is plural." },
+        { pre: "One-third of the water", v1: "is", v2: "are", post: "polluted.", ans: 0, rule: "For fractions, look at the noun after 'of'. 'Water' is uncountable (singular)." },
 
-function startQuiz(){
-document.getElementById("quiz").style.display="block";
-i=0;
-load();
-}
+        // Rule 8: Uncountable
+        { s: ["The information", "His advice", "The furniture", "The luggage", "The equipment"], v1: "is", v2: "are", ans: 0, rule: "Uncountable nouns always take a singular verb." },
 
-function load(){
-let q=questions[i];
-document.getElementById("question").innerText=q.q;
+        // Rule 9: Gerunds
+        { s: ["Swimming in the ocean", "Reading books", "Writing essays", "Playing video games"], v1: "is", v2: "are", ans: 0, rule: "A gerund (V+ing) used as a subject represents a single activity, taking a singular verb." },
 
-let html="";
-q.o.forEach((opt,index)=>{
-html+=`<div class="option" onclick="check(${index},this)">${opt}</div>`;
-});
-document.getElementById("options").innerHTML=html;
-document.getElementById("explanation").innerHTML="";
-}
+        // Rule 10: Here / There
+        { pre: "There", v1: "is", v2: "are", post: "a big problem here.", ans: 0, rule: "With 'there', the real subject follows the verb. 'A big problem' is singular." },
+        { pre: "There", v1: "are", v2: "is", post: "many problems here.", ans: 0, rule: "With 'there', the real subject follows the verb. 'Many problems' is plural." },
 
-function check(index,el){
-let q=questions[i];
+        // Rule 11: Plural Form, Singular Meaning
+        { s: ["The news", "Mathematics", "Physics", "Measles", "Statistics"], v1: "is", v2: "are", ans: 0, rule: "These nouns end in 's' but are treated as singular concepts." },
 
-document.querySelectorAll('.option').forEach(o=>o.onclick=null);
+        // Rule 12: Always Plural
+        { s: ["The police", "The cattle", "Those people", "The staff"], v1: "are", v2: "is", ans: 0, rule: "These nouns are always plural, even without an 's'." },
+        { s: ["My scissors", "Her trousers", "These glasses", "His jeans"], v1: "are", v2: "is", ans: 0, rule: "Items made of two parts are always plural." },
 
-if(index===q.a){
-el.classList.add("correct");
-document.getElementById("explanation").innerHTML="✅ "+q.e;
-}else{
-el.classList.add("wrong");
-document.getElementById("explanation").innerHTML="❌ Correct: "+q.o[q.a]+"<br>"+q.e;
-}
-}
+        // Rule 13: Collective Nouns
+        { s: ["The team", "The government", "The committee", "The jury"], v1: "has", v2: "have", ans: 0, rule: "When a collective noun acts as a single, unified group, it takes a singular verb." },
+        { pre: "The jury", v1: "are", v2: "is", post: "arguing among themselves.", ans: 0, rule: "When members of a collective noun act individually (arguing), it takes a plural verb." }
+    ];
 
-function nextQ(){
-i=(i+1)%questions.length;
-load();
-}
+    let questions = [];
+
+    // Generate exactly 150 questions by randomly selecting from the templates
+    function generateQuestions() {
+        let generated = [];
+        for (let i = 0; i < 150; i++) {
+            let template = ruleTemplates[Math.floor(Math.random() * ruleTemplates.length)];
+            
+            let subject = "";
+            let questionText = "";
+
+            if (template.s) {
+                subject = template.s[Math.floor(Math.random() * template.s.length)];
+                questionText = `${subject} ___ `;
+                if (template.post) questionText += template.post;
+            } else if (template.mid) {
+                let midText = template.mid[Math.floor(Math.random() * template.mid.length)];
+                questionText = `${template.pre} ${midText} ___ ${template.post}`;
+            } else {
+                questionText = `${template.pre} ___ ${template.post}`;
+            }
+
+            // Randomize options order
+            let options = [];
+            let correctIndex = 0;
+            if (Math.random() > 0.5) {
+                options = [template.v1, template.v2];
+                correctIndex = 0;
+            } else {
+                options = [template.v2, template.v1];
+                correctIndex = 1;
+            }
+
+            generated.push({
+                q: questionText,
+                opts: options,
+                ans: correctIndex,
+                rule: template.rule,
+                v1: template.v1 // correct answer text
+            });
+        }
+        return generated;
+    }
+
+    // --- QUIZ LOGIC ---
+    let currentQ = 0;
+    let score = 0;
+    let answered = 0;
+
+    function startQuiz() {
+        showTab('quiz');
+        questions = generateQuestions();
+        currentQ = 0;
+        score = 0;
+        answered = 0;
+        document.getElementById('score').innerText = score;
+        document.getElementById('total-answered').innerText = answered;
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        if (currentQ >= questions.length) {
+            document.getElementById('question').innerHTML = `🎉 Quiz Complete! You scored ${score} out of 150.`;
+            document.getElementById('options').innerHTML = "";
+            document.getElementById('explanation').className = "explanation-box";
+            document.getElementById('next-btn').style.display = "none";
+            document.getElementById('quiz-progress').innerText = "Test Finished";
+            return;
+        }
+
+        let q = questions[currentQ];
+        document.getElementById('quiz-progress').innerText = `Question ${currentQ + 1} of 150`;
+        document.getElementById('question').innerText = q.q.replace('___', '________');
+        
+        let optionsHtml = "";
+        q.opts.forEach((opt, index) => {
+            optionsHtml += `<div class="option" onclick="checkAnswer(${index}, this)">${opt}</div>`;
+        });
+        document.getElementById('options').innerHTML = optionsHtml;
+        
+        let expBox = document.getElementById('explanation');
+        expBox.className = "explanation-box";
+        expBox.innerHTML = "";
+        
+        document.getElementById('next-btn').style.display = "none";
+    }
+
+    function checkAnswer(selectedIndex, element) {
+        let q = questions[currentQ];
+        let optionsDivs = document.querySelectorAll('.option');
+        
+        // Disable all options
+        optionsDivs.forEach(opt => opt.classList.add('disabled'));
+
+        let expBox = document.getElementById('explanation');
+        answered++;
+        
+        if (selectedIndex === q.ans) {
+            element.classList.add('correct');
+            score++;
+            expBox.className = "explanation-box show exp-correct";
+            expBox.innerHTML = `<strong>✅ Correct!</strong><br><br>${q.rule}`;
+        } else {
+            element.classList.add('wrong');
+            // Highlight the correct one
+            optionsDivs[q.ans].classList.add('correct');
+            expBox.className = "explanation-box show exp-wrong";
+            expBox.innerHTML = `<strong>❌ Incorrect.</strong> The correct answer is <strong>${q.v1}</strong>.<br><br>${q.rule}`;
+        }
+
+        document.getElementById('score').innerText = score;
+        document.getElementById('total-answered').innerText = answered;
+        document.getElementById('next-btn').style.display = "block";
+    }
+
+    function nextQuestion() {
+        currentQ++;
+        loadQuestion();
+    }
 
 </script>
 
