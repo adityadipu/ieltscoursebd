@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Step-by-Step SOP Builder</title>
+    <title>Interactive Step-by-Step SOP Builder</title>
     <style>
         :root {
             --primary: #2563eb;
@@ -11,6 +11,8 @@
             --bg-color: #f8fafc;
             --text-color: #334155;
             --border: #cbd5e1;
+            --chip-bg: #e0e7ff;
+            --chip-text: #3730a3;
         }
         body { 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
@@ -28,7 +30,8 @@
             border-radius: 12px; 
             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); 
         }
-        h1 { text-align: center; color: #0f172a; margin-bottom: 30px; }
+        h1 { text-align: center; color: #0f172a; margin-bottom: 10px; }
+        .subtitle { text-align: center; color: #64748b; margin-bottom: 30px; font-size: 0.9em; }
         
         .progress-bar { 
             display: flex; 
@@ -54,33 +57,46 @@
             font-weight: 700; 
         }
 
-        .step { display: none; animation: fadeIn 0.5s; }
+        .step { display: none; animation: fadeIn 0.4s ease-out; }
         .step.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .step-header { font-size: 1.4em; font-weight: bold; margin-bottom: 10px; color: #1e293b; }
+        .step-header { font-size: 1.4em; font-weight: bold; margin-bottom: 10px; color: #1e293b; display: flex; justify-content: space-between; align-items: center;}
         
         .helper-text { 
             background: #eff6ff; 
             padding: 20px; 
             border-left: 4px solid var(--primary); 
             border-radius: 4px; 
-            margin-bottom: 20px; 
+            margin-bottom: 15px; 
             font-size: 0.95em; 
             color: #1e40af;
         }
-        .helper-text ul {
-            margin-top: 10px;
-            margin-bottom: 0;
-            padding-left: 20px;
+        .helper-text ul { margin-top: 10px; margin-bottom: 0; padding-left: 20px; }
+        .helper-text li { margin-bottom: 5px; }
+
+        /* New Template Chips Styles */
+        .template-section { margin-bottom: 15px; }
+        .template-label { font-size: 0.85em; color: #64748b; margin-bottom: 5px; font-weight: 600; text-transform: uppercase;}
+        .chip { 
+            display: inline-block; 
+            background: var(--chip-bg); 
+            color: var(--chip-text); 
+            padding: 6px 12px; 
+            border-radius: 20px; 
+            font-size: 0.85em; 
+            margin-right: 8px; 
+            margin-bottom: 8px; 
+            cursor: pointer; 
+            transition: all 0.2s;
+            border: 1px solid #c7d2fe;
         }
-        .helper-text li {
-            margin-bottom: 5px;
-        }
+        .chip:hover { background: #c7d2fe; transform: translateY(-1px); }
+        .chip::before { content: '+ '; font-weight: bold;}
         
         textarea { 
             width: 100%; 
-            height: 200px; 
+            height: 220px; 
             padding: 15px; 
             border: 2px solid var(--border); 
             border-radius: 8px; 
@@ -90,9 +106,12 @@
             box-sizing: border-box;
             transition: border-color 0.3s;
         }
-        textarea:focus { outline: none; border-color: var(--primary); }
+        textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
         
-        .btn-container { display: flex; justify-content: space-between; margin-top: 30px; }
+        .textarea-footer { display: flex; justify-content: space-between; margin-top: 5px; font-size: 0.85em; color: #64748b; }
+        .word-count { font-weight: 600; }
+        
+        .btn-container { display: flex; justify-content: space-between; margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border); }
         button { 
             background: var(--primary); 
             color: #fff; 
@@ -108,14 +127,18 @@
         button:disabled { background: #94a3b8; cursor: not-allowed; }
         
         #finalSOP { height: 400px; background: #f8fafc; }
-        .copy-btn { width: 100%; margin-top: 15px; background: #10b981; }
+        .action-btns { display: flex; gap: 10px; margin-top: 15px; }
+        .copy-btn { flex: 1; background: #10b981; }
         .copy-btn:hover { background: #059669; }
+        .clear-btn { background: #ef4444; font-size: 0.85em; padding: 8px 15px; }
+        .clear-btn:hover { background: #dc2626; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>📝 Ultimate SOP Builder</h1>
+    <h1>📝 Interactive SOP Builder</h1>
+    <div class="subtitle">Your progress is automatically saved to your browser.</div>
     
     <div class="progress-bar">
         <div class="progress-step active" id="prog1">1. Intro</div>
@@ -133,11 +156,23 @@
             <div class="helper-text">
                 <strong>Pro Tip: Write this paragraph LAST! It should contain two main parts:</strong>
                 <ul>
-                    <li><strong>The Puzzle (The Hook):</strong> Start with a real-world contradiction or knowledge gap. <em>(e.g., "Bangladesh has a rising GDP, yet poverty remains high. This puzzle inspired me to study policy...")</em></li>
-                    <li><strong>Objective & 3-Line Summary:</strong> Clearly state who you are, what program/university you are applying to, and summarize your long-term goal.</li>
+                    <li><strong>The Puzzle (The Hook):</strong> Start with a real-world contradiction or knowledge gap.</li>
+                    <li><strong>Objective & 3-Line Summary:</strong> Clearly state who you are, the program you are applying to, and summarize your long-term goal.</li>
                 </ul>
             </div>
-            <textarea id="inputIntro" placeholder="Example: Growing up in a rapidly developing country with a rising GDP, I was puzzled by the stark contrast between macroeconomic growth and the microeconomic reality of poverty on the streets. This knowledge gap inspired me to pursue policy analysis. I am [Name], an International Relations graduate from Dhaka University, and I am applying to the Master's in Political Science at Memorial University to bridge this gap and ultimately become a university professor..."></textarea>
+            
+            <div class="template-section">
+                <div class="template-label">Click to insert a starter phrase:</div>
+                <div class="chip" onclick="insertText('inputIntro', 'Growing up in a rapidly developing country, I was puzzled by...')">Growing up...</div>
+                <div class="chip" onclick="insertText('inputIntro', 'Despite the rapid advancement of [Field], there is still a critical gap in...')">Identify a gap...</div>
+                <div class="chip" onclick="insertText('inputIntro', 'I am applying to the Master’s in [Program] at [University] to bridge this gap by...')">I am applying to...</div>
+            </div>
+
+            <textarea id="inputIntro" oninput="handleInput(this)" placeholder="Start typing your introduction here..."></textarea>
+            <div class="textarea-footer">
+                <span>Auto-saving...</span>
+                <span class="word-count" id="count-inputIntro">0 words</span>
+            </div>
         </div>
 
         <!-- Step 2: Past Experience -->
@@ -146,12 +181,24 @@
             <div class="helper-text">
                 <strong>How does your past prepare you for this Master's? Connect these dots:</strong>
                 <ul>
-                    <li><strong>Academic/Research:</strong> Mention relevant courses, degrees, and specific research methodologies (e.g., Qualitative research, Data Analysis, FGDs).</li>
-                    <li><strong>Volunteer/Work:</strong> Mention specific organizations (e.g., Political groups, Active Citizens).</li>
-                    <li><strong>Skill Translation:</strong> Show how these gave you <em>Hard Skills</em> (policy building, analysis) and <em>Soft Skills</em> (leadership, presentation) needed for a Master's.</li>
+                    <li><strong>Academic/Research:</strong> Mention relevant courses, degrees, and specific methodologies.</li>
+                    <li><strong>Volunteer/Work:</strong> Mention specific organizations and roles.</li>
+                    <li><strong>Skill Translation:</strong> Show how these gave you Hard Skills and Soft Skills.</li>
                 </ul>
             </div>
-            <textarea id="inputExp" placeholder="Example: During my undergraduate studies in International Relations, courses in Foreign Policy and Diplomacy laid my academic foundation. Beyond the classroom, my leadership role in a political organization allowed me to witness how public opinion influences government policy. Furthermore, volunteering with the Active Citizens program honed my presentation and leadership skills. Every one of these experiences has uniquely prepared me for the rigorous environment of a Master's degree..."></textarea>
+
+            <div class="template-section">
+                <div class="template-label">Click to insert a starter phrase:</div>
+                <div class="chip" onclick="insertText('inputExp', 'During my undergraduate studies in [Major], courses in [Course 1] and [Course 2] laid my academic foundation.')">Undergrad courses...</div>
+                <div class="chip" onclick="insertText('inputExp', 'Beyond the classroom, my leadership role at [Organization] allowed me to...')">Beyond the classroom...</div>
+                <div class="chip" onclick="insertText('inputExp', 'This project taught me vital skills such as critical thinking, teamwork, and...')">Skills learned...</div>
+            </div>
+
+            <textarea id="inputExp" oninput="handleInput(this)" placeholder="Detail your experiences here..."></textarea>
+            <div class="textarea-footer">
+                <span>Auto-saving...</span>
+                <span class="word-count" id="count-inputExp">0 words</span>
+            </div>
         </div>
 
         <!-- Step 3: University Choice -->
@@ -160,11 +207,23 @@
             <div class="helper-text">
                 <strong>Prove you have researched their department thoroughly:</strong>
                 <ul>
-                    <li><strong>Specific Strengths:</strong> Why are they better than your current/previous university? Mention specific research facilities.</li>
-                    <li><strong>Professor Alignment:</strong> Name a specific professor. Analyze their work (e.g., "Professor [Name]'s work on state-sponsored oppression...") and state how your research interests align with theirs.</li>
+                    <li><strong>Specific Strengths:</strong> Mention specific research facilities, labs, or curriculum structure.</li>
+                    <li><strong>Professor Alignment:</strong> Name a specific professor and explain how your research interests align with theirs.</li>
                 </ul>
             </div>
-            <textarea id="inputUni" placeholder="Example: I chose Memorial University because of its strong emphasis on Refugee Studies. I am particularly drawn to the work of Professor Isha Pola. Although her research focuses on the systemic oppression of Uyghur populations in Eastern Europe, the methodological approaches she utilizes to examine state-sponsored displacement align perfectly with my aspirations to study the marginalization of the Rohingya. I am eager to apply her theoretical insights to my own regional focus..."></textarea>
+
+            <div class="template-section">
+                <div class="template-label">Click to insert a starter phrase:</div>
+                <div class="chip" onclick="insertText('inputUni', 'I chose [University Name] because of its strong emphasis on...')">I chose [University]...</div>
+                <div class="chip" onclick="insertText('inputUni', 'I am particularly drawn to the work of Professor [Name].')">Drawn to Professor...</div>
+                <div class="chip" onclick="insertText('inputUni', 'Their research on [Topic] aligns perfectly with my aspirations to study...')">Research alignment...</div>
+            </div>
+
+            <textarea id="inputUni" oninput="handleInput(this)" placeholder="Explain why you chose them..."></textarea>
+            <div class="textarea-footer">
+                <span>Auto-saving...</span>
+                <span class="word-count" id="count-inputUni">0 words</span>
+            </div>
         </div>
 
         <!-- Step 4: Goals -->
@@ -173,11 +232,23 @@
             <div class="helper-text">
                 <strong>Map out your exact timeline and explain how this Master's helps achieve it:</strong>
                 <ul>
-                    <li><strong>Short-Term Goal:</strong> Be highly specific. <em>(e.g., "I want to leverage the thesis experience from this Master's to prepare for a PhD at the University of Alberta.")</em></li>
-                    <li><strong>Long-Term Goal (5-7 years):</strong> Where do you see yourself? <em>(e.g., "I aim to return to my home country as a Professor at Dhaka University.")</em></li>
+                    <li><strong>Short-Term Goal:</strong> Be highly specific (e.g., getting a job as X, or applying for a PhD).</li>
+                    <li><strong>Long-Term Goal (5-7 years):</strong> Where do you see yourself ultimately?</li>
                 </ul>
             </div>
-            <textarea id="inputGoals" placeholder="Example: My short-term goal upon completing this Master's is to pursue a PhD at the University of Alberta. I believe the rigorous thesis experience at Memorial University will perfectly prepare me for doctoral research. In the long term—within the next five to seven years—I aim to return to Bangladesh and establish myself as a Professor at Dhaka University. All these reasons have prepared me to take this critical next step..."></textarea>
+
+            <div class="template-section">
+                <div class="template-label">Click to insert a starter phrase:</div>
+                <div class="chip" onclick="insertText('inputGoals', 'My short-term goal upon completing this Master\'s is to...')">Short-term goal...</div>
+                <div class="chip" onclick="insertText('inputGoals', 'In the long term—within the next five to seven years—I aim to...')">Long-term goal...</div>
+                <div class="chip" onclick="insertText('inputGoals', 'I believe the rigorous thesis experience at your university will perfectly prepare me for...')">How it prepares me...</div>
+            </div>
+
+            <textarea id="inputGoals" oninput="handleInput(this)" placeholder="Describe your future goals..."></textarea>
+            <div class="textarea-footer">
+                <span>Auto-saving...</span>
+                <span class="word-count" id="count-inputGoals">0 words</span>
+            </div>
         </div>
 
         <!-- Step 5: Conclusion -->
@@ -187,20 +258,43 @@
                 <strong>End on a confident and concise note:</strong>
                 <ul>
                     <li>Reiterate your confidence in your preparation.</li>
-                    <li>Express hope and expectation to contribute to their dynamic academic environment.</li>
+                    <li>Express hope to contribute to their dynamic academic environment.</li>
                 </ul>
             </div>
-            <textarea id="inputConclusion" placeholder="Example: I am confident that this Master's program will provide me with the necessary skills and knowledge to achieve my long-term goal. Thank you for considering my application. I look forward to contributing to the dynamic academic environment at your institution."></textarea>
+
+            <div class="template-section">
+                <div class="template-label">Click to insert a starter phrase:</div>
+                <div class="chip" onclick="insertText('inputConclusion', 'I am confident that this program will provide me with the necessary skills to achieve my goals.')">I am confident...</div>
+                <div class="chip" onclick="insertText('inputConclusion', 'Thank you for considering my application.')">Thank you...</div>
+                <div class="chip" onclick="insertText('inputConclusion', 'I look forward to contributing to the dynamic academic environment at your institution.')">I look forward to...</div>
+            </div>
+
+            <textarea id="inputConclusion" oninput="handleInput(this)" placeholder="Wrap up your SOP..."></textarea>
+            <div class="textarea-footer">
+                <span>Auto-saving...</span>
+                <span class="word-count" id="count-inputConclusion">0 words</span>
+            </div>
         </div>
 
         <!-- Step 6: Final Output -->
         <div class="step" id="step6">
-            <div class="step-header">Your Compiled Statement of Purpose</div>
+            <div class="step-header">
+                <span>Your Compiled Statement of Purpose</span>
+                <button type="button" class="clear-btn" onclick="clearData()">🗑️ Clear All Data</button>
+            </div>
             <div class="helper-text">
                 Review your complete SOP below. Read it out loud to ensure it flows logically from the "Puzzle" to your "Long-term Goals." You can make final edits directly in this box.
             </div>
-            <textarea id="finalSOP"></textarea>
-            <button type="button" class="copy-btn" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+            
+            <textarea id="finalSOP" oninput="countTotalWords()"></textarea>
+            <div class="textarea-footer">
+                <span>Final Review</span>
+                <span class="word-count" id="total-word-count" style="color: var(--primary); font-size: 1.1em;">Total: 0 words</span>
+            </div>
+            
+            <div class="action-btns">
+                <button type="button" class="copy-btn" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+            </div>
         </div>
 
         <div class="btn-container">
@@ -213,7 +307,69 @@
 <script>
     let currentStep = 1;
     const totalSteps = 6;
+    const fields = ['inputIntro', 'inputExp', 'inputUni', 'inputGoals', 'inputConclusion'];
 
+    // --- Initialization & LocalStorage ---
+    window.onload = function() {
+        // Load saved data
+        fields.forEach(field => {
+            const savedData = localStorage.getItem('sop_' + field);
+            if (savedData) {
+                document.getElementById(field).value = savedData;
+                updateWordCount(field);
+            }
+        });
+        updateUI();
+    };
+
+    function handleInput(element) {
+        // Save to local storage
+        localStorage.setItem('sop_' + element.id, element.value);
+        // Update word count
+        updateWordCount(element.id);
+    }
+
+    // --- Interactive Features ---
+    function insertText(targetId, textToInsert) {
+        const textarea = document.getElementById(targetId);
+        // Add a space if the textarea isn't empty and doesn't end with a space/newline
+        if (textarea.value.length > 0 && !textarea.value.endsWith(' ') && !textarea.value.endsWith('\n')) {
+            textarea.value += ' ';
+        }
+        textarea.value += textToInsert + ' ';
+        
+        // Trigger save and count update
+        handleInput(textarea);
+        textarea.focus();
+    }
+
+    function updateWordCount(id) {
+        const text = document.getElementById(id).value.trim();
+        const words = text ? text.split(/\s+/).length : 0;
+        document.getElementById('count-' + id).innerText = words + (words === 1 ? ' word' : ' words');
+    }
+
+    function countTotalWords() {
+        const text = document.getElementById('finalSOP').value.trim();
+        const words = text ? text.split(/\s+/).length : 0;
+        document.getElementById('total-word-count').innerText = `Total Length: ${words} words`;
+    }
+
+    function clearData() {
+        if(confirm("Are you sure you want to clear all your progress? This cannot be undone.")) {
+            fields.forEach(field => {
+                localStorage.removeItem('sop_' + field);
+                document.getElementById(field).value = '';
+                updateWordCount(field);
+            });
+            document.getElementById('finalSOP').value = '';
+            countTotalWords();
+            currentStep = 1;
+            updateUI();
+        }
+    }
+
+    // --- Navigation & Generation ---
     function updateUI() {
         document.querySelectorAll('.step').forEach((el, index) => {
             el.classList.toggle('active', index + 1 === currentStep);
@@ -237,17 +393,14 @@
     function nextPrev(n) {
         currentStep += n;
         updateUI();
+        // Scroll to top of form smoothly
+        document.querySelector('.container').scrollIntoView({ behavior: 'smooth' });
     }
 
     function generateSOP() {
-        const intro = document.getElementById('inputIntro').value.trim();
-        const exp = document.getElementById('inputExp').value.trim();
-        const uni = document.getElementById('inputUni').value.trim();
-        const goals = document.getElementById('inputGoals').value.trim();
-        const conclusion = document.getElementById('inputConclusion').value.trim();
-
-        const sections = [intro, exp, uni, goals, conclusion].filter(Boolean);
+        const sections = fields.map(field => document.getElementById(field).value.trim()).filter(Boolean);
         document.getElementById('finalSOP').value = sections.join('\n\n');
+        countTotalWords();
     }
 
     function copyToClipboard() {
@@ -255,7 +408,14 @@
         copyText.select();
         copyText.setSelectionRange(0, 99999);
         navigator.clipboard.writeText(copyText.value).then(() => {
-            alert("SOP copied to clipboard!");
+            const btn = document.querySelector('.copy-btn');
+            const originalText = btn.innerText;
+            btn.innerText = "✅ Copied Successfully!";
+            btn.style.background = "#059669";
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.background = "#10b981";
+            }, 2000);
         });
     }
 </script>
