@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step-by-Step SOP Generator</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #2c3e50; }
+        .step { display: none; }
+        .step.active { display: block; }
+        .step-header { font-size: 1.2em; font-weight: bold; margin-bottom: 15px; color: #2980b9; }
+        textarea { width: 100%; height: 120px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; resize: vertical; margin-bottom: 15px; font-family: inherit; }
+        .btn-container { display: flex; justify-content: space-between; margin-top: 20px; }
+        button { background: #3498db; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 4px; font-size: 1em; transition: background 0.3s; }
+        button:hover { background: #2980b9; }
+        button:disabled { background: #bdc3c7; cursor: not-allowed; }
+        #finalSOP { height: 300px; background: #f9f9f9; }
+        .progress-bar { display: flex; justify-content: space-between; margin-bottom: 30px; }
+        .progress-step { flex: 1; text-align: center; border-bottom: 3px solid #eee; padding-bottom: 10px; color: #7f8c8d; }
+        .progress-step.active { border-bottom-color: #3498db; color: #3498db; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>SOP Builder</h1>
+    
+    <div class="progress-bar">
+        <div class="progress-step active" id="prog1">1. Introduction</div>
+        <div class="progress-step" id="prog2">2. Experience</div>
+        <div class="progress-step" id="prog3">3. University</div>
+        <div class="progress-step" id="prog4">4. Goals</div>
+        <div class="progress-step" id="prog5">5. Output</div>
+    </div>
+
+    <form id="sopForm">
+        <!-- Step 1: Introduction -->
+        <div class="step active" id="step1">
+            <div class="step-header">Step 1: The "Puzzle" & Introduction</div>
+            <p>Start with a hook (a real-world problem or observation) and state your objective.</p>
+            <textarea id="inputIntro" placeholder="e.g., Growing up in a developing country with a rising GDP, I was puzzled by the stark contrast between macroeconomic growth and microeconomic realities..."></textarea>
+        </div>
+
+        <!-- Step 2: Past Experience -->
+        <div class="step" id="step2">
+            <div class="step-header">Step 2: Academic & Practical Experience</div>
+            <p>Detail your past education, volunteer work, and how they built your foundation.</p>
+            <textarea id="inputExp" placeholder="e.g., During my undergraduate studies in International Relations at Dhaka University..."></textarea>
+        </div>
+
+        <!-- Step 3: University Choice -->
+        <div class="step" id="step3">
+            <div class="step-header">Step 3: Why This University & Professor?</div>
+            <p>Mention specific research alignment and faculty members.</p>
+            <textarea id="inputUni" placeholder="e.g., I have chosen Memorial University because of its strong emphasis on Refugee Studies, particularly the work of Professor..."></textarea>
+        </div>
+
+        <!-- Step 4: Goals & Conclusion -->
+        <div class="step" id="step4">
+            <div class="step-header">Step 4: Future Goals & Conclusion</div>
+            <p>State your short/long-term goals and a confident closing statement.</p>
+            <textarea id="inputGoals" placeholder="e.g., My short-term goal is to pursue a PhD at the University of Alberta. Ultimately, I aim to become a Professor at Dhaka University..."></textarea>
+        </div>
+
+        <!-- Step 5: Final Output -->
+        <div class="step" id="step5">
+            <div class="step-header">Your Compiled Statement of Purpose</div>
+            <p>Review and edit your final SOP below.</p>
+            <textarea id="finalSOP"></textarea>
+        </div>
+
+        <div class="btn-container">
+            <button type="button" id="prevBtn" onclick="nextPrev(-1)" disabled>Previous</button>
+            <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    let currentStep = 1;
+    const totalSteps = 5;
+
+    function updateUI() {
+        // Hide all steps, show current step
+        document.querySelectorAll('.step').forEach((el, index) => {
+            el.classList.toggle('active', index + 1 === currentStep);
+        });
+
+        // Update Progress Bar
+        document.querySelectorAll('.progress-step').forEach((el, index) => {
+            el.classList.toggle('active', index + 1 <= currentStep);
+        });
+
+        // Update Buttons
+        document.getElementById('prevBtn').disabled = currentStep === 1;
+        
+        if (currentStep === totalSteps) {
+            document.getElementById('nextBtn').style.display = 'none';
+            generateSOP();
+        } else {
+            document.getElementById('nextBtn').style.display = 'inline-block';
+            document.getElementById('nextBtn').innerText = currentStep === totalSteps - 1 ? 'Generate SOP' : 'Next';
+        }
+    }
+
+    function nextPrev(n) {
+        currentStep += n;
+        updateUI();
+    }
+
+    function generateSOP() {
+        const intro = document.getElementById('inputIntro').value.trim();
+        const exp = document.getElementById('inputExp').value.trim();
+        const uni = document.getElementById('inputUni').value.trim();
+        const goals = document.getElementById('inputGoals').value.trim();
+
+        const combined = `${intro}\n\n${exp}\n\n${uni}\n\n${goals}`;
+        document.getElementById('finalSOP').value = combined;
+    }
+</script>
+</body>
+</html>
