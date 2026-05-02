@@ -75,7 +75,6 @@
         .helper-text ul { margin-top: 10px; margin-bottom: 0; padding-left: 20px; }
         .helper-text li { margin-bottom: 5px; }
 
-        /* New Template Chips Styles */
         .template-section { margin-bottom: 15px; }
         .template-label { font-size: 0.85em; color: #64748b; margin-bottom: 5px; font-weight: 600; text-transform: uppercase;}
         .chip { 
@@ -168,7 +167,8 @@
                 <div class="chip" onclick="insertText('inputIntro', 'I am applying to the Master’s in [Program] at [University] to bridge this gap by...')">I am applying to...</div>
             </div>
 
-            <textarea id="inputIntro" oninput="handleInput(this)" placeholder="Start typing your introduction here..."></textarea>
+            <!-- RESTORED EXAMPLE PLACEHOLDER -->
+            <textarea id="inputIntro" oninput="handleInput(this)" placeholder="Example: Growing up in a village, I witnessed how technology can transform lives, which inspired me to pursue CSE. My first experience coding in high school made me realize how much I enjoy solving problems using technology. I am applying to the Master's in Data Science to deepen this knowledge and ultimately build tech solutions for healthcare..."></textarea>
             <div class="textarea-footer">
                 <span>Auto-saving...</span>
                 <span class="word-count" id="count-inputIntro">0 words</span>
@@ -194,7 +194,8 @@
                 <div class="chip" onclick="insertText('inputExp', 'This project taught me vital skills such as critical thinking, teamwork, and...')">Skills learned...</div>
             </div>
 
-            <textarea id="inputExp" oninput="handleInput(this)" placeholder="Detail your experiences here..."></textarea>
+            <!-- RESTORED EXAMPLE PLACEHOLDER -->
+            <textarea id="inputExp" oninput="handleInput(this)" placeholder="Example: During my undergraduate studies in Mechanical Engineering, I worked on a project focused on a Renewable Energy System, which was later published in a national journal. Beyond the technical knowledge, this project taught me vital soft skills such as teamwork, critical thinking, and practical problem-solving skills under tight deadlines..."></textarea>
             <div class="textarea-footer">
                 <span>Auto-saving...</span>
                 <span class="word-count" id="count-inputExp">0 words</span>
@@ -219,7 +220,8 @@
                 <div class="chip" onclick="insertText('inputUni', 'Their research on [Topic] aligns perfectly with my aspirations to study...')">Research alignment...</div>
             </div>
 
-            <textarea id="inputUni" oninput="handleInput(this)" placeholder="Explain why you chose them..."></textarea>
+            <!-- RESTORED EXAMPLE PLACEHOLDER -->
+            <textarea id="inputUni" oninput="handleInput(this)" placeholder="Example: The data science program at XYZ university aligns perfectly with my interest in machine learning and predictive analysis. Furthermore, XYZ university's state-of-the-art Artificial Intelligence lab and direct industry collaborations make it the ideal place for my academic growth. I am particularly drawn to the work being done in..."></textarea>
             <div class="textarea-footer">
                 <span>Auto-saving...</span>
                 <span class="word-count" id="count-inputUni">0 words</span>
@@ -244,7 +246,8 @@
                 <div class="chip" onclick="insertText('inputGoals', 'I believe the rigorous thesis experience at your university will perfectly prepare me for...')">How it prepares me...</div>
             </div>
 
-            <textarea id="inputGoals" oninput="handleInput(this)" placeholder="Describe your future goals..."></textarea>
+            <!-- RESTORED EXAMPLE PLACEHOLDER -->
+            <textarea id="inputGoals" oninput="handleInput(this)" placeholder="Example: After completing this program, my short-term goal is to work as a data analyst to gain practical experience in handling real-world datasets. My long-term goal, over the next five to seven years, is to establish my own AI-driven startup focused specifically on scalable healthcare solutions..."></textarea>
             <div class="textarea-footer">
                 <span>Auto-saving...</span>
                 <span class="word-count" id="count-inputGoals">0 words</span>
@@ -269,7 +272,8 @@
                 <div class="chip" onclick="insertText('inputConclusion', 'I look forward to contributing to the dynamic academic environment at your institution.')">I look forward to...</div>
             </div>
 
-            <textarea id="inputConclusion" oninput="handleInput(this)" placeholder="Wrap up your SOP..."></textarea>
+            <!-- RESTORED EXAMPLE PLACEHOLDER -->
+            <textarea id="inputConclusion" oninput="handleInput(this)" placeholder="Example: I am confident that this program will provide me with the necessary skills and knowledge to achieve my academic and professional aspirations. Thank you for considering my application. I look forward to contributing to the dynamic academic environment at your institution."></textarea>
             <div class="textarea-footer">
                 <span>Auto-saving...</span>
                 <span class="word-count" id="count-inputConclusion">0 words</span>
@@ -283,7 +287,7 @@
                 <button type="button" class="clear-btn" onclick="clearData()">🗑️ Clear All Data</button>
             </div>
             <div class="helper-text">
-                Review your complete SOP below. Read it out loud to ensure it flows logically from the "Puzzle" to your "Long-term Goals." You can make final edits directly in this box.
+                Review your complete SOP below. Read it out loud to ensure it flows logically. You can make final edits directly in this box.
             </div>
             
             <textarea id="finalSOP" oninput="countTotalWords()"></textarea>
@@ -311,7 +315,6 @@
 
     // --- Initialization & LocalStorage ---
     window.onload = function() {
-        // Load saved data
         fields.forEach(field => {
             const savedData = localStorage.getItem('sop_' + field);
             if (savedData) {
@@ -323,22 +326,18 @@
     };
 
     function handleInput(element) {
-        // Save to local storage
         localStorage.setItem('sop_' + element.id, element.value);
-        // Update word count
         updateWordCount(element.id);
     }
 
     // --- Interactive Features ---
     function insertText(targetId, textToInsert) {
         const textarea = document.getElementById(targetId);
-        // Add a space if the textarea isn't empty and doesn't end with a space/newline
         if (textarea.value.length > 0 && !textarea.value.endsWith(' ') && !textarea.value.endsWith('\n')) {
             textarea.value += ' ';
         }
         textarea.value += textToInsert + ' ';
         
-        // Trigger save and count update
         handleInput(textarea);
         textarea.focus();
     }
@@ -393,7 +392,6 @@
     function nextPrev(n) {
         currentStep += n;
         updateUI();
-        // Scroll to top of form smoothly
         document.querySelector('.container').scrollIntoView({ behavior: 'smooth' });
     }
 
